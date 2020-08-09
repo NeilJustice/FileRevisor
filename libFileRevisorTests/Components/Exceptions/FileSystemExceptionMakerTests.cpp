@@ -54,8 +54,8 @@ TEST(MakeFileSystemExceptionForFailedToOpenFileWithFOpen_ReturnsExpectedFileSyst
       MakeFileSystemExceptionForFailedToOpenFileWithFOpen(_filePath, _fileOpenMode.c_str());
    //
    METALMOCK(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce());
-   const string expectedExceptionMessage = String::Concat("fopen() returned nullptr. filePath=\"",
-      _filePath.string(), "\". fileOpenMode=\"", _fileOpenMode, "\". errno=",
+   const string expectedExceptionMessage = String::Concat("fopen() returned nullptr for filePath=\"",
+      _filePath.string(), "\" and fileOpenMode=\"", _fileOpenMode, "\". errno=",
       errnoWithDescription.first, " (", errnoWithDescription.second, ")");
    const FileSystemException expectedFileSystemException(
       FileExceptionType::FailedToOpenFile, expectedExceptionMessage);

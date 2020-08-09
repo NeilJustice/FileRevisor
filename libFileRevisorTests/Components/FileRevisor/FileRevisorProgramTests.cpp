@@ -125,7 +125,7 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndWhat_Returns1)
    int exitCode = _fileRevisorProgram.ExceptionHandler(ex, args);
    //
    METALMOCK(ClassNameAndWhatMock.CalledOnceWith(&ex));
-   const string expectedExceptionMessage = "[FileRevisor] Error: Uncaught exception: " + exceptionTypeNameAndWhat;
+   const string expectedExceptionMessage = "[FileRevisor] Error: Exception thrown: " + exceptionTypeNameAndWhat;
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedExceptionMessage));
    ARE_EQUAL(1, exitCode);
 }

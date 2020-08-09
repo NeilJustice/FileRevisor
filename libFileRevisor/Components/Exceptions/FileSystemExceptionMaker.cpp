@@ -24,8 +24,8 @@ FileSystemException FileSystemExceptionMaker::
 MakeFileSystemExceptionForFailedToOpenFileWithFOpen(const fs::path& filePath, const char* fileOpenMode) const
 {
    const pair<int, string> errnoWithDescription = _errorCodeTranslator->GetErrnoWithDescription();
-   const string exceptionMessage = String::Concat("fopen() returned nullptr. filePath=\"", filePath.string(),
-      "\". fileOpenMode=\"", fileOpenMode, "\". errno=",
+   const string exceptionMessage = String::Concat("fopen() returned nullptr for filePath=\"", filePath.string(),
+      "\" and fileOpenMode=\"", fileOpenMode, "\". errno=",
       errnoWithDescription.first, " (", errnoWithDescription.second, ")");
    const FileSystemException fileSystemException(FileExceptionType::FailedToOpenFile, exceptionMessage);
    return fileSystemException;
