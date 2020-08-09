@@ -2,9 +2,9 @@
 #include "libFileRevisor/Components/FileRevisor/FileRevisorArgsParser.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorProgram.h"
 #include "libFileRevisor/ValueTypes/FileRevisorArgs.h"
-#include "libFileRevisorTests/Components/FileRevisor/ZenMock/FileRevisorArgsParserMock.h"
-#include "libFileRevisorTests/Components/SubPrograms/ZenMock/FileRevisorSubProgramFactoryMock.h"
-#include "libFileRevisorTests/Components/SubPrograms/ZenMock/FileRevisorSubProgramMock.h"
+#include "libFileRevisorTests/Components/FileRevisor/MetalMock/FileRevisorArgsParserMock.h"
+#include "libFileRevisorTests/Components/SubPrograms/MetalMock/FileRevisorSubProgramFactoryMock.h"
+#include "libFileRevisorTests/Components/SubPrograms/MetalMock/FileRevisorSubProgramMock.h"
 
 TESTS(FileRevisorProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
@@ -47,7 +47,7 @@ TEST(Main_ArgcIs1_WritesCommandLineUsage_Returns0)
    //
    int exitCode = _fileRevisorProgram.Main(1, nullptr);
    //
-   ZENMOCK(_consoleMock->WriteLineMock.CalledOnceWith(FileRevisorArgs::CommandLineUsage));
+   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(FileRevisorArgs::CommandLineUsage));
    IS_ZERO(exitCode);
 }
 
@@ -55,8 +55,8 @@ TEST(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTim
 {
    _fileRevisorRunTimeStopwatchMock->StartMock.Expect();
 
-   ZENMOCK_NONVOID2_STATIC(vector<string>, Vector, FromArgcArgv, int, char**);
-   _fileRevisorProgram._call_Utils_Vector_FromArgcArgv = BIND_2ARG_ZENMOCK_OBJECT(FromArgcArgvMock);
+   METALMOCK_NONVOID2_STATIC(vector<string>, Vector, FromArgcArgv, int, char**);
+   _fileRevisorProgram._call_Utils_Vector_FromArgcArgv = BIND_2ARG_METALMOCK_OBJECT(FromArgcArgvMock);
 
    const vector<string> vectorArgs{ ZenUnit::Random<string>(), ZenUnit::Random<string>() };
    FromArgcArgvMock.Return(vectorArgs);
@@ -76,14 +76,14 @@ TEST(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTim
    //
    const int exitCode = _fileRevisorProgram.Main(argc, const_cast<char**>(argv));
    //
-   ZENMOCK(_fileRevisorRunTimeStopwatchMock->StartMock.CalledOnce());
-   ZENMOCK(FromArgcArgvMock.CalledOnceWith(argc, const_cast<char**>(argv)));
-   ZENMOCK(_tryCatchCallerMock->TryCatchCallMock.CalledOnceWith(
+   METALMOCK(_fileRevisorRunTimeStopwatchMock->StartMock.CalledOnce());
+   METALMOCK(FromArgcArgvMock.CalledOnceWith(argc, const_cast<char**>(argv)));
+   METALMOCK(_tryCatchCallerMock->TryCatchCallMock.CalledOnceWith(
       &_fileRevisorProgram, &FileRevisorProgram::Run, vectorArgs, &FileRevisorProgram::ExceptionHandler));
-   ZENMOCK(_fileRevisorRunTimeStopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
+   METALMOCK(_fileRevisorRunTimeStopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
    const string expectedDurationLine = "[FileRevisor] Duration: " + elapsedSeconds + " seconds";
    const string expectedExitCodeLine = "[FileRevisor] ExitCode: " + to_string(exitCode);
-   ZENMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
+   METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
    {
       { expectedDurationLine },
       { expectedExitCodeLine }
@@ -105,28 +105,28 @@ TEST(Run_ParsesArgs_GetsAndRunsSubProgramSpecifiedByCommandLineArguments_Returns
    //
    const int exitCode = _fileRevisorProgram.Run(stringArgs);
    //
-   ZENMOCK(_argsParserMock->ParseArgsMock.CalledOnceWith(stringArgs));
-   ZENMOCK(_argsParserMock->PrintPreambleMock.CalledOnceWith(args));
-   ZENMOCK(_fileRevisorSubProgramFactoryMock->NewFileRevisorSubProgramMock.CalledOnceWith(args.programMode));
-   ZENMOCK(fileRevisorSubProgramMock->RunMock.CalledOnceWith(args));
+   METALMOCK(_argsParserMock->ParseArgsMock.CalledOnceWith(stringArgs));
+   METALMOCK(_argsParserMock->PrintPreambleMock.CalledOnceWith(args));
+   METALMOCK(_fileRevisorSubProgramFactoryMock->NewFileRevisorSubProgramMock.CalledOnceWith(args.programMode));
+   METALMOCK(fileRevisorSubProgramMock->RunMock.CalledOnceWith(args));
    ARE_EQUAL(runReturnValue, exitCode);
 }
 
 TEST(ExceptionHandler_PrintsExceptionClassNameAndWhat_Returns1)
 {
-   ZENMOCK_NONVOID1_STATIC(string, Exception, ClassNameAndWhat, const exception*);
+   METALMOCK_NONVOID1_STATIC(string, Exception, ClassNameAndWhat, const exception*);
    const string exceptionTypeNameAndWhat = ZenUnit::Random<string>();
    ClassNameAndWhatMock.Return(exceptionTypeNameAndWhat);
-   _fileRevisorProgram._call_Utils_Exception_ClassNameAndWhat = BIND_1ARG_ZENMOCK_OBJECT(ClassNameAndWhatMock);
+   _fileRevisorProgram._call_Utils_Exception_ClassNameAndWhat = BIND_1ARG_METALMOCK_OBJECT(ClassNameAndWhatMock);
    _consoleMock->WriteLineMock.Expect();
    const exception ex;
    const vector<string> args = ZenUnit::RandomVector<string>();
    //
    int exitCode = _fileRevisorProgram.ExceptionHandler(ex, args);
    //
-   ZENMOCK(ClassNameAndWhatMock.CalledOnceWith(&ex));
+   METALMOCK(ClassNameAndWhatMock.CalledOnceWith(&ex));
    const string expectedExceptionMessage = "[FileRevisor] Error: Uncaught exception: " + exceptionTypeNameAndWhat;
-   ZENMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedExceptionMessage));
+   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedExceptionMessage));
    ARE_EQUAL(1, exitCode);
 }
 

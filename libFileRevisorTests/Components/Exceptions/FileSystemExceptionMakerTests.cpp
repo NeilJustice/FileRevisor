@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libFileRevisor/Components/Exceptions/FileSystemExceptionMaker.h"
-#include "libFileRevisorTests/Components/Exceptions/ZenMock/ErrorCodeTranslatorMock.h"
+#include "libFileRevisorTests/Components/Exceptions/MetalMock/ErrorCodeTranslatorMock.h"
 
 TESTS(FileSystemExceptionMakerTests)
 AFACT(Constructor_NewsErrorCodeTranslator)
@@ -41,7 +41,7 @@ TEST(GetErrnoValue_ReturnsErrorCodeTranslatorGetErrnoValue)
    //
    const int returnedErrnoValue = _fileSystemExceptionMaker.GetErrnoValue();
    //
-   ZENMOCK(_errorCodeTranslatorMock->GetErrnoValueMock.CalledOnce());
+   METALMOCK(_errorCodeTranslatorMock->GetErrnoValueMock.CalledOnce());
    ARE_EQUAL(errnoValue, returnedErrnoValue);
 }
 
@@ -53,7 +53,7 @@ TEST(MakeFileSystemExceptionForFailedToOpenFileWithFOpen_ReturnsExpectedFileSyst
    const FileSystemException fileSystemException = _fileSystemExceptionMaker.
       MakeFileSystemExceptionForFailedToOpenFileWithFOpen(_filePath, _fileOpenMode.c_str());
    //
-   ZENMOCK(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce());
+   METALMOCK(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce());
    const string expectedExceptionMessage = String::Concat("fopen() returned nullptr. filePath=\"",
       _filePath.string(), "\". fileOpenMode=\"", _fileOpenMode, "\". errno=",
       errnoWithDescription.first, " (", errnoWithDescription.second, ")");
@@ -101,7 +101,7 @@ TEST(MakeFileSystemExceptionForFailedToDeleteDirectory_ReturnsExpectedFileSystem
       _fileSystemExceptionMaker.MakeFileSystemExceptionForFailedToDeleteDirectory(
          fileOrDirectoryPath, removeAllReturnValue, errorCodeValue);
    //
-   ZENMOCK(_errorCodeTranslatorMock->GetSystemErrorDescriptionMock.CalledOnceWith(errorCodeValue));
+   METALMOCK(_errorCodeTranslatorMock->GetSystemErrorDescriptionMock.CalledOnceWith(errorCodeValue));
    const string exceptionMessage = String::Concat(
       "fs::remove_all(\"", fileOrDirectoryPath.string(), "\", errorCode) returned ",
       removeAllReturnValue, " with errorCode.value()=", errorCodeValue, " (", systemErrorDescription, ")");
@@ -140,7 +140,7 @@ TEST(MakeFileSystemExceptionForFailedToDeleteFile_ReturnsExpectedFileSystemExcep
    const FileSystemException fileSystemException =
       _fileSystemExceptionMaker.MakeFileSystemExceptionForFailedToDeleteFile(filePath);
    //
-   ZENMOCK(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce());
+   METALMOCK(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce());
    const string expectedExceptionMessage = String::Concat("unlink(\"",
       filePath, "\") failed with errno = ", errnoWithDescription.first, " (", errnoWithDescription.second, ")");
    const FileSystemException expectedFileSystemException(
@@ -173,7 +173,7 @@ TEST(MakeFileSystemExceptionForFailedToSetFileAttribute_ReturnsExpectedFileSyste
    const FileSystemException fileSystemException = _fileSystemExceptionMaker.
       MakeFileSystemExceptionForFailedToSetFileAttribute(filePath, fileAttributes);
    //
-   ZENMOCK(_errorCodeTranslatorMock->GetWindowsLastErrorWithDescriptionMock.CalledOnce());
+   METALMOCK(_errorCodeTranslatorMock->GetWindowsLastErrorWithDescriptionMock.CalledOnce());
    const string expectedExceptionMessage = String::Concat(
       "SetFileAttributes(\"", filePath, "\", ", fileAttributes, ") failed. GetLastError()=",
       windowsLastErrorWithDescription.first, " (", windowsLastErrorWithDescription.second, ")");

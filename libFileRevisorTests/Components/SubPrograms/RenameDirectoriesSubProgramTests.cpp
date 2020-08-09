@@ -1,9 +1,9 @@
 #include "pch.h"
 #include "libFileRevisor/Components/SubPrograms/RenameDirectoriesSubProgram.h"
-#include "libFileRevisorTests/Components/Console/ZenMock/ConsoleMock.h"
-#include "libFileRevisorTests/Components/FileSystem/ZenMock/FileSystemMock.h"
-#include "libFileRevisorTests/Components/Iteration/ForEach/ZenMock/OneExtraArgMemberForEacherMock.h"
-#include "libFileRevisorTests/Components/Strings/ZenMock/RegexerMock.h"
+#include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
+#include "libFileRevisorTests/Components/Iteration/ForEach/MetalMock/OneExtraArgMemberForEacherMock.h"
+#include "libFileRevisorTests/Components/Strings/MetalMock/RegexerMock.h"
 #include "libFileRevisorTests/ValueTypes/ZenUnit/RenameResultZenUnitFunctions.h"
 
 TESTS(RenameDirectoriesSubProgramTests)
@@ -75,14 +75,14 @@ TEST2X2(Run_CallsRenameDirectoryOnEachDirectoryPathInArgsDirPath_PrintsNumberOfD
    //
    const int exitCode = _renameDirectoriesSubProgram.Run(args);
    //
-   ZENMOCK(_protected_fileSystemMock->GetDirectoryPathsInDirectoryMock.CalledOnceWith(args.targetDirectoryPath, args.recursive));
-   ZENMOCK(_oneExtraArgMemberFunctionTransformerMock->TransformMock.CalledOnceWith(
+   METALMOCK(_protected_fileSystemMock->GetDirectoryPathsInDirectoryMock.CalledOnceWith(args.targetDirectoryPath, args.recursive));
+   METALMOCK(_oneExtraArgMemberFunctionTransformerMock->TransformMock.CalledOnceWith(
       directoryPathsInDirectory, &_renameDirectoriesSubProgram, &RenameDirectoriesSubProgram::RenameDirectory, args));
-   ZENMOCK(_predicateCounterMock->CountWhereMock.CalledOnceWith(directoryRenameResults, RenameResult::DidRenameFileOrDirectoryFieldIsTrue));
-   ZENMOCK(_protected_pluralizerMock->PotentiallyPluralizeWordMock.CalledOnceWith(numberOfRenamedDirectories, "directory", "directories"));
+   METALMOCK(_predicateCounterMock->CountWhereMock.CalledOnceWith(directoryRenameResults, RenameResult::DidRenameFileOrDirectoryFieldIsTrue));
+   METALMOCK(_protected_pluralizerMock->PotentiallyPluralizeWordMock.CalledOnceWith(numberOfRenamedDirectories, "directory", "directories"));
    const string expectedNumberOfDirectoriesMessage = String::Concat(
       expectedNumberOfDirectoriesMessagePrefix, numberOfRenamedDirectories, ' ', directoryOrDirectories);
-   ZENMOCK(_protected_consoleMock->WriteLineMock.CalledOnceWith(expectedNumberOfDirectoriesMessage));
+   METALMOCK(_protected_consoleMock->WriteLineMock.CalledOnceWith(expectedNumberOfDirectoriesMessage));
    IS_ZERO(exitCode);
 }
 
@@ -99,8 +99,8 @@ TEST(RenameDirectory_RegexReplacedDirectoryNameEqualsSourceDirectoryName_PrintsD
    //
    const RenameResult renameResult = _renameDirectoriesSubProgram.RenameDirectory(directoryPath, args);
    //
-   ZENMOCK(_regexerMock->ReplaceMock.CalledOnceWith(directoryName, args.fromRegexPattern, args.toRegexPattern));
-   ZENMOCK(_call_PrintDidNotMatchDirectoryMessageIfVerboseModeMock->ConstCallMock.CalledOnceWith(
+   METALMOCK(_regexerMock->ReplaceMock.CalledOnceWith(directoryName, args.fromRegexPattern, args.toRegexPattern));
+   METALMOCK(_call_PrintDidNotMatchDirectoryMessageIfVerboseModeMock->ConstCallMock.CalledOnceWith(
       &_renameDirectoriesSubProgram,
       &RenameDirectoriesSubProgram::PrintDidNotMatchDirectoryMessageIfVerboseMode,
       args.verbose, directoryPath));
@@ -121,11 +121,11 @@ TEST(RenameDirectory_RegexReplacedDirectoryNameDoesNotEqualSourceDirectoryName_P
    const RenameResult renameResult = _renameDirectoriesSubProgram.RenameDirectory(directoryPath, args);
    //
    const string originalDirectoryName = directoryPath.filename().string();
-   ZENMOCK(_regexerMock->ReplaceMock.CalledOnceWith(originalDirectoryName, args.fromRegexPattern, args.toRegexPattern));
+   METALMOCK(_regexerMock->ReplaceMock.CalledOnceWith(originalDirectoryName, args.fromRegexPattern, args.toRegexPattern));
    const fs::path expectedRenamedDirectoryPath = directoryPath.parent_path() / regexReplacedDirectoryName;
    const string expectedFileRenamedMessage =
       "[FileRevisor] Preview: Would rename directory " + directoryPath.string() + " to " + regexReplacedDirectoryName;
-   ZENMOCK(_protected_consoleMock->WriteLineMock.CalledOnceWith(expectedFileRenamedMessage));
+   METALMOCK(_protected_consoleMock->WriteLineMock.CalledOnceWith(expectedFileRenamedMessage));
    const RenameResult expectedRenameResult(true, directoryPath, expectedRenamedDirectoryPath);
    ARE_EQUAL(expectedRenameResult, renameResult);
 }
@@ -145,11 +145,11 @@ TEST(RenameDirectory_RegexReplacedDirectoryNameDoesNotEqualSourceDirectoryName_P
    const RenameResult renameResult = _renameDirectoriesSubProgram.RenameDirectory(directoryPath, args);
    //
    const string originalDirectoryName = directoryPath.filename().string();
-   ZENMOCK(_regexerMock->ReplaceMock.CalledOnceWith(originalDirectoryName, args.fromRegexPattern, args.toRegexPattern));
-   ZENMOCK(_protected_fileSystemMock->RenameDirectoryMock.CalledOnceWith(directoryPath, regexReplacedDirectoryName));
+   METALMOCK(_regexerMock->ReplaceMock.CalledOnceWith(originalDirectoryName, args.fromRegexPattern, args.toRegexPattern));
+   METALMOCK(_protected_fileSystemMock->RenameDirectoryMock.CalledOnceWith(directoryPath, regexReplacedDirectoryName));
    const string expectedRenamedDirectoryMessage =
       "[FileRevisor] Renamed directory " + directoryPath.string() + " to " + regexReplacedDirectoryName;
-   ZENMOCK(_protected_consoleMock->WriteLineMock.CalledOnceWith(expectedRenamedDirectoryMessage));
+   METALMOCK(_protected_consoleMock->WriteLineMock.CalledOnceWith(expectedRenamedDirectoryMessage));
    const RenameResult expectedRenameResult(true, directoryPath, renamedDirectoryPath);
    ARE_EQUAL(expectedRenameResult, renameResult);
 }
@@ -169,7 +169,7 @@ TEST(PrintDidNotMatchDirectoryMessageIfVerboseMode_VerboseIsTrue_PrintsDidNotMat
    //
    const string expectedDidNotMatchDirectoryMessage =
       "[FileRevisor] Verbose: Did not match " + directoryPath.string();
-   ZENMOCK(_protected_consoleMock->WriteLineMock.CalledOnceWith(expectedDidNotMatchDirectoryMessage));
+   METALMOCK(_protected_consoleMock->WriteLineMock.CalledOnceWith(expectedDidNotMatchDirectoryMessage));
 }
 
 RUN_TESTS(RenameDirectoriesSubProgramTests)

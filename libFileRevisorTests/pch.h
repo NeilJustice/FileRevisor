@@ -19,7 +19,7 @@
 #include <regex>
 using namespace std;
 
-#include "ZenMock.h"
+#include "MetalMock.h"
 
 #include "libFileRevisor/Components/DataStructures/Vector.h"
 #include "libFileRevisor/Components/Exceptions/Exception.h"
@@ -28,19 +28,19 @@ using namespace std;
 #include "libFileRevisor/Enums/ProgramMode.h"
 #include "libFileRevisor/Utilities/ReleaseAssert.h"
 
-#include "libFileRevisorTests/Components/Console/ZenMock/ConsoleMock.h"
-#include "libFileRevisorTests/Components/Exceptions/ZenMock/TryCatchCallerMock.h"
-#include "libFileRevisorTests/Components/FileSystem/ZenMock/FileSystemMock.h"
-#include "libFileRevisorTests/Components/FunctionCallers/Member/ZenMock/NonVoidTwoArgMemberFunctionCallerMock.h"
-#include "libFileRevisorTests/Components/FunctionCallers/Member/ZenMock/VoidTwoArgMemberFunctionCallerMock.h"
-#include "libFileRevisorTests/Components/FunctionCallers/NonMember/ZenMock/VoidFourArgFunctionCallerMock.h"
-#include "libFileRevisorTests/Components/Iteration/Counter/ZenMock/PredicateCounterMock.h"
-#include "libFileRevisorTests/Components/Iteration/ForEach/ZenMock/OneExtraArgMemberForEacherMock.h"
-#include "libFileRevisorTests/Components/Iteration/ForEach/ZenMock/ParallelOneExtraArgMemberForEacherMock.h"
-#include "libFileRevisorTests/Components/Iteration/Transform/ZenMock/OneExtraArgMemberFunctionTransformerMock.h"
-#include "libFileRevisorTests/Components/Strings/ZenMock/PluralizerMock.h"
-#include "libFileRevisorTests/Components/Strings/ZenMock/RegexerMock.h"
-#include "libFileRevisorTests/Components/Time/ZenMock/StopwatchMock.h"
+#include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libFileRevisorTests/Components/Exceptions/MetalMock/TryCatchCallerMock.h"
+#include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
+#include "libFileRevisorTests/Components/FunctionCallers/Member/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
+#include "libFileRevisorTests/Components/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
+#include "libFileRevisorTests/Components/FunctionCallers/NonMember/MetalMock/VoidFourArgFunctionCallerMock.h"
+#include "libFileRevisorTests/Components/Iteration/Counter/MetalMock/PredicateCounterMock.h"
+#include "libFileRevisorTests/Components/Iteration/ForEach/MetalMock/OneExtraArgMemberForEacherMock.h"
+#include "libFileRevisorTests/Components/Iteration/ForEach/MetalMock/ParallelOneExtraArgMemberForEacherMock.h"
+#include "libFileRevisorTests/Components/Iteration/Transform/MetalMock/OneExtraArgMemberFunctionTransformerMock.h"
+#include "libFileRevisorTests/Components/Strings/MetalMock/PluralizerMock.h"
+#include "libFileRevisorTests/Components/Strings/MetalMock/RegexerMock.h"
+#include "libFileRevisorTests/Components/Time/MetalMock/StopwatchMock.h"
 
 #include "libFileRevisorTests/ValueTypes/ZenUnit/FileRevisorArgsEqualizerAndRandom.h"
 #include "libFileRevisorTests/Exceptions/ZenUnit/FileSystemExceptionRandom.h"

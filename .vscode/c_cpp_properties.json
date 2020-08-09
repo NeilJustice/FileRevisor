@@ -5,7 +5,7 @@
             "includePath": [
                 "${workspaceFolder}/**",
                 "/usr/local/include/ZenUnit",
-                "/usr/local/include/ZenMock"
+                "/usr/local/include/MetalMock"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",

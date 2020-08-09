@@ -64,10 +64,10 @@ TEST(Run_TargetDirectoryDoesNotExist_WritesDirectoryDoesNotExistInformationalMes
    //
    const int exitCode = _deleteDirectorySubProgram.Run(args);
    //
-   ZENMOCK(_protected_fileSystemMock->FileOrDirectoryExistsMock.CalledOnceWith(args.targetDirectoryPath));
+   METALMOCK(_protected_fileSystemMock->FileOrDirectoryExistsMock.CalledOnceWith(args.targetDirectoryPath));
    const string expectedDirectoryDoesNotExistMessage =
       "[FileRevisor] Directory does not exist: " + args.targetDirectoryPath.string();
-   ZENMOCK(_protected_consoleMock->WriteLineMock.CalledOnceWith(expectedDirectoryDoesNotExistMessage));
+   METALMOCK(_protected_consoleMock->WriteLineMock.CalledOnceWith(expectedDirectoryDoesNotExistMessage));
    IS_ZERO(exitCode);
 }
 
@@ -92,17 +92,17 @@ TEST(Run_TargetDirectoryExists_ParallelIsFalse_WritesDeletingSequentiallyMessage
    //
    const int exitCode = _deleteDirectorySubProgram.Run(args);
    //
-   ZENMOCK(_protected_fileSystemMock->FileOrDirectoryExistsMock.CalledOnceWith(args.targetDirectoryPath));
-   ZENMOCK(_protected_fileSystemMock->GetStringDirectoryPathsInDirectoryMock.CalledOnceWith(args.targetDirectoryPath, false));
-   ZENMOCK(_oneExtraArgMemberForEacher_DeleteDirectoryMock->OneExtraArgMemberForEachMock.CalledOnceWith(
+   METALMOCK(_protected_fileSystemMock->FileOrDirectoryExistsMock.CalledOnceWith(args.targetDirectoryPath));
+   METALMOCK(_protected_fileSystemMock->GetStringDirectoryPathsInDirectoryMock.CalledOnceWith(args.targetDirectoryPath, false));
+   METALMOCK(_oneExtraArgMemberForEacher_DeleteDirectoryMock->OneExtraArgMemberForEachMock.CalledOnceWith(
       topLevelDirectoryPathsInDirectory, &_deleteDirectorySubProgram,
       &DeleteDirectorySubProgram::DeleteDirectory, args));
-   ZENMOCK(_protected_fileSystemMock->
+   METALMOCK(_protected_fileSystemMock->
       RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindowsMock.CalledOnceWith(args.targetDirectoryPath));
-   ZENMOCK(_protected_fileSystemMock->RemoveAllMock.CalledOnceWith(args.targetDirectoryPath));
+   METALMOCK(_protected_fileSystemMock->RemoveAllMock.CalledOnceWith(args.targetDirectoryPath));
    const string expectedDeletedDirectoryMessage =
       "[FileRevisor] Deleted directory " + args.targetDirectoryPath.string();
-   ZENMOCK(_protected_consoleMock->WriteLineMock.CalledOnceWith(expectedDeletedDirectoryMessage));
+   METALMOCK(_protected_consoleMock->WriteLineMock.CalledOnceWith(expectedDeletedDirectoryMessage));
    IS_ZERO(exitCode);
 }
 
@@ -127,17 +127,17 @@ TEST(Run_TargetDirectoryExists_ParallelIsTrue_WritesDeletingInParallelMessage_Re
    //
    const int exitCode = _deleteDirectorySubProgram.Run(args);
    //
-   ZENMOCK(_protected_fileSystemMock->FileOrDirectoryExistsMock.CalledOnceWith(args.targetDirectoryPath));
-   ZENMOCK(_protected_fileSystemMock->GetStringDirectoryPathsInDirectoryMock.CalledOnceWith(args.targetDirectoryPath, false));
-   ZENMOCK(_parallelOneExtraArgMemberForEacher_DeleteDirectoryMock->ParallelOneExtraArgMemberForEachMock.CalledOnceWith(
+   METALMOCK(_protected_fileSystemMock->FileOrDirectoryExistsMock.CalledOnceWith(args.targetDirectoryPath));
+   METALMOCK(_protected_fileSystemMock->GetStringDirectoryPathsInDirectoryMock.CalledOnceWith(args.targetDirectoryPath, false));
+   METALMOCK(_parallelOneExtraArgMemberForEacher_DeleteDirectoryMock->ParallelOneExtraArgMemberForEachMock.CalledOnceWith(
       topLevelDirectoryPathsInDirectory, &_deleteDirectorySubProgram,
       &DeleteDirectorySubProgram::DeleteDirectory, args));
-   ZENMOCK(_protected_fileSystemMock->
+   METALMOCK(_protected_fileSystemMock->
       RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindowsMock.CalledOnceWith(args.targetDirectoryPath));
-   ZENMOCK(_protected_fileSystemMock->RemoveAllMock.CalledOnceWith(args.targetDirectoryPath));
+   METALMOCK(_protected_fileSystemMock->RemoveAllMock.CalledOnceWith(args.targetDirectoryPath));
    const string expectedDeletedDirectoryMessage = "[FileRevisor] Deleted directory " + args.targetDirectoryPath.string();
    const string expectedDeletingInParallelMessage = "[FileRevisor] Deleting in parallel all files in directory: " + args.targetDirectoryPath.string();
-   ZENMOCK(_protected_consoleMock->WriteLineMock.CalledAsFollows(
+   METALMOCK(_protected_consoleMock->WriteLineMock.CalledAsFollows(
    {
       { expectedDeletingInParallelMessage },
       { expectedDeletedDirectoryMessage }
@@ -153,7 +153,7 @@ TEST(DeleteDirectory_CallsRecursivelyDeleteAllFilesInDirectoryOnDirectoryPath)
    //
    _deleteDirectorySubProgram.DeleteDirectory(directoryPath, args);
    //
-   ZENMOCK(_protected_fileSystemMock->RecursivelyDeleteAllFilesInDirectoryMock.CalledOnceWith(directoryPath, args));
+   METALMOCK(_protected_fileSystemMock->RecursivelyDeleteAllFilesInDirectoryMock.CalledOnceWith(directoryPath, args));
 }
 
 RUN_TESTS(DeleteDirectorySubProgramTests)

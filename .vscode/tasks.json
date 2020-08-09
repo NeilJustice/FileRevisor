@@ -69,7 +69,7 @@
             "-g",
             "${file}",
             "-I/usr/local/include/ZenUnit",
-            "-I/usr/local/include/ZenMock",
+            "-I/usr/local/include/MetalMock",
             "-o",
             "${fileDirname}/${fileBasenameNoExtension}"
          ],

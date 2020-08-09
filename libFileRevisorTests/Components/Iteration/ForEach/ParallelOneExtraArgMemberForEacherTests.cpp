@@ -27,7 +27,7 @@ class ClassTypeMock : public Zen::Mock<ClassType>
 {
 public:
    vector<ElementType> vec;
-   ZENMOCK_VOID2_CONST(TwoArgFunction, ElementType, Arg2Type)
+   METALMOCK_VOID2_CONST(TwoArgFunction, ElementType, Arg2Type)
 };
 
 using ParallelOneExtraArgMemberForEacherType = ParallelOneExtraArgMemberForEacher<
@@ -53,7 +53,7 @@ TEST(ParallelOneExtraArgMemberForEach_OneItemCollection_CallsThisPointerBoundFun
    _parallelOneExtraArgMemberForEacher_DeleteDirectory.ParallelOneExtraArgMemberForEach(
       classInstanceMock.vec, &classInstanceMock, &ClassType::TwoArgFunction, extraArg);
    //
-   ZENMOCK(classInstanceMock.TwoArgFunctionMock.CalledOnceWith(1, extraArg));
+   METALMOCK(classInstanceMock.TwoArgFunctionMock.CalledOnceWith(1, extraArg));
 }
 
  //TEST(ParallelOneExtraArgMemberForEach_TwoItemCollection_CallsThisPointerBoundFuncTwice)

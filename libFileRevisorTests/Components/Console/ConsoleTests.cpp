@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libFileRevisor/Components/Console/Console.h"
 #include "libFileRevisor/Components/FunctionCallers/Member/VoidZeroArgMemberFunctionCaller.h"
-#include "libFileRevisorTests/Components/FunctionCallers/Member/ZenMock/VoidZeroArgMemberFunctionCallerMock.h"
+#include "libFileRevisorTests/Components/FunctionCallers/Member/MetalMock/VoidZeroArgMemberFunctionCallerMock.h"
 
 TESTS(ConsoleTests)
 AFACT(WriteInt_CodeCoverage)

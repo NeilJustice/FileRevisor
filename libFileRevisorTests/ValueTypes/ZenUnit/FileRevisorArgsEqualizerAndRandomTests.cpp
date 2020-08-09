@@ -30,7 +30,7 @@ TEST(ZenUnitRandom_FileRevisorArgs_ReturnsRandomFileRevisorArgs)
 
 TEST(TestableRandomFileRevisorArgs_ReturnsFileRevisorArgsWithAllRandomFields)
 {
-   ZenMock::RandomGeneratorMock randomGeneratorMock;
+   MetalMock::RandomGeneratorMock randomGeneratorMock;
 
    const string commandLine = ZenUnit::Random<string>();
    const string fromRegexPattern = ZenUnit::Random<string>();
@@ -54,10 +54,10 @@ TEST(TestableRandomFileRevisorArgs_ReturnsFileRevisorArgsWithAllRandomFields)
    //
    const FileRevisorArgs randomFileRevisorArgs = TestableRandomFileRevisorArgs(&randomGeneratorMock);
    //
-   ZENMOCK(randomGeneratorMock.StringMock.CalledNTimes(3));
-   ZENMOCK(randomGeneratorMock.EnumMock.CalledOnceWith(static_cast<int>(ProgramMode::MaxValue)));
-   ZENMOCK(randomGeneratorMock.PathMock.CalledOnce());
-   ZENMOCK(randomGeneratorMock.BoolMock.CalledNTimes(6));
+   METALMOCK(randomGeneratorMock.StringMock.CalledNTimes(3));
+   METALMOCK(randomGeneratorMock.EnumMock.CalledOnceWith(static_cast<int>(ProgramMode::MaxValue)));
+   METALMOCK(randomGeneratorMock.PathMock.CalledOnce());
+   METALMOCK(randomGeneratorMock.BoolMock.CalledNTimes(6));
    FileRevisorArgs expectedRandomFileRevisorArgs;
    expectedRandomFileRevisorArgs.commandLine = commandLine;
    expectedRandomFileRevisorArgs.programMode = programMode;

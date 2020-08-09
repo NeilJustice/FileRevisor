@@ -21,7 +21,7 @@ AFACT(GetOptionalStringWithDefaultValue_ArgInMap_ReturnsValue)
 EVIDENCE
 
 DocoptParser _docoptParser;
-ZENMOCK_NONVOID5_FREE(map<string COMMA docopt::Value>, docopt, const string&, const vector<string>&, bool, const string&, bool)
+METALMOCK_NONVOID5_FREE(map<string COMMA docopt::Value>, docopt, const string&, const vector<string>&, bool, const string&, bool)
 
 map<string, docopt::Value> _docoptArgs;
 string _argName;
@@ -29,7 +29,7 @@ string _expectedKeyNotFoundWhat;
 
 STARTUP
 {
-   _docoptParser._call_docopt_docopt = BIND_5ARG_ZENMOCK_OBJECT(docoptMock);
+   _docoptParser._call_docopt_docopt = BIND_5ARG_METALMOCK_OBJECT(docoptMock);
 
    _docoptArgs = ZenUnit::RandomMap<string, docopt::Value>();
    _argName = ZenUnit::Random<string>() + "_argName";
@@ -56,7 +56,7 @@ TEST(ParseArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
    //
    const vector<string> expectedNonEmptyArgvWithoutFirstArgument(
       nonEmptyArgv.data() + 1, nonEmptyArgv.data() + nonEmptyArgv.size());
-   ZENMOCK(docoptMock.CalledOnceWith(usage, expectedNonEmptyArgvWithoutFirstArgument, true, "", false));
+   METALMOCK(docoptMock.CalledOnceWith(usage, expectedNonEmptyArgvWithoutFirstArgument, true, "", false));
    ARE_EQUAL(docoptReturnValue, docoptValues);
 }
 

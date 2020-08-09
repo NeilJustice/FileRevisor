@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libFileRevisor/Components/FileSystem/RecursiveFileDeleter.h"
-#include "libFileRevisorTests/Components/Exceptions/ZenMock/ErrorCodeTranslatorMock.h"
-#include "libFileRevisorTests/Components/Exceptions/ZenMock/FileSystemExceptionMakerMock.h"
+#include "libFileRevisorTests/Components/Exceptions/MetalMock/ErrorCodeTranslatorMock.h"
+#include "libFileRevisorTests/Components/Exceptions/MetalMock/FileSystemExceptionMakerMock.h"
 
 TESTS(RecursiveFileDeleterTests)
 AFACT(Constructor_NewsErrorCodeTranslator)
@@ -21,8 +21,8 @@ RecursiveFileDeleter _recursiveFileDeleter;
 ConsoleMock* _consoleMock = nullptr;
 FileSystemExceptionMakerMock* _fileSystemExceptionMakerMock = nullptr;
 #ifdef _WIN32
-ZENMOCK_NONVOID1_FREE(DWORD, GetFileAttributesA, const char*)
-ZENMOCK_NONVOID2_FREE(DWORD, SetFileAttributesA, const char*, DWORD)
+METALMOCK_NONVOID1_FREE(DWORD, GetFileAttributesA, const char*)
+METALMOCK_NONVOID2_FREE(DWORD, SetFileAttributesA, const char*, DWORD)
 #endif
 
 STARTUP
@@ -30,8 +30,8 @@ STARTUP
    _recursiveFileDeleter._console.reset(_consoleMock = new ConsoleMock);
    _recursiveFileDeleter._fileSystemExceptionMaker.reset(_fileSystemExceptionMakerMock = new FileSystemExceptionMakerMock);
 #ifdef _WIN32
-   _recursiveFileDeleter._call_GetFileAttributesA = BIND_1ARG_ZENMOCK_OBJECT(GetFileAttributesAMock);
-   _recursiveFileDeleter._call_SetFileAttributesA = BIND_2ARG_ZENMOCK_OBJECT(SetFileAttributesAMock);
+   _recursiveFileDeleter._call_GetFileAttributesA = BIND_1ARG_METALMOCK_OBJECT(GetFileAttributesAMock);
+   _recursiveFileDeleter._call_SetFileAttributesA = BIND_2ARG_METALMOCK_OBJECT(SetFileAttributesAMock);
 #endif
 }
 
@@ -54,7 +54,7 @@ TEST(OptionallyThrowFileSystemExceptionDueToUnlinkFailing_SkipFilesInUseIsFalse_
    THROWS_EXCEPTION(_recursiveFileDeleter.OptionallyThrowFileSystemExceptionDueToUnlinkFailing(filePath, args),
       FileSystemException, fileSystemException.what());
    //
-   ZENMOCK(_fileSystemExceptionMakerMock->
+   METALMOCK(_fileSystemExceptionMakerMock->
       MakeFileSystemExceptionForFailedToDeleteFileMock.CalledOnceWith(filePath));
 }
 
@@ -74,8 +74,8 @@ TEST(OptionallyThrowFileSystemExceptionDueToUnlinkFailing_SkipFilesInUseIsTrue_E
    const string expectedSkippingFileMessage = String::Concat(
       "[FileRevisor] Skipped: File \"", filePath,
       "\" because permission was denied when attempting to delete it");
-   ZENMOCK(_fileSystemExceptionMakerMock->GetErrnoValueMock.CalledOnce());
-   ZENMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedSkippingFileMessage));
+   METALMOCK(_fileSystemExceptionMakerMock->GetErrnoValueMock.CalledOnce());
+   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedSkippingFileMessage));
 }
 
 TEST(OptionallyThrowFileSystemExceptionDueToUnlinkFailing_SkipFilesInUseIsTrue_ErrnoIsNot13_ThrowsFileSystemException)
@@ -96,8 +96,8 @@ TEST(OptionallyThrowFileSystemExceptionDueToUnlinkFailing_SkipFilesInUseIsTrue_E
       OptionallyThrowFileSystemExceptionDueToUnlinkFailing(filePath, args),
       FileSystemException, fileSystemException.what());
    //
-   ZENMOCK(_fileSystemExceptionMakerMock->GetErrnoValueMock.CalledOnce());
-   ZENMOCK(_fileSystemExceptionMakerMock->
+   METALMOCK(_fileSystemExceptionMakerMock->GetErrnoValueMock.CalledOnce());
+   METALMOCK(_fileSystemExceptionMakerMock->
       MakeFileSystemExceptionForFailedToDeleteFileMock.CalledOnceWith(filePath));
 }
 
@@ -121,7 +121,7 @@ TEST(ThrowFileSystemExceptionIfFindFirstFileExReturnedInvalidHandleValue_FindFir
       findFirstFileExHandle, directoryPathSearchPatternChars),
       FileSystemException, fileSystemException.what());
    //
-   ZENMOCK(_fileSystemExceptionMakerMock->
+   METALMOCK(_fileSystemExceptionMakerMock->
       MakeFileSystemExceptionForFindFirstFileExHavingReturnedInvalidHandleValueMock.
       CalledOnceWith(directoryPathSearchPatternChars));
 }
@@ -134,7 +134,7 @@ TEST(RemoveReadonlyFlagFromConstCharPointerFilePath_GetsFileAttributesWhichDoesN
    //
    _recursiveFileDeleter.RemoveReadonlyFlagFromConstCharPointerFilePath(filePath);
    //
-   ZENMOCK(GetFileAttributesAMock.CalledOnceWith(filePath));
+   METALMOCK(GetFileAttributesAMock.CalledOnceWith(filePath));
 }
 
 TEST1X1(RemoveReadonlyFlagFromConstCharPointerFilePath_GetsFileAttributesWhichIncludeReadonlyAttribute_RemovesReadonlyAttributeWhichSuceeds_Returns,
@@ -149,8 +149,8 @@ TEST1X1(RemoveReadonlyFlagFromConstCharPointerFilePath_GetsFileAttributesWhichIn
    _recursiveFileDeleter.RemoveReadonlyFlagFromConstCharPointerFilePath(filePath);
    //
    const DWORD fileAttributesMinusReadonlyAttribute = fileAttributes & ~FILE_ATTRIBUTE_READONLY;
-   ZENMOCK(GetFileAttributesAMock.CalledOnceWith(filePath));
-   ZENMOCK(SetFileAttributesAMock.CalledOnceWith(filePath, fileAttributesMinusReadonlyAttribute));
+   METALMOCK(GetFileAttributesAMock.CalledOnceWith(filePath));
+   METALMOCK(SetFileAttributesAMock.CalledOnceWith(filePath, fileAttributesMinusReadonlyAttribute));
 }
 
 TEST1X1(RemoveReadonlyFlagFromConstCharPointerFilePath_GetsFileAttributesWhichIncludeReadonlyAttribute_RemovesReadonlyAttributeWhichFails_ThrowsFileSystemException,
@@ -168,9 +168,9 @@ TEST1X1(RemoveReadonlyFlagFromConstCharPointerFilePath_GetsFileAttributesWhichIn
       FileSystemException, fileSystemException.what());
    //
    const DWORD expectedFileAttributesMinusReadonlyAttribute = fileAttributes & ~FILE_ATTRIBUTE_READONLY;
-   ZENMOCK(GetFileAttributesAMock.CalledOnceWith(filePath));
-   ZENMOCK(SetFileAttributesAMock.CalledOnceWith(filePath, expectedFileAttributesMinusReadonlyAttribute));
-   ZENMOCK(_fileSystemExceptionMakerMock->
+   METALMOCK(GetFileAttributesAMock.CalledOnceWith(filePath));
+   METALMOCK(SetFileAttributesAMock.CalledOnceWith(filePath, expectedFileAttributesMinusReadonlyAttribute));
+   METALMOCK(_fileSystemExceptionMakerMock->
       MakeFileSystemExceptionForFailedToSetFileAttributeMock.CalledOnceWith(
          filePath, expectedFileAttributesMinusReadonlyAttribute));
 }

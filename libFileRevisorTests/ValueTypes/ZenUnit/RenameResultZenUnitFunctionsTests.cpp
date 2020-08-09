@@ -23,7 +23,7 @@ TEST(ZenUnitRandom_CodeCoverage)
 
 TEST(TestableRenameResultRandom_ReturnsRenameResultWithAllRandomFields)
 {
-   ZenMock::RandomGeneratorMock randomGeneratorMock;
+   MetalMock::RandomGeneratorMock randomGeneratorMock;
    const bool didRenameFileOrDirectory = randomGeneratorMock.BoolMock.ReturnRandom();
    const fs::path originalPath = ZenUnit::Random<fs::path>();
    const fs::path renamedFileOrDirectoryPath = ZenUnit::Random<fs::path>();
@@ -31,8 +31,8 @@ TEST(TestableRenameResultRandom_ReturnsRenameResultWithAllRandomFields)
    //
    const RenameResult randomRenameResult = ::TestableRenameResultRandom(&randomGeneratorMock);
    //
-   ZENMOCK(randomGeneratorMock.BoolMock.CalledOnce());
-   ZENMOCK(randomGeneratorMock.PathMock.CalledNTimes(2));
+   METALMOCK(randomGeneratorMock.BoolMock.CalledOnce());
+   METALMOCK(randomGeneratorMock.PathMock.CalledNTimes(2));
    RenameResult expectedRandomRenameResult;
    expectedRandomRenameResult.didRenameFileOrDirectory = didRenameFileOrDirectory;
    expectedRandomRenameResult.originalFileOrDirectoryPath = originalPath;

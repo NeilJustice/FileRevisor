@@ -34,7 +34,7 @@ TEST3X3(MakePreambleLines_ReturnsExpectedPreambleLinesAsAString,
    //
    const string fileRevisorPreambleLines = _fileRevisorPreambleMaker.MakePreambleLines(args);
    //
-   ZENMOCK(_fileSystemMock->CurrentDirectoryPathMock.CalledOnce());
+   METALMOCK(_fileSystemMock->CurrentDirectoryPathMock.CalledOnce());
    const string expectedActionString = ENUM_TO_STRING(ProgramMode, args.programMode);
    const string expectedFileRevisorPreambleLines = String::Concat(
       "[FileRevisor] Running: ", args.commandLine, '\n',
