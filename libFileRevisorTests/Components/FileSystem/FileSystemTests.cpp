@@ -455,7 +455,7 @@ TEST(RemoveReadOnlyFlagsFromTopLevelFilesInDirectoryIfWindows_OnLinuxDoesNothing
 
 TEST(RemoveReadOnlyFlagsFromTopLevelFilesInDirectoryIfWindows_CallsRemoveReadonlyFlagOnAllTopLevelFilesInDirectory)
 {
-   class FileSystemSelfMocked : public Zen::Mock<FileSystem>
+   class FileSystemSelfMocked : public Metal::Mock<FileSystem>
    {
    public:
       RecursiveFileDeleterMock* recursiveFileDeleterMock = nullptr;

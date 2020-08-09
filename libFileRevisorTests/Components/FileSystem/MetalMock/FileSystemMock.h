@@ -1,7 +1,7 @@
 #pragma once
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 
-class FileSystemMock : public Zen::Mock<FileSystem>
+class FileSystemMock : public Metal::Mock<FileSystem>
 {
 public:
    // Queries

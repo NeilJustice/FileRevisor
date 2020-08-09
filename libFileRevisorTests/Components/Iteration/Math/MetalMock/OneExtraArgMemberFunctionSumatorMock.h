@@ -7,7 +7,7 @@ template<
    template<typename _ElementType, typename...> typename ContainerType,
    typename ElementType,
    typename ExtraArgType>
-   class OneExtraArgMemberFunctionSumatorMock : public Zen::Mock<OneExtraArgMemberFunctionSumator<ClassType, SumType, ContainerType, ElementType, ExtraArgType>>
+   class OneExtraArgMemberFunctionSumatorMock : public Metal::Mock<OneExtraArgMemberFunctionSumator<ClassType, SumType, ContainerType, ElementType, ExtraArgType>>
 {
 public:
    using MemberFunctionType = SumType(ClassType::*)(const ElementType&, const ExtraArgType&) const;

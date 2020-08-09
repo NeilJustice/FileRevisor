@@ -1,7 +1,7 @@
 #pragma once
 #include "libFileRevisor/Components/Exceptions/FileSystemExceptionMaker.h"
 
-class FileSystemExceptionMakerMock : public Zen::Mock<FileSystemExceptionMaker>
+class FileSystemExceptionMakerMock : public Metal::Mock<FileSystemExceptionMaker>
 {
 public:
    METALMOCK_NONVOID0_CONST(int, GetErrnoValue)

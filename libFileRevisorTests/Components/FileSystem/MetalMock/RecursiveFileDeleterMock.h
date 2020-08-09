@@ -1,7 +1,7 @@
 #pragma once
 #include "libFileRevisor/Components/FileSystem/RecursiveFileDeleter.h"
 
-class RecursiveFileDeleterMock : public Zen::Mock<RecursiveFileDeleter>
+class RecursiveFileDeleterMock : public Metal::Mock<RecursiveFileDeleter>
 {
 public:
    METALMOCK_VOID2_CONST(RecursivelyDeleteAllFilesInDirectory, const char*, const FileRevisorArgs&)

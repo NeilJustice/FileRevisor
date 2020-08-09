@@ -1,7 +1,7 @@
 #pragma once
 #include "libFileRevisor/Components/FileSystem/DirectoryIterator.h"
 
-class DirectoryIteratorMock : public Zen::Mock<DirectoryIterator>
+class DirectoryIteratorMock : public Metal::Mock<DirectoryIterator>
 {
 public:
    METALMOCK_VOID1(SetFileAndDirectoryPathIgnoreSubstrings, const vector<string>&)

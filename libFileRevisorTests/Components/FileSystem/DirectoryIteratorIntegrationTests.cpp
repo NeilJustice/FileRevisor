@@ -90,7 +90,7 @@ TEST(IntegrationTest_DirectoryIterator_RecursiveTrue_NextNonIgnoredDirectoryPath
       _rootDirectoryPath / "subdirectory7",
       _rootDirectoryPath / "subdirectory7" / "subdirectory8"
    };
-   EQUAL_ELEMENTS_ANY_ORDER(expectedDirectoryPaths, directoryPaths);
+   INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedDirectoryPaths, directoryPaths);
    ARE_EQUAL(fs::path(), directoryPath9);
    ARE_EQUAL(fs::path(), directoryPath10);
 }
@@ -129,7 +129,7 @@ TEST(IntegrationTest_DirectoryIterator_RecursiveFalse_NextNonIgnoredDirectoryPat
       _rootDirectoryPath / "subdirectory5",
       _rootDirectoryPath / "subdirectory7"
    };
-   EQUAL_ELEMENTS_ANY_ORDER(expectedFilePaths, filePaths);
+   INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedFilePaths, filePaths);
    ARE_EQUAL(fs::path(), directoryPath7);
    ARE_EQUAL(fs::path(), directoryPath8);
 }
@@ -171,7 +171,7 @@ TEST(IntegrationTest_DirectoryIterator_RecursiveTrue_NextNonIgnoredFilePathRetur
       _rootDirectoryPath / "subdirectory4" / "subdirectory4.file1",
       _rootDirectoryPath / "subdirectory5" / "subdirectory6" / "subdirectory6.file1"
    };
-   EQUAL_ELEMENTS_ANY_ORDER(expectedFilePaths, filePaths);
+   INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedFilePaths, filePaths);
    ARE_EQUAL(fs::path(), filePath8);
    ARE_EQUAL(fs::path(), filePath9);
 }
@@ -198,7 +198,7 @@ TEST(IntegrationTest_DirectoryIterator_RecursiveFalse_NextNonIgnoredFilePathRetu
       _rootDirectoryPath / "root.file1",
       _rootDirectoryPath / "root.file2"
    };
-   EQUAL_ELEMENTS_ANY_ORDER(expectedNonEmptyTextFilePaths, nonEmptyTextFilePaths);
+   INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedNonEmptyTextFilePaths, nonEmptyTextFilePaths);
    ARE_EQUAL(fs::path(), textFilePath3);
    ARE_EQUAL(fs::path(), textFilePath4);
 }

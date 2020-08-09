@@ -1,7 +1,7 @@
 #pragma once
 #include "libFileRevisor/Components/Exceptions/ErrorCodeTranslator.h"
 
-class ErrorCodeTranslatorMock : public Zen::Mock<ErrorCodeTranslator>
+class ErrorCodeTranslatorMock : public Metal::Mock<ErrorCodeTranslator>
 {
 public:
    METALMOCK_NONVOID0_CONST(int, GetErrnoValue)

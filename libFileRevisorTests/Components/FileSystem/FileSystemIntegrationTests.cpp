@@ -70,7 +70,7 @@ TEST(GetFilePathsInDirectory_RecursiveFalse_ReturnsTopLevelFilePaths)
       _rootDirectoryPath / "root.textFile1",
       _rootDirectoryPath / "root.textFile2"
    };
-   EQUAL_ELEMENTS_ANY_ORDER(expectedTopLevelFilePathsInDirectory, topLevelFilePathsInDirectory);
+   INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedTopLevelFilePathsInDirectory, topLevelFilePathsInDirectory);
 }
 
 TEST(GetFilePathsInDirectory_RecursiveTrue_ReturnsFilePathsInAndBelowDirectoryPath)
@@ -90,7 +90,7 @@ TEST(GetFilePathsInDirectory_RecursiveTrue_ReturnsFilePathsInAndBelowDirectoryPa
       _rootDirectoryPath / "subdirectory2/subdirectory2.emptyFile1",
       _rootDirectoryPath / "subdirectory2/subdirectory2.textFile1"
    };
-   EQUAL_ELEMENTS_ANY_ORDER(expectedFilePathsInAndBelowDirectory, filePathsInAndBelowDirectory);
+   INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedFilePathsInAndBelowDirectory, filePathsInAndBelowDirectory);
 }
 
 TEST(GetDirectoryPathsInDirectory_RecursiveFalse_ReturnsTopLevelDirectoryPaths)
@@ -103,7 +103,7 @@ TEST(GetDirectoryPathsInDirectory_RecursiveFalse_ReturnsTopLevelDirectoryPaths)
       _rootDirectoryPath / "subdirectory2",
       _rootDirectoryPath / "subdirectory3"
    };
-   EQUAL_ELEMENTS_ANY_ORDER(expectedTopLevelDirectoryPathsInDirectory, topLevelDirectoryPathsInDirectory);
+   INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedTopLevelDirectoryPathsInDirectory, topLevelDirectoryPathsInDirectory);
 }
 
 TEST(GetDirectoryPathsInDirectory_RecursiveTrue_ReturnsDirectoryPathsInAndBelowDirectoryPath)
@@ -119,7 +119,7 @@ TEST(GetDirectoryPathsInDirectory_RecursiveTrue_ReturnsDirectoryPathsInAndBelowD
       _rootDirectoryPath / "subdirectory3",
       _rootDirectoryPath / "subdirectory3/subdirectory4"
    };
-   EQUAL_ELEMENTS_ANY_ORDER(expectedDirectoryPathsInAndBelowDirectory, directoryPathsInAndBelowDirectory);
+   INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedDirectoryPathsInAndBelowDirectory, directoryPathsInAndBelowDirectory);
 }
 
 TEST(GetStringDirectoryPathsInDirectory_RecursiveFalse_ReturnsTopLevelDirectoryPaths)
@@ -133,7 +133,7 @@ TEST(GetStringDirectoryPathsInDirectory_RecursiveFalse_ReturnsTopLevelDirectoryP
       (_rootDirectoryPath / "subdirectory2").string(),
       (_rootDirectoryPath / "subdirectory3").string()
    };
-   EQUAL_ELEMENTS_ANY_ORDER(expectedTopLevelDirectoryPathsInDirectory, topLevelDirectoryPathsInDirectory);
+   INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedTopLevelDirectoryPathsInDirectory, topLevelDirectoryPathsInDirectory);
 }
 
 TEST(GetStringDirectoryPathsInDirectory_RecursiveTrue_ReturnsDirectoryPathsInAndBelowDirectoryPath)
@@ -150,7 +150,7 @@ TEST(GetStringDirectoryPathsInDirectory_RecursiveTrue_ReturnsDirectoryPathsInAnd
       (_rootDirectoryPath / "subdirectory3").string(),
       (_rootDirectoryPath / "subdirectory3" / "subdirectory4").string()
    };
-   EQUAL_ELEMENTS_ANY_ORDER(expectedDirectoryPathsInAndBelowDirectory, directoryPathsInAndBelowDirectory);
+   INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedDirectoryPathsInAndBelowDirectory, directoryPathsInAndBelowDirectory);
 }
 
 TEST(GetNonEmptyTextFilePathsInDirectory_RecursiveFalse_ReturnsTopLevelFilePathsThatDoNotHaveABinary0InTheFirst1024Bytes)
@@ -163,7 +163,7 @@ TEST(GetNonEmptyTextFilePathsInDirectory_RecursiveFalse_ReturnsTopLevelFilePaths
       _rootDirectoryPath / "root.textFile1",
       _rootDirectoryPath / "root.textFile2"
    };
-   EQUAL_ELEMENTS_ANY_ORDER(expectedTopLevelNonEmptyTextFilesInDirectory, topLevelNonEmptyTextFilesInDirectory);
+   INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedTopLevelNonEmptyTextFilesInDirectory, topLevelNonEmptyTextFilesInDirectory);
 }
 
 TEST(GetNonEmptyTextFilePathsInDirectory_RecursiveTrue_ReturnsAllFilePathsInAndBelowDirectoryThatDoNotHaveABinary0InTheFirst1024Bytes)
@@ -178,7 +178,7 @@ TEST(GetNonEmptyTextFilePathsInDirectory_RecursiveTrue_ReturnsAllFilePathsInAndB
       _rootDirectoryPath / "subdirectory1/subdirectory1.textFile1",
       _rootDirectoryPath / "subdirectory2/subdirectory2.textFile1",
    };
-   EQUAL_ELEMENTS_ANY_ORDER(
+   INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(
       expectedAllNonEmptyTextFilePathsInAndBelowDirectory,
       allNonEmptyTextFilePathsInAndBelowDirectory);
 }

@@ -13,7 +13,10 @@ public:
    virtual ~ParallelOneExtraArgMemberForEacher() = default;
 
    virtual void ParallelOneExtraArgMemberForEach(
-      const std::vector<T>& elements, const ClassType* constClassPointer, MemberFunctionType constMemberFunction, ExtraArgType extraArg) const
+      const std::vector<T>& elements,
+      const ClassType* constClassPointer,
+      MemberFunctionType constMemberFunction,
+      ExtraArgType extraArg) const
    {
       const auto extraArgBoundMemberFunction = std::bind(constMemberFunction, constClassPointer, std::placeholders::_1, extraArg);
 #if defined(__GNUG__) && !defined(__clang__)

@@ -1,86 +1,87 @@
 #include "pch.h"
 #include "libFileRevisor/Components/Iteration/ForEach/OneExtraArgMemberForEacher.h"
 
-template<typename ElementType, typename Arg2Type>
-TEMPLATE_TESTS(ParallelOneExtraArgMemberForEacherTests, ElementType, Arg2Type)
-AFACT(ParallelOneExtraArgMemberForEach_EmptyCollection_DoesNotCallFunc)
-AFACT(ParallelOneExtraArgMemberForEach_OneItemCollection_CallsThisPointerBoundFuncOnce)
-//AFACT(ParallelOneExtraArgMemberForEach_TwoItemCollection_CallsThisPointerBoundFuncTwice)
-AFACT(TwoArgFunction_CodeCoverage)
+template<typename ElementType, typename ExtraArgType>
+TEMPLATE_TESTS(ParallelOneExtraArgMemberForEacherTests, ElementType, ExtraArgType)
+AFACT(ParallelOneExtraArgMemberForEach_EmptyElements_DoesNotCallMemberFunction)
+AFACT(ParallelOneExtraArgMemberForEach_OneItemElements_CallsMemberFunctionWithElementAndExtraArgOnce)
+AFACT(ParallelOneExtraArgMemberForEach_TwoItemElements_CallsInParallelOnBothElementsTheMemberFunctionWithElementAndExtraArg)
+AFACT(TestingClassTwoArgMemberFunction_DoesNothing)
 EVIDENCE
 
-class ClassType
+class TestingClass
 {
 public:
-   // Rule of 5 to satisfy clang-tidy hicpp-special-member-functions
-   ClassType() = default;
-   ClassType(const ClassType&) = default;
-   ClassType& operator=(const ClassType&) = default;
-   ClassType(ClassType&&) noexcept = default;
-   ClassType& operator=(ClassType&&) noexcept = default;
-
-   virtual void TwoArgFunction(ElementType, Arg2Type) const {}
-   virtual ~ClassType() = default;
+   TestingClass() = default;
+   TestingClass(const TestingClass&) = default;
+   TestingClass& operator=(const TestingClass&) = default;
+   TestingClass(TestingClass&&) noexcept = default;
+   TestingClass& operator=(TestingClass&&) noexcept = default;
+   virtual void TwoArgMemberFunction(ElementType, ExtraArgType) const {}
+   virtual ~TestingClass() = default;
 };
 
-class ClassTypeMock : public Zen::Mock<ClassType>
+class TestingClassMock : public Metal::Mock<TestingClass>
 {
 public:
-   vector<ElementType> vec;
-   METALMOCK_VOID2_CONST(TwoArgFunction, ElementType, Arg2Type)
+   vector<ElementType> elements;
+   METALMOCK_VOID2_CONST(TwoArgMemberFunction, ElementType, ExtraArgType)
 };
 
 using ParallelOneExtraArgMemberForEacherType = ParallelOneExtraArgMemberForEacher<
-   ElementType, ClassType, void (ClassType::*)(ElementType, Arg2Type) const, Arg2Type>;
+   ElementType, TestingClass, void (TestingClass::*)(ElementType, ExtraArgType) const, ExtraArgType>;
 
 ParallelOneExtraArgMemberForEacherType _parallelOneExtraArgMemberForEacher_DeleteDirectory;
 
-TEST(ParallelOneExtraArgMemberForEach_EmptyCollection_DoesNotCallFunc)
+TEST(ParallelOneExtraArgMemberForEach_EmptyElements_DoesNotCallMemberFunction)
 {
-   const ClassTypeMock classInstanceMock{};
-   const Arg2Type extraArg = ZenUnit::Random<Arg2Type>();
-   _parallelOneExtraArgMemberForEacher_DeleteDirectory.ParallelOneExtraArgMemberForEach(
-      classInstanceMock.vec, &classInstanceMock, &ClassType::TwoArgFunction, extraArg);
-}
-
-TEST(ParallelOneExtraArgMemberForEach_OneItemCollection_CallsThisPointerBoundFuncOnce)
-{
-   ClassTypeMock classInstanceMock;
-   classInstanceMock.vec = { 1 };
-   classInstanceMock.TwoArgFunctionMock.Expect();
-   const Arg2Type extraArg = ZenUnit::Random<Arg2Type>();
+   const TestingClassMock testingClassMock{};
+   const ExtraArgType extraArg = ZenUnit::Random<ExtraArgType>();
    //
    _parallelOneExtraArgMemberForEacher_DeleteDirectory.ParallelOneExtraArgMemberForEach(
-      classInstanceMock.vec, &classInstanceMock, &ClassType::TwoArgFunction, extraArg);
-   //
-   METALMOCK(classInstanceMock.TwoArgFunctionMock.CalledOnceWith(1, extraArg));
+      testingClassMock.elements, &testingClassMock, &TestingClass::TwoArgMemberFunction, extraArg);
 }
 
- //TEST(ParallelOneExtraArgMemberForEach_TwoItemCollection_CallsThisPointerBoundFuncTwice)
- //{
- //   ClassTypeMock classInstanceMock;
- //   classInstanceMock.vec = { 1, 2 };
- //   classInstanceMock.TwoArgFunctionMock.Expect();
- //   const Arg2Type extraArg = ZenUnit::Random<Arg2Type>();
- //   //
- //   _parallelOneExtraArgMemberForEacher_DeleteDirectory.ParallelOneExtraArgMemberForEach(
- //      classInstanceMock.vec, &classInstanceMock, &ClassType::TwoArgFunction, extraArg);
- //   //
- //   ARE_EQUAL(2, classInstanceMock.TwoArgFunctionMock.zenMockedFunctionCallHistory.size());
-
- //   ARE_EQUAL(1, classInstanceMock.TwoArgFunctionMock.zenMockedFunctionCallHistory[0].firstArgument.value);
- //   ARE_EQUAL(extraArg, classInstanceMock.TwoArgFunctionMock.zenMockedFunctionCallHistory[0].secondArgument.value);
-
- //   ARE_EQUAL(2, classInstanceMock.TwoArgFunctionMock.zenMockedFunctionCallHistory[1].firstArgument.value);
- //   ARE_EQUAL(extraArg, classInstanceMock.TwoArgFunctionMock.zenMockedFunctionCallHistory[1].secondArgument.value);
-
- //   classInstanceMock.TwoArgFunctionMock._wasAsserted = true;
- //}
-
-TEST(TwoArgFunction_CodeCoverage)
+TEST(ParallelOneExtraArgMemberForEach_OneItemElements_CallsMemberFunctionWithElementAndExtraArgOnce)
 {
-   ClassType classInstance;
-   classInstance.TwoArgFunction(ElementType{}, Arg2Type{});
+   TestingClassMock testingClassMock;
+   testingClassMock.elements = { ZenUnit::Random<ElementType>() };
+   testingClassMock.TwoArgMemberFunctionMock.Expect();
+   const ExtraArgType extraArg = ZenUnit::Random<ExtraArgType>();
+   //
+   _parallelOneExtraArgMemberForEacher_DeleteDirectory.ParallelOneExtraArgMemberForEach(
+      testingClassMock.elements, &testingClassMock, &TestingClass::TwoArgMemberFunction, extraArg);
+   //
+   METALMOCK(testingClassMock.TwoArgMemberFunctionMock.CalledOnceWith(testingClassMock.elements[0], extraArg));
+}
+
+TEST(ParallelOneExtraArgMemberForEach_TwoItemElements_CallsInParallelOnBothElementsTheMemberFunctionWithElementAndExtraArg)
+{
+   //TestingClassMock testingClassMock;
+   //testingClassMock.elements = { ZenUnit::Random<ElementType>(), ZenUnit::Random<ElementType>() };
+   //testingClassMock.TwoArgMemberFunctionMock.Expect();
+   //const ExtraArgType extraArg = ZenUnit::Random<ExtraArgType>();
+   ////
+   //_parallelOneExtraArgMemberForEacher_DeleteDirectory.ParallelOneExtraArgMemberForEach(
+   //   testingClassMock.elements, &testingClassMock, &TestingClass::TwoArgMemberFunction, extraArg);
+   ////
+   //vector<MetalMock::TwoArgumentFunctionCall<ElementType, ExtraArgType>> expectedMetalMockedFunctionCallHistory =
+   //{
+   //   { testingClassMock.elements[0], extraArg },
+   //   { testingClassMock.elements[1], extraArg }
+   //};
+   //INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(
+   //   expectedMetalMockedFunctionCallHistory,
+   //   testingClassMock.TwoArgMemberFunctionMock.metalMockedFunctionCallHistory);
+
+   //// To prevent Fatal Expected But Not Asserted MetalMocked Function
+   //testingClassMock.TwoArgMemberFunctionMock._wasAsserted = true;
+}
+
+TEST(TestingClassTwoArgMemberFunction_DoesNothing)
+{
+   TestingClass testingClass;
+   testingClass.TwoArgMemberFunction(ZenUnit::Random<ElementType>(), ZenUnit::Random<ExtraArgType>());
 }
 
 RUN_TEMPLATE_TESTS(ParallelOneExtraArgMemberForEacherTests, int, int)

@@ -2,7 +2,7 @@
 #include "libFileRevisor/Components/FunctionCallers/Member/NonVoidOneArgMemberFunctionCaller.h"
 
 template<typename ReturnType, typename ClassType, typename ArgType>
-class NonVoidOneArgMemberFunctionCallerMock : public Zen::Mock<NonVoidOneArgMemberFunctionCaller<ReturnType, ClassType, ArgType>>
+class NonVoidOneArgMemberFunctionCallerMock : public Metal::Mock<NonVoidOneArgMemberFunctionCaller<ReturnType, ClassType, ArgType>>
 {
 public:
    using MemberFunctionType = ReturnType(ClassType::*)(ArgType) const;

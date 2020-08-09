@@ -1,7 +1,7 @@
 #pragma once
 #include "libFileRevisor/Components/Docopt/DocoptParser.h"
 
-class DocoptParserMock : public Zen::Mock<DocoptParser>
+class DocoptParserMock : public Metal::Mock<DocoptParser>
 {
 public:
    using DocoptMapType = map<string, docopt::Value>;

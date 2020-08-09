@@ -1,7 +1,7 @@
 #pragma once
 #include "libFileRevisor/Components/FileRevisor/FileRevisorArgsParser.h"
 
-class FileRevisorArgsParserMock : public Zen::Mock<FileRevisorArgsParser>
+class FileRevisorArgsParserMock : public Metal::Mock<FileRevisorArgsParser>
 {
 public:
    METALMOCK_NONVOID1_CONST(FileRevisorArgs, ParseArgs, const vector<string>&)

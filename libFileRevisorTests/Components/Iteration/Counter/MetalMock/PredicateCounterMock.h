@@ -2,7 +2,7 @@
 #include "libFileRevisor/Components/Iteration/Counter/PredicateCounter.h"
 
 template<typename ContainerType, typename T>
-class PredicateCounterMock : public Zen::Mock<PredicateCounter<ContainerType, T>>
+class PredicateCounterMock : public Metal::Mock<PredicateCounter<ContainerType, T>>
 {
 public:
    using PredicateFunctionPointerType = bool(*)(const T&);
