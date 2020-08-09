@@ -1,0 +1,2 @@
+ignore:
+  - "libFileRevisor/Components/Docopt/docopt.h"

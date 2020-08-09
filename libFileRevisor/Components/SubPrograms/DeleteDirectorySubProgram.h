@@ -1,0 +1,26 @@
+#pragma once
+#include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgram.h"
+
+class DeleteDirectorySubProgram : public FileRevisorSubProgram
+{
+   friend class DeleteDirectorySubProgramTests;
+private:
+   using OneExtraArgMemberForEacherType = OneExtraArgMemberForEacher<
+      string,
+      DeleteDirectorySubProgram,
+      void(DeleteDirectorySubProgram::*)(const string&, const FileRevisorArgs&) const,
+      const FileRevisorArgs&>;
+   unique_ptr<const OneExtraArgMemberForEacherType> _oneExtraArgMemberForEacher_DeleteDirectory;
+
+   using ParallelOneExtraArgMemberForEacherType = ParallelOneExtraArgMemberForEacher<
+      string,
+      DeleteDirectorySubProgram,
+      void(DeleteDirectorySubProgram::*)(const string&, const FileRevisorArgs&) const,
+      const FileRevisorArgs&>;
+   unique_ptr<const ParallelOneExtraArgMemberForEacherType> _parallelOneExtraArgMemberForEacher_DeleteDirectory;
+public:
+   DeleteDirectorySubProgram();
+   int Run(const FileRevisorArgs& args) const override;
+private:
+   void DeleteDirectory(const string& directoryPath, const FileRevisorArgs& args) const;
+};

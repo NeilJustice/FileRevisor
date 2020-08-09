@@ -1,0 +1,39 @@
+#pragma once
+#include "libFileRevisor/ValueTypes/FileRevisorArgs.h"
+class Console;
+class DocoptParser;
+class FileSystem;
+namespace docopt
+{
+   struct Value;
+}
+class FileRevisorPreambleMaker;
+enum class ProgramMode;
+
+class FileRevisorArgsParser
+{
+   friend class FileRevisorArgsParserTests;
+private:
+   unique_ptr<const Console> _console;
+   unique_ptr<const FileSystem> _fileSystem;
+   unique_ptr<const DocoptParser> _docoptParser;
+   unique_ptr<const FileRevisorPreambleMaker> _fileRevisorPreambleMaker;
+   function<ProgramMode(bool, bool, bool, bool)> _call_DetermineProgramMode;
+
+   using NonVoidTwoArgMemberFunctionCallerType = NonVoidTwoArgMemberFunctionCaller<
+      tuple<fs::path, string, string>, FileRevisorArgsParser, const map<string, docopt::Value>&, bool>;
+   unique_ptr<const NonVoidTwoArgMemberFunctionCallerType> _caller_ParseDirAndFromAndToArguments;
+public:
+   FileRevisorArgsParser();
+   virtual ~FileRevisorArgsParser();
+   virtual FileRevisorArgs ParseArgs(const vector<string>& stringArgs) const;
+   virtual void PrintPreamble(const FileRevisorArgs& args) const;
+private:
+   static ProgramMode DetermineProgramMode(
+      bool isRenameFilesMode,
+      bool isRenameDirectoriesMode,
+      bool isReplaceTextInTextFilesMode,
+      bool isDeleteDirectoryMode);
+   tuple<fs::path, string, string> ParseTargetAndFromAndToArguments(
+      const map<string, docopt::Value>& docoptValues, bool isDeleteDirectoryMode) const;
+};

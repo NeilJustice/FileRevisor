@@ -1,0 +1,197 @@
+#include "pch.h"
+#include "libFileRevisor/Components/FileSystem/RecursiveFileDeleter.h"
+#include "libFileRevisor/Components/Exceptions/ErrorCodeTranslator.h"
+#include "libFileRevisor/Components/Exceptions/FileSystemExceptionMaker.h"
+#include "libFileRevisor/ValueTypes/FileRevisorArgs.h"
+
+RecursiveFileDeleter::RecursiveFileDeleter()
+   : _console(make_unique<Console>())
+   , _fileSystemExceptionMaker(make_unique<FileSystemExceptionMaker>())
+#ifdef _WIN32
+   , _call_GetFileAttributesA(GetFileAttributesA)
+   , _call_SetFileAttributesA(SetFileAttributesA)
+#endif
+{
+}
+
+RecursiveFileDeleter::~RecursiveFileDeleter()
+{
+}
+
+NOINLINE void PrintDeletedFileMessage(const char* filePath)
+{
+   cout << "[FileRevisor] Deleted file " << filePath << '\n';
+}
+
+#ifdef __linux__
+void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(
+   const char* directoryPath, const FileRevisorArgs& args) const
+{
+   DIR* const dirPointer = opendir(directoryPath);
+   release_assert(dirPointer != nullptr);
+   const dirent* directoryEntry = nullptr;
+   char filePathOrSubdirectoryPathChars[PATH_MAX];
+   while ((directoryEntry = readdir(dirPointer)) != nullptr)
+   {
+      const char* const fileNameOrSubdirectoryName = directoryEntry->d_name;
+      const bool isDotOrDotDot =
+         strcmp(fileNameOrSubdirectoryName, ".") == 0 ||
+         strcmp(fileNameOrSubdirectoryName, "..") == 0;
+      if (!isDotOrDotDot)
+      {
+         char* writePointer = stpcpy(filePathOrSubdirectoryPathChars, directoryPath);
+         *writePointer++ = '/';
+         writePointer = stpcpy(writePointer, fileNameOrSubdirectoryName);
+         *writePointer = 0;
+         if (directoryEntry->d_type == DT_DIR)
+         {
+            const char* const subdirectoryPath = filePathOrSubdirectoryPathChars;
+            RecursivelyDeleteAllFilesInDirectory(subdirectoryPath, args);
+         }
+         else
+         {
+            const char* const filePath = filePathOrSubdirectoryPathChars;
+            const int unlinkReturnValue = unlink(filePath);
+            if (unlinkReturnValue == 0)
+            {
+               if (!args.minimal)
+               {
+                  PrintDeletedFileMessage(filePath);
+               }
+            }
+            else
+            {
+               OptionallyThrowFileSystemExceptionDueToUnlinkFailing(filePathOrSubdirectoryPathChars, args);
+            }
+         }
+      }
+   }
+   const int closeDirReturnValue = closedir(dirPointer);
+   release_assert(closeDirReturnValue == 0);
+}
+
+#elif _WIN32
+
+void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(
+   const char* directoryPath, const FileRevisorArgs& args) const
+{
+   const size_t directoryPathLength = strlen(directoryPath);
+   char directoryPathSearchPatternChars[MAX_PATH];
+   memcpy(directoryPathSearchPatternChars, directoryPath, directoryPathLength);
+   directoryPathSearchPatternChars[directoryPathLength] = '\\';
+   directoryPathSearchPatternChars[directoryPathLength + 1] = '*';
+   directoryPathSearchPatternChars[directoryPathLength + 2] = 0;
+
+   WIN32_FIND_DATA win32FindData;
+   const HANDLE findFirstFileHandle = FindFirstFileEx(
+      directoryPathSearchPatternChars, FindExInfoBasic, &win32FindData, FindExSearchNameMatch, NULL, NULL);
+   ThrowFileSystemExceptionIfFindFirstFileExReturnedInvalidHandleValue(
+      findFirstFileHandle, directoryPathSearchPatternChars);
+
+   do
+   {
+      const char* const fileNameOrSubdirectoryName = win32FindData.cFileName;
+      const bool isDotOrDotDot =
+         strcmp(fileNameOrSubdirectoryName, ".") == 0 ||
+         strcmp(fileNameOrSubdirectoryName, "..") == 0;
+      if (!isDotOrDotDot)
+      {
+         char filePathOrSubdirectoryPathChars[MAX_PATH];
+         memcpy(filePathOrSubdirectoryPathChars, directoryPath, directoryPathLength);
+         filePathOrSubdirectoryPathChars[directoryPathLength] = '\\';
+
+         const size_t fileNameOrSubdirectoryNameLength = strlen(win32FindData.cFileName);
+         memcpy(filePathOrSubdirectoryPathChars + directoryPathLength + 1,
+            win32FindData.cFileName, fileNameOrSubdirectoryNameLength);
+         filePathOrSubdirectoryPathChars[directoryPathLength + 1 + fileNameOrSubdirectoryNameLength] = 0;
+
+         if (win32FindData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+         {
+            const char* const subdirectoryPath = filePathOrSubdirectoryPathChars;
+            RecursivelyDeleteAllFilesInDirectory(subdirectoryPath, args);
+         }
+         else
+         {
+            const char* const filePath = filePathOrSubdirectoryPathChars;
+            RemoveReadonlyFlagFromConstCharPointerFilePath(filePath);
+            const int unlinkReturnValue = _unlink(filePath);
+            if (unlinkReturnValue == 0)
+            {
+               if (!args.minimal)
+               {
+                  PrintDeletedFileMessage(filePath);
+               }
+            }
+            else
+            {
+               OptionallyThrowFileSystemExceptionDueToUnlinkFailing(filePathOrSubdirectoryPathChars, args);
+            }
+         }
+      }
+   } while (FindNextFile(findFirstFileHandle, &win32FindData) != FALSE);
+
+   const DWORD lastError = GetLastError();
+   release_assert(lastError == ERROR_NO_MORE_FILES);
+
+   const BOOL didCloseFileHandle = FindClose(findFirstFileHandle);
+   release_assert(didCloseFileHandle == TRUE);
+}
+
+void RecursiveFileDeleter::
+ThrowFileSystemExceptionIfFindFirstFileExReturnedInvalidHandleValue(
+   HANDLE findFirstFileExHandle, const char* directoryPathSearchPatternChars) const
+{
+   if (findFirstFileExHandle == INVALID_HANDLE_VALUE)
+   {
+      const FileSystemException fileSystemException = _fileSystemExceptionMaker->
+         MakeFileSystemExceptionForFindFirstFileExHavingReturnedInvalidHandleValue(
+            directoryPathSearchPatternChars);
+      throw fileSystemException;
+   }
+}
+
+#endif
+
+void RecursiveFileDeleter::OptionallyThrowFileSystemExceptionDueToUnlinkFailing(
+   const char* filePath, const FileRevisorArgs& args) const
+{
+   if (args.skipFilesInUse)
+   {
+      const int errnoValue = _fileSystemExceptionMaker->GetErrnoValue();
+      if (errnoValue == ErrnoValue::PermissionDenied)
+      {
+         const string skippingFileMessage = String::Concat(
+            "[FileRevisor] Skipped: File \"", filePath, "\" because permission was denied when attempting to delete it");
+         _console->WriteLine(skippingFileMessage);
+         return;
+      }
+   }
+   const FileSystemException fileSystemException =
+      _fileSystemExceptionMaker->MakeFileSystemExceptionForFailedToDeleteFile(filePath);
+   throw fileSystemException;
+}
+
+#ifdef _WIN32
+
+void RecursiveFileDeleter::RemoveReadonlyFlagFromFileSystemFilePath(const fs::path& filePath) const
+{
+   RemoveReadonlyFlagFromConstCharPointerFilePath(filePath.string().c_str());
+}
+
+void RecursiveFileDeleter::RemoveReadonlyFlagFromConstCharPointerFilePath(const char* filePath) const
+{
+   const DWORD fileAttributes = _call_GetFileAttributesA(filePath);
+   if (fileAttributes & FILE_ATTRIBUTE_READONLY)
+   {
+      const DWORD fileAttributesMinusReadonlyAttribute = fileAttributes & ~FILE_ATTRIBUTE_READONLY;
+      const BOOL didSetFileAttributes = _call_SetFileAttributesA(filePath, fileAttributesMinusReadonlyAttribute);
+      if (didSetFileAttributes == FALSE)
+      {
+         const FileSystemException fileSystemException = _fileSystemExceptionMaker->
+            MakeFileSystemExceptionForFailedToSetFileAttribute(filePath, fileAttributesMinusReadonlyAttribute);
+         throw fileSystemException;
+      }
+   }
+}
+
+#endif

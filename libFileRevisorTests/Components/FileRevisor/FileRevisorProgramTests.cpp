@@ -1,0 +1,133 @@
+#include "pch.h"
+#include "libFileRevisor/Components/FileRevisor/FileRevisorArgsParser.h"
+#include "libFileRevisor/Components/FileRevisor/FileRevisorProgram.h"
+#include "libFileRevisor/ValueTypes/FileRevisorArgs.h"
+#include "libFileRevisorTests/Components/FileRevisor/ZenMock/FileRevisorArgsParserMock.h"
+#include "libFileRevisorTests/Components/SubPrograms/ZenMock/FileRevisorSubProgramFactoryMock.h"
+#include "libFileRevisorTests/Components/SubPrograms/ZenMock/FileRevisorSubProgramMock.h"
+
+TESTS(FileRevisorProgramTests)
+AFACT(DefaultConstructor_NewsComponents)
+AFACT(Main_ArgcIs1_WritesCommandLineUsage_Returns0)
+AFACT(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTime)
+AFACT(Run_ParsesArgs_GetsAndRunsSubProgramSpecifiedByCommandLineArguments_ReturnsSubProgramExitCode)
+AFACT(ExceptionHandler_PrintsExceptionClassNameAndWhat_Returns1)
+EVIDENCE
+
+FileRevisorProgram _fileRevisorProgram;
+FileRevisorArgsParserMock* _argsParserMock = nullptr;
+ConsoleMock* _consoleMock = nullptr;
+FileRevisorSubProgramFactoryMock* _fileRevisorSubProgramFactoryMock = nullptr;
+TryCatchCallerMock<FileRevisorProgram, const vector<string>&>* _tryCatchCallerMock = nullptr;
+StopwatchMock* _fileRevisorRunTimeStopwatchMock = nullptr;
+
+STARTUP
+{
+   _fileRevisorProgram._console.reset(_consoleMock = new ConsoleMock);
+   _fileRevisorProgram._tryCatchCaller.reset(_tryCatchCallerMock = new TryCatchCallerMock<FileRevisorProgram, const vector<string>&>);
+   _fileRevisorProgram._argsParser.reset(_argsParserMock = new FileRevisorArgsParserMock);
+   _fileRevisorProgram._fileRevisorSubProgramFactory.reset(_fileRevisorSubProgramFactoryMock = new FileRevisorSubProgramFactoryMock);
+	_fileRevisorProgram._fileRevisorRunTimeStopwatch.reset(_fileRevisorRunTimeStopwatchMock = new StopwatchMock);
+}
+
+TEST(DefaultConstructor_NewsComponents)
+{
+   FileRevisorProgram textChangerProgram;
+	STD_FUNCTION_TARGETS(Vector::FromArgcArgv, textChangerProgram._call_Utils_Vector_FromArgcArgv);
+   STD_FUNCTION_TARGETS(Exception::ClassNameAndWhat, textChangerProgram._call_Utils_Exception_ClassNameAndWhat);
+   DELETE_TO_ASSERT_NEWED(textChangerProgram._console);
+   DELETE_TO_ASSERT_NEWED(textChangerProgram._fileRevisorSubProgramFactory);
+   DELETE_TO_ASSERT_NEWED(textChangerProgram._tryCatchCaller);
+   DELETE_TO_ASSERT_NEWED(textChangerProgram._fileRevisorRunTimeStopwatch);
+}
+
+TEST(Main_ArgcIs1_WritesCommandLineUsage_Returns0)
+{
+   _consoleMock->WriteLineMock.Expect();
+   //
+   int exitCode = _fileRevisorProgram.Main(1, nullptr);
+   //
+   ZENMOCK(_consoleMock->WriteLineMock.CalledOnceWith(FileRevisorArgs::CommandLineUsage));
+   IS_ZERO(exitCode);
+}
+
+TEST(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTime)
+{
+   _fileRevisorRunTimeStopwatchMock->StartMock.Expect();
+
+   ZENMOCK_NONVOID2_STATIC(vector<string>, Vector, FromArgcArgv, int, char**);
+   _fileRevisorProgram._call_Utils_Vector_FromArgcArgv = BIND_2ARG_ZENMOCK_OBJECT(FromArgcArgvMock);
+
+   const vector<string> vectorArgs{ ZenUnit::Random<string>(), ZenUnit::Random<string>() };
+   FromArgcArgvMock.Return(vectorArgs);
+
+   int tryCatchCallReturnValue = ZenUnit::Random<int>();
+   _tryCatchCallerMock->TryCatchCallMock.Return(tryCatchCallReturnValue);
+
+   const string elapsedSeconds = ZenUnit::Random<string>();
+   _fileRevisorRunTimeStopwatchMock->StopAndGetElapsedSecondsMock.Return(elapsedSeconds);
+
+   _consoleMock->WriteLineMock.Expect();
+
+   const int argc = ZenUnit::RandomBetween<int>(2, 5);
+   const string exePath = ZenUnit::Random<string>();
+   const string textChangerIniPath = ZenUnit::Random<string>();
+   const char* argv[] = { exePath.c_str(), textChangerIniPath.c_str() };
+   //
+   const int exitCode = _fileRevisorProgram.Main(argc, const_cast<char**>(argv));
+   //
+   ZENMOCK(_fileRevisorRunTimeStopwatchMock->StartMock.CalledOnce());
+   ZENMOCK(FromArgcArgvMock.CalledOnceWith(argc, const_cast<char**>(argv)));
+   ZENMOCK(_tryCatchCallerMock->TryCatchCallMock.CalledOnceWith(
+      &_fileRevisorProgram, &FileRevisorProgram::Run, vectorArgs, &FileRevisorProgram::ExceptionHandler));
+   ZENMOCK(_fileRevisorRunTimeStopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
+   const string expectedDurationLine = "[FileRevisor] Duration: " + elapsedSeconds + " seconds";
+   const string expectedExitCodeLine = "[FileRevisor] ExitCode: " + to_string(exitCode);
+   ZENMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
+   {
+      { expectedDurationLine },
+      { expectedExitCodeLine }
+   }));
+   ARE_EQUAL(tryCatchCallReturnValue, exitCode);
+}
+
+TEST(Run_ParsesArgs_GetsAndRunsSubProgramSpecifiedByCommandLineArguments_ReturnsSubProgramExitCode)
+{
+   const FileRevisorArgs args = _argsParserMock->ParseArgsMock.ReturnRandom();
+
+   _argsParserMock->PrintPreambleMock.Expect();
+
+   shared_ptr<FileRevisorSubProgramMock> fileRevisorSubProgramMock = make_shared<FileRevisorSubProgramMock>();
+   const int runReturnValue = fileRevisorSubProgramMock->RunMock.ReturnRandom();
+   _fileRevisorSubProgramFactoryMock->NewFileRevisorSubProgramMock.Return(fileRevisorSubProgramMock);
+
+   const vector<string> stringArgs = ZenUnit::RandomVector<string>();
+   //
+   const int exitCode = _fileRevisorProgram.Run(stringArgs);
+   //
+   ZENMOCK(_argsParserMock->ParseArgsMock.CalledOnceWith(stringArgs));
+   ZENMOCK(_argsParserMock->PrintPreambleMock.CalledOnceWith(args));
+   ZENMOCK(_fileRevisorSubProgramFactoryMock->NewFileRevisorSubProgramMock.CalledOnceWith(args.programMode));
+   ZENMOCK(fileRevisorSubProgramMock->RunMock.CalledOnceWith(args));
+   ARE_EQUAL(runReturnValue, exitCode);
+}
+
+TEST(ExceptionHandler_PrintsExceptionClassNameAndWhat_Returns1)
+{
+   ZENMOCK_NONVOID1_STATIC(string, Exception, ClassNameAndWhat, const exception*);
+   const string exceptionTypeNameAndWhat = ZenUnit::Random<string>();
+   ClassNameAndWhatMock.Return(exceptionTypeNameAndWhat);
+   _fileRevisorProgram._call_Utils_Exception_ClassNameAndWhat = BIND_1ARG_ZENMOCK_OBJECT(ClassNameAndWhatMock);
+   _consoleMock->WriteLineMock.Expect();
+   const exception ex;
+   const vector<string> args = ZenUnit::RandomVector<string>();
+   //
+   int exitCode = _fileRevisorProgram.ExceptionHandler(ex, args);
+   //
+   ZENMOCK(ClassNameAndWhatMock.CalledOnceWith(&ex));
+   const string expectedExceptionMessage = "[FileRevisor] Error: Uncaught exception: " + exceptionTypeNameAndWhat;
+   ZENMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedExceptionMessage));
+   ARE_EQUAL(1, exitCode);
+}
+
+RUN_TESTS(FileRevisorProgramTests)

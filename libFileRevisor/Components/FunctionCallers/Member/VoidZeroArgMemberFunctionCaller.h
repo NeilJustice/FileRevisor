@@ -1,0 +1,18 @@
+#pragma once
+
+template<typename ClassType>
+class VoidZeroArgMemberFunctionCaller
+{
+public:
+   virtual void ConstCall(const ClassType* classInstance, void (ClassType::* constMemberFunction)() const) const
+   {
+      (classInstance->*constMemberFunction)();
+   }
+
+   virtual void NonConstCall(ClassType* classInstance, void (ClassType::* nonConstMemberFunction)()) const
+   {
+      (classInstance->*nonConstMemberFunction)();
+   }
+
+   virtual ~VoidZeroArgMemberFunctionCaller() = default;
+};
