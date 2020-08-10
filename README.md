@@ -27,7 +27,7 @@ FileRevisor is a C++ command line program for quickly deleting large directories
 ## FileRevisor Command Line Usage
 
 ```
-FileRevisor 0.9.5
+FileRevisor v0.9.5
 https://github.com/NeilJustice/FileRevisor
 
 Usage:
