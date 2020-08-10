@@ -1,5 +1,5 @@
 #pragma once
-#include "libFileRevisor/Utilities/NOINLINEMacro.h"
+#include "libFileRevisor/Utilities/CompilerHints.h"
 
 class Map
 {

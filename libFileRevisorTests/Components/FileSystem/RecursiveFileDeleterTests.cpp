@@ -4,7 +4,7 @@
 #include "libFileRevisorTests/Components/Exceptions/MetalMock/FileSystemExceptionMakerMock.h"
 
 TESTS(RecursiveFileDeleterTests)
-AFACT(Constructor_NewsErrorCodeTranslator)
+AFACT(Constructor_NewsComponents_SetsFunctionCallers)
 AFACT(OptionallyThrowFileSystemExceptionDueToUnlinkFailing_SkipFilesInUseIsFalse_ThrowsFileSystemException)
 AFACT(OptionallyThrowFileSystemExceptionDueToUnlinkFailing_SkipFilesInUseIsTrue_ErrnoIs13_WritesSkippingMessage_DoesNotThrowException)
 AFACT(OptionallyThrowFileSystemExceptionDueToUnlinkFailing_SkipFilesInUseIsTrue_ErrnoIsNot13_ThrowsFileSystemException)
@@ -18,8 +18,10 @@ FACTS(RemoveReadonlyFlagFromConstCharPointerFilePath_GetsFileAttributesWhichIncl
 EVIDENCE
 
 RecursiveFileDeleter _recursiveFileDeleter;
+// Constant Components
 ConsoleMock* _consoleMock = nullptr;
 FileSystemExceptionMakerMock* _fileSystemExceptionMakerMock = nullptr;
+// Function Callers
 #ifdef _WIN32
 METALMOCK_NONVOID1_FREE(DWORD, GetFileAttributesA, const char*)
 METALMOCK_NONVOID2_FREE(DWORD, SetFileAttributesA, const char*, DWORD)
@@ -27,18 +29,27 @@ METALMOCK_NONVOID2_FREE(DWORD, SetFileAttributesA, const char*, DWORD)
 
 STARTUP
 {
+   // Constant Components
    _recursiveFileDeleter._console.reset(_consoleMock = new ConsoleMock);
    _recursiveFileDeleter._fileSystemExceptionMaker.reset(_fileSystemExceptionMakerMock = new FileSystemExceptionMakerMock);
+   // Function Callers
 #ifdef _WIN32
    _recursiveFileDeleter._call_GetFileAttributesA = BIND_1ARG_METALMOCK_OBJECT(GetFileAttributesAMock);
    _recursiveFileDeleter._call_SetFileAttributesA = BIND_2ARG_METALMOCK_OBJECT(SetFileAttributesAMock);
 #endif
 }
 
-TEST(Constructor_NewsErrorCodeTranslator)
+TEST(Constructor_NewsComponents_SetsFunctionCallers)
 {
    RecursiveFileDeleter recursiveFileDeleter;
+   // Constant Components
+   DELETE_TO_ASSERT_NEWED(recursiveFileDeleter._console);
    DELETE_TO_ASSERT_NEWED(recursiveFileDeleter._fileSystemExceptionMaker);
+   // Function Callers
+#ifdef _WIN32
+   STD_FUNCTION_TARGETS(::GetFileAttributesA, recursiveFileDeleter._call_GetFileAttributesA);
+   STD_FUNCTION_TARGETS(::SetFileAttributesA, recursiveFileDeleter._call_SetFileAttributesA);
+#endif
 }
 
 TEST(OptionallyThrowFileSystemExceptionDueToUnlinkFailing_SkipFilesInUseIsFalse_ThrowsFileSystemException)

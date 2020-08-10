@@ -1,18 +1,26 @@
 #include "pch.h"
+#include "libFileRevisor/Components/Console/Console.h"
+#include "libFileRevisor/Components/DataStructures/Vector.h"
+#include "libFileRevisor/Components/Exceptions/Exception.h"
+#include "libFileRevisor/Components/Exceptions/TryCatchCaller.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorArgsParser.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorProgram.h"
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgram.h"
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgramFactory.h"
+#include "libFileRevisor/Components/Time/Stopwatch.h"
 #include "libFileRevisor/ValueTypes/FileRevisorArgs.h"
 
 FileRevisorProgram::FileRevisorProgram()
-	: _call_Utils_Vector_FromArgcArgv(Vector::FromArgcArgv)
-   , _call_Utils_Exception_ClassNameAndWhat(Exception::ClassNameAndWhat)
-   , _argsParser(make_unique<FileRevisorArgsParser>())
+   // Constant Components
+   : _argsParser(make_unique<FileRevisorArgsParser>())
    , _console(make_unique<Console>())
    , _fileRevisorSubProgramFactory(make_unique<FileRevisorSubProgramFactory>())
    , _tryCatchCaller(make_unique<TryCatchCaller<FileRevisorProgram, const vector<string>&>>())
-	, _fileRevisorRunTimeStopwatch(make_unique<Stopwatch>())
+   // Function Callers
+   , _call_Utils_Exception_ClassNameAndWhat(Exception::ClassNameAndWhat)
+   , _call_Utils_Vector_FromArgcArgv(Vector::FromArgcArgv)
+   // Mutable Components
+	, _programDurationStopwatch(make_unique<Stopwatch>())
 {
 }
 
@@ -27,11 +35,11 @@ int FileRevisorProgram::Main(int argc, char* argv[])
       _console->WriteLine(FileRevisorArgs::CommandLineUsage);
       return 0;
    }
-   _fileRevisorRunTimeStopwatch->Start();
+   _programDurationStopwatch->Start();
    const vector<string> stringArgs = _call_Utils_Vector_FromArgcArgv(argc, argv);
    const int exitCode = _tryCatchCaller->TryCatchCall(
       this, &FileRevisorProgram::Run, stringArgs, &FileRevisorProgram::ExceptionHandler);
-   const string elapsedSeconds = _fileRevisorRunTimeStopwatch->StopAndGetElapsedSeconds();
+   const string elapsedSeconds = _programDurationStopwatch->StopAndGetElapsedSeconds();
    const string durationLine = "[FileRevisor] Duration: " + elapsedSeconds + " seconds";
    _console->WriteLine(durationLine);
    const string exitCodeLine = "[FileRevisor] ExitCode: " + to_string(exitCode);

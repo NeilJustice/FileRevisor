@@ -1,13 +1,19 @@
 #include "pch.h"
+#include "libFileRevisor/Components/Console/Console.h"
+#include "libFileRevisor/Components/FileSystem/FileSystem.h"
+#include "libFileRevisor/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
+#include "libFileRevisor/Components/Iteration/Math/OneExtraArgMemberFunctionSumator.h"
 #include "libFileRevisor/Components/SubPrograms/ReplaceTextInTextFilesSubProgram.h"
+#include "libFileRevisor/Components/Strings/Pluralizer.h"
 #include "libFileRevisor/Components/Strings/Regexer.h"
 #include "libFileRevisor/ValueTypes/FileRevisorArgs.h"
 
 ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFilesSubProgram()
-   : _oneExtraArgMemberFunctionSumator(make_unique<OneExtraArgMemberFunctionSumatorType>())
-   , _call_PrintReadingFileMessageIfVerboseMode(make_unique<VoidTwoArgMemberFunctionCaller<
-      ReplaceTextInTextFilesSubProgram, bool, const fs::path&>>())
-   , _regexer(make_unique<Regexer>())
+   // Constant Components
+   : _regexer(make_unique<Regexer>())
+   // Function Callers
+   , _call_PrintReadingFileMessageIfVerboseMode(make_unique<VoidTwoArgMemberFunctionCaller<ReplaceTextInTextFilesSubProgram, bool, const fs::path&>>())
+   , _memberFunctionSumator_RegexReplaceTextInTextFile(make_unique<OneExtraArgMemberFunctionSumatorType>())
 {
 }
 
@@ -15,7 +21,7 @@ int ReplaceTextInTextFilesSubProgram::Run(const FileRevisorArgs& args) const
 {
    const vector<fs::path> nonEmptyTextFilePathsInTargetDirectory =
       _protected_fileSystem->GetNonEmptyTextFilePathsInDirectory(args.targetDirectoryPath, args.recursive);
-   const size_t numberOfFilesThatWereOrWouldBeModified = _oneExtraArgMemberFunctionSumator->SumElementsWithFunction(
+   const size_t numberOfFilesThatWereOrWouldBeModified = _memberFunctionSumator_RegexReplaceTextInTextFile->SumElementsWithFunction(
       this, nonEmptyTextFilePathsInTargetDirectory, &ReplaceTextInTextFilesSubProgram::RegexReplaceTextInTextFile, args);
    const string fileOrFiles = _protected_pluralizer->PotentiallyPluralizeWord(numberOfFilesThatWereOrWouldBeModified, "file", "files");
    if (args.preview)

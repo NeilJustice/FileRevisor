@@ -1,34 +1,37 @@
 #pragma once
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgram.h"
+class Console;
+struct FileRevisorArgs;
+
 template<
-   typename ClassType,
-   typename AccumulatedType,
-   template<typename _ElementType, typename...>
-typename ContainerType,
-typename ElementType,
-typename ExtraArgType>
+      typename ClassType,
+      typename AccumulatedType,
+      template<typename _ElementType, typename...>
+   typename ContainerType,
+   typename ElementType,
+   typename ExtraArgType>
 class OneExtraArgMemberFunctionSumator;
 
-class Console;
+class Regexer;
 
 template<typename ClassType, typename Arg1Type, typename Arg2Type>
 class VoidTwoArgMemberFunctionCaller;
-
-struct FileRevisorArgs;
-class Regexer;
 
 class ReplaceTextInTextFilesSubProgram : public FileRevisorSubProgram
 {
    friend class ReplaceTextInTextFilesSubProgramTests;
 private:
-   using OneExtraArgMemberFunctionSumatorType = OneExtraArgMemberFunctionSumator<
-      ReplaceTextInTextFilesSubProgram, size_t, vector, fs::path, const FileRevisorArgs&>;
-   unique_ptr<const OneExtraArgMemberFunctionSumatorType> _oneExtraArgMemberFunctionSumator;
+   // Constant Components
+   unique_ptr<const Regexer> _regexer;
+   // Function Callers
    unique_ptr<const VoidTwoArgMemberFunctionCaller<
       ReplaceTextInTextFilesSubProgram, bool, const fs::path&>> _call_PrintReadingFileMessageIfVerboseMode;
-   unique_ptr<const Regexer> _regexer;
+   using OneExtraArgMemberFunctionSumatorType = OneExtraArgMemberFunctionSumator<
+      ReplaceTextInTextFilesSubProgram, size_t, vector, fs::path, const FileRevisorArgs&>;
+   unique_ptr<const OneExtraArgMemberFunctionSumatorType> _memberFunctionSumator_RegexReplaceTextInTextFile;
 public:
    ReplaceTextInTextFilesSubProgram();
+   virtual ~ReplaceTextInTextFilesSubProgram() = default;
    int Run(const FileRevisorArgs& args) const override;
 private:
    void PrintReadingFileMessageIfVerboseIsTrue(bool verbose, const fs::path& textFilePath) const;

@@ -22,6 +22,7 @@
 
 #include <fstream>
 #include <functional>
+#include <iostream>
 #include <regex>
 #include <sstream>
 using namespace std;
@@ -33,23 +34,7 @@ using namespace std;
 #include "Windows.h"
 #endif
 
-#include "libFileRevisor/Components/Console/Console.h"
-#include "libFileRevisor/Components/DataStructures/Vector.h"
-#include "libFileRevisor/Components/Docopt/DocoptParser.h"
-#include "libFileRevisor/Components/Exceptions/Exception.h"
-#include "libFileRevisor/Components/Exceptions/TryCatchCaller.h"
-#include "libFileRevisor/Components/FileSystem/FileSystem.h"
-#include "libFileRevisor/Components/FunctionCallers/Member/NonVoidOneArgMemberFunctionCaller.h"
-#include "libFileRevisor/Components/FunctionCallers/Member/NonVoidTwoArgMemberFunctionCaller.h"
-#include "libFileRevisor/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
-#include "libFileRevisor/Components/FunctionCallers/NonMember/VoidFourArgFunctionCaller.h"
-#include "libFileRevisor/Components/Iteration/Counter/PredicateCounter.h"
-#include "libFileRevisor/Components/Iteration/ForEach/OneExtraArgMemberForEacher.h"
-#include "libFileRevisor/Components/Iteration/ForEach/ParallelOneExtraArgMemberForEacher.h"
-#include "libFileRevisor/Components/Iteration/Math/OneExtraArgMemberFunctionSumator.h"
-#include "libFileRevisor/Components/Iteration/Transform/OneExtraArgMemberFunctionTransformer.h"
-#include "libFileRevisor/Components/Strings/Pluralizer.h"
-#include "libFileRevisor/Components/Strings/StringUtil.h"
-#include "libFileRevisor/Components/Time/Stopwatch.h"
-#include "libFileRevisor/Constants/ErrnoValue.h"
 #include "libFileRevisor/Utilities/ReleaseAssert.h"
+#include "libFileRevisor/Components/Strings/StringUtil.h"
+#include "libFileRevisor/Constants/ErrnoValue.h"
+#include "libFileRevisor/Components/Docopt/DocoptParser.h"

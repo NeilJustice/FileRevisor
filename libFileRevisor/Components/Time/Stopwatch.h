@@ -9,7 +9,7 @@ private:
    std::chrono::time_point<std::chrono::high_resolution_clock> _startTime;
 public:
    Stopwatch();
+   virtual ~Stopwatch() = default;
    virtual void Start();
    virtual std::string StopAndGetElapsedSeconds();
-   virtual ~Stopwatch() = default;
 };

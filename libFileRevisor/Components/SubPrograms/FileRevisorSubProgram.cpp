@@ -1,14 +1,13 @@
 #include "pch.h"
+#include "libFileRevisor/Components/Console/Console.h"
+#include "libFileRevisor/Components/FileSystem/FileSystem.h"
+#include "libFileRevisor/Components/Strings/Pluralizer.h"
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgram.h"
 
 FileRevisorSubProgram::FileRevisorSubProgram()
    : _protected_console(make_unique<Console>())
    , _protected_fileSystem(make_unique<FileSystem>())
    , _protected_pluralizer(make_unique<Pluralizer>())
-{
-}
-
-FileRevisorSubProgram::~FileRevisorSubProgram()
 {
 }
 

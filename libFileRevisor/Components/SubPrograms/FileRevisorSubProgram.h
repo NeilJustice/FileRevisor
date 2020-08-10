@@ -13,6 +13,6 @@ protected:
    unique_ptr<const Pluralizer> _protected_pluralizer;
 public:
    FileRevisorSubProgram();
-   virtual ~FileRevisorSubProgram();
+   virtual ~FileRevisorSubProgram() = default;
    virtual int Run(const FileRevisorArgs& args) const;
 };

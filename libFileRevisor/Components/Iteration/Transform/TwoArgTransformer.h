@@ -9,13 +9,13 @@ template<
 {
 public:
    virtual TransformedContainerType Transform(
-      const SourceContainerType& sourceContainer, TransformFunctionType transformFunction, Arg2Type arg2) const
+      const SourceContainerType& sourceElements, TransformFunctionType transformFunction, Arg2Type arg2) const
    {
       TransformedContainerType transformedElements;
-      transformedElements.reserve(sourceContainer.size());
-      const auto endSourceIter = sourceContainer.end();
+      transformedElements.reserve(sourceElements.size());
+      const auto endSourceIter = sourceElements.end();
       size_t index = 0;
-      for (auto iter = sourceContainer.begin(); iter != endSourceIter; ++iter)
+      for (auto iter = sourceElements.begin(); iter != endSourceIter; ++iter)
       {
          const auto& sourceElement = *iter;
          transformedElements.push_back(transformFunction(index++, sourceElement, arg2));

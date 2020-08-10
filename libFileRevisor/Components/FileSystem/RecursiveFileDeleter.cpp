@@ -1,15 +1,18 @@
 #include "pch.h"
+#include "libFileRevisor/Components/Console/Console.h"
 #include "libFileRevisor/Components/FileSystem/RecursiveFileDeleter.h"
 #include "libFileRevisor/Components/Exceptions/ErrorCodeTranslator.h"
 #include "libFileRevisor/Components/Exceptions/FileSystemExceptionMaker.h"
 #include "libFileRevisor/ValueTypes/FileRevisorArgs.h"
 
 RecursiveFileDeleter::RecursiveFileDeleter()
+   // Constant Components
    : _console(make_unique<Console>())
    , _fileSystemExceptionMaker(make_unique<FileSystemExceptionMaker>())
+   // Function Callers
 #ifdef _WIN32
-   , _call_GetFileAttributesA(GetFileAttributesA)
-   , _call_SetFileAttributesA(SetFileAttributesA)
+   , _call_GetFileAttributesA(::GetFileAttributesA)
+   , _call_SetFileAttributesA(::SetFileAttributesA)
 #endif
 {
 }

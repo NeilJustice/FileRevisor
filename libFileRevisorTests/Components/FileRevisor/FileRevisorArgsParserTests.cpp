@@ -19,22 +19,25 @@ AFACT(DetermineProgramMode_AllFourProgramModeBoolsAreFalse_ThrowsInvalidArgument
 EVIDENCE
 
 FileRevisorArgsParser _fileRevisorArgsParser;
+// Constant Components
 ConsoleMock* _consoleMock = nullptr;
 FileSystemMock* _fileSystemMock = nullptr;
 DocoptParserMock* _docoptParserMock = nullptr;
 FileRevisorPreambleMakerMock* _fileRevisorPreambleMakerMock = nullptr;
+// Function Callers
 METALMOCK_NONVOID4_STATIC(ProgramMode, FileRevisorArgsParser, DetermineProgramMode, bool, bool, bool, bool)
-
 using NonVoidTwoArgMemberFunctionCallerMockType = NonVoidTwoArgMemberFunctionCallerMock<
    tuple<fs::path, string, string>, FileRevisorArgsParser, const map<string, docopt::Value>&, bool>;
 NonVoidTwoArgMemberFunctionCallerMockType* _caller_ParseDirAndFromAndToArgumentsMock = nullptr;
 
 STARTUP
 {
+   // Constant Components
    _fileRevisorArgsParser._console.reset(_consoleMock = new ConsoleMock);
    _fileRevisorArgsParser._fileSystem.reset(_fileSystemMock = new FileSystemMock);
    _fileRevisorArgsParser._docoptParser.reset(_docoptParserMock = new DocoptParserMock);
    _fileRevisorArgsParser._fileRevisorPreambleMaker.reset(_fileRevisorPreambleMakerMock = new FileRevisorPreambleMakerMock);
+   // Function Callers
    _fileRevisorArgsParser._call_DetermineProgramMode = BIND_4ARG_METALMOCK_OBJECT(DetermineProgramModeMock);
    _fileRevisorArgsParser._caller_ParseDirAndFromAndToArguments.reset(
       _caller_ParseDirAndFromAndToArgumentsMock = new NonVoidTwoArgMemberFunctionCallerMockType);
@@ -43,12 +46,14 @@ STARTUP
 TEST(DefaultConstructor_NewsComponents_SetsDetermineProgramModeFunctionPointer)
 {
    FileRevisorArgsParser argsParser;
+   // Constant Components
    DELETE_TO_ASSERT_NEWED(argsParser._console);
    DELETE_TO_ASSERT_NEWED(argsParser._fileSystem);
    DELETE_TO_ASSERT_NEWED(argsParser._docoptParser);
    DELETE_TO_ASSERT_NEWED(argsParser._fileRevisorPreambleMaker);
-   DELETE_TO_ASSERT_NEWED(argsParser._caller_ParseDirAndFromAndToArguments);
+   // Function Callers
    STD_FUNCTION_TARGETS(FileRevisorArgsParser::DetermineProgramMode, argsParser._call_DetermineProgramMode);
+   DELETE_TO_ASSERT_NEWED(argsParser._caller_ParseDirAndFromAndToArguments);
 }
 
 TEST(ParseArgs_ParsesEachArgument_ReturnsFileRevisorArgs)

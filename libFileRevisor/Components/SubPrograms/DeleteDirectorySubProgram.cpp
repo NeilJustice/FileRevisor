@@ -1,5 +1,10 @@
 #include "pch.h"
+#include "libFileRevisor/Components/Console/Console.h"
+#include "libFileRevisor/Components/FileSystem/FileSystem.h"
+#include "libFileRevisor/Components/Strings/Pluralizer.h"
 #include "libFileRevisor/Components/SubPrograms/DeleteDirectorySubProgram.h"
+#include "libFileRevisor/Components/Iteration/ForEach/OneExtraArgMemberForEacher.h"
+#include "libFileRevisor/Components/Iteration/ForEach/ParallelOneExtraArgMemberForEacher.h"
 #include "libFileRevisor/ValueTypes/FileRevisorArgs.h"
 
 DeleteDirectorySubProgram::DeleteDirectorySubProgram()

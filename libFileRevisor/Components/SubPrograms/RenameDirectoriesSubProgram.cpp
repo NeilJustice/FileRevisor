@@ -1,18 +1,22 @@
 #include "pch.h"
-#include "libFileRevisor/Components/SubPrograms/RenameDirectoriesSubProgram.h"
+#include "libFileRevisor/Components/Console/Console.h"
+#include "libFileRevisor/Components/FileSystem/FileSystem.h"
+#include "libFileRevisor/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
+#include "libFileRevisor/Components/Iteration/Counter/PredicateCounter.h"
+#include "libFileRevisor/Components/Iteration/Transform/OneExtraArgMemberFunctionTransformer.h"
+#include "libFileRevisor/Components/Strings/Pluralizer.h"
 #include "libFileRevisor/Components/Strings/Regexer.h"
+#include "libFileRevisor/Components/SubPrograms/RenameDirectoriesSubProgram.h"
 #include "libFileRevisor/ValueTypes/FileRevisorArgs.h"
 
 RenameDirectoriesSubProgram::RenameDirectoriesSubProgram()
-   : _oneExtraArgMemberFunctionTransformer(make_unique<OneExtraArgMemberFunctionTransformerType>())
+   // Constant Components
+   : _predicateCounter(make_unique<PredicateCounter<vector<RenameResult>, RenameResult>>())
    , _regexer(make_unique<Regexer>())
-   , _call_PrintDidNotMatchDirectoryMessageIfVerboseMode(make_unique<VoidTwoArgMemberFunctionCaller<
-      RenameDirectoriesSubProgram, bool, const fs::path& >>())
-   , _predicateCounter(make_unique<PredicateCounter<vector<RenameResult>, RenameResult>>())
-{
-}
-
-RenameDirectoriesSubProgram::~RenameDirectoriesSubProgram()
+   // Function Callers
+   , _call_PrintDidNotMatchDirectoryMessageIfVerboseMode(
+      make_unique<VoidTwoArgMemberFunctionCaller<RenameDirectoriesSubProgram, bool, const fs::path& >>())
+   , _directoryPathsTransformer_RenameDirectory(make_unique<OneExtraArgMemberFunctionTransformerType>())
 {
 }
 
@@ -22,7 +26,7 @@ int RenameDirectoriesSubProgram::Run(const FileRevisorArgs& args) const
       _protected_fileSystem->GetDirectoryPathsInDirectory(args.targetDirectoryPath, args.recursive);
 
    const vector<RenameResult> directoryRenameResults =
-      _oneExtraArgMemberFunctionTransformer->Transform(
+      _directoryPathsTransformer_RenameDirectory->Transform(
          directoryPathsInDirectory, this, &RenameDirectoriesSubProgram::RenameDirectory, args);
 
    const size_t numberOfRenamedDirectories =

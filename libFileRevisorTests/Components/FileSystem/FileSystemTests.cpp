@@ -36,10 +36,12 @@ AFACT(RemoveReadOnlyFlagsFromTopLevelFilesInDirectoryIfWindows_CallsRemoveReadon
 EVIDENCE
 
 FileSystem _fileSystem;
+// Constant Components
 ConstCharPointerGetterMock* _constCharPointerGetterMock = nullptr;
 FileSystemExceptionMakerMock* _fileSystemExceptionThrowerMock = nullptr;
-NonVoidOneArgMemberFunctionCallerMock<bool, FileSystem, const fs::path&>* _caller_ExistsMock = nullptr;
 RecursiveFileDeleterMock* _recursiveFileDeleterMock = nullptr;
+// Function Callers
+NonVoidOneArgMemberFunctionCallerMock<bool, FileSystem, const fs::path&>* _caller_ExistsMock = nullptr;
 #ifdef _WIN32
 METALMOCK_NONVOID1_NAMESPACED_FREE(fs::path, std::filesystem, absolute, const fs::path&)
 #endif
@@ -53,9 +55,11 @@ METALMOCK_NONVOID2_NAMESPACED_FREE(uintmax_t, fs, remove_all, const fs::path&, e
 
 STARTUP
 {
+   // Constant Components
    _fileSystem._constCharPointerGetter.reset(_constCharPointerGetterMock = new ConstCharPointerGetterMock);
    _fileSystem._fileSystemExceptionThrower.reset(_fileSystemExceptionThrowerMock = new FileSystemExceptionMakerMock);
    _fileSystem._recursiveFileDeleter.reset(_recursiveFileDeleterMock = new RecursiveFileDeleterMock);
+   // Function Callers
    _fileSystem._caller_Exists.reset(_caller_ExistsMock = new NonVoidOneArgMemberFunctionCallerMock<bool, FileSystem, const fs::path&>);
    _fileSystem._call_fopen = BIND_2ARG_METALMOCK_OBJECT(fopenMock);
    _fileSystem._call_fclose = BIND_1ARG_METALMOCK_OBJECT(fcloseMock);
@@ -72,11 +76,11 @@ STARTUP
 TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
 {
    FileSystem fileSystem;
-
+   // Constant Components
    DELETE_TO_ASSERT_NEWED(fileSystem._constCharPointerGetter);
    DELETE_TO_ASSERT_NEWED(fileSystem._fileSystemExceptionThrower);
    DELETE_TO_ASSERT_NEWED(fileSystem._recursiveFileDeleter);
-
+   // Function Callers
    DELETE_TO_ASSERT_NEWED(fileSystem._caller_Exists);
    STD_FUNCTION_TARGETS(::fopen, fileSystem._call_fopen);
    STD_FUNCTION_TARGETS(::fclose, fileSystem._call_fclose);

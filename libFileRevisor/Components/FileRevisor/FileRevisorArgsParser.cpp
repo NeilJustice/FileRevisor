@@ -1,14 +1,21 @@
 #include "pch.h"
+#include "libFileRevisor/Components/Console/Console.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorArgsParser.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorPreambleMaker.h"
+#include "libFileRevisor/Components/FileSystem/FileSystem.h"
+#include "libFileRevisor/Components/FunctionCallers/Member/NonVoidTwoArgMemberFunctionCaller.h"
+#include "libFileRevisor/Components/Iteration/Transform/OneExtraArgMemberFunctionTransformer.h"
+#include "libFileRevisor/Components/DataStructures/Vector.h"
 #include "libFileRevisor/Enums/ProgramMode.h"
 #include "libFileRevisor/ValueTypes/FileRevisorArgs.h"
 
 FileRevisorArgsParser::FileRevisorArgsParser()
+   // Constant Components
    : _console(make_unique<Console>())
    , _fileSystem(make_unique<FileSystem>())
    , _docoptParser(make_unique<DocoptParser>())
    , _fileRevisorPreambleMaker(make_unique<FileRevisorPreambleMaker>())
+   // Function Callers
    , _call_DetermineProgramMode(FileRevisorArgsParser::DetermineProgramMode)
    , _caller_ParseDirAndFromAndToArguments(make_unique<NonVoidTwoArgMemberFunctionCallerType>())
 {

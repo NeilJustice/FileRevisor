@@ -9,36 +9,50 @@
 TESTS(FileRevisorProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
 AFACT(Main_ArgcIs1_WritesCommandLineUsage_Returns0)
-AFACT(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTime)
+AFACT(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTime_ReturnsTryCatchCallReturnValue)
 AFACT(Run_ParsesArgs_GetsAndRunsSubProgramSpecifiedByCommandLineArguments_ReturnsSubProgramExitCode)
 AFACT(ExceptionHandler_PrintsExceptionClassNameAndWhat_Returns1)
 EVIDENCE
 
 FileRevisorProgram _fileRevisorProgram;
+// Components
 FileRevisorArgsParserMock* _argsParserMock = nullptr;
 ConsoleMock* _consoleMock = nullptr;
 FileRevisorSubProgramFactoryMock* _fileRevisorSubProgramFactoryMock = nullptr;
 TryCatchCallerMock<FileRevisorProgram, const vector<string>&>* _tryCatchCallerMock = nullptr;
-StopwatchMock* _fileRevisorRunTimeStopwatchMock = nullptr;
+// Function Callers
+METALMOCK_NONVOID2_STATIC(vector<string>, Vector, FromArgcArgv, int, char**);
+METALMOCK_NONVOID1_STATIC(string, Exception, ClassNameAndWhat, const exception*);
+// Mutable Components
+StopwatchMock* _programDurationStopwatchMock = nullptr;
 
 STARTUP
 {
+   // Components
    _fileRevisorProgram._console.reset(_consoleMock = new ConsoleMock);
    _fileRevisorProgram._tryCatchCaller.reset(_tryCatchCallerMock = new TryCatchCallerMock<FileRevisorProgram, const vector<string>&>);
    _fileRevisorProgram._argsParser.reset(_argsParserMock = new FileRevisorArgsParserMock);
    _fileRevisorProgram._fileRevisorSubProgramFactory.reset(_fileRevisorSubProgramFactoryMock = new FileRevisorSubProgramFactoryMock);
-	_fileRevisorProgram._fileRevisorRunTimeStopwatch.reset(_fileRevisorRunTimeStopwatchMock = new StopwatchMock);
+   // Function Callers
+   _fileRevisorProgram._call_Utils_Vector_FromArgcArgv = BIND_2ARG_METALMOCK_OBJECT(FromArgcArgvMock);
+   _fileRevisorProgram._call_Utils_Exception_ClassNameAndWhat = BIND_1ARG_METALMOCK_OBJECT(ClassNameAndWhatMock);
+   // Mutable Components
+	_fileRevisorProgram._programDurationStopwatch.reset(_programDurationStopwatchMock = new StopwatchMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
 {
    FileRevisorProgram textChangerProgram;
-	STD_FUNCTION_TARGETS(Vector::FromArgcArgv, textChangerProgram._call_Utils_Vector_FromArgcArgv);
-   STD_FUNCTION_TARGETS(Exception::ClassNameAndWhat, textChangerProgram._call_Utils_Exception_ClassNameAndWhat);
+   // Components
+   DELETE_TO_ASSERT_NEWED(textChangerProgram._argsParser);
    DELETE_TO_ASSERT_NEWED(textChangerProgram._console);
    DELETE_TO_ASSERT_NEWED(textChangerProgram._fileRevisorSubProgramFactory);
    DELETE_TO_ASSERT_NEWED(textChangerProgram._tryCatchCaller);
-   DELETE_TO_ASSERT_NEWED(textChangerProgram._fileRevisorRunTimeStopwatch);
+   // Function Callers
+	STD_FUNCTION_TARGETS(Vector::FromArgcArgv, textChangerProgram._call_Utils_Vector_FromArgcArgv);
+   STD_FUNCTION_TARGETS(Exception::ClassNameAndWhat, textChangerProgram._call_Utils_Exception_ClassNameAndWhat);
+   // Mutable Components
+   DELETE_TO_ASSERT_NEWED(textChangerProgram._programDurationStopwatch);
 }
 
 TEST(Main_ArgcIs1_WritesCommandLineUsage_Returns0)
@@ -51,12 +65,9 @@ TEST(Main_ArgcIs1_WritesCommandLineUsage_Returns0)
    IS_ZERO(exitCode);
 }
 
-TEST(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTime)
+TEST(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTime_ReturnsTryCatchCallReturnValue)
 {
-   _fileRevisorRunTimeStopwatchMock->StartMock.Expect();
-
-   METALMOCK_NONVOID2_STATIC(vector<string>, Vector, FromArgcArgv, int, char**);
-   _fileRevisorProgram._call_Utils_Vector_FromArgcArgv = BIND_2ARG_METALMOCK_OBJECT(FromArgcArgvMock);
+   _programDurationStopwatchMock->StartMock.Expect();
 
    const vector<string> vectorArgs{ ZenUnit::Random<string>(), ZenUnit::Random<string>() };
    FromArgcArgvMock.Return(vectorArgs);
@@ -65,7 +76,7 @@ TEST(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTim
    _tryCatchCallerMock->TryCatchCallMock.Return(tryCatchCallReturnValue);
 
    const string elapsedSeconds = ZenUnit::Random<string>();
-   _fileRevisorRunTimeStopwatchMock->StopAndGetElapsedSecondsMock.Return(elapsedSeconds);
+   _programDurationStopwatchMock->StopAndGetElapsedSecondsMock.Return(elapsedSeconds);
 
    _consoleMock->WriteLineMock.Expect();
 
@@ -76,11 +87,11 @@ TEST(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTim
    //
    const int exitCode = _fileRevisorProgram.Main(argc, const_cast<char**>(argv));
    //
-   METALMOCK(_fileRevisorRunTimeStopwatchMock->StartMock.CalledOnce());
+   METALMOCK(_programDurationStopwatchMock->StartMock.CalledOnce());
    METALMOCK(FromArgcArgvMock.CalledOnceWith(argc, const_cast<char**>(argv)));
    METALMOCK(_tryCatchCallerMock->TryCatchCallMock.CalledOnceWith(
       &_fileRevisorProgram, &FileRevisorProgram::Run, vectorArgs, &FileRevisorProgram::ExceptionHandler));
-   METALMOCK(_fileRevisorRunTimeStopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
+   METALMOCK(_programDurationStopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
    const string expectedDurationLine = "[FileRevisor] Duration: " + elapsedSeconds + " seconds";
    const string expectedExitCodeLine = "[FileRevisor] ExitCode: " + to_string(exitCode);
    METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
@@ -114,11 +125,11 @@ TEST(Run_ParsesArgs_GetsAndRunsSubProgramSpecifiedByCommandLineArguments_Returns
 
 TEST(ExceptionHandler_PrintsExceptionClassNameAndWhat_Returns1)
 {
-   METALMOCK_NONVOID1_STATIC(string, Exception, ClassNameAndWhat, const exception*);
    const string exceptionTypeNameAndWhat = ZenUnit::Random<string>();
    ClassNameAndWhatMock.Return(exceptionTypeNameAndWhat);
-   _fileRevisorProgram._call_Utils_Exception_ClassNameAndWhat = BIND_1ARG_METALMOCK_OBJECT(ClassNameAndWhatMock);
+
    _consoleMock->WriteLineMock.Expect();
+
    const exception ex;
    const vector<string> args = ZenUnit::RandomVector<string>();
    //

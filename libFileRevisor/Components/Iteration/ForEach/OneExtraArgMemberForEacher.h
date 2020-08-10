@@ -8,7 +8,10 @@ public:
    virtual ~OneExtraArgMemberForEacher() = default;
 
    virtual void OneExtraArgMemberForEach(
-      const std::vector<T>& elements, const ClassType* constClassPointer, MemberFunctionType constMemberFunction, ExtraArgType extraArg) const
+      const std::vector<T>& elements,
+      const ClassType* constClassPointer,
+      MemberFunctionType constMemberFunction,
+      ExtraArgType extraArg) const
    {
       const typename std::vector<T>::const_iterator elementsEnd = elements.cend();
       for (typename std::vector<T>::const_iterator iter = elements.cbegin(); iter != elementsEnd; ++iter)

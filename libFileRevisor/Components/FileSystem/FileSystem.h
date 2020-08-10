@@ -17,12 +17,13 @@ class FileSystem
 {
    friend class ::FileSystemTests;
 private:
+   // Constant Components
    unique_ptr<const ConstCharPointerGetter> _constCharPointerGetter;
    unique_ptr<const FileSystemExceptionMaker> _fileSystemExceptionThrower;
    unique_ptr<const RecursiveFileDeleter> _recursiveFileDeleter;
+   // Function Callers
    unique_ptr<const NonVoidOneArgMemberFunctionCaller<bool, FileSystem, const fs::path&>> _caller_Exists;
    unique_ptr<const VoidTwoArgMemberFunctionCaller<FileSystem, const fs::path&, FILE*>> _caller_CloseFile;
-
    function<FILE*(const char*, const char*)> _call_fopen;
    function<int(FILE*)> _call_fclose;
    function<uintmax_t(const fs::path&, error_code&)> _call_fs_remove_all;

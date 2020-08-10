@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "libFileRevisor/Components/Strings/StringUtil.h"
 #include "libFileRevisor/Utilities/CompilerHints.h"
-#include "libFileRevisor/Utilities/NOINLINEMacro.h"
 #include "libFileRevisor/Utilities/ReleaseAssert.h"
 
 NOINLINE void ThrowLogicError(
@@ -10,8 +9,9 @@ NOINLINE void ThrowLogicError(
    long lineNumber,
    const char* functionName)
 {
-   const string what = String::Concat("release_assert(", predicateExpressionText, ") failed in ", functionName, "()\n", filePath, "(", lineNumber, ")");
-   throw logic_error(what);
+   const string exceptioMessage = String::Concat(
+      "release_assert(", predicateExpressionText, ") failed in ", functionName, "()\n", filePath, "(", lineNumber, ")");
+   throw logic_error(exceptioMessage);
 }
 
 void ReleaseAssert(

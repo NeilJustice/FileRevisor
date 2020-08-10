@@ -1,16 +1,24 @@
 #include "pch.h"
-#include "libFileRevisor/Components/SubPrograms/RenameFilesSubProgram.h"
-#include "libFileRevisor/Components/Strings/Regexer.h"
+#include "libFileRevisor/Components/Console/Console.h"
+#include "libFileRevisor/Components/FileSystem/FileSystem.h"
+#include "libFileRevisor/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
 #include "libFileRevisor/Components/Iteration/Counter/PredicateCounter.h"
+#include "libFileRevisor/Components/Iteration/Transform/OneExtraArgMemberFunctionTransformer.h"
+#include "libFileRevisor/Components/SubPrograms/RenameFilesSubProgram.h"
+#include "libFileRevisor/Components/Strings/Pluralizer.h"
+#include "libFileRevisor/Components/Strings/Regexer.h"
+#include "libFileRevisor/Components/Strings/StringUtil.h"
 #include "libFileRevisor/ValueTypes/FileRevisorArgs.h"
 #include "libFileRevisor/ValueTypes/RenameResult.h"
 
 RenameFilesSubProgram::RenameFilesSubProgram()
-   : _oneExtraArgMemberFunctionTransformer(make_unique<OneExtraArgMemberFunctionTransformerType>())
+   // Constant Components
+   : _predicateCounter(make_unique<PredicateCounter<vector<RenameResult>, RenameResult>>())
    , _regexer(make_unique<Regexer>())
+   // Function Callers
    , _caller_PrintDidNotMatchFileMessageIfVerboseMode(make_unique<VoidTwoArgMemberFunctionCaller<
       RenameFilesSubProgram, bool, const fs::path& >>())
-   , _predicateCounter(make_unique<PredicateCounter<vector<RenameResult>, RenameResult>>())
+   , _transformer_RenameFileIfFileNameMatchesFromPattern(make_unique<OneExtraArgMemberFunctionTransformerType>())
 {
 }
 
@@ -18,7 +26,7 @@ int RenameFilesSubProgram::Run(const FileRevisorArgs& args) const
 {
    const vector<fs::path> filePathsInAndPossiblyBelowDirectory =
       _protected_fileSystem->GetFilePathsInDirectory(args.targetDirectoryPath, args.recursive);
-   const vector<RenameResult> fileRenameResults = _oneExtraArgMemberFunctionTransformer->Transform(
+   const vector<RenameResult> fileRenameResults = _transformer_RenameFileIfFileNameMatchesFromPattern->Transform(
       filePathsInAndPossiblyBelowDirectory, this, &RenameFilesSubProgram::RenameFileIfFileNameMatchesFromPattern, args);
    const size_t numberOfRenamedFiles = _predicateCounter->CountWhere(fileRenameResults, DidRenameFileIsTrue);
    string renamedFilesMessage;
