@@ -52,7 +52,7 @@ FileRevisorArgs FileRevisorArgsParser::ParseArgs(const vector<string>& stringArg
    return args;
 }
 
-void FileRevisorArgsParser::PrintPreamble(const FileRevisorArgs& args) const
+void FileRevisorArgsParser::PrintPreambleLines(const FileRevisorArgs& args) const
 {
    const string preambleLines = _fileRevisorPreambleMaker->MakePreambleLines(args);
    _console->WriteLine(preambleLines);

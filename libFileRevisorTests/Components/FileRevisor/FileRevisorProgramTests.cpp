@@ -106,7 +106,7 @@ TEST(Run_ParsesArgs_GetsAndRunsSubProgramSpecifiedByCommandLineArguments_Returns
 {
    const FileRevisorArgs args = _argsParserMock->ParseArgsMock.ReturnRandom();
 
-   _argsParserMock->PrintPreambleMock.Expect();
+   _argsParserMock->PrintPreambleLinesMock.Expect();
 
    shared_ptr<FileRevisorSubProgramMock> fileRevisorSubProgramMock = make_shared<FileRevisorSubProgramMock>();
    const int runReturnValue = fileRevisorSubProgramMock->RunMock.ReturnRandom();
@@ -117,7 +117,7 @@ TEST(Run_ParsesArgs_GetsAndRunsSubProgramSpecifiedByCommandLineArguments_Returns
    const int exitCode = _fileRevisorProgram.Run(stringArgs);
    //
    METALMOCK(_argsParserMock->ParseArgsMock.CalledOnceWith(stringArgs));
-   METALMOCK(_argsParserMock->PrintPreambleMock.CalledOnceWith(args));
+   METALMOCK(_argsParserMock->PrintPreambleLinesMock.CalledOnceWith(args));
    METALMOCK(_fileRevisorSubProgramFactoryMock->NewFileRevisorSubProgramMock.CalledOnceWith(args.programMode));
    METALMOCK(fileRevisorSubProgramMock->RunMock.CalledOnceWith(args));
    ARE_EQUAL(runReturnValue, exitCode);
@@ -125,8 +125,8 @@ TEST(Run_ParsesArgs_GetsAndRunsSubProgramSpecifiedByCommandLineArguments_Returns
 
 TEST(ExceptionHandler_PrintsExceptionClassNameAndWhat_Returns1)
 {
-   const string exceptionTypeNameAndWhat = ZenUnit::Random<string>();
-   ClassNameAndWhatMock.Return(exceptionTypeNameAndWhat);
+   const string exceptionTypeNameAndMessage = ZenUnit::Random<string>();
+   ClassNameAndWhatMock.Return(exceptionTypeNameAndMessage);
 
    _consoleMock->WriteLineMock.Expect();
 
@@ -136,7 +136,7 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndWhat_Returns1)
    int exitCode = _fileRevisorProgram.ExceptionHandler(ex, args);
    //
    METALMOCK(ClassNameAndWhatMock.CalledOnceWith(&ex));
-   const string expectedExceptionMessage = "[FileRevisor] Error: Exception thrown: " + exceptionTypeNameAndWhat;
+   const string expectedExceptionMessage = "[FileRevisor] Error: Exception thrown: " + exceptionTypeNameAndMessage;
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedExceptionMessage));
    ARE_EQUAL(1, exitCode);
 }

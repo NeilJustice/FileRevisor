@@ -10,7 +10,7 @@
 TESTS(FileRevisorArgsParserTests)
 AFACT(DefaultConstructor_NewsComponents_SetsDetermineProgramModeFunctionPointer)
 AFACT(ParseArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
-AFACT(PrintPreamble_WritesPreambleLinesToConsole)
+AFACT(PrintPreambleLines_WritesPreambleLinesToConsole)
 AFACT(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsTrue_ParsesDirArgumentAsRequired_ReturnsDirAndFromAndToArgumentValues)
 AFACT(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsFalse_FromArgumentIsEmpty_ThrowsInvalidArgumentException)
 AFACT(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsFalse_FromArgumentIsNotEmpty_ParsesDirArgumentAsOptional_ReturnsDirAndFromAndToArgumentValues)
@@ -129,13 +129,13 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
    ARE_EQUAL(expectedArgs, args);
 }
 
-TEST(PrintPreamble_WritesPreambleLinesToConsole)
+TEST(PrintPreambleLines_WritesPreambleLinesToConsole)
 {
    const string preambleLines = _fileRevisorPreambleMakerMock->MakePreambleLinesMock.ReturnRandom();
    _consoleMock->WriteLineMock.Expect();
    const FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    //
-   _fileRevisorArgsParser.PrintPreamble(args);
+   _fileRevisorArgsParser.PrintPreambleLines(args);
    //
    METALMOCK(_fileRevisorPreambleMakerMock->MakePreambleLinesMock.CalledOnceWith(args));
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(preambleLines));

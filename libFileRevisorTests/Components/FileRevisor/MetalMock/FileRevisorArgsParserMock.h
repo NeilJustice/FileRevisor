@@ -5,5 +5,5 @@ class FileRevisorArgsParserMock : public Metal::Mock<FileRevisorArgsParser>
 {
 public:
    METALMOCK_NONVOID1_CONST(FileRevisorArgs, ParseArgs, const vector<string>&)
-   METALMOCK_VOID1_CONST(PrintPreamble, const FileRevisorArgs&)
+   METALMOCK_VOID1_CONST(PrintPreambleLines, const FileRevisorArgs&)
 };

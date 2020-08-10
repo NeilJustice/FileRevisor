@@ -30,7 +30,7 @@ public:
    FileRevisorArgsParser();
    virtual ~FileRevisorArgsParser();
    virtual FileRevisorArgs ParseArgs(const vector<string>& stringArgs) const;
-   virtual void PrintPreamble(const FileRevisorArgs& args) const;
+   virtual void PrintPreambleLines(const FileRevisorArgs& args) const;
 private:
    static ProgramMode DetermineProgramMode(
       bool isRenameFilesMode,

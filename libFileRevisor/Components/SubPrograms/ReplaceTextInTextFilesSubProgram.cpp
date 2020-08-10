@@ -55,7 +55,7 @@ RegexReplaceTextInTextFile(const fs::path& textFilePath, const FileRevisorArgs& 
          return 1;
       }
       _protected_fileSystem->CreateTextFile(textFilePath, regexReplacedTextFileText);
-      const string replacedTextInFileMessage = "[FileRevisor] Replaced text in file " + textFilePath.string();
+      const string replacedTextInFileMessage = "[FileRevisor] Replaced: Text in file " + textFilePath.string();
       _protected_console->WriteLine(replacedTextInFileMessage);
       return 1;
    }
