@@ -2,6 +2,7 @@
 #include "libFileRevisor/Components/Exceptions/ErrorCodeTranslator.h"
 #include "libFileRevisor/Components/Exceptions/FileSystemExceptionMaker.h"
 #include "libFileRevisor/Components/FileSystem/RecursiveFileDeleter.h"
+#include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 #ifdef __linux__
 #include <sys/stat.h>
 #endif

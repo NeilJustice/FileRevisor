@@ -4,7 +4,10 @@
 #include "libFileRevisor/Components/DataStructures/Vector.h"
 #include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
+#include "libFileRevisorTests/Components/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
 #include "libFileRevisorTests/Components/Iteration/Math/MetalMock/OneExtraArgMemberFunctionSumatorMock.h"
+#include "libFileRevisorTests/Components/Strings/MetalMock/PluralizerMock.h"
+#include "libFileRevisorTests/Components/Strings/MetalMock/RegexerMock.h"
 
 TESTS(ReplaceTextInTextFilesSubProgramTests)
 AFACT(DefaultConstructor_NewsFileSystem)

@@ -1,10 +1,17 @@
 #include "pch.h"
+#include "libFileRevisor/Components/DataStructures/Vector.h"
+#include "libFileRevisor/Components/Exceptions/Exception.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorArgsParser.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorProgram.h"
+#include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/ValueTypes/FileRevisorArgs.h"
+#include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libFileRevisorTests/Components/Exceptions/MetalMock/TryCatchCallerMock.h"
 #include "libFileRevisorTests/Components/FileRevisor/MetalMock/FileRevisorArgsParserMock.h"
+#include "libFileRevisorTests/Components/Strings/MetalMock/PluralizerMock.h"
 #include "libFileRevisorTests/Components/SubPrograms/MetalMock/FileRevisorSubProgramFactoryMock.h"
 #include "libFileRevisorTests/Components/SubPrograms/MetalMock/FileRevisorSubProgramMock.h"
+#include "libFileRevisorTests/Components/Time/MetalMock/StopwatchMock.h"
 
 TESTS(FileRevisorProgramTests)
 AFACT(DefaultConstructor_NewsComponents)

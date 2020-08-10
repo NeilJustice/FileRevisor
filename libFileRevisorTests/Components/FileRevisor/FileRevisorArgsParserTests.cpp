@@ -6,6 +6,7 @@
 #include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
 #include "libFileRevisorTests/Components/Docopt/MetalMock/DocoptParserMock.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
+#include "libFileRevisorTests/Components/FunctionCallers/Member/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
 
 TESTS(FileRevisorArgsParserTests)
 AFACT(DefaultConstructor_NewsComponents_SetsDetermineProgramModeFunctionPointer)

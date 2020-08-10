@@ -2,7 +2,11 @@
 #include "libFileRevisor/Components/SubPrograms/RenameDirectoriesSubProgram.h"
 #include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
+#include "libFileRevisorTests/Components/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
+#include "libFileRevisorTests/Components/Iteration/Counter/MetalMock/PredicateCounterMock.h"
 #include "libFileRevisorTests/Components/Iteration/ForEach/MetalMock/OneExtraArgMemberForEacherMock.h"
+#include "libFileRevisorTests/Components/Iteration/Transform/MetalMock/OneExtraArgMemberFunctionTransformerMock.h"
+#include "libFileRevisorTests/Components/Strings/MetalMock/PluralizerMock.h"
 #include "libFileRevisorTests/Components/Strings/MetalMock/RegexerMock.h"
 #include "libFileRevisorTests/ValueTypes/ZenUnit/RenameResultZenUnitFunctions.h"
 

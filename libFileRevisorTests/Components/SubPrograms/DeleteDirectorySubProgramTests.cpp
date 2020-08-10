@@ -1,5 +1,10 @@
 #include "pch.h"
 #include "libFileRevisor/Components/SubPrograms/DeleteDirectorySubProgram.h"
+#include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
+#include "libFileRevisorTests/Components/Iteration/ForEach/MetalMock/OneExtraArgMemberForEacherMock.h"
+#include "libFileRevisorTests/Components/Iteration/ForEach/MetalMock/ParallelOneExtraArgMemberForEacherMock.h"
+#include "libFileRevisorTests/Components/Strings/MetalMock/PluralizerMock.h"
 
 TESTS(DeleteDirectorySubProgramTests)
 AFACT(DefaultConstructor_NewsComponents)

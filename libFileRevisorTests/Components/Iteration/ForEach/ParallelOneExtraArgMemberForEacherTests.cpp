@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "libFileRevisor/Components/Iteration/ForEach/OneExtraArgMemberForEacher.h"
+#include "libFileRevisorTests/Components/Iteration/ForEach/MetalMock/ParallelOneExtraArgMemberForEacherMock.h"
 
 template<typename ElementType, typename ExtraArgType>
 TEMPLATE_TESTS(ParallelOneExtraArgMemberForEacherTests, ElementType, ExtraArgType)

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorPreambleMaker.h"
+#include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 
 TESTS(FileRevisorPreambleMakerTests)
 AFACT(DefaultConstructor_NewsComponents)
