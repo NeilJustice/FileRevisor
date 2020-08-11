@@ -24,7 +24,7 @@ private:
    unique_ptr<const ParallelOneExtraArgMemberForEacherType> _parallelOneExtraArgMemberForEacher_DeleteDirectory;
 public:
    DeleteDirectorySubProgram();
-   virtual ~DeleteDirectorySubProgram() = default;
+   virtual ~DeleteDirectorySubProgram();
    int Run(const FileRevisorArgs& args) const override;
 private:
    void DeleteDirectory(const string& directoryPath, const FileRevisorArgs& args) const;

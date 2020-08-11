@@ -13,6 +13,10 @@ DeleteDirectorySubProgram::DeleteDirectorySubProgram()
 {
 }
 
+DeleteDirectorySubProgram::~DeleteDirectorySubProgram()
+{
+}
+
 int DeleteDirectorySubProgram::Run(const FileRevisorArgs& args) const
 {
    const bool targetDirectoryExists = _protected_fileSystem->FileOrDirectoryExists(args.targetDirectoryPath);
