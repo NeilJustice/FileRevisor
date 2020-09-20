@@ -40,7 +40,7 @@ Usage:
       --target=<TargetDirectoryPath>
       --from=<FileNameRegex>
       --to=<FileNameRegex>
-      [--recursive]
+      [--recurse]
       [--preview]
       [--verbose]
 
@@ -48,7 +48,7 @@ Usage:
       --target=<TargetDirectoryPath>
       --from=<DirectoryNameRegex>
       --to=<DirectoryNameRegex>
-      [--recursive]
+      [--recurse]
       [--preview]
       [--verbose]
 
@@ -56,7 +56,7 @@ Usage:
       --target=<TargetDirectoryPath>
       --from=<FileTextRegexPattern>
       --to=<ReplacementFileTextRegexPattern>
-      [--recursive]
+      [--recurse]
       [--preview]
       [--verbose]
 ```

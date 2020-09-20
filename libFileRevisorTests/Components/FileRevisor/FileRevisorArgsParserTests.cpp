@@ -73,14 +73,14 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
       isReplaceTextInTextFilesMode,
       isDeleteDirectoryMode);
 
-   const bool recursive = ZenUnit::Random<bool>();
+   const bool recurse = ZenUnit::Random<bool>();
    const bool parallel = ZenUnit::Random<bool>();
    const bool skipFilesInUse = ZenUnit::Random<bool>();
    const bool preview = ZenUnit::Random<bool>();
    const bool minimal = ZenUnit::Random<bool>();
    const bool verbose = ZenUnit::Random<bool>();
    _docoptParserMock->GetOptionalBoolMock.ReturnValues(
-      recursive, parallel, skipFilesInUse, preview, minimal, verbose);
+      recurse, parallel, skipFilesInUse, preview, minimal, verbose);
 
    const ProgramMode programMode = ZenUnit::RandomEnum<ProgramMode>(ProgramMode::MaxValue);
    DetermineProgramModeMock.Return(programMode);
@@ -108,7 +108,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
       docoptValues, isDeleteDirectoryMode));
    METALMOCK(_docoptParserMock->GetOptionalBoolMock.CalledAsFollows(
    {
-      { docoptValues, "--recursive" },
+      { docoptValues, "--recurse" },
       { docoptValues, "--parallel" },
       { docoptValues, "--skip-files-in-use" },
       { docoptValues, "--preview" },
@@ -121,7 +121,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
    expectedArgs.targetDirectoryPath = get<0>(targetDirectory_fromRegexPattern_toRegexPattern);
    expectedArgs.fromRegexPattern = get<1>(targetDirectory_fromRegexPattern_toRegexPattern);
    expectedArgs.toRegexPattern = get<2>(targetDirectory_fromRegexPattern_toRegexPattern);
-   expectedArgs.recursive = recursive;
+   expectedArgs.recurse = recurse;
    expectedArgs.parallel = parallel;
    expectedArgs.skipFilesInUse = skipFilesInUse;
    expectedArgs.preview = preview;

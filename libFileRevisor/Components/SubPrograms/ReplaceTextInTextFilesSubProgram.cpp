@@ -20,7 +20,7 @@ ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFilesSubProgram()
 int ReplaceTextInTextFilesSubProgram::Run(const FileRevisorArgs& args) const
 {
    const vector<fs::path> nonEmptyTextFilePathsInTargetDirectory =
-      _protected_fileSystem->GetNonEmptyTextFilePathsInDirectory(args.targetDirectoryPath, args.recursive);
+      _protected_fileSystem->GetNonEmptyTextFilePathsInDirectory(args.targetDirectoryPath, args.recurse);
    const size_t numberOfFilesThatWereOrWouldBeModified = _memberFunctionSumator_RegexReplaceTextInTextFile->SumElementsWithFunction(
       this, nonEmptyTextFilePathsInTargetDirectory, &ReplaceTextInTextFilesSubProgram::RegexReplaceTextInTextFile, args);
    const string fileOrFiles = _protected_pluralizer->PotentiallyPluralizeWord(numberOfFilesThatWereOrWouldBeModified, "file", "files");

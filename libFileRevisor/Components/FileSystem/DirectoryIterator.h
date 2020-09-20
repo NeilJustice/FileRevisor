@@ -14,7 +14,7 @@ public:
    DirectoryIterator() noexcept;
    virtual ~DirectoryIterator() = default;
    virtual void SetFileAndDirectoryPathIgnoreSubstrings(const vector<string>& fileAndDirectoryPathIgnoreSubstrings);
-   virtual void SetDirectoryIterator(const fs::path& directoryPath, bool recursive);
+   virtual void SetDirectoryIterator(const fs::path& directoryPath, bool recurse);
    virtual fs::path NextNonIgnoredFilePath();
    virtual fs::path NextNonIgnoredDirectoryPath();
 private:

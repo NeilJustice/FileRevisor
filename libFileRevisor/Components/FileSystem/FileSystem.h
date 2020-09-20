@@ -51,10 +51,10 @@ public:
    virtual fs::path CurrentDirectoryPath() const;
    virtual void RecursivelyDeleteAllFilesInDirectory(
       const string& directoryPath, const FileRevisorArgs& args) const;
-   virtual vector<fs::path> GetFilePathsInDirectory(const fs::path& directoryPath, bool recursive) const;
-   virtual vector<fs::path> GetNonEmptyTextFilePathsInDirectory(const fs::path& directoryPath, bool recursive) const;
-   virtual vector<fs::path> GetDirectoryPathsInDirectory(const fs::path& directoryPath, bool recursive) const;
-   virtual vector<string> GetStringDirectoryPathsInDirectory(const fs::path& directoryPath, bool recursive) const;
+   virtual vector<fs::path> GetFilePathsInDirectory(const fs::path& directoryPath, bool recurse) const;
+   virtual vector<fs::path> GetNonEmptyTextFilePathsInDirectory(const fs::path& directoryPath, bool recurse) const;
+   virtual vector<fs::path> GetDirectoryPathsInDirectory(const fs::path& directoryPath, bool recurse) const;
+   virtual vector<string> GetStringDirectoryPathsInDirectory(const fs::path& directoryPath, bool recurse) const;
    virtual bool FileOrDirectoryExists(const fs::path& fileOrDirectoryPath) const;
 
    // Reads

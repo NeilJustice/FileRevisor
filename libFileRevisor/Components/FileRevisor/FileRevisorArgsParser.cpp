@@ -43,7 +43,7 @@ FileRevisorArgs FileRevisorArgsParser::ParseArgs(const vector<string>& stringArg
    args.targetDirectoryPath = get<0>(targetDirectory_fromRegexPattern_toRegexPattern);
    args.fromRegexPattern = get<1>(targetDirectory_fromRegexPattern_toRegexPattern);
    args.toRegexPattern = get<2>(targetDirectory_fromRegexPattern_toRegexPattern);
-   args.recursive = _docoptParser->GetOptionalBool(docoptValues, "--recursive");
+   args.recurse = _docoptParser->GetOptionalBool(docoptValues, "--recurse");
    args.parallel = _docoptParser->GetOptionalBool(docoptValues, "--parallel");
    args.skipFilesInUse = _docoptParser->GetOptionalBool(docoptValues, "--skip-files-in-use");
    args.preview = _docoptParser->GetOptionalBool(docoptValues, "--preview");

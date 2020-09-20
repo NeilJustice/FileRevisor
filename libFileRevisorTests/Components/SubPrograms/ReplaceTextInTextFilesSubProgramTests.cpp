@@ -81,7 +81,7 @@ TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsRegexReplaceFileTextOnEachText
 	//
 	const int exitCode = _replaceTextInTextFilesSubProgram.Run(args);
 	//
-	METALMOCK(_protected_fileSystemMock->GetNonEmptyTextFilePathsInDirectoryMock.CalledOnceWith(args.targetDirectoryPath, args.recursive));
+	METALMOCK(_protected_fileSystemMock->GetNonEmptyTextFilePathsInDirectoryMock.CalledOnceWith(args.targetDirectoryPath, args.recurse));
 	METALMOCK(_memberFunctionSumator_RegexReplaceTextInTextFileMock->SumElementsWithFunctionMock.CalledOnceWith(
 		&_replaceTextInTextFilesSubProgram, nonEmptyTextFilePaths, &ReplaceTextInTextFilesSubProgram::RegexReplaceTextInTextFile, args));
    METALMOCK(_protected_pluralizerMock->PotentiallyPluralizeWordMock.CalledOnceWith(numberOfFilesThatWereOrWouldBeModified, "file", "files"));

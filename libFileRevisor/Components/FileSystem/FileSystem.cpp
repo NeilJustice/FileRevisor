@@ -70,11 +70,11 @@ void FileSystem::RecursivelyDeleteAllFilesInDirectory(
    _recursiveFileDeleter->RecursivelyDeleteAllFilesInDirectory(directoryPath.c_str(), args);
 }
 
-vector<fs::path> FileSystem::GetFilePathsInDirectory(const fs::path& directoryPath, bool recursive) const
+vector<fs::path> FileSystem::GetFilePathsInDirectory(const fs::path& directoryPath, bool recurse) const
 {
    vector<fs::path> filePaths;
    DirectoryIterator directoryIterator;
-   directoryIterator.SetDirectoryIterator(directoryPath, recursive);
+   directoryIterator.SetDirectoryIterator(directoryPath, recurse);
    static const fs::path endIterationMarker;
    while (true)
    {
@@ -88,11 +88,11 @@ vector<fs::path> FileSystem::GetFilePathsInDirectory(const fs::path& directoryPa
    return filePaths;
 }
 
-vector<fs::path> FileSystem::GetNonEmptyTextFilePathsInDirectory(const fs::path& directoryPath, bool recursive) const
+vector<fs::path> FileSystem::GetNonEmptyTextFilePathsInDirectory(const fs::path& directoryPath, bool recurse) const
 {
    vector<fs::path> textFilePaths;
    DirectoryIterator directoryIterator;
-   directoryIterator.SetDirectoryIterator(directoryPath, recursive);
+   directoryIterator.SetDirectoryIterator(directoryPath, recurse);
    while (true)
    {
       const fs::path nextNonIgnoredFilePath = directoryIterator.NextNonIgnoredFilePath();
@@ -111,11 +111,11 @@ vector<fs::path> FileSystem::GetNonEmptyTextFilePathsInDirectory(const fs::path&
    return textFilePaths;
 }
 
-vector<fs::path> FileSystem::GetDirectoryPathsInDirectory(const fs::path& directoryPath, bool recursive) const
+vector<fs::path> FileSystem::GetDirectoryPathsInDirectory(const fs::path& directoryPath, bool recurse) const
 {
    vector<fs::path> directoryPaths;
    DirectoryIterator directoryIterator;
-   directoryIterator.SetDirectoryIterator(directoryPath, recursive);
+   directoryIterator.SetDirectoryIterator(directoryPath, recurse);
    while (true)
    {
       const fs::path nonIgnoredDirectoryPath = directoryIterator.NextNonIgnoredDirectoryPath();
@@ -129,9 +129,9 @@ vector<fs::path> FileSystem::GetDirectoryPathsInDirectory(const fs::path& direct
    return directoryPaths;
 }
 
-vector<string> FileSystem::GetStringDirectoryPathsInDirectory(const fs::path& directoryPath, bool recursive) const
+vector<string> FileSystem::GetStringDirectoryPathsInDirectory(const fs::path& directoryPath, bool recurse) const
 {
-   const vector<fs::path> subdirectoryPaths = GetDirectoryPathsInDirectory(directoryPath, recursive);
+   const vector<fs::path> subdirectoryPaths = GetDirectoryPathsInDirectory(directoryPath, recurse);
    const size_t numberOfSubdirectoryPaths = subdirectoryPaths.size();
    vector<string> stringSubdirectoryPaths(numberOfSubdirectoryPaths);
    for (size_t i = 0; i < numberOfSubdirectoryPaths; ++i)

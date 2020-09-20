@@ -6,14 +6,14 @@
 #include "libFileRevisorTests/Components/Strings/MetalMock/ConstCharPointerGetterMock.h"
 
 TESTS(FileSystemIntegrationTests)
-AFACT(GetFilePathsInDirectory_RecursiveFalse_ReturnsTopLevelFilePaths)
-AFACT(GetFilePathsInDirectory_RecursiveTrue_ReturnsFilePathsInAndBelowDirectoryPath)
-AFACT(GetDirectoryPathsInDirectory_RecursiveFalse_ReturnsTopLevelDirectoryPaths)
-AFACT(GetDirectoryPathsInDirectory_RecursiveTrue_ReturnsDirectoryPathsInAndBelowDirectoryPath)
-AFACT(GetStringDirectoryPathsInDirectory_RecursiveFalse_ReturnsTopLevelDirectoryPaths)
-AFACT(GetStringDirectoryPathsInDirectory_RecursiveTrue_ReturnsDirectoryPathsInAndBelowDirectoryPath)
-AFACT(GetNonEmptyTextFilePathsInDirectory_RecursiveFalse_ReturnsTopLevelFilePathsThatDoNotHaveABinary0InTheFirst1024Bytes)
-AFACT(GetNonEmptyTextFilePathsInDirectory_RecursiveTrue_ReturnsAllFilePathsInAndBelowDirectoryThatDoNotHaveABinary0InTheFirst1024Bytes)
+AFACT(GetFilePathsInDirectory_RecurseIsFalse_ReturnsTopLevelFilePaths)
+AFACT(GetFilePathsInDirectory_RecurseIsTrue_ReturnsFilePathsInAndBelowDirectoryPath)
+AFACT(GetDirectoryPathsInDirectory_RecurseIsFalse_ReturnsTopLevelDirectoryPaths)
+AFACT(GetDirectoryPathsInDirectory_RecurseIsTrue_ReturnsDirectoryPathsInAndBelowDirectoryPath)
+AFACT(GetStringDirectoryPathsInDirectory_RecurseIsFalse_ReturnsTopLevelDirectoryPaths)
+AFACT(GetStringDirectoryPathsInDirectory_RecurseIsTrue_ReturnsDirectoryPathsInAndBelowDirectoryPath)
+AFACT(GetNonEmptyTextFilePathsInDirectory_RecurseIsFalse_ReturnsTopLevelFilePathsThatDoNotHaveABinary0InTheFirst1024Bytes)
+AFACT(GetNonEmptyTextFilePathsInDirectory_RecurseIsTrue_ReturnsAllFilePathsInAndBelowDirectoryThatDoNotHaveABinary0InTheFirst1024Bytes)
 AFACT(ReadText_FileDoesNotExist_ThrowsFileSystemException)
 AFACT(ReadText_FileExists_FileIsEmpty_ReturnsEmptyString)
 AFACT(ReadText_FileExists_FileIsNotEmptyAndContainsTrailingBinaryZeros_ReturnsFileTextMinusTrailingBinaryZeros)
@@ -58,7 +58,7 @@ CLEANUP
    fs::remove_all(_rootDirectoryPath);
 }
 
-TEST(GetFilePathsInDirectory_RecursiveFalse_ReturnsTopLevelFilePaths)
+TEST(GetFilePathsInDirectory_RecurseIsFalse_ReturnsTopLevelFilePaths)
 {
    const vector<fs::path> topLevelFilePathsInDirectory =
       _fileSystem.GetFilePathsInDirectory(_rootDirectoryPath, false);
@@ -73,7 +73,7 @@ TEST(GetFilePathsInDirectory_RecursiveFalse_ReturnsTopLevelFilePaths)
    INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedTopLevelFilePathsInDirectory, topLevelFilePathsInDirectory);
 }
 
-TEST(GetFilePathsInDirectory_RecursiveTrue_ReturnsFilePathsInAndBelowDirectoryPath)
+TEST(GetFilePathsInDirectory_RecurseIsTrue_ReturnsFilePathsInAndBelowDirectoryPath)
 {
    const vector<fs::path> filePathsInAndBelowDirectory = _fileSystem.GetFilePathsInDirectory(_rootDirectoryPath, true);
    //
@@ -93,7 +93,7 @@ TEST(GetFilePathsInDirectory_RecursiveTrue_ReturnsFilePathsInAndBelowDirectoryPa
    INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedFilePathsInAndBelowDirectory, filePathsInAndBelowDirectory);
 }
 
-TEST(GetDirectoryPathsInDirectory_RecursiveFalse_ReturnsTopLevelDirectoryPaths)
+TEST(GetDirectoryPathsInDirectory_RecurseIsFalse_ReturnsTopLevelDirectoryPaths)
 {
    const vector<fs::path> topLevelDirectoryPathsInDirectory = _fileSystem.GetDirectoryPathsInDirectory(_rootDirectoryPath, false);
    //
@@ -106,7 +106,7 @@ TEST(GetDirectoryPathsInDirectory_RecursiveFalse_ReturnsTopLevelDirectoryPaths)
    INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedTopLevelDirectoryPathsInDirectory, topLevelDirectoryPathsInDirectory);
 }
 
-TEST(GetDirectoryPathsInDirectory_RecursiveTrue_ReturnsDirectoryPathsInAndBelowDirectoryPath)
+TEST(GetDirectoryPathsInDirectory_RecurseIsTrue_ReturnsDirectoryPathsInAndBelowDirectoryPath)
 {
    const vector<fs::path> directoryPathsInAndBelowDirectory = _fileSystem.GetDirectoryPathsInDirectory(_rootDirectoryPath, true);
    //
@@ -122,7 +122,7 @@ TEST(GetDirectoryPathsInDirectory_RecursiveTrue_ReturnsDirectoryPathsInAndBelowD
    INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedDirectoryPathsInAndBelowDirectory, directoryPathsInAndBelowDirectory);
 }
 
-TEST(GetStringDirectoryPathsInDirectory_RecursiveFalse_ReturnsTopLevelDirectoryPaths)
+TEST(GetStringDirectoryPathsInDirectory_RecurseIsFalse_ReturnsTopLevelDirectoryPaths)
 {
    const vector<string> topLevelDirectoryPathsInDirectory =
       _fileSystem.GetStringDirectoryPathsInDirectory(_rootDirectoryPath, false);
@@ -136,7 +136,7 @@ TEST(GetStringDirectoryPathsInDirectory_RecursiveFalse_ReturnsTopLevelDirectoryP
    INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedTopLevelDirectoryPathsInDirectory, topLevelDirectoryPathsInDirectory);
 }
 
-TEST(GetStringDirectoryPathsInDirectory_RecursiveTrue_ReturnsDirectoryPathsInAndBelowDirectoryPath)
+TEST(GetStringDirectoryPathsInDirectory_RecurseIsTrue_ReturnsDirectoryPathsInAndBelowDirectoryPath)
 {
    const vector<string> directoryPathsInAndBelowDirectory =
       _fileSystem.GetStringDirectoryPathsInDirectory(_rootDirectoryPath, true);
@@ -153,7 +153,7 @@ TEST(GetStringDirectoryPathsInDirectory_RecursiveTrue_ReturnsDirectoryPathsInAnd
    INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedDirectoryPathsInAndBelowDirectory, directoryPathsInAndBelowDirectory);
 }
 
-TEST(GetNonEmptyTextFilePathsInDirectory_RecursiveFalse_ReturnsTopLevelFilePathsThatDoNotHaveABinary0InTheFirst1024Bytes)
+TEST(GetNonEmptyTextFilePathsInDirectory_RecurseIsFalse_ReturnsTopLevelFilePathsThatDoNotHaveABinary0InTheFirst1024Bytes)
 {
    const vector<fs::path> topLevelNonEmptyTextFilesInDirectory =
       _fileSystem.GetNonEmptyTextFilePathsInDirectory(_rootDirectoryPath, false);
@@ -166,7 +166,7 @@ TEST(GetNonEmptyTextFilePathsInDirectory_RecursiveFalse_ReturnsTopLevelFilePaths
    INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedTopLevelNonEmptyTextFilesInDirectory, topLevelNonEmptyTextFilesInDirectory);
 }
 
-TEST(GetNonEmptyTextFilePathsInDirectory_RecursiveTrue_ReturnsAllFilePathsInAndBelowDirectoryThatDoNotHaveABinary0InTheFirst1024Bytes)
+TEST(GetNonEmptyTextFilePathsInDirectory_RecurseIsTrue_ReturnsAllFilePathsInAndBelowDirectoryThatDoNotHaveABinary0InTheFirst1024Bytes)
 {
    const vector<fs::path> allNonEmptyTextFilePathsInAndBelowDirectory =
       _fileSystem.GetNonEmptyTextFilePathsInDirectory(_rootDirectoryPath, true);

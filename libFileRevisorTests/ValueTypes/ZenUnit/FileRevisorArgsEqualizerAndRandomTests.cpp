@@ -15,7 +15,7 @@ TEST(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
    EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, fromRegexPattern, ZenUnit::Random<string>());
    EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, toRegexPattern, ZenUnit::Random<string>());
    EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, targetDirectoryPath, ZenUnit::Random<fs::path>());
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, recursive, true);
+   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, recurse, true);
    EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, parallel, true);
    EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, skipFilesInUse, true);
    EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, preview, true);
@@ -43,14 +43,14 @@ TEST(TestableRandomFileRevisorArgs_ReturnsFileRevisorArgsWithAllRandomFields)
 
    const fs::path targetDirectory = randomGeneratorMock.PathMock.ReturnRandom();
 
-   const bool recursive = ZenUnit::Random<bool>();
+   const bool recurse = ZenUnit::Random<bool>();
    const bool parallel = ZenUnit::Random<bool>();
    const bool skipFilesInUse = ZenUnit::Random<bool>();
    const bool preview = ZenUnit::Random<bool>();
    const bool minimal = ZenUnit::Random<bool>();
    const bool verbose = ZenUnit::Random<bool>();
    randomGeneratorMock.BoolMock.ReturnValues(
-      recursive, parallel, skipFilesInUse, preview, minimal, verbose);
+      recurse, parallel, skipFilesInUse, preview, minimal, verbose);
    //
    const FileRevisorArgs randomFileRevisorArgs = TestableRandomFileRevisorArgs(&randomGeneratorMock);
    //
@@ -64,7 +64,7 @@ TEST(TestableRandomFileRevisorArgs_ReturnsFileRevisorArgsWithAllRandomFields)
    expectedRandomFileRevisorArgs.fromRegexPattern = fromRegexPattern;
    expectedRandomFileRevisorArgs.toRegexPattern = toRegexPattern;
    expectedRandomFileRevisorArgs.targetDirectoryPath = targetDirectory;
-   expectedRandomFileRevisorArgs.recursive = recursive;
+   expectedRandomFileRevisorArgs.recurse = recurse;
    expectedRandomFileRevisorArgs.parallel = parallel;
    expectedRandomFileRevisorArgs.skipFilesInUse = skipFilesInUse;
    expectedRandomFileRevisorArgs.preview = preview;

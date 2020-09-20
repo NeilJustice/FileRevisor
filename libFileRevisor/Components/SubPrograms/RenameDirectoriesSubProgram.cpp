@@ -23,7 +23,7 @@ RenameDirectoriesSubProgram::RenameDirectoriesSubProgram()
 int RenameDirectoriesSubProgram::Run(const FileRevisorArgs& args) const
 {
    const vector<fs::path> directoryPathsInDirectory =
-      _protected_fileSystem->GetDirectoryPathsInDirectory(args.targetDirectoryPath, args.recursive);
+      _protected_fileSystem->GetDirectoryPathsInDirectory(args.targetDirectoryPath, args.recurse);
 
    const vector<RenameResult> directoryRenameResults =
       _directoryPathsTransformer_RenameDirectory->Transform(

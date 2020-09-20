@@ -25,7 +25,7 @@ RenameFilesSubProgram::RenameFilesSubProgram()
 int RenameFilesSubProgram::Run(const FileRevisorArgs& args) const
 {
    const vector<fs::path> filePathsInAndPossiblyBelowDirectory =
-      _protected_fileSystem->GetFilePathsInDirectory(args.targetDirectoryPath, args.recursive);
+      _protected_fileSystem->GetFilePathsInDirectory(args.targetDirectoryPath, args.recurse);
    const vector<RenameResult> fileRenameResults = _transformer_RenameFileIfFileNameMatchesFromPattern->Transform(
       filePathsInAndPossiblyBelowDirectory, this, &RenameFilesSubProgram::RenameFileIfFileNameMatchesFromPattern, args);
    const size_t numberOfRenamedFiles = _predicateCounter->CountWhere(fileRenameResults, DidRenameFileIsTrue);

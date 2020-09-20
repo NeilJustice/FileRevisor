@@ -12,9 +12,9 @@ void DirectoryIterator::SetFileAndDirectoryPathIgnoreSubstrings(const vector<str
    _fileAndDirectoryPathIgnoreSubstrings = fileAndDirectoryPathIgnoreSubstrings;
 }
 
-void DirectoryIterator::SetDirectoryIterator(const fs::path& directoryPath, bool recursive)
+void DirectoryIterator::SetDirectoryIterator(const fs::path& directoryPath, bool recurse)
 {
-	if (recursive)
+	if (recurse)
 	{
 		_recursiveDirectoryIterator = fs::recursive_directory_iterator(directoryPath);
 		_recursiveMode = true;

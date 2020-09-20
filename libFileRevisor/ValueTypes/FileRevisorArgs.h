@@ -9,7 +9,7 @@ struct FileRevisorArgs
    fs::path targetDirectoryPath;
    string fromRegexPattern;
    string toRegexPattern;
-   bool recursive = false;
+   bool recurse = false;
    bool parallel = false;
    bool skipFilesInUse = false;
    bool preview = false;

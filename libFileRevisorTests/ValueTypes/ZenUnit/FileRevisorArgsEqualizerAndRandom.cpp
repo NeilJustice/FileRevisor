@@ -11,7 +11,7 @@ namespace ZenUnit
       ARE_EQUAL(expectedFileRevisorArgs.fromRegexPattern, actualFileRevisorArgs.fromRegexPattern);
       ARE_EQUAL(expectedFileRevisorArgs.toRegexPattern, actualFileRevisorArgs.toRegexPattern);
       ARE_EQUAL(expectedFileRevisorArgs.targetDirectoryPath, actualFileRevisorArgs.targetDirectoryPath);
-      ARE_EQUAL(expectedFileRevisorArgs.recursive, actualFileRevisorArgs.recursive);
+      ARE_EQUAL(expectedFileRevisorArgs.recurse, actualFileRevisorArgs.recurse);
       ARE_EQUAL(expectedFileRevisorArgs.parallel, actualFileRevisorArgs.parallel);
       ARE_EQUAL(expectedFileRevisorArgs.skipFilesInUse, actualFileRevisorArgs.skipFilesInUse);
       ARE_EQUAL(expectedFileRevisorArgs.preview, actualFileRevisorArgs.preview);
@@ -36,7 +36,7 @@ FileRevisorArgs TestableRandomFileRevisorArgs(const ZenUnit::RandomGenerator* ra
    randomFileRevisorArgs.fromRegexPattern = randomGenerator->String();
    randomFileRevisorArgs.toRegexPattern = randomGenerator->String();
    randomFileRevisorArgs.targetDirectoryPath = randomGenerator->Path();
-   randomFileRevisorArgs.recursive = randomGenerator->Bool();
+   randomFileRevisorArgs.recurse = randomGenerator->Bool();
    randomFileRevisorArgs.parallel = randomGenerator->Bool();
    randomFileRevisorArgs.skipFilesInUse = randomGenerator->Bool();
    randomFileRevisorArgs.preview = randomGenerator->Bool();

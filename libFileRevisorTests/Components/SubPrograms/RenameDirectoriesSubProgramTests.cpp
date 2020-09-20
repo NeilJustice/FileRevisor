@@ -81,7 +81,7 @@ TEST2X2(Run_CallsRenameDirectoryOnEachDirectoryPathInArgsDirPath_PrintsNumberOfD
    //
    const int exitCode = _renameDirectoriesSubProgram.Run(args);
    //
-   METALMOCK(_protected_fileSystemMock->GetDirectoryPathsInDirectoryMock.CalledOnceWith(args.targetDirectoryPath, args.recursive));
+   METALMOCK(_protected_fileSystemMock->GetDirectoryPathsInDirectoryMock.CalledOnceWith(args.targetDirectoryPath, args.recurse));
    METALMOCK(_directoryPathsTransformer_RenameDirectoryMock->TransformMock.CalledOnceWith(
       directoryPathsInDirectory, &_renameDirectoriesSubProgram, &RenameDirectoriesSubProgram::RenameDirectory, args));
    METALMOCK(_predicateCounterMock->CountWhereMock.CalledOnceWith(directoryRenameResults, RenameResult::DidRenameFileOrDirectoryFieldIsTrue));
