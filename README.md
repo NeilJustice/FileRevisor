@@ -110,6 +110,8 @@ CXX=clang++ cmake .. -DCMAKE_BUILD_TYPE=Release
 sudo cmake --build . --target install
 ```
 
+![Linux filerevisor binary in /usr/local/bin](Screenshots/LinuxFileRevisorBinaryInUsrLocalBin.png)
+
 ## Four Steps To Build And Install FileRevisor On Windows
 
 ```
@@ -120,3 +122,4 @@ cmake --build . --config Release --target install
 ```
 
 ![Windows FileRevisor.exe](Screenshots/WindowsFileRevisorDotExe.png)
+
