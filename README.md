@@ -107,7 +107,6 @@ A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins job
 git clone https://github.com/NeilJustice/FileRevisor
 cd FileRevisor && mkdir Release && cd Release
 CXX=clang++ cmake .. -DCMAKE_BUILD_TYPE=Release
-# Builds then copies binary 'filerevisor' to /usr/local/bin/filerevisor
 sudo cmake --build . --target install
 ```
 
@@ -117,7 +116,6 @@ sudo cmake --build . --target install
 git clone https://github.com/NeilJustice/FileRevisor
 cd FileRevisor
 cmake . -G"Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
-# Builds then copies FileRevisor.exe to C:\bin\FileRevisor.exe
 cmake --build . --config Release --target install
 ```
 
