@@ -50,7 +50,7 @@ RegexReplaceTextInTextFile(const fs::path& textFilePath, const FileRevisorArgs& 
    {
       if (args.preview)
       {
-         const string wouldReplaceTextInFileMessage = "[FileRevisor]  Preview: Would replace text in file " + textFilePath.string();
+         const string wouldReplaceTextInFileMessage = "[FileRevisor] Preview: Would replace text in file " + textFilePath.string();
          _protected_console->WriteLine(wouldReplaceTextInFileMessage);
          return 1;
       }

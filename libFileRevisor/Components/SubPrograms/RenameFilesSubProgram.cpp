@@ -64,7 +64,7 @@ RenameFileIfFileNameMatchesFromPattern(const fs::path& filePath, const FileRevis
    if (args.preview)
    {
       const string wouldRenameMessage = String::Concat(
-         "[FileRevisor]  Preview: Would rename file ", filePath.string(), " to ", regexReplacedFileName);
+         "[FileRevisor] Preview: Would rename file ", filePath.string(), " to ", regexReplacedFileName);
       _protected_console->WriteLine(wouldRenameMessage);
       const fs::path sourceDirectoryPath = filePath.parent_path();
       const fs::path renamedFilePath = sourceDirectoryPath / regexReplacedFileName;
