@@ -22,8 +22,8 @@ public:
    virtual void RecursivelyDeleteAllFilesInDirectory(
       const char* directoryPath, const FileRevisorArgs& args) const;
 #ifdef _WIN32
-   virtual void RemoveReadonlyFlagFromFileSystemFilePath(const fs::path& filePath) const;
    virtual void RemoveReadonlyFlagFromConstCharPointerFilePath(const char* filePath) const;
+   virtual void RemoveReadonlyFlagFromFileSystemFilePath(const fs::path& filePath) const;
 #endif
 private:
    virtual void OptionallyThrowFileSystemExceptionDueToUnlinkFailing(

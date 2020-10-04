@@ -99,7 +99,7 @@ TEST(OptionallyThrowFileSystemExceptionDueToUnlinkFailing_SkipFilesInUseIsTrue_E
       _fileSystemExceptionMakerMock->MakeFileSystemExceptionForFailedToDeleteFileMock.ReturnRandom();
 
    const int errnoValueThatIsNotPermissionDenied =
-      ZenUnit::RandomBetween<int>(0, ErrnoValue::PermissionDenied - 1);
+      ZenUnit::RandomBetween<int>(0, static_cast<unsigned long long>(ErrnoValue::PermissionDenied) - 1ULL);
    _fileSystemExceptionMakerMock->GetErrnoValueMock.Return(errnoValueThatIsNotPermissionDenied);
 
    const char* const filePath = ZenUnit::Random<const char*>();

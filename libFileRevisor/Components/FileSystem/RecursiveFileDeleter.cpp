@@ -177,11 +177,6 @@ void RecursiveFileDeleter::OptionallyThrowFileSystemExceptionDueToUnlinkFailing(
 
 #ifdef _WIN32
 
-void RecursiveFileDeleter::RemoveReadonlyFlagFromFileSystemFilePath(const fs::path& filePath) const
-{
-   RemoveReadonlyFlagFromConstCharPointerFilePath(filePath.string().c_str());
-}
-
 void RecursiveFileDeleter::RemoveReadonlyFlagFromConstCharPointerFilePath(const char* filePath) const
 {
    const DWORD fileAttributes = _call_GetFileAttributesA(filePath);
@@ -196,6 +191,11 @@ void RecursiveFileDeleter::RemoveReadonlyFlagFromConstCharPointerFilePath(const 
          throw fileSystemException;
       }
    }
+}
+
+void RecursiveFileDeleter::RemoveReadonlyFlagFromFileSystemFilePath(const fs::path& filePath) const
+{
+   RemoveReadonlyFlagFromConstCharPointerFilePath(filePath.string().c_str());
 }
 
 #endif
