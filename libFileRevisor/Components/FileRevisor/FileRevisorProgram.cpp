@@ -20,7 +20,7 @@ FileRevisorProgram::FileRevisorProgram()
    , _call_Utils_Exception_ClassNameAndWhat(Exception::ClassNameAndWhat)
    , _call_Utils_Vector_FromArgcArgv(Vector::FromArgcArgv)
    // Mutable Components
-	, _programDurationStopwatch(make_unique<Stopwatch>())
+	, _stopwatch(make_unique<Stopwatch>())
 {
 }
 
@@ -35,11 +35,11 @@ int FileRevisorProgram::Main(int argc, char* argv[])
       _console->WriteLine(FileRevisorArgs::CommandLineUsage);
       return 0;
    }
-   _programDurationStopwatch->Start();
+   _stopwatch->Start();
    const vector<string> stringArgs = _call_Utils_Vector_FromArgcArgv(argc, argv);
    const int exitCode = _tryCatchCaller->TryCatchCall(
       this, &FileRevisorProgram::Run, stringArgs, &FileRevisorProgram::ExceptionHandler);
-   const string elapsedSeconds = _programDurationStopwatch->StopAndGetElapsedSeconds();
+   const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    const string durationLine = "[FileRevisor] Duration: " + elapsedSeconds + " seconds";
    _console->WriteLine(durationLine);
    const string exitCodeLine = "[FileRevisor] ExitCode: " + to_string(exitCode);

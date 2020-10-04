@@ -31,7 +31,7 @@ TryCatchCallerMock<FileRevisorProgram, const vector<string>&>* _tryCatchCallerMo
 METALMOCK_NONVOID2_STATIC(vector<string>, Vector, FromArgcArgv, int, char**);
 METALMOCK_NONVOID1_STATIC(string, Exception, ClassNameAndWhat, const exception*);
 // Mutable Components
-StopwatchMock* _programDurationStopwatchMock = nullptr;
+StopwatchMock* _stopwatchMock = nullptr;
 
 STARTUP
 {
@@ -44,7 +44,7 @@ STARTUP
    _fileRevisorProgram._call_Utils_Vector_FromArgcArgv = BIND_2ARG_METALMOCK_OBJECT(FromArgcArgvMock);
    _fileRevisorProgram._call_Utils_Exception_ClassNameAndWhat = BIND_1ARG_METALMOCK_OBJECT(ClassNameAndWhatMock);
    // Mutable Components
-	_fileRevisorProgram._programDurationStopwatch.reset(_programDurationStopwatchMock = new StopwatchMock);
+	_fileRevisorProgram._stopwatch.reset(_stopwatchMock = new StopwatchMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
@@ -59,7 +59,7 @@ TEST(DefaultConstructor_NewsComponents)
 	STD_FUNCTION_TARGETS(Vector::FromArgcArgv, textChangerProgram._call_Utils_Vector_FromArgcArgv);
    STD_FUNCTION_TARGETS(Exception::ClassNameAndWhat, textChangerProgram._call_Utils_Exception_ClassNameAndWhat);
    // Mutable Components
-   DELETE_TO_ASSERT_NEWED(textChangerProgram._programDurationStopwatch);
+   DELETE_TO_ASSERT_NEWED(textChangerProgram._stopwatch);
 }
 
 TEST(Main_ArgcIs1_WritesCommandLineUsage_Returns0)
@@ -74,7 +74,7 @@ TEST(Main_ArgcIs1_WritesCommandLineUsage_Returns0)
 
 TEST(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTime_ReturnsTryCatchCallReturnValue)
 {
-   _programDurationStopwatchMock->StartMock.Expect();
+   _stopwatchMock->StartMock.Expect();
 
    const vector<string> vectorArgs{ ZenUnit::Random<string>(), ZenUnit::Random<string>() };
    FromArgcArgvMock.Return(vectorArgs);
@@ -82,8 +82,7 @@ TEST(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTim
    int tryCatchCallReturnValue = ZenUnit::Random<int>();
    _tryCatchCallerMock->TryCatchCallMock.Return(tryCatchCallReturnValue);
 
-   const string elapsedSeconds = ZenUnit::Random<string>();
-   _programDurationStopwatchMock->StopAndGetElapsedSecondsMock.Return(elapsedSeconds);
+   const string elapsedSeconds = _stopwatchMock->StopAndGetElapsedSecondsMock.ReturnRandom();
 
    _consoleMock->WriteLineMock.Expect();
 
@@ -94,11 +93,11 @@ TEST(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTim
    //
    const int exitCode = _fileRevisorProgram.Main(argc, const_cast<char**>(argv));
    //
-   METALMOCK(_programDurationStopwatchMock->StartMock.CalledOnce());
+   METALMOCK(_stopwatchMock->StartMock.CalledOnce());
    METALMOCK(FromArgcArgvMock.CalledOnceWith(argc, const_cast<char**>(argv)));
    METALMOCK(_tryCatchCallerMock->TryCatchCallMock.CalledOnceWith(
       &_fileRevisorProgram, &FileRevisorProgram::Run, vectorArgs, &FileRevisorProgram::ExceptionHandler));
-   METALMOCK(_programDurationStopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
+   METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
    const string expectedDurationLine = "[FileRevisor] Duration: " + elapsedSeconds + " seconds";
    const string expectedExitCodeLine = "[FileRevisor] ExitCode: " + to_string(exitCode);
    METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(

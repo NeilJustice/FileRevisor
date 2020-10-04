@@ -21,7 +21,7 @@ private:
    std::function<std::string(const std::exception*)> _call_Utils_Exception_ClassNameAndWhat;
    std::function<std::vector<std::string>(int, char**)> _call_Utils_Vector_FromArgcArgv;
    // Mutable Components
-   std::unique_ptr<Stopwatch> _programDurationStopwatch;
+   std::unique_ptr<Stopwatch> _stopwatch;
 public:
    FileRevisorProgram();
    virtual ~FileRevisorProgram();

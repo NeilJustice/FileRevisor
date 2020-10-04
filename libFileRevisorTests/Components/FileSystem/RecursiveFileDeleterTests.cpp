@@ -84,8 +84,8 @@ TEST(OptionallyThrowFileSystemExceptionDueToUnlinkFailing_SkipFilesInUseIsTrue_E
    _recursiveFileDeleter.OptionallyThrowFileSystemExceptionDueToUnlinkFailing(filePath, args);
    //
    const string expectedSkippingFileMessage = String::Concat(
-      "[FileRevisor] Skipped: File \"", filePath,
-      "\" because permission was denied when attempting to delete it");
+      "[FileRevisor] Skipped file: \"", filePath,
+      "\" because permission denied when attempting to delete it");
    METALMOCK(_fileSystemExceptionMakerMock->GetErrnoValueMock.CalledOnce());
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedSkippingFileMessage));
 }
