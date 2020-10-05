@@ -19,7 +19,7 @@ class FileSystem
 private:
    // Constant Components
    unique_ptr<const ConstCharPointerGetter> _constCharPointerGetter;
-   unique_ptr<const FileSystemExceptionMaker> _fileSystemExceptionThrower;
+   unique_ptr<const FileSystemExceptionMaker> _fileSystemExceptionMaker;
    unique_ptr<const RecursiveFileDeleter> _recursiveFileDeleter;
    // Function Callers
    unique_ptr<const NonVoidOneArgMemberFunctionCaller<bool, FileSystem, const fs::path&>> _caller_Exists;

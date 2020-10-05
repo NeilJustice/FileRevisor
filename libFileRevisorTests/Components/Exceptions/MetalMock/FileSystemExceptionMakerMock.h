@@ -6,6 +6,8 @@ class FileSystemExceptionMakerMock : public Metal::Mock<FileSystemExceptionMaker
 public:
    METALMOCK_NONVOID0_CONST(int, GetErrnoValue)
 
+   METALMOCK_NONVOID0_CONST(pair<int COMMA string>, GetErrnoWithDescription)
+
    METALMOCK_NONVOID2_CONST(FileSystemException,
       MakeFileSystemExceptionForFailedToOpenFileWithFOpen, const fs::path&, const char*)
 
@@ -16,7 +18,7 @@ public:
       MakeFileSystemExceptionForFailedToCloseFile, const fs::path&)
 
    METALMOCK_NONVOID3_CONST(FileSystemException,
-      MakeFileSystemExceptionForFailedToDeleteDirectory, const fs::path&, long long, int)
+      MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory, const fs::path&, long long, int)
 
    METALMOCK_NONVOID1_CONST(FileSystemException,
       MakeFileSystemExceptionForFailedToDeleteFile, const char*)

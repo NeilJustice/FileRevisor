@@ -20,8 +20,8 @@ AFACT(FileOrDirectoryExists_ReturnsResultOfCallingStdFilesystemExists)
 AFACT(RenameFile_FilePathDoesNotExist_ThrowsRuntimeError)
 AFACT(RenameFile_FilePathExists_DestinationFilePathAlreadyExists_ThrowsRuntimeError)
 FACTS(RenameFile_FilePathExists_DestinationFilePathDoesNotExist_RenamesFile_ThrowsIfRenameReturnsNon0_OtherwiseReturns)
-AFACT(RemoveAll_FsRemoveAllReturnsWithSettingErrorCodeTo0_ReturnsNumberOfFilesAndDirectoriesRemoved)
-FACTS(RemoveAll_FsRemoveAllReturnsWithSettingErrorCodeToNon0_ThrowsFileSystemException)
+AFACT(RemoveAll_FsRemoveAllReturns0ErrorCode_ReturnsNumberOfFilesAndDirectoriesRemoved)
+FACTS(RemoveAll_FsRemoveAllReturnsNon0ErrorCode_ThrowsFileSystemException)
 AFACT(RenameDirectory_RenamesDirectory_FilesystemRenameReturns0_ReturnsRenamedDirectoryPath)
 FACTS(RenameDirectory_RenamesDirectory_FilesystemRenameReturnsNot0_ThrowsFileSystemException)
 AFACT(OpenFile_FOpenReturnsNullFILEPointer_ThrowsFileSystemException)
@@ -38,7 +38,7 @@ EVIDENCE
 FileSystem _fileSystem;
 // Constant Components
 ConstCharPointerGetterMock* _constCharPointerGetterMock = nullptr;
-FileSystemExceptionMakerMock* _fileSystemExceptionThrowerMock = nullptr;
+FileSystemExceptionMakerMock* _fileSystemExceptionMakerMock = nullptr;
 RecursiveFileDeleterMock* _recursiveFileDeleterMock = nullptr;
 // Function Callers
 NonVoidOneArgMemberFunctionCallerMock<bool, FileSystem, const fs::path&>* _caller_ExistsMock = nullptr;
@@ -57,7 +57,7 @@ STARTUP
 {
    // Constant Components
    _fileSystem._constCharPointerGetter.reset(_constCharPointerGetterMock = new ConstCharPointerGetterMock);
-   _fileSystem._fileSystemExceptionThrower.reset(_fileSystemExceptionThrowerMock = new FileSystemExceptionMakerMock);
+   _fileSystem._fileSystemExceptionMaker.reset(_fileSystemExceptionMakerMock = new FileSystemExceptionMakerMock);
    _fileSystem._recursiveFileDeleter.reset(_recursiveFileDeleterMock = new RecursiveFileDeleterMock);
    // Function Callers
    _fileSystem._caller_Exists.reset(_caller_ExistsMock = new NonVoidOneArgMemberFunctionCallerMock<bool, FileSystem, const fs::path&>);
@@ -78,7 +78,7 @@ TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
    FileSystem fileSystem;
    // Constant Components
    DELETE_TO_ASSERT_NEWED(fileSystem._constCharPointerGetter);
-   DELETE_TO_ASSERT_NEWED(fileSystem._fileSystemExceptionThrower);
+   DELETE_TO_ASSERT_NEWED(fileSystem._fileSystemExceptionMaker);
    DELETE_TO_ASSERT_NEWED(fileSystem._recursiveFileDeleter);
    // Function Callers
    DELETE_TO_ASSERT_NEWED(fileSystem._caller_Exists);
@@ -270,11 +270,12 @@ unsigned long long remove_all_CallInstead(const fs::path& directoryPath, error_c
    return _remove_all_FunctionCall.returnValue;
 }
 
-TEST(RemoveAll_FsRemoveAllReturnsWithSettingErrorCodeTo0_ReturnsNumberOfFilesAndDirectoriesRemoved)
+TEST(RemoveAll_FsRemoveAllReturns0ErrorCode_ReturnsNumberOfFilesAndDirectoriesRemoved)
 {
    remove_allMock.CallInstead(std::bind(&FileSystemTests::remove_all_CallInstead,
       this, std::placeholders::_1, std::placeholders::_2));
    _remove_all_FunctionCall.returnValue = ZenUnit::Random<unsigned long long>();
+   _remove_all_FunctionCall.outErrorCodeReturnValue = error_code(0, std::generic_category());
    const fs::path directoryPath = ZenUnit::Random<fs::path>();
    //
    const unsigned long long numberOfFilesAndDirectoriesRemoved = _fileSystem.RemoveAll(directoryPath);
@@ -285,7 +286,7 @@ TEST(RemoveAll_FsRemoveAllReturnsWithSettingErrorCodeTo0_ReturnsNumberOfFilesAnd
    ARE_EQUAL(_remove_all_FunctionCall.returnValue, numberOfFilesAndDirectoriesRemoved);
 }
 
-TEST1X1(RemoveAll_FsRemoveAllReturnsWithSettingErrorCodeToNon0_ThrowsFileSystemException,
+TEST1X1(RemoveAll_FsRemoveAllReturnsNon0ErrorCode_ThrowsFileSystemException,
    int errorCodeValue,
    -1,
    1)
@@ -295,19 +296,20 @@ TEST1X1(RemoveAll_FsRemoveAllReturnsWithSettingErrorCodeToNon0_ThrowsFileSystemE
    _remove_all_FunctionCall.returnValue = ZenUnit::Random<unsigned long long>();
    _remove_all_FunctionCall.outErrorCodeReturnValue = error_code(errorCodeValue, std::generic_category());
 
-   const FileSystemException fileSystemException =
-      _fileSystemExceptionThrowerMock->MakeFileSystemExceptionForFailedToDeleteDirectoryMock.ReturnRandom();
+   const FileSystemException fileSystemException = _fileSystemExceptionMakerMock->
+      MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectoryMock.ReturnRandom();
 
    const fs::path directoryPath = ZenUnit::Random<fs::path>();
    //
-   THROWS_EXCEPTION(_fileSystem.RemoveAll(
-      directoryPath), FileSystemException, fileSystemException.what());
+   THROWS_EXCEPTION(_fileSystem.RemoveAll(directoryPath),
+      FileSystemException, fileSystemException.what());
    //
    ARE_EQUAL(1, _remove_all_FunctionCall.numberOfCalls);
    ARE_EQUAL(directoryPath, _remove_all_FunctionCall.directoryPathArg);
    ARE_EQUAL(error_code(), _remove_all_FunctionCall.outErrorCodeArg);
 
-   METALMOCK(_fileSystemExceptionThrowerMock->MakeFileSystemExceptionForFailedToDeleteDirectoryMock.CalledOnceWith(
+   METALMOCK(_fileSystemExceptionMakerMock->
+      MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectoryMock.CalledOnceWith(
       directoryPath, _remove_all_FunctionCall.returnValue, errorCodeValue));
 }
 
@@ -346,7 +348,7 @@ TEST1X1(RenameDirectory_RenamesDirectory_FilesystemRenameReturnsNot0_ThrowsFileS
       this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 
    const FileSystemException fileSystemException =
-      _fileSystemExceptionThrowerMock->MakeFileSystemExceptionForFailedToRenameDirectoryMock.ReturnRandom();
+      _fileSystemExceptionMakerMock->MakeFileSystemExceptionForFailedToRenameDirectoryMock.ReturnRandom();
 
    const fs::path directoryPath = ZenUnit::Random<fs::path>();
    const string newDirectoryName = ZenUnit::Random<string>();
@@ -364,7 +366,7 @@ TEST1X1(RenameDirectory_RenamesDirectory_FilesystemRenameReturnsNot0_ThrowsFileS
    METALMOCK(renameMock_fs.CalledOnceWith(directoryPath, expectedRenamedDirectoryPath, expectedRenameArgumentErrorCode));
 
    error_code expectedErrorCode(_stdFileSystemRenameErrorCodeValue, std::generic_category());
-   METALMOCK(_fileSystemExceptionThrowerMock->MakeFileSystemExceptionForFailedToRenameDirectoryMock.CalledOnceWith(
+   METALMOCK(_fileSystemExceptionMakerMock->MakeFileSystemExceptionForFailedToRenameDirectoryMock.CalledOnceWith(
       directoryPath, expectedRenamedDirectoryPath, expectedErrorCode));
 }
 
@@ -382,7 +384,7 @@ TEST(OpenFile_FOpenReturnsNullFILEPointer_ThrowsFileSystemException)
    fopenMock.CallInstead(std::bind(
       &FileSystemTests::fopen_CallInstead, this, placeholders::_1, placeholders::_2));
 
-   const FileSystemException fileSystemException = _fileSystemExceptionThrowerMock->
+   const FileSystemException fileSystemException = _fileSystemExceptionMakerMock->
       MakeFileSystemExceptionForFailedToOpenFileWithFOpenMock.ReturnRandom();
 
    const fs::path filePath = ZenUnit::Random<fs::path>();
@@ -393,7 +395,7 @@ TEST(OpenFile_FOpenReturnsNullFILEPointer_ThrowsFileSystemException)
    //
    const vector<pair<string, string>> expected_fopen_Arguments = { { filePath.string(), fileOpenMode } };
    ARE_EQUAL(expected_fopen_Arguments, _fopen_Arguments);
-   METALMOCK(_fileSystemExceptionThrowerMock->MakeFileSystemExceptionForFailedToOpenFileWithFOpenMock.
+   METALMOCK(_fileSystemExceptionMakerMock->MakeFileSystemExceptionForFailedToOpenFileWithFOpenMock.
       CalledOnceWith(filePath, fileOpenMode.c_str()));
 }
 
@@ -424,7 +426,7 @@ TEST1X1(CloseFile_fcloseReturnValueIsNot0_ThrowsFileCloseException,
    fcloseMock.Return(fcloseReturnValue);
 
    const FileSystemException fileSystemException = ZenUnit::Random<FileSystemException>();
-   _fileSystemExceptionThrowerMock->MakeFileSystemExceptionForFailedToCloseFileMock.Return(fileSystemException);
+   _fileSystemExceptionMakerMock->MakeFileSystemExceptionForFailedToCloseFileMock.Return(fileSystemException);
 
    const fs::path filePath = ZenUnit::Random<fs::path>();
    FILE* const file = nullptr;
@@ -433,7 +435,7 @@ TEST1X1(CloseFile_fcloseReturnValueIsNot0_ThrowsFileCloseException,
       FileSystemException, fileSystemException.what());
    //
    METALMOCK(fcloseMock.CalledOnceWith(file));
-   METALMOCK(_fileSystemExceptionThrowerMock->MakeFileSystemExceptionForFailedToCloseFileMock.CalledOnceWith(filePath));
+   METALMOCK(_fileSystemExceptionMakerMock->MakeFileSystemExceptionForFailedToCloseFileMock.CalledOnceWith(filePath));
 }
 
 TEST(CloseFile_fcloseReturnValueIs0_Returns)

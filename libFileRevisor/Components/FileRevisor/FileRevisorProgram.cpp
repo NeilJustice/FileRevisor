@@ -57,7 +57,7 @@ int FileRevisorProgram::Run(const vector<string>& stringArgs)
    return exitCode;
 }
 
-int FileRevisorProgram::ExceptionHandler(const exception& ex, const vector<string>& /*stringArgs*/)
+int FileRevisorProgram::ExceptionHandler(const exception& ex, const vector<string>& /*stringArgs*/) const
 {
    const string exceptionTypeNameAndMessage = _call_Utils_Exception_ClassNameAndWhat(&ex);
    const string exceptionMessage = "[FileRevisor] Error: Exception thrown: " + exceptionTypeNameAndMessage;

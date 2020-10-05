@@ -90,8 +90,6 @@ TEST(Run_TargetDirectoryExists_ParallelIsFalse_WritesDeletingSequentiallyMessage
    unsigned long long numberOfFilesAndDirectoriesRemoved = _protected_fileSystemMock->RemoveAllMock.ReturnRandom();
    ++numberOfFilesAndDirectoriesRemoved; // Varible usage to supress unused variable warning
 
-   _protected_consoleMock->WriteLineMock.Expect();
-
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    args.parallel = false;
    //
@@ -105,9 +103,6 @@ TEST(Run_TargetDirectoryExists_ParallelIsFalse_WritesDeletingSequentiallyMessage
    METALMOCK(_protected_fileSystemMock->
       RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindowsMock.CalledOnceWith(args.targetDirectoryPath));
    METALMOCK(_protected_fileSystemMock->RemoveAllMock.CalledOnceWith(args.targetDirectoryPath));
-   const string expectedDeletedDirectoryMessage =
-      "[FileRevisor] Deleted directory " + args.targetDirectoryPath.string();
-   METALMOCK(_protected_consoleMock->WriteLineMock.CalledOnceWith(expectedDeletedDirectoryMessage));
    IS_ZERO(exitCode);
 }
 
@@ -140,13 +135,9 @@ TEST(Run_TargetDirectoryExists_ParallelIsTrue_WritesDeletingInParallelMessage_Re
    METALMOCK(_protected_fileSystemMock->
       RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindowsMock.CalledOnceWith(args.targetDirectoryPath));
    METALMOCK(_protected_fileSystemMock->RemoveAllMock.CalledOnceWith(args.targetDirectoryPath));
-   const string expectedDeletedDirectoryMessage = "[FileRevisor] Deleted directory " + args.targetDirectoryPath.string();
    const string expectedDeletingInParallelMessage = "[FileRevisor] Deleting in parallel all files in directory: " + args.targetDirectoryPath.string();
-   METALMOCK(_protected_consoleMock->WriteLineMock.CalledAsFollows(
-   {
-      { expectedDeletingInParallelMessage },
-      { expectedDeletedDirectoryMessage }
-   }));
+   const string expectedDeletedDirectoryMessage = "[FileRevisor] Deleted directory " + args.targetDirectoryPath.string();
+   METALMOCK(_protected_consoleMock->WriteLineMock.CalledOnceWith(expectedDeletingInParallelMessage));
    IS_ZERO(exitCode);
 }
 

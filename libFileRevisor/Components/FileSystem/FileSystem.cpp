@@ -12,7 +12,7 @@
 FileSystem::FileSystem()
    // Constant Components
    : _constCharPointerGetter(make_unique<ConstCharPointerGetter>())
-   , _fileSystemExceptionThrower(make_unique<FileSystemExceptionMaker>())
+   , _fileSystemExceptionMaker(make_unique<FileSystemExceptionMaker>())
    , _recursiveFileDeleter(make_unique<RecursiveFileDeleter>())
    // Function Callers
    , _caller_Exists(make_unique<NonVoidOneArgMemberFunctionCaller<bool, FileSystem, const fs::path&>>())
@@ -154,7 +154,7 @@ string FileSystem::ReadText(const fs::path& textFilePath) const
    ifstream textFileStream(textFilePath.c_str());
    if (!textFileStream.is_open())
    {
-      const FileSystemException fileSystemException = _fileSystemExceptionThrower->
+      const FileSystemException fileSystemException = _fileSystemExceptionMaker->
          MakeFileSystemExceptionForFailedToOpenFileWithFStream(textFilePath);
       throw fileSystemException;
    }
@@ -260,7 +260,7 @@ fs::path FileSystem::RenameDirectory(const fs::path& directoryPath, string_view 
    if (renameErrorCodeValue != 0)
    {
       const FileSystemException fileSystemException =
-         _fileSystemExceptionThrower->MakeFileSystemExceptionForFailedToRenameDirectory(
+         _fileSystemExceptionMaker->MakeFileSystemExceptionForFailedToRenameDirectory(
             directoryPath, renamedDirectoryPath, renameErrorCode);
       throw fileSystemException;
    }
@@ -276,8 +276,8 @@ void FileSystem::RemoveFile(const char* filePath) const
 #endif
    if (unlinkReturnValue != 0)
    {
-      const FileSystemException fileSystemException = _fileSystemExceptionThrower->
-         MakeFileSystemExceptionForFailedToDeleteFile(filePath);
+      const FileSystemException fileSystemException =
+         _fileSystemExceptionMaker->MakeFileSystemExceptionForFailedToDeleteFile(filePath);
       throw fileSystemException;
    }
 }
@@ -300,8 +300,8 @@ unsigned long long FileSystem::RemoveAll(const fs::path& directoryPath) const
    const int errorCodeValue = errorCode.value();
    if (errorCodeValue != 0)
    {
-      const FileSystemException fileSystemException = _fileSystemExceptionThrower->
-         MakeFileSystemExceptionForFailedToDeleteDirectory(
+      const FileSystemException fileSystemException =
+         _fileSystemExceptionMaker->MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory(
             directoryPath, numberOfFilesAndDirectoriesRemoved, errorCodeValue);
       throw fileSystemException;
    }
@@ -314,7 +314,7 @@ void FileSystem::CloseFile(const fs::path& filePath, FILE* filePointer) const
    if (fcloseReturnValue != 0)
    {
       const FileSystemException fileSystemException =
-         _fileSystemExceptionThrower->MakeFileSystemExceptionForFailedToCloseFile(filePath);
+         _fileSystemExceptionMaker->MakeFileSystemExceptionForFailedToCloseFile(filePath);
       throw fileSystemException;
    }
 }
@@ -324,7 +324,7 @@ FILE* FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) c
    FILE* const filePointer = _call_fopen(filePath.string().c_str(), fileOpenMode);
    if (filePointer == nullptr)
    {
-      const FileSystemException fileSystemException = _fileSystemExceptionThrower->
+      const FileSystemException fileSystemException = _fileSystemExceptionMaker->
          MakeFileSystemExceptionForFailedToOpenFileWithFOpen(filePath, fileOpenMode);
       throw fileSystemException;
    }

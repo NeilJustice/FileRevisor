@@ -28,5 +28,5 @@ public:
    int Main(int argc, char* argv[]);
 private:
    int Run(const std::vector<std::string>& stringArgs);
-   int ExceptionHandler(const std::exception& ex, const std::vector<std::string>& stringArgs);
+   int ExceptionHandler(const std::exception& ex, const std::vector<std::string>& stringArgs) const;
 };

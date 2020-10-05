@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "libFileRevisor/Components/Console/Console.h"
+#include "libFileRevisor/Components/Exceptions/TryCatchCaller.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Components/Strings/Pluralizer.h"
 #include "libFileRevisor/Components/SubPrograms/DeleteDirectorySubProgram.h"
@@ -8,6 +9,7 @@
 #include "libFileRevisor/ValueTypes/FileRevisorArgs.h"
 
 DeleteDirectorySubProgram::DeleteDirectorySubProgram()
+   // Function Callers
    : _oneExtraArgMemberForEacher_DeleteDirectory(make_unique<OneExtraArgMemberForEacherType>())
    , _parallelOneExtraArgMemberForEacher_DeleteDirectory(make_unique<ParallelOneExtraArgMemberForEacherType>())
 {
@@ -44,11 +46,10 @@ int DeleteDirectorySubProgram::Run(const FileRevisorArgs& args) const
    }
    _protected_fileSystem->RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows(args.targetDirectoryPath);
    _protected_fileSystem->RemoveAll(args.targetDirectoryPath);
-   const string deletedDirectoryMessage =
-      "[FileRevisor] Deleted directory " + args.targetDirectoryPath.string();
-   _protected_console->WriteLine(deletedDirectoryMessage);
    return 0;
 }
+
+// Private Functions
 
 void DeleteDirectorySubProgram::DeleteDirectory(
    const string& directoryPath, const FileRevisorArgs& args) const

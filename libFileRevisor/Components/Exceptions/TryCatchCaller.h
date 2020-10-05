@@ -8,7 +8,7 @@ public:
       ClassType* classPointer,
       int (ClassType::* memberFunction)(ArgumentType),
       ArgumentType argument,
-      int (ClassType::* memberExceptionHandlerFunction)(const exception&, ArgumentType)) const
+      int (ClassType::* memberExceptionHandlerFunction)(const exception&, ArgumentType) const) const
    {
       try
       {

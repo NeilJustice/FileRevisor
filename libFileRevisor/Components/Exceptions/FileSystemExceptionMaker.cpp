@@ -20,6 +20,12 @@ int FileSystemExceptionMaker::GetErrnoValue() const
    return errnoValue;
 }
 
+pair<int, string> FileSystemExceptionMaker::GetErrnoWithDescription() const
+{
+   const pair<int, string> errnoWithDescription = _errorCodeTranslator->GetErrnoWithDescription();
+   return errnoWithDescription;
+}
+
 FileSystemException FileSystemExceptionMaker::
 MakeFileSystemExceptionForFailedToOpenFileWithFOpen(const fs::path& filePath, const char* fileOpenMode) const
 {
@@ -48,7 +54,7 @@ MakeFileSystemExceptionForFailedToCloseFile(const fs::path& filePath) const
 }
 
 FileSystemException FileSystemExceptionMaker::
-MakeFileSystemExceptionForFailedToDeleteDirectory(
+MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory(
    const fs::path& fileOrDirectoryPath,
    long long removeAllReturnValue,
    int errorCodeValue) const

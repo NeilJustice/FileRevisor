@@ -15,6 +15,8 @@ public:
 
    virtual int GetErrnoValue() const;
 
+   virtual pair<int, string> GetErrnoWithDescription() const;
+
    virtual FileSystemException MakeFileSystemExceptionForFailedToOpenFileWithFOpen(
       const fs::path& filePath, const char* fileOpenMode) const;
 
@@ -24,7 +26,7 @@ public:
    virtual FileSystemException MakeFileSystemExceptionForFailedToCloseFile(
       const fs::path& filePath) const;
 
-   virtual FileSystemException MakeFileSystemExceptionForFailedToDeleteDirectory(
+   virtual FileSystemException MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory(
       const fs::path& fileOrDirectoryPath,
       long long removeAllReturnValue,
       int errorCodeValue) const;

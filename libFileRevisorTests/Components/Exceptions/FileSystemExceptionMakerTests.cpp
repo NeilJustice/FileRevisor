@@ -5,10 +5,11 @@
 TESTS(FileSystemExceptionMakerTests)
 AFACT(Constructor_NewsErrorCodeTranslator)
 AFACT(GetErrnoValue_ReturnsErrorCodeTranslatorGetErrnoValue)
+AFACT(GetErrnoWithDescription_ReturnsErrorCodeTranslatorGetErrnoWithDescription)
 AFACT(MakeFileSystemExceptionForFailedToOpenFileWithFOpen_ReturnsExpectedFileSystemException)
 AFACT(MakeFileSystemExceptionForFailedToOpenFileWithFStream_ReturnsExpectedFileSystemException)
 AFACT(MakeFileSystemExceptionForFailedToCloseFile_ReturnsExpectedFileSystemException)
-AFACT(MakeFileSystemExceptionForFailedToDeleteDirectory_ReturnsExpectedFileSystemException)
+AFACT(MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory_ReturnsExpectedFileSystemException)
 AFACT(MakeFileSystemExceptionForFailedToRenameDirectory_ReturnsExpectedFileSystemException)
 AFACT(MakeFileSystemExceptionForFailedToDeleteFile_ReturnsExpectedFileSystemException)
 #ifdef _WIN32
@@ -43,6 +44,18 @@ TEST(GetErrnoValue_ReturnsErrorCodeTranslatorGetErrnoValue)
    //
    METALMOCK(_errorCodeTranslatorMock->GetErrnoValueMock.CalledOnce());
    ARE_EQUAL(errnoValue, returnedErrnoValue);
+}
+
+TEST(GetErrnoWithDescription_ReturnsErrorCodeTranslatorGetErrnoWithDescription)
+{
+   const pair<int, string> errnoWithDescription(ZenUnit::Random<int>(), ZenUnit::Random<string>());
+   _errorCodeTranslatorMock->GetErrnoWithDescriptionMock.Return(errnoWithDescription);
+   //
+   const pair<int, string> returnedErrnoWithDescription =
+      _fileSystemExceptionMaker.GetErrnoWithDescription();
+   //
+   METALMOCK(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce());
+   ARE_EQUAL(errnoWithDescription, returnedErrnoWithDescription);
 }
 
 TEST(MakeFileSystemExceptionForFailedToOpenFileWithFOpen_ReturnsExpectedFileSystemException)
@@ -88,7 +101,7 @@ TEST(MakeFileSystemExceptionForFailedToCloseFile_ReturnsExpectedFileSystemExcept
    ARE_EQUAL(expectedFileSystemException.what(), fileSystemException.what());
 }
 
-TEST(MakeFileSystemExceptionForFailedToDeleteDirectory_ReturnsExpectedFileSystemException)
+TEST(MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory_ReturnsExpectedFileSystemException)
 {
    const string systemErrorDescription =
       _errorCodeTranslatorMock->GetSystemErrorDescriptionMock.ReturnRandom();
@@ -98,7 +111,7 @@ TEST(MakeFileSystemExceptionForFailedToDeleteDirectory_ReturnsExpectedFileSystem
    const int errorCodeValue = ZenUnit::Random<int>();
    //
    const FileSystemException fileSystemException =
-      _fileSystemExceptionMaker.MakeFileSystemExceptionForFailedToDeleteDirectory(
+      _fileSystemExceptionMaker.MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory(
          fileOrDirectoryPath, removeAllReturnValue, errorCodeValue);
    //
    METALMOCK(_errorCodeTranslatorMock->GetSystemErrorDescriptionMock.CalledOnceWith(errorCodeValue));

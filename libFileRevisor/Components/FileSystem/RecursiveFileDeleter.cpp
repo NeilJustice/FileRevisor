@@ -165,7 +165,7 @@ void RecursiveFileDeleter::OptionallyThrowFileSystemExceptionDueToUnlinkFailing(
       {
          const string skippingFileMessage = String::Concat(
             "[FileRevisor] Skipped file: \"", filePath,
-            "\" because permission denied when attempting to delete it");
+            "\" because of error 13 (permission denied) when attempting to delete it");
          _console->WriteLine(skippingFileMessage);
          return;
       }

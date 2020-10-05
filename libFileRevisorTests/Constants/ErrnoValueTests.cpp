@@ -7,6 +7,7 @@ EVIDENCE
 TEST(Constants_AreExpectedValues)
 {
    ARE_EQUAL(13, ErrnoValue::PermissionDenied);
+   ARE_EQUAL(32, ErrnoValue::BrokenPipe);
 }
 
 RUN_TESTS(ErrnoValueTests)

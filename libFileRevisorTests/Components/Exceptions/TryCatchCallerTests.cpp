@@ -16,7 +16,7 @@ public:
    int exitCode = 0;
 
    string exceptionWhat;
-   vector<pair<string, ArgumentType>> exceptionHandlerCalls;
+   mutable vector<pair<string, ArgumentType>> exceptionHandlerCalls;
    int exceptionHandlerExitCode = 0;
 
    Class()
@@ -37,7 +37,7 @@ public:
       return exitCode;
    }
 
-   int ExceptionHandler(const exception& ex, ArgumentType argument)
+   int ExceptionHandler(const exception& ex, ArgumentType argument) const
    {
       const string exceptionClassNameAndWhat = Exception::ClassNameAndWhat(&ex);
       exceptionHandlerCalls.emplace_back(exceptionClassNameAndWhat, argument);

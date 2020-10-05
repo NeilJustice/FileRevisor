@@ -6,6 +6,6 @@ class TryCatchCallerMock : public Metal::Mock<TryCatchCaller<ClassType, Argument
 {
 public:
    using MemberFunctionType = int (ClassType::*)(ArgumentType);
-   using ExceptionHandlerType = int (ClassType::*)(const exception&, ArgumentType);
+   using ExceptionHandlerType = int (ClassType::*)(const exception&, ArgumentType) const;
    METALMOCK_NONVOID4_CONST(int, TryCatchCall, ClassType*, MemberFunctionType, ArgumentType, ExceptionHandlerType)
 };
