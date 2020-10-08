@@ -6,7 +6,8 @@ class FileSystemExceptionMakerMock : public Metal::Mock<FileSystemExceptionMaker
 public:
    METALMOCK_NONVOID0_CONST(int, GetErrnoValue)
 
-   METALMOCK_NONVOID0_CONST(pair<int COMMA string>, GetErrnoWithDescription)
+   using PairIntStringType = pair<int, string>;
+   METALMOCK_NONVOID0_CONST(PairIntStringType, GetErrnoWithDescription)
 
    METALMOCK_NONVOID2_CONST(FileSystemException,
       MakeFileSystemExceptionForFailedToOpenFileWithFOpen, const fs::path&, const char*)
