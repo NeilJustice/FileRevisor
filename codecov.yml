@@ -1,2 +1,4 @@
 ignore:
+  - "ZenUnit.h"
+  - "MetalMock.h"
   - "libFileRevisor/Components/Docopt/docopt.h"
