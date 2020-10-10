@@ -6,9 +6,9 @@
 
 TESTS(RecursiveFileDeleterTests)
 AFACT(Constructor_NewsComponents_SetsFunctionCallers)
-AFACT(OptionallyThrowFileSystemExceptionDueToUnlinkFailing_SkipFilesInUseIsFalse_ThrowsFileSystemException)
-AFACT(OptionallyThrowFileSystemExceptionDueToUnlinkFailing_SkipFilesInUseIsTrue_ErrnoIs13_WritesSkippingMessage_DoesNotThrowException)
-AFACT(OptionallyThrowFileSystemExceptionDueToUnlinkFailing_SkipFilesInUseIsTrue_ErrnoIsNot13_ThrowsFileSystemException)
+AFACT(ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissionDenied_SkipFilesInUseIsFalse_ThrowsFileSystemException)
+AFACT(ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissionDenied_SkipFilesInUseIsTrue_ErrnoIs13_WritesSkippingMessage_DoesNotThrowException)
+AFACT(ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissionDenied_SkipFilesInUseIsTrue_ErrnoIsNot13_ThrowsFileSystemException)
 #ifdef _WIN32
 AFACT(ThrowFileSystemExceptionIfFindFirstFileExReturnedInvalidHandleValue_FindFirstFileExHandleIs0_DoesNothing)
 AFACT(ThrowFileSystemExceptionIfFindFirstFileExReturnedInvalidHandleValue_FindFirstFileExHandleIsInvalidHandleValue_ThrowsFileSystemException)
@@ -53,7 +53,7 @@ TEST(Constructor_NewsComponents_SetsFunctionCallers)
 #endif
 }
 
-TEST(OptionallyThrowFileSystemExceptionDueToUnlinkFailing_SkipFilesInUseIsFalse_ThrowsFileSystemException)
+TEST(ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissionDenied_SkipFilesInUseIsFalse_ThrowsFileSystemException)
 {
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    args.skipFilesInUse = false;
@@ -63,14 +63,14 @@ TEST(OptionallyThrowFileSystemExceptionDueToUnlinkFailing_SkipFilesInUseIsFalse_
 
    const char* const filePath = ZenUnit::Random<const char*>();
    //
-   THROWS_EXCEPTION(_recursiveFileDeleter.OptionallyThrowFileSystemExceptionDueToUnlinkFailing(filePath, args),
+   THROWS_EXCEPTION(_recursiveFileDeleter.ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissionDenied(filePath, args),
       FileSystemException, fileSystemException.what());
    //
    METALMOCK(_fileSystemExceptionMakerMock->
       MakeFileSystemExceptionForFailedToDeleteFileMock.CalledOnceWith(filePath));
 }
 
-TEST(OptionallyThrowFileSystemExceptionDueToUnlinkFailing_SkipFilesInUseIsTrue_ErrnoIs13_WritesSkippingMessage_DoesNotThrowException)
+TEST(ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissionDenied_SkipFilesInUseIsTrue_ErrnoIs13_WritesSkippingMessage_DoesNotThrowException)
 {
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    args.skipFilesInUse = true;
@@ -81,7 +81,7 @@ TEST(OptionallyThrowFileSystemExceptionDueToUnlinkFailing_SkipFilesInUseIsTrue_E
 
    const char* const filePath = ZenUnit::Random<const char*>();
    //
-   _recursiveFileDeleter.OptionallyThrowFileSystemExceptionDueToUnlinkFailing(filePath, args);
+   _recursiveFileDeleter.ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissionDenied(filePath, args);
    //
    const string expectedSkippingFileMessage = String::Concat(
       "[FileRevisor] Skipped file: \"", filePath,
@@ -90,7 +90,7 @@ TEST(OptionallyThrowFileSystemExceptionDueToUnlinkFailing_SkipFilesInUseIsTrue_E
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedSkippingFileMessage));
 }
 
-TEST(OptionallyThrowFileSystemExceptionDueToUnlinkFailing_SkipFilesInUseIsTrue_ErrnoIsNot13_ThrowsFileSystemException)
+TEST(ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissionDenied_SkipFilesInUseIsTrue_ErrnoIsNot13_ThrowsFileSystemException)
 {
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    args.skipFilesInUse = true;
@@ -105,7 +105,7 @@ TEST(OptionallyThrowFileSystemExceptionDueToUnlinkFailing_SkipFilesInUseIsTrue_E
    const char* const filePath = ZenUnit::Random<const char*>();
    //
    THROWS_EXCEPTION(_recursiveFileDeleter.
-      OptionallyThrowFileSystemExceptionDueToUnlinkFailing(filePath, args),
+      ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissionDenied(filePath, args),
       FileSystemException, fileSystemException.what());
    //
    METALMOCK(_fileSystemExceptionMakerMock->GetErrnoValueMock.CalledOnce());

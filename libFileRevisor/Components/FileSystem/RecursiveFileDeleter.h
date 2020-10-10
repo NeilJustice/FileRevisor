@@ -19,14 +19,13 @@ private:
 public:
    RecursiveFileDeleter();
    virtual ~RecursiveFileDeleter();
-   virtual void RecursivelyDeleteAllFilesInDirectory(
-      const char* directoryPath, const FileRevisorArgs& args) const;
+   virtual void RecursivelyDeleteAllFilesInDirectory(const char* directoryPath, const FileRevisorArgs& args) const;
 #ifdef _WIN32
    virtual void RemoveReadonlyFlagFromConstCharPointerFilePath(const char* filePath) const;
    virtual void RemoveReadonlyFlagFromFileSystemFilePath(const fs::path& filePath) const;
 #endif
 private:
-   virtual void OptionallyThrowFileSystemExceptionDueToUnlinkFailing(
+   virtual void ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissionDenied(
       const char* filePath, const FileRevisorArgs& args) const;
 #ifdef _WIN32
    void ThrowFileSystemExceptionIfFindFirstFileExReturnedInvalidHandleValue(

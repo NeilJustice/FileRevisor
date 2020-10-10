@@ -27,8 +27,7 @@ NOINLINE void PrintDeletedFileMessage(const char* filePath)
 }
 
 #ifdef __linux__
-void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(
-   const char* directoryPath, const FileRevisorArgs& args) const
+void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* directoryPath, const FileRevisorArgs& args) const
 {
    DIR* const dirPointer = opendir(directoryPath);
    release_assert(dirPointer != nullptr);
@@ -64,7 +63,7 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(
             }
             else
             {
-               OptionallyThrowFileSystemExceptionDueToUnlinkFailing(filePathOrSubdirectoryPathChars, args);
+               ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissionDenied(filePathOrSubdirectoryPathChars, args);
             }
          }
       }
@@ -75,8 +74,7 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(
 
 #elif _WIN32
 
-void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(
-   const char* directoryPath, const FileRevisorArgs& args) const
+void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* directoryPath, const FileRevisorArgs& args) const
 {
    const size_t directoryPathLength = strlen(directoryPath);
    char directoryPathSearchPatternChars[MAX_PATH];
@@ -127,15 +125,13 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(
             }
             else
             {
-               OptionallyThrowFileSystemExceptionDueToUnlinkFailing(filePathOrSubdirectoryPathChars, args);
+               ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissionDenied(filePathOrSubdirectoryPathChars, args);
             }
          }
       }
    } while (FindNextFile(findFirstFileHandle, &win32FindData) != FALSE);
-
    const DWORD lastError = GetLastError();
    release_assert(lastError == ERROR_NO_MORE_FILES);
-
    const BOOL didCloseFileHandle = FindClose(findFirstFileHandle);
    release_assert(didCloseFileHandle == TRUE);
 }
@@ -155,7 +151,7 @@ ThrowFileSystemExceptionIfFindFirstFileExReturnedInvalidHandleValue(
 
 #endif
 
-void RecursiveFileDeleter::OptionallyThrowFileSystemExceptionDueToUnlinkFailing(
+void RecursiveFileDeleter::ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissionDenied(
    const char* filePath, const FileRevisorArgs& args) const
 {
    if (args.skipFilesInUse)
