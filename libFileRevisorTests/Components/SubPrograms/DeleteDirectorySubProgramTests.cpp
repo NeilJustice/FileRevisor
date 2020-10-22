@@ -82,8 +82,8 @@ TEST(Run_TargetDirectoryExists_ParallelIsFalse_WritesDeletingSequentiallyMessage
 
    _oneExtraArgMemberForEacher_DeleteDirectoryMock->OneExtraArgMemberForEachMock.Expect();
 
-   const vector<string> topLevelDirectoryPathsInDirectory = ZenUnit::RandomVector<string>();
-   _protected_fileSystemMock->GetStringDirectoryPathsInDirectoryMock.Return(topLevelDirectoryPathsInDirectory);
+   const vector<string> topLevelDirectoryPathsInDirectory =
+      _protected_fileSystemMock->GetStringDirectoryPathsInDirectoryMock.ReturnRandom();
 
    _protected_fileSystemMock->RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindowsMock.Expect();
 
@@ -112,8 +112,8 @@ TEST(Run_TargetDirectoryExists_ParallelIsTrue_WritesDeletingInParallelMessage_Re
 
    _parallelOneExtraArgMemberForEacher_DeleteDirectoryMock->ParallelOneExtraArgMemberForEachMock.Expect();
 
-   const vector<string> topLevelDirectoryPathsInDirectory = ZenUnit::RandomVector<string>();
-   _protected_fileSystemMock->GetStringDirectoryPathsInDirectoryMock.Return(topLevelDirectoryPathsInDirectory);
+   const vector<string> topLevelDirectoryPathsInDirectory =
+      _protected_fileSystemMock->GetStringDirectoryPathsInDirectoryMock.ReturnRandom();
 
    _protected_fileSystemMock->RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindowsMock.Expect();
 

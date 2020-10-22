@@ -66,11 +66,11 @@ TEST2X2(Run_CallsRenameFileOnEachFilePathInArgsDirPath_PrintsNumberOfFilesThatWe
    false, "[FileRevisor] Result: Renamed ",
    true, "[FileRevisor] Result: Would rename ")
 {
-   const vector<fs::path> filePathsInAndPossiblyBelowDirectory = ZenUnit::RandomVector<fs::path>();
-   _protected_fileSystemMock->GetFilePathsInDirectoryMock.Return(filePathsInAndPossiblyBelowDirectory);
+   const vector<fs::path> filePathsInAndPossiblyBelowDirectory =
+      _protected_fileSystemMock->GetFilePathsInDirectoryMock.ReturnRandom();
 
-   const vector<RenameResult> fileRenameResults = ZenUnit::RandomVector<RenameResult>();
-   _transformer_RenameFileIfFileNameMatchesFromPatternMock->TransformMock.Return(fileRenameResults);
+   const vector<RenameResult> fileRenameResults =
+      _transformer_RenameFileIfFileNameMatchesFromPatternMock->TransformMock.ReturnRandom();
 
    const size_t numberOfRenamedFiles = _predicateCounterMock->CountWhereMock.ReturnRandom();
 

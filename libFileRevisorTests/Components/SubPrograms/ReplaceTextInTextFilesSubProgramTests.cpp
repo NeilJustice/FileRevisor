@@ -66,8 +66,8 @@ TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsRegexReplaceFileTextOnEachText
    true, "[FileRevisor] Result: Would replace text in ",
    false, "[FileRevisor] Result: Replaced text in ")
 {
-   const vector<fs::path> nonEmptyTextFilePaths = ZenUnit::RandomVector<fs::path>();
-   _protected_fileSystemMock->GetNonEmptyTextFilePathsInDirectoryMock.Return(nonEmptyTextFilePaths);
+   const vector<fs::path> nonEmptyTextFilePaths =
+      _protected_fileSystemMock->GetNonEmptyTextFilePathsInDirectoryMock.ReturnRandom();
 
    const size_t numberOfFilesThatWereOrWouldBeModified =
       _memberFunctionSumator_RegexReplaceTextInTextFileMock->SumElementsWithFunctionMock.ReturnRandom();
