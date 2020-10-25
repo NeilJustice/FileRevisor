@@ -75,11 +75,15 @@ Shown in this screenshot is FileRevisor `delete-directory` deleting `directory1`
 
 FileRevisor `rename-files` mode renames files in either a specified directory only or with `--recurse` in a specified directory and its subdirectories.
 
-Shown in this screenshot is FileRevisor `rename-files` renaming files with name `file` to name `new_file_name` in the current directory:
+Shown in this screenshot is FileRevisor `rename-files` renaming files with name `file` to new name `new_file_name` in the current directory:
 
 ![rename-files](Screenshots/rename-files.png)
 
 ### rename-directories
+
+FileRevisor `rename-directories` mode renames directories in either a specified directory only or with `--recurse` in a specified directory and its subdirectories.
+
+Shown in this screenshot is FileRevisor `rename-directories` renaming directories with name `directory` to new name `new_directory_name` in the current directory:
 
 ![rename-directories](Screenshots/rename-directories.png)
 
