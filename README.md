@@ -21,8 +21,8 @@ FileRevisor is a C++ command line program for quickly deleting large directories
 * [Windows Folder Deletion Performance: CMD vs. Git Bash vs. PowerShell vs. FileRevisor](#windows-folder-deletion-performance-cmd-vs-git-bash-vs-powershell-vs-filerevisor)
 * [Linux Jenkins Jobs That Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor](#linux-jenkins-jobs-that-compile-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filerevisor)
 * [Windows Jenkins Jobs That Compile FileRevisor](#windows-jenkins-jobs-that-compile-filerevisor)
-* [Four Steps To Build And Install FileRevisor On Linux](#four-steps-to-build-and-install-filerevisor-on-linux)
-* [Four Steps To Build And Install FileRevisor On Windows](#four-steps-to-build-and-install-filerevisor-on-windows)
+* [4 Commands To Build And Install FileRevisor On Linux](#4-steps-to-build-and-install-filerevisor-on-linux)
+* [4 Commands To Build And Install FileRevisor On Windows](#4-steps-to-build-and-install-filerevisor-on-windows)
 
 ## FileRevisor Command Line Usage
 
@@ -113,7 +113,7 @@ A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins job
 
 ![Jenkins Jobs That Compile FileRevisor On Windows](Screenshots/WindowsJenkinsJobsForFileRevisor.png)
 
-## Four Steps To Build And Install FileRevisor On Linux
+## 4 Commands To Build And Install FileRevisor On Linux
 
 ```
 git clone https://github.com/NeilJustice/FileRevisor
@@ -122,9 +122,11 @@ CXX=clang++ cmake .. -DCMAKE_BUILD_TYPE=Release
 sudo cmake --build . --target install
 ```
 
+The result from running the above four Linux commands is binary `filerevisor` installed to `/usr/local/bin/filerevisor`:
+
 ![Linux filerevisor binary in /usr/local/bin](Screenshots/LinuxFileRevisorBinaryInUsrLocalBin.png)
 
-## Four Steps To Build And Install FileRevisor On Windows
+## 4 Commands To Build And Install FileRevisor On Windows
 
 ```
 git clone https://github.com/NeilJustice/FileRevisor
@@ -133,5 +135,6 @@ cmake . -G"Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
 cmake --build . --config Release --target install
 ```
 
-![Windows FileRevisor.exe](Screenshots/WindowsFileRevisorDotExe.png)
+The result from running the above four Windows commands is binary `FileRevisor.exe` installed to `C:\bin\FileRevisor.exe`:
 
+![Windows FileRevisor.exe](Screenshots/WindowsFileRevisorDotExe.png)
