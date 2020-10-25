@@ -65,9 +65,17 @@ Usage:
 
 ### delete-directory
 
+FileRevisor `delete-directory` mode quickly deletes a directory optionally in parallel to delete its contents even faster.
+
+Shown in this screenshot is FileRevisor `delete-directory` deleting `directory1` in parallel:
+
 ![delete-directory](Screenshots/delete-directory.png)
 
 ### rename-files
+
+FileRevisor `rename-files` mode renames files in either a specified directory only or with `--recurse` in a specified directory and its subdirectories.
+
+Shown in this screenshot is FileRevisor `rename-files` renaming files with name `file` to name `new_file_name` in the current directory:
 
 ![rename-files](Screenshots/rename-files.png)
 
