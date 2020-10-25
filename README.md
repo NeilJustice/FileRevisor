@@ -91,27 +91,27 @@ Shown in this screenshot is FileRevisor `rename-directories` renaming directorie
 
 ![replace-text](Screenshots/replace-text.png)
 
+### Windows Folder Deletion Performance: CMD vs. Git Bash vs. PowerShell vs. FileRevisor
+
+![Windows Folder Deletion Performance: Remove-Item -Recurse vs. FileRevisor delete-directory](Screenshots/WindowsFileRevisorPerformanceGraph.png)
+
 ### Linux Folder Deletion Performance: rm -rf > /dev/null vs. FileRevisor
 
 ![Linux Folder Deletion Performance: rm -rf > /dev/null vs. FileRevisor](Screenshots/LinuxFileRevisorPerformanceGraph.png)
 
 CPU and storage hardware that generated the above and below performance numbers: 32-core 64-thread AMD Threadripper 2990WX with a 512 GB Samsung 970 PRO NVMe drive.
 
-### Windows Folder Deletion Performance: CMD vs. Git Bash vs. PowerShell vs. FileRevisor
+### Linux Jenkins Jobs That Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor
 
-![Windows Folder Deletion Performance: Remove-Item -Recurse vs. FileRevisor delete-directory](Screenshots/WindowsFileRevisorPerformanceGraph.png)
+A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 31:
+
+![A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 31 Linux](Screenshots/LinuxJenkinsJobsForFileRevisor.png)
 
 ### Windows Jenkins Jobs That Compile FileRevisor
 
 A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Windows 10:
 
 ![Jenkins Jobs That Compile FileRevisor On Windows](Screenshots/WindowsJenkinsJobsForFileRevisor.png)
-
-### Linux Jenkins Jobs That Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor
-
-A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 31:
-
-![A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 31 Linux](Screenshots/LinuxJenkinsJobsForFileRevisor.png)
 
 ## 4 Commands To Build And Install FileRevisor On Linux
 
