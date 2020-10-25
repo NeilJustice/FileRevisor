@@ -17,8 +17,8 @@ FileRevisor is a C++ command line program for quickly deleting large directories
   * [rename-files](#rename-files)
   * [rename-directories](#rename-directories)
   * [replace-text](#replace-text)
-* [Linux Folder Deletion Performance: rm -rf > /dev/null vs. FileRevisor](#linux-folder-deletion-performance-rm-rf->-dev-null-vs-FileRevisor)
 * [Windows Folder Deletion Performance: CMD vs. Git Bash vs. PowerShell vs. FileRevisor](#windows-folder-deletion-performance-cmd-vs-git-bash-vs-powershell-vs-filerevisor)
+* [Linux Folder Deletion Performance: rm -rf > /dev/null vs. FileRevisor](#linux-folder-deletion-performance-rm-rf->-dev-null-vs-FileRevisor)
 * [Linux Jenkins Jobs That Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor](#linux-jenkins-jobs-that-compile-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filerevisor)
 * [Windows Jenkins Jobs That Compile FileRevisor](#windows-jenkins-jobs-that-compile-filerevisor)
 * [4 Commands To Build And Install FileRevisor On Linux](#4-commands-to-build-and-install-filerevisor-on-linux)
@@ -101,17 +101,17 @@ CPU and storage hardware that generated the above and below performance numbers:
 
 ![Windows Folder Deletion Performance: Remove-Item -Recurse vs. FileRevisor delete-directory](Screenshots/WindowsFileRevisorPerformanceGraph.png)
 
-### Linux Jenkins Jobs That Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor
-
-A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 31:
-
-![A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 31 Linux](Screenshots/LinuxJenkinsJobsForFileRevisor.png)
-
 ### Windows Jenkins Jobs That Compile FileRevisor
 
 A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Windows 10:
 
 ![Jenkins Jobs That Compile FileRevisor On Windows](Screenshots/WindowsJenkinsJobsForFileRevisor.png)
+
+### Linux Jenkins Jobs That Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor
+
+A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 31:
+
+![A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 31 Linux](Screenshots/LinuxJenkinsJobsForFileRevisor.png)
 
 ## 4 Commands To Build And Install FileRevisor On Linux
 
