@@ -21,8 +21,8 @@ FileRevisor is a C++ command line program for quickly deleting large directories
 * [Windows Folder Deletion Performance: CMD vs. Git Bash vs. PowerShell vs. FileRevisor](#windows-folder-deletion-performance-cmd-vs-git-bash-vs-powershell-vs-filerevisor)
 * [Linux Jenkins Jobs That Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor](#linux-jenkins-jobs-that-compile-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filerevisor)
 * [Windows Jenkins Jobs That Compile FileRevisor](#windows-jenkins-jobs-that-compile-filerevisor)
-* [4 Commands To Build And Install FileRevisor On Linux](#4-steps-to-build-and-install-filerevisor-on-linux)
-* [4 Commands To Build And Install FileRevisor On Windows](#4-steps-to-build-and-install-filerevisor-on-windows)
+* [4 Commands To Build And Install FileRevisor On Linux](#4-commands-to-build-and-install-filerevisor-on-linux)
+* [4 Commands To Build And Install FileRevisor On Windows](#4-commands-to-build-and-install-filerevisor-on-windows)
 
 ## FileRevisor Command Line Usage
 
