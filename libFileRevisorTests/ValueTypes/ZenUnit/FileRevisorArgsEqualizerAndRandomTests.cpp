@@ -30,7 +30,7 @@ TEST(ZenUnitRandom_FileRevisorArgs_ReturnsRandomFileRevisorArgs)
 
 TEST(TestableRandomFileRevisorArgs_ReturnsFileRevisorArgsWithAllRandomFields)
 {
-   MetalMock::RandomGeneratorMock randomGeneratorMock;
+   ZenUnit::RandomGeneratorMock randomGeneratorMock;
 
    const string commandLine = ZenUnit::Random<string>();
    const string fromRegexPattern = ZenUnit::Random<string>();
