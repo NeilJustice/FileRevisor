@@ -41,7 +41,7 @@ TEST(TestableRandomFileRevisorArgs_ReturnsFileRevisorArgsWithAllRandomFields)
    const int programModeInt = randomGeneratorMock.EnumMock.ReturnRandom();
    const ProgramMode programMode = static_cast<ProgramMode>(programModeInt);
 
-   const fs::path targetDirectory = randomGeneratorMock.PathMock.ReturnRandom();
+   const fs::path targetDirectory = randomGeneratorMock.FilesystemPathMock.ReturnRandom();
 
    const bool recurse = ZenUnit::Random<bool>();
    const bool parallel = ZenUnit::Random<bool>();
@@ -56,7 +56,7 @@ TEST(TestableRandomFileRevisorArgs_ReturnsFileRevisorArgsWithAllRandomFields)
    //
    METALMOCK(randomGeneratorMock.StringMock.CalledNTimes(3));
    METALMOCK(randomGeneratorMock.EnumMock.CalledOnceWith(static_cast<int>(ProgramMode::MaxValue)));
-   METALMOCK(randomGeneratorMock.PathMock.CalledOnce());
+   METALMOCK(randomGeneratorMock.FilesystemPathMock.CalledOnce());
    METALMOCK(randomGeneratorMock.BoolMock.CalledNTimes(6));
    FileRevisorArgs expectedRandomFileRevisorArgs;
    expectedRandomFileRevisorArgs.commandLine = commandLine;

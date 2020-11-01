@@ -35,7 +35,7 @@ FileRevisorArgs TestableRandomFileRevisorArgs(const ZenUnit::RandomGenerator* ra
    randomFileRevisorArgs.programMode = static_cast<ProgramMode>(randomGenerator->Enum(static_cast<int>(ProgramMode::MaxValue)));
    randomFileRevisorArgs.fromRegexPattern = randomGenerator->String();
    randomFileRevisorArgs.toRegexPattern = randomGenerator->String();
-   randomFileRevisorArgs.targetDirectoryPath = randomGenerator->Path();
+   randomFileRevisorArgs.targetDirectoryPath = randomGenerator->FilesystemPath();
    randomFileRevisorArgs.recurse = randomGenerator->Bool();
    randomFileRevisorArgs.parallel = randomGenerator->Bool();
    randomFileRevisorArgs.skipFilesInUse = randomGenerator->Bool();

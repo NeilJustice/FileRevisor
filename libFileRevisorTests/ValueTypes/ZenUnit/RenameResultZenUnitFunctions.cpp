@@ -30,7 +30,7 @@ RenameResult TestableRenameResultRandom(const ZenUnit::RandomGenerator* randomGe
 {
    RenameResult randomRenameResult;
    randomRenameResult.didRenameFileOrDirectory = randomGenerator->Bool();
-   randomRenameResult.originalFileOrDirectoryPath = randomGenerator->Path();
-   randomRenameResult.renamedFileOrDirectoryPath = randomGenerator->Path();
+   randomRenameResult.originalFileOrDirectoryPath = randomGenerator->FilesystemPath();
+   randomRenameResult.renamedFileOrDirectoryPath = randomGenerator->FilesystemPath();
    return randomRenameResult;
 }
