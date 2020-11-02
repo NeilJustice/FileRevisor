@@ -9,18 +9,18 @@ EVIDENCE
 
 TEST(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
 {
-   SETUP_EQUALIZER_TEST(FileRevisorArgs);
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, commandLine, ZenUnit::Random<string>());
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, programMode, ProgramMode::ReplaceTextInTextFiles);
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, fromRegexPattern, ZenUnit::Random<string>());
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, toRegexPattern, ZenUnit::Random<string>());
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, targetDirectoryPath, ZenUnit::Random<fs::path>());
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, recurse, true);
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, parallel, true);
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, skipFilesInUse, true);
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, preview, true);
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, minimal, true);
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, verbose, true);
+   ZENUNIT_EQUALIZER_TEST_SETUP(FileRevisorArgs);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, commandLine, ZenUnit::Random<string>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, programMode, ProgramMode::ReplaceTextInTextFiles);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, fromRegexPattern, ZenUnit::Random<string>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, toRegexPattern, ZenUnit::Random<string>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, targetDirectoryPath, ZenUnit::Random<fs::path>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, recurse, true);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, parallel, true);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, skipFilesInUse, true);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, preview, true);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, minimal, true);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, verbose, true);
 }
 
 TEST(ZenUnitRandom_FileRevisorArgs_ReturnsRandomFileRevisorArgs)

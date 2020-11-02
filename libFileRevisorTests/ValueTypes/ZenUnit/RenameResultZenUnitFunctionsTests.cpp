@@ -10,10 +10,10 @@ EVIDENCE
 
 TEST(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
 {
-   SETUP_EQUALIZER_TEST(RenameResult);
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(RenameResult, didRenameFileOrDirectory, true);
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(RenameResult, originalFileOrDirectoryPath, ZenUnit::Random<fs::path>());
-   EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(RenameResult, renamedFileOrDirectoryPath, ZenUnit::Random<fs::path>());
+   ZENUNIT_EQUALIZER_TEST_SETUP(RenameResult);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(RenameResult, didRenameFileOrDirectory, true);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(RenameResult, originalFileOrDirectoryPath, ZenUnit::Random<fs::path>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(RenameResult, renamedFileOrDirectoryPath, ZenUnit::Random<fs::path>());
 }
 
 TEST(ZenUnitRandom_CodeCoverage)
