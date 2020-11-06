@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileRevisorTests/ValueTypes/ZenUnit/RenameResultZenUnitFunctions.h"
+#include "libFileRevisorTests/ValueTypes/ZenUnit/RenameResultZenUnitEqualizerAndRandom.h"
 
 namespace ZenUnit
 {
@@ -16,13 +16,6 @@ namespace ZenUnit
       ZenUnit::RandomGenerator randomGenerator;
       const RenameResult randomRenameResult = ::TestableRenameResultRandom(&randomGenerator);
       return randomRenameResult;
-   }
-
-   void Printer<RenameResult>::Print(ostream& os, const RenameResult& fileRenameResult)
-   {
-      os << "RenameResult(didRenameFile=" << boolalpha << fileRenameResult.didRenameFileOrDirectory
-         << ", originalFilePath=" << fileRenameResult.originalFileOrDirectoryPath
-         << ", renamedFilePath=" << fileRenameResult.renamedFileOrDirectoryPath << ")";
    }
 }
 

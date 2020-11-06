@@ -1,11 +1,10 @@
 #include "pch.h"
-#include "libFileRevisorTests/ValueTypes/ZenUnit/RenameResultZenUnitFunctions.h"
+#include "libFileRevisorTests/ValueTypes/ZenUnit/RenameResultZenUnitEqualizerAndRandom.h"
 
-TESTS(RenameResultZenUnitFunctionsTests)
+TESTS(RenameResultZenUnitEqualizerAndRandomTests)
 AFACT(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
-AFACT(ZenUnitRandom_CodeCoverage)
+AFACT(ZenUnitRandom_ReturnsRenameResultWithAllNonDefaultValueFields)
 AFACT(TestableRenameResultRandom_ReturnsRenameResultWithAllRandomFields)
-AFACT(ZenUnitPrinter_WritesExpectedStringRepresentation)
 EVIDENCE
 
 TEST(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
@@ -16,9 +15,12 @@ TEST(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(RenameResult, renamedFileOrDirectoryPath, ZenUnit::Random<fs::path>());
 }
 
-TEST(ZenUnitRandom_CodeCoverage)
+TEST(ZenUnitRandom_ReturnsRenameResultWithAllNonDefaultValueFields)
 {
    const RenameResult randomRenameResult = ZenUnit::Random<RenameResult>();
+   // randomRenameResult.didRenameFileOrDirectory is a bool
+   IS_NOT_DEFAULT_VALUE(randomRenameResult.originalFileOrDirectoryPath);
+   IS_NOT_DEFAULT_VALUE(randomRenameResult.renamedFileOrDirectoryPath);
 }
 
 TEST(TestableRenameResultRandom_ReturnsRenameResultWithAllRandomFields)
@@ -40,20 +42,4 @@ TEST(TestableRenameResultRandom_ReturnsRenameResultWithAllRandomFields)
    ARE_EQUAL(expectedRandomRenameResult, randomRenameResult);
 }
 
-TEST(ZenUnitPrinter_WritesExpectedStringRepresentation)
-{
-   ostringstream oss;
-   const RenameResult renameResult = ZenUnit::Random<RenameResult>();
-   //
-   ZenUnit::Printer<RenameResult>::Print(oss, renameResult);
-   //
-   ostringstream expectedPrintMaker;
-   expectedPrintMaker << "RenameResult(didRenameFile=" << boolalpha << renameResult.didRenameFileOrDirectory
-      << ", originalFilePath=" << renameResult.originalFileOrDirectoryPath
-      << ", renamedFilePath=" << renameResult.renamedFileOrDirectoryPath << ")";
-   const string expectedPrint = expectedPrintMaker.str();
-   const string actualPrint = oss.str();
-   ARE_EQUAL(expectedPrint, actualPrint);
-}
-
-RUN_TESTS(RenameResultZenUnitFunctionsTests)
+RUN_TESTS(RenameResultZenUnitEqualizerAndRandomTests)

@@ -3,7 +3,7 @@
 
 TESTS(FileRevisorArgsEqualizerAndRandomTests)
 AFACT(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
-AFACT(ZenUnitRandom_FileRevisorArgs_ReturnsRandomFileRevisorArgs)
+AFACT(ZenUnitRandom_ReturnsFileRevisorArgsWithAllNonDefaultValueFields)
 AFACT(TestableRandomFileRevisorArgs_ReturnsFileRevisorArgsWithAllRandomFields)
 EVIDENCE
 
@@ -23,9 +23,14 @@ TEST(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, verbose, true);
 }
 
-TEST(ZenUnitRandom_FileRevisorArgs_ReturnsRandomFileRevisorArgs)
+TEST(ZenUnitRandom_ReturnsFileRevisorArgsWithAllNonDefaultValueFields)
 {
    const FileRevisorArgs randomFileRevisorArgs = ZenUnit::Random<FileRevisorArgs>();
+   IS_NOT_DEFAULT_VALUE(randomFileRevisorArgs.commandLine);
+   IS_NOT_DEFAULT_VALUE(randomFileRevisorArgs.programMode);
+   IS_NOT_DEFAULT_VALUE(randomFileRevisorArgs.targetDirectoryPath);
+   IS_NOT_DEFAULT_VALUE(randomFileRevisorArgs.fromRegexPattern);
+   IS_NOT_DEFAULT_VALUE(randomFileRevisorArgs.toRegexPattern);
 }
 
 TEST(TestableRandomFileRevisorArgs_ReturnsFileRevisorArgsWithAllRandomFields)
