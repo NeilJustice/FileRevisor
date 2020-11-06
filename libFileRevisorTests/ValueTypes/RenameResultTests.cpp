@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "libFileRevisor/ValueTypes/RenameResult.h"
-#include "libFileRevisorTests/ValueTypes/ZenUnit/RenameResultZenUnitFunctions.h"
 
 TESTS(RenameResultTests)
 AFACT(DefaultConstructor_SetsFieldsToDefaults)

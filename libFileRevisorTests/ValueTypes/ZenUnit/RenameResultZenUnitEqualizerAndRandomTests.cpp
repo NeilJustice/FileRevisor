@@ -18,7 +18,7 @@ TEST(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
 TEST(ZenUnitRandom_ReturnsRenameResultWithAllNonDefaultValueFields)
 {
    const RenameResult randomRenameResult = ZenUnit::Random<RenameResult>();
-   // randomRenameResult.didRenameFileOrDirectory is a bool
+   // randomRenameResult.didRenameFileOrDirectory is a bool that ZenUnit::RandomGenerator::Bool() can sometimes set to false
    IS_NOT_DEFAULT_VALUE(randomRenameResult.originalFileOrDirectoryPath);
    IS_NOT_DEFAULT_VALUE(randomRenameResult.renamedFileOrDirectoryPath);
 }

@@ -27,10 +27,16 @@ TEST(ZenUnitRandom_ReturnsFileRevisorArgsWithAllNonDefaultValueFields)
 {
    const FileRevisorArgs randomFileRevisorArgs = ZenUnit::Random<FileRevisorArgs>();
    IS_NOT_DEFAULT_VALUE(randomFileRevisorArgs.commandLine);
-   IS_NOT_DEFAULT_VALUE(randomFileRevisorArgs.programMode);
+   // randomFileRevisorArgs.programMode is an enum that ZenUnit::RandomGenerator::Enum() can sometimes set to 0
    IS_NOT_DEFAULT_VALUE(randomFileRevisorArgs.targetDirectoryPath);
    IS_NOT_DEFAULT_VALUE(randomFileRevisorArgs.fromRegexPattern);
    IS_NOT_DEFAULT_VALUE(randomFileRevisorArgs.toRegexPattern);
+   // randomFileRevisorArgs.recurse is a bool that ZenUnit::RandomGenerator::Bool() can sometimes set to false
+   // randomFileRevisorArgs.parallel
+   // randomFileRevisorArgs.skipFilesInUse
+   // randomFileRevisorArgs.preview
+   // randomFileRevisorArgs.minimal
+   // randomFileRevisorArgs.verbose
 }
 
 TEST(TestableRandomFileRevisorArgs_ReturnsFileRevisorArgsWithAllRandomFields)

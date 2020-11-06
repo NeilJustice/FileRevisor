@@ -8,7 +8,6 @@
 #include "libFileRevisorTests/Components/Iteration/Transform/MetalMock/OneExtraArgMemberFunctionTransformerMock.h"
 #include "libFileRevisorTests/Components/Strings/MetalMock/PluralizerMock.h"
 #include "libFileRevisorTests/Components/Strings/MetalMock/RegexerMock.h"
-#include "libFileRevisorTests/ValueTypes/ZenUnit/RenameResultZenUnitFunctions.h"
 
 TESTS(RenameDirectoriesSubProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
