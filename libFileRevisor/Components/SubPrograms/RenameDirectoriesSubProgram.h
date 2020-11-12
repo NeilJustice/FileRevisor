@@ -1,6 +1,5 @@
 #pragma once
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgram.h"
-#include "libFileRevisor/ValueTypes/RenameResult.h"
 class Regexer;
 
 template<typename ClassType, typename ElementType, typename TransformedElementType, typename ExtraArgType>

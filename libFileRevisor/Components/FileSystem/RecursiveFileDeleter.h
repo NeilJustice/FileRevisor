@@ -1,5 +1,5 @@
 #pragma once
-#include "libFileRevisor/Utilities/CompilerHints.h"
+#include "libFileRevisor/Compiler/CompilerHints.h"
 class Console;
 class FileSystemExceptionMaker;
 struct FileRevisorArgs;

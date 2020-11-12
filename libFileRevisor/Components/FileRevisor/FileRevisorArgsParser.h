@@ -1,5 +1,5 @@
 #pragma once
-#include "libFileRevisor/ValueTypes/FileRevisorArgs.h"
+#include "libFileRevisor/Components/Docopt/docopt.h"
 class Console;
 class DocoptParser;
 class FileSystem;

@@ -1,5 +1,4 @@
 #include "pch.h"
-#include "libFileRevisor/Components/DataStructures/Map.h"
 #include "libFileRevisor/Components/Docopt/DocoptParser.h"
 
 DocoptParser::DocoptParser()

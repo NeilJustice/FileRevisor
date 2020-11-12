@@ -14,8 +14,6 @@
 #include "libFileRevisor/Components/SubPrograms/RenameFilesSubProgram.h"
 #include "libFileRevisor/Components/SubPrograms/ReplaceTextInTextFilesSubProgram.h"
 #include "libFileRevisor/Components/Strings/Regexer.h"
-#include "libFileRevisor/Enums/ProgramMode.h"
-#include "libFileRevisor/ValueTypes/FileRevisorArgs.h"
 
 shared_ptr<FileRevisorSubProgram> FileRevisorSubProgramFactory::NewFileRevisorSubProgram(ProgramMode programMode) const
 {

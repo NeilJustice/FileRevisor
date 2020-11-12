@@ -1,5 +1,5 @@
 #pragma once
-#include "libFileRevisor/Utilities/MSVCIgnoredWallWarnings.h"
+#include "libFileRevisor/Compiler/MSVCIgnoredWallWarnings.h"
 
 #if defined __linux__
    #include <cstddef>
@@ -34,7 +34,21 @@ using namespace std;
 #include "Windows.h"
 #endif
 
-#include "libFileRevisor/Utilities/ReleaseAssert.h"
-#include "libFileRevisor/Components/Strings/StringUtil.h"
+// libFileRevisor Constants
 #include "libFileRevisor/Constants/ErrnoValue.h"
-#include "libFileRevisor/Components/Docopt/DocoptParser.h"
+
+// libFileRevisor StaticUtilities
+#include "libFileRevisor/StaticUtilities/ReleaseAssert.h"
+#include "libFileRevisor/StaticUtilities/StringUtil.h"
+#include "libFileRevisor/StaticUtilities/Map.h"
+#include "libFileRevisor/StaticUtilities/STRING_ENUM_MAP.h"
+#include "libFileRevisor/StaticUtilities/Vector.h"
+#include "libFileRevisor/StaticUtilities/Type.h"
+
+// libFileRevisor Enums
+#include "libFileRevisor/Enums/FileExceptionType.h"
+#include "libFileRevisor/Enums/ProgramMode.h"
+
+// libFileRevisor ValueTypes
+#include "libFileRevisor/ValueTypes/FileRevisorArgs.h"
+#include "libFileRevisor/ValueTypes/RenameResult.h"

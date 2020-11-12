@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "libFileRevisor/Components/FileSystem/DirectoryIterator.h"
-#include "libFileRevisor/Components/Strings/StringUtil.h"
 
 DirectoryIterator::DirectoryIterator() noexcept
 	: _recursiveMode(false)

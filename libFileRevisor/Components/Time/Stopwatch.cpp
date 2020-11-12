@@ -1,5 +1,4 @@
 #include "pch.h"
-#include "libFileRevisor/Components/Strings/StringUtil.h"
 #include "libFileRevisor/Components/Time/Stopwatch.h"
 
 Stopwatch::Stopwatch()

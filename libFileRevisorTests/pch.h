@@ -1,5 +1,5 @@
 #pragma once
-#include "libFileRevisor/Utilities/MSVCIgnoredWallWarnings.h"
+#include "libFileRevisor/Compiler/MSVCIgnoredWallWarnings.h"
 
 #if defined __linux__
    #include <cstddef>
@@ -21,11 +21,24 @@ using namespace std;
 
 #include "MetalMock.h"
 
-#include "libFileRevisor/Components/Strings/StringUtil.h"
+// libFileRevisor Constants
 #include "libFileRevisor/Constants/ErrnoValue.h"
-#include "libFileRevisor/Enums/ProgramMode.h"
-#include "libFileRevisor/Utilities/ReleaseAssert.h"
 
+// libFileRevisor StaticUtilities
+#include "libFileRevisor/StaticUtilities/Map.h"
+#include "libFileRevisor/StaticUtilities/ReleaseAssert.h"
+#include "libFileRevisor/StaticUtilities/STRING_ENUM_MAP.h"
+#include "libFileRevisor/StaticUtilities/StringUtil.h"
+#include "libFileRevisor/StaticUtilities/Vector.h"
+
+// libFileRevisor Enums
+#include "libFileRevisor/Enums/ProgramMode.h"
+
+// libFileRevisor ValueTypes
+#include "libFileRevisor/ValueTypes/FileRevisorArgs.h"
+#include "libFileRevisor/ValueTypes/RenameResult.h"
+
+// libFileRevisorTests ZenUnit Equalizers And Randoms
 #include "libFileRevisorTests/ValueTypes/ZenUnit/FileRevisorArgsEqualizerAndRandom.h"
-#include "libFileRevisorTests/Exceptions/ZenUnit/FileSystemExceptionRandom.h"
 #include "libFileRevisorTests/ValueTypes/ZenUnit/RenameResultZenUnitEqualizerAndRandom.h"
+#include "libFileRevisorTests/Exceptions/ZenUnit/FileSystemExceptionRandom.h"

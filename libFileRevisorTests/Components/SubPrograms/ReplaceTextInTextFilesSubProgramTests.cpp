@@ -1,7 +1,5 @@
 #include "pch.h"
 #include "libFileRevisor/Components/SubPrograms/ReplaceTextInTextFilesSubProgram.h"
-#include "libFileRevisor/Components/DataStructures/Vector.h"
-#include "libFileRevisor/Components/DataStructures/Vector.h"
 #include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 #include "libFileRevisorTests/Components/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
