@@ -1,6 +1,5 @@
 #pragma once
 class FileRevisorSubProgram;
-enum class ProgramMode;
 
 class FileRevisorSubProgramFactory
 {

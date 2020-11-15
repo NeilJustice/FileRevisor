@@ -9,8 +9,6 @@ class Type
 private:
    static std::unordered_map<const char*, std::string> s_mangledToDemangledTypeName;
 public:
-   Type() = delete;
-
    template<typename T>
    static const std::string* GetName(const T& variable)
    {
@@ -22,6 +20,8 @@ public:
    {
       return TypeInfoToTypeName(typeid(T));
    }
+
+   Type() = delete;
 private:
    static const std::string* TypeInfoToTypeName(const std::type_info& typeInfo)
    {

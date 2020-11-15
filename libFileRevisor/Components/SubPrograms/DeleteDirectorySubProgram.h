@@ -1,7 +1,9 @@
 #pragma once
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgram.h"
+
 template<typename T, typename ClassType, typename MemberFunctionType, typename ExtraArgType>
 class OneExtraArgMemberForEacher;
+
 template<typename T, typename ClassType, typename MemberFunctionType, typename ExtraArgType>
 class ParallelOneExtraArgMemberForEacher;
 

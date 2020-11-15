@@ -4,8 +4,6 @@
 class Map
 {
 public:
-   Map() = delete;
-
    template<
       template<typename...>
    typename MapType,
@@ -36,6 +34,8 @@ public:
       }
       return false;
    }
+
+   Map() = delete;
 private:
    template<typename KeyType>
    static

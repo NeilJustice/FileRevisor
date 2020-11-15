@@ -1,7 +1,5 @@
 #include "pch.h"
 #include "libFileRevisor/Components/Console/Console.h"
-#include "libFileRevisor/Components/Exceptions/Exception.h"
-#include "libFileRevisor/Components/FunctionCallers/Member/VoidZeroArgMemberFunctionCaller.h"
 
 void Console::WriteInt(int value) const
 {

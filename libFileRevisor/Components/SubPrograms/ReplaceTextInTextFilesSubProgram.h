@@ -11,7 +11,6 @@ template<
    typename ElementType,
    typename ExtraArgType>
 class OneExtraArgMemberFunctionSumator;
-
 class Regexer;
 
 template<typename ClassType, typename Arg1Type, typename Arg2Type>

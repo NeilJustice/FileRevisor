@@ -21,18 +21,20 @@ Usage:
 
 TEST(DefaultConstructor_SetsFieldsTo0)
 {
-   const FileRevisorArgs args;
-   ARE_EQUAL("", args.commandLine);
-   ARE_EQUAL(ProgramMode::Unset, args.programMode);
-   ARE_EQUAL(fs::path(), args.targetDirectoryPath);
-   ARE_EQUAL("", args.fromRegexPattern);
-   ARE_EQUAL("", args.toRegexPattern);
-   IS_FALSE(args.recurse);
-   IS_FALSE(args.parallel);
-   IS_FALSE(args.skipFilesInUse);
-   IS_FALSE(args.preview);
-   IS_FALSE(args.minimal);
-   IS_FALSE(args.verbose);
+   const FileRevisorArgs defaultFileRevisorArgs;
+   FileRevisorArgs expectedDefaultFileRevisorArgs;
+   expectedDefaultFileRevisorArgs.commandLine = "";
+   expectedDefaultFileRevisorArgs.programMode = ProgramMode::Unset;
+   expectedDefaultFileRevisorArgs.targetDirectoryPath = fs::path();
+   expectedDefaultFileRevisorArgs.fromRegexPattern = "";
+   expectedDefaultFileRevisorArgs.toRegexPattern = "";
+   expectedDefaultFileRevisorArgs.recurse = false;
+   expectedDefaultFileRevisorArgs.parallel = false;
+   expectedDefaultFileRevisorArgs.skipFilesInUse = false;
+   expectedDefaultFileRevisorArgs.preview = false;
+   expectedDefaultFileRevisorArgs.minimal = false;
+   expectedDefaultFileRevisorArgs.verbose = false;
+   ARE_EQUAL(expectedDefaultFileRevisorArgs, defaultFileRevisorArgs);
 }
 
 RUN_TESTS(FileRevisorArgsTests)

@@ -1,10 +1,13 @@
 #pragma once
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgram.h"
 class Regexer;
+
 template<typename ContainerType, typename T>
 class PredicateCounter;
+
 template<typename ClassType, typename ElementType, typename TransformedElementType, typename ExtraArgType>
 class OneExtraArgMemberFunctionTransformer;
+
 template<typename ClassType, typename Arg1Type, typename Arg2Type>
 class VoidTwoArgMemberFunctionCaller;
 

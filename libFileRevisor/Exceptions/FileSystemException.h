@@ -1,5 +1,4 @@
 #pragma once
-enum class FileExceptionType;
 
 class FileSystemException : public std::exception
 {

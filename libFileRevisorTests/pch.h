@@ -1,5 +1,5 @@
 #pragma once
-#include "libFileRevisor/Compiler/MSVCIgnoredWallWarnings.h"
+#include "libFileRevisor/Compiler/IfMSVCIgnoreTheseWarnings.h"
 
 #if defined __linux__
    #include <cstddef>
@@ -16,6 +16,7 @@
    namespace fs = std::filesystem;
 #endif
 
+#include <assert.h>
 #include <regex>
 using namespace std;
 
@@ -23,6 +24,9 @@ using namespace std;
 
 // libFileRevisor Constants
 #include "libFileRevisor/Constants/ErrnoValue.h"
+
+// libFileRevisor Docopt
+#include "libFileRevisor/Components/Docopt/docopt.h"
 
 // libFileRevisor StaticUtilities
 #include "libFileRevisor/StaticUtilities/Map.h"

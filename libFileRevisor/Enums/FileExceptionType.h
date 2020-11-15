@@ -1,6 +1,6 @@
 #pragma once
 
-enum class FileExceptionType
+enum class FileExceptionType : unsigned char
 {
    Unset,
    FailedToOpenFile,

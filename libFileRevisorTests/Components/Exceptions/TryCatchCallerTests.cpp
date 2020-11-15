@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "libFileRevisor/Components/Exceptions/Exception.h"
 #include "libFileRevisor/Components/Exceptions/TryCatchCaller.h"
+#include "libFileRevisor/StaticUtilities/Exception.h"
 
 template<typename ArgumentType, typename ExceptionType>
 TEMPLATE_TESTS(TryCatchCallerTests, ArgumentType, ExceptionType)
@@ -11,7 +11,7 @@ EVIDENCE
 class Class
 {
 public:
-   bool doThrow = false;
+   bool doThrowException = false;
    vector<ArgumentType> calls;
    int exitCode = 0;
 
@@ -20,7 +20,7 @@ public:
    int exceptionHandlerExitCode = 0;
 
    Class()
-      : doThrow(false)
+      : doThrowException(false)
    {
       exitCode = ZenUnit::Random<int>();
       exceptionWhat = ZenUnit::Random<string>();
@@ -30,7 +30,7 @@ public:
    int MemberFunction(ArgumentType argument)
    {
       calls.push_back(argument);
-      if (doThrow)
+      if (doThrowException)
       {
          throw ExceptionType(exceptionWhat.c_str());
       }
@@ -39,8 +39,8 @@ public:
 
    int ExceptionHandler(const exception& ex, ArgumentType argument) const
    {
-      const string exceptionClassNameAndWhat = Exception::ClassNameAndWhat(&ex);
-      exceptionHandlerCalls.emplace_back(exceptionClassNameAndWhat, argument);
+      const string exceptionClassNameAndMessage = Exception::GetExceptionClassNameAndMessage(&ex);
+      exceptionHandlerCalls.emplace_back(exceptionClassNameAndMessage, argument);
       return exceptionHandlerExitCode;
    }
 };
@@ -51,7 +51,7 @@ TryCatchCaller<Class, ArgumentType> _tryCatchCaller;
 TEST(TryCatchCall_CallsFunctionWhichDoesNotThrow_ReturnsFunctionReturnValue)
 {
    const ArgumentType argument = ZenUnit::Random<ArgumentType>();
-   classInstance.doThrow = false;
+   classInstance.doThrowException = false;
    //
    const int exitCode = _tryCatchCaller.TryCatchCall(
       &classInstance, &Class::MemberFunction, argument, &Class::ExceptionHandler);
@@ -63,17 +63,17 @@ TEST(TryCatchCall_CallsFunctionWhichDoesNotThrow_ReturnsFunctionReturnValue)
 TEST(TryCatchCall_CallsFunctionWhichThrowsException_CallsExceptionHandler_ReturnsExceptionHandlerReturnValue)
 {
    const ArgumentType argument = ZenUnit::Random<ArgumentType>();
-   classInstance.doThrow = true;
+   classInstance.doThrowException = true;
    //
    const int exitCode = _tryCatchCaller.TryCatchCall(
       &classInstance, &Class::MemberFunction, argument, &Class::ExceptionHandler);
    //
    VECTORS_ARE_EQUAL({ argument }, classInstance.calls);
    ExceptionType ex(classInstance.exceptionWhat.c_str());
-   const string exceptionClassNameAndWhat = Exception::ClassNameAndWhat(&ex);
+   const string exceptionClassNameAndMessage = Exception::GetExceptionClassNameAndMessage(&ex);
    vector<pair<string, ArgumentType>> expectedExceptionHandlerCalls =
    {
-      { exceptionClassNameAndWhat, argument }
+      { exceptionClassNameAndMessage, argument }
    };
    VECTORS_ARE_EQUAL(expectedExceptionHandlerCalls, classInstance.exceptionHandlerCalls);
    ARE_EQUAL(classInstance.exceptionHandlerExitCode, exitCode);

@@ -3,8 +3,6 @@
 class Vector
 {
 public:
-   Vector() = delete;
-
    static std::vector<std::string> FromArgcArgv(int argc, char** argv);
 
    template<typename T>
@@ -28,4 +26,6 @@ public:
       const std::string joinedVectorString = oss.str();
       return joinedVectorString;
    }
+
+   Vector() = delete;
 };

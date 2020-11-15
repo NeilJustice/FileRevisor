@@ -1,9 +1,6 @@
 #pragma once
 class ConsoleTests;
 
-template<typename ClassType>
-class VoidZeroArgMemberFunctionCaller;
-
 class Console
 {
    friend class ::ConsoleTests;

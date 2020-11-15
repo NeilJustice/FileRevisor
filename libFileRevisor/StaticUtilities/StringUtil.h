@@ -3,8 +3,6 @@
 class String
 {
 public:
-   String() = delete;
-
    static bool ContainsSubstring(std::string_view stringView, std::string_view substring);
    static bool CaseInsensitiveContainsSubstring(std::string_view stringView, std::string_view substring);
    static std::string RegexReplace(std::string_view stringView, std::string_view matchingRegex, std::string_view replacingRegex);
@@ -36,6 +34,8 @@ public:
    static void RecursivelyConcatenate(std::ostringstream*)
    {
    }
+
+   String() = delete;
 private:
    static std::string ToAllLowercase(std::string_view str);
 };

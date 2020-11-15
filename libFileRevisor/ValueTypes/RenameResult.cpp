@@ -6,7 +6,10 @@ RenameResult::RenameResult()
 {
 }
 
-RenameResult::RenameResult(bool didRenameFileOrDirectory, const fs::path& originalFileOrDirectoryPath, const fs::path& renamedFileOrDirectoryPath)
+RenameResult::RenameResult(
+   bool didRenameFileOrDirectory,
+   const fs::path& originalFileOrDirectoryPath,
+   const fs::path& renamedFileOrDirectoryPath)
    : didRenameFileOrDirectory(didRenameFileOrDirectory)
    , originalFileOrDirectoryPath(originalFileOrDirectoryPath)
    , renamedFileOrDirectoryPath(renamedFileOrDirectoryPath)

@@ -16,3 +16,11 @@ struct FileRevisorArgs
    bool minimal = false;
    bool verbose = false;
 };
+
+#ifdef _WIN32
+   #ifdef _DEBUG
+      static_assert(sizeof(FileRevisorArgs) == 176);
+   #else
+      static_assert(sizeof(FileRevisorArgs) == 144);
+   #endif
+#endif

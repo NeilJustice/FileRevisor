@@ -2,7 +2,6 @@
 #include "libFileRevisor/Enums/FileExceptionType.h"
 #include "libFileRevisor/Exceptions/FileSystemException.h"
 class ErrorCodeTranslator;
-enum class FileExceptionType;
 
 class FileSystemExceptionMaker
 {

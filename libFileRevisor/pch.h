@@ -1,5 +1,5 @@
 #pragma once
-#include "libFileRevisor/Compiler/MSVCIgnoredWallWarnings.h"
+#include "libFileRevisor/Compiler/IfMSVCIgnoreTheseWarnings.h"
 
 #if defined __linux__
    #include <cstddef>
@@ -20,11 +20,14 @@
    namespace fs = std::filesystem;
 #endif
 
+#include <assert.h>
 #include <fstream>
 #include <functional>
 #include <iostream>
+#include <map>
 #include <regex>
 #include <sstream>
+#include <unordered_set>
 using namespace std;
 
 #ifdef _WIN32
@@ -36,6 +39,9 @@ using namespace std;
 
 // libFileRevisor Constants
 #include "libFileRevisor/Constants/ErrnoValue.h"
+
+// libFileRevisor Docopt
+#include "libFileRevisor/Components/Docopt/docopt.h"
 
 // libFileRevisor StaticUtilities
 #include "libFileRevisor/StaticUtilities/ReleaseAssert.h"

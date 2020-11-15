@@ -1,12 +1,12 @@
 #include "pch.h"
 #include "libFileRevisor/Components/Console/Console.h"
-#include "libFileRevisor/Components/Exceptions/Exception.h"
 #include "libFileRevisor/Components/Exceptions/TryCatchCaller.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorArgsParser.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorProgram.h"
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgram.h"
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgramFactory.h"
 #include "libFileRevisor/Components/Time/Stopwatch.h"
+#include "libFileRevisor/StaticUtilities/Exception.h"
 
 FileRevisorProgram::FileRevisorProgram()
    // Constant Components
@@ -15,7 +15,7 @@ FileRevisorProgram::FileRevisorProgram()
    , _fileRevisorSubProgramFactory(make_unique<FileRevisorSubProgramFactory>())
    , _tryCatchCaller(make_unique<TryCatchCaller<FileRevisorProgram, const vector<string>&>>())
    // Function Callers
-   , _call_Utils_Exception_ClassNameAndWhat(Exception::ClassNameAndWhat)
+   , _call_Utils_Exception_GetExceptionClassNameAndMessage(Exception::GetExceptionClassNameAndMessage)
    , _call_Utils_Vector_FromArgcArgv(Vector::FromArgcArgv)
    // Mutable Components
 	, _stopwatch(make_unique<Stopwatch>())
@@ -57,8 +57,8 @@ int FileRevisorProgram::Run(const vector<string>& stringArgs)
 
 int FileRevisorProgram::ExceptionHandler(const exception& ex, const vector<string>& /*stringArgs*/) const
 {
-   const string exceptionTypeNameAndMessage = _call_Utils_Exception_ClassNameAndWhat(&ex);
-   const string exceptionMessage = "[FileRevisor] Error: Exception thrown: " + exceptionTypeNameAndMessage;
+   const string exceptionClassNameAndMessage = _call_Utils_Exception_GetExceptionClassNameAndMessage(&ex);
+   const string exceptionMessage = "[FileRevisor] Error: Exception thrown: " + exceptionClassNameAndMessage;
    _console->WriteLine(exceptionMessage);
    return 1;
 }

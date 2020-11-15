@@ -1,5 +1,4 @@
 #pragma once
-#include "libFileRevisor/Components/Docopt/docopt.h"
 class Console;
 class DocoptParser;
 class FileSystem;
@@ -10,7 +9,6 @@ namespace docopt
 class FileRevisorPreambleMaker;
 template<typename ReturnType, typename ClassType, typename Arg1Type, typename Arg2Type>
 class NonVoidTwoArgMemberFunctionCaller;
-enum class ProgramMode;
 
 class FileRevisorArgsParser
 {

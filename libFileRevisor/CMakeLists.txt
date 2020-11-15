@@ -6,7 +6,6 @@ include_directories(${CMAKE_SOURCE_DIR})
 
 folder_source_group(Compiler)
 folder_source_group(Components)
-folder_source_group_subfolder(Components Asserter)
 folder_source_group_subfolder(Components Console)
 folder_source_group_subsubfolder(Components Console Windows)
 folder_source_group_subfolder(Components Docopt)

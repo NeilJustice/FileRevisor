@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "libFileRevisor/Components/Exceptions/Exception.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorArgsParser.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorProgram.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
+#include "libFileRevisor/StaticUtilities/Exception.h"
 #include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
 #include "libFileRevisorTests/Components/Exceptions/MetalMock/TryCatchCallerMock.h"
 #include "libFileRevisorTests/Components/FileRevisor/MetalMock/FileRevisorArgsParserMock.h"
@@ -20,14 +20,14 @@ AFACT(ExceptionHandler_PrintsExceptionClassNameAndWhat_Returns1)
 EVIDENCE
 
 FileRevisorProgram _fileRevisorProgram;
-// Components
+// Constant Components
 FileRevisorArgsParserMock* _argsParserMock = nullptr;
 ConsoleMock* _consoleMock = nullptr;
 FileRevisorSubProgramFactoryMock* _fileRevisorSubProgramFactoryMock = nullptr;
 TryCatchCallerMock<FileRevisorProgram, const vector<string>&>* _tryCatchCallerMock = nullptr;
 // Function Callers
-METALMOCK_NONVOID2_STATIC(vector<string>, Vector, FromArgcArgv, int, char**);
-METALMOCK_NONVOID1_STATIC(string, Exception, ClassNameAndWhat, const exception*);
+METALMOCK_NONVOID2_STATIC(vector<string>, Vector, FromArgcArgv, int, char**)
+METALMOCK_NONVOID1_STATIC(string, Exception, ClassNameAndWhat, const exception*)
 // Mutable Components
 StopwatchMock* _stopwatchMock = nullptr;
 
@@ -40,7 +40,7 @@ STARTUP
    _fileRevisorProgram._fileRevisorSubProgramFactory.reset(_fileRevisorSubProgramFactoryMock = new FileRevisorSubProgramFactoryMock);
    // Function Callers
    _fileRevisorProgram._call_Utils_Vector_FromArgcArgv = BIND_2ARG_METALMOCK_OBJECT(FromArgcArgvMock);
-   _fileRevisorProgram._call_Utils_Exception_ClassNameAndWhat = BIND_1ARG_METALMOCK_OBJECT(ClassNameAndWhatMock);
+   _fileRevisorProgram._call_Utils_Exception_GetExceptionClassNameAndMessage = BIND_1ARG_METALMOCK_OBJECT(ClassNameAndWhatMock);
    // Mutable Components
 	_fileRevisorProgram._stopwatch.reset(_stopwatchMock = new StopwatchMock);
 }
@@ -55,7 +55,7 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(textChangerProgram._tryCatchCaller);
    // Function Callers
 	STD_FUNCTION_TARGETS(Vector::FromArgcArgv, textChangerProgram._call_Utils_Vector_FromArgcArgv);
-   STD_FUNCTION_TARGETS(Exception::ClassNameAndWhat, textChangerProgram._call_Utils_Exception_ClassNameAndWhat);
+   STD_FUNCTION_TARGETS(Exception::GetExceptionClassNameAndMessage, textChangerProgram._call_Utils_Exception_GetExceptionClassNameAndMessage);
    // Mutable Components
    DELETE_TO_ASSERT_NEWED(textChangerProgram._stopwatch);
 }
