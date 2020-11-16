@@ -20,6 +20,7 @@
 #include <regex>
 using namespace std;
 
+#include "ZenUnit/ZenUnit.h"
 #include "ZenUnit/MetalMock.h"
 
 // libFileRevisor Constants
