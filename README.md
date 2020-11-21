@@ -60,6 +60,8 @@ Usage:
       [--verbose]
 ```
 
+FileRevisor command line arguments are parsed using the excellent single-header library [docopt.cpp](https://github.com/docopt/docopt.cpp).
+
 ## FileRevisor Program Modes
 
 ### delete-directory
