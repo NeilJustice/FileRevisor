@@ -252,38 +252,38 @@ void StdFileSystemRenameWithSettableErrorCode(
    outErrorCode = errorCode;
 }
 
-struct remove_all_FunctionCall
+struct remove_all_CallHistory
 {
    size_t numberOfCalls = 0;
    unsigned long long returnValue = 0;
    fs::path directoryPathArg;
    error_code outErrorCodeArg;
    error_code outErrorCodeReturnValue;
-} _remove_all_FunctionCall;
+} _remove_all_CallHistory;
 
 unsigned long long remove_all_CallInstead(const fs::path& directoryPath, error_code& outErrorCode)
 {
-   ++_remove_all_FunctionCall.numberOfCalls;
-   _remove_all_FunctionCall.directoryPathArg = directoryPath;
-   _remove_all_FunctionCall.outErrorCodeArg = outErrorCode;
-   outErrorCode = _remove_all_FunctionCall.outErrorCodeReturnValue;
-   return _remove_all_FunctionCall.returnValue;
+   ++_remove_all_CallHistory.numberOfCalls;
+   _remove_all_CallHistory.directoryPathArg = directoryPath;
+   _remove_all_CallHistory.outErrorCodeArg = outErrorCode;
+   outErrorCode = _remove_all_CallHistory.outErrorCodeReturnValue;
+   return _remove_all_CallHistory.returnValue;
 }
 
 TEST(RemoveAll_FsRemoveAllReturns0ErrorCode_ReturnsNumberOfFilesAndDirectoriesRemoved)
 {
    remove_allMock.CallInstead(std::bind(&FileSystemTests::remove_all_CallInstead,
       this, std::placeholders::_1, std::placeholders::_2));
-   _remove_all_FunctionCall.returnValue = ZenUnit::Random<unsigned long long>();
-   _remove_all_FunctionCall.outErrorCodeReturnValue = error_code(0, std::generic_category());
+   _remove_all_CallHistory.returnValue = ZenUnit::Random<unsigned long long>();
+   _remove_all_CallHistory.outErrorCodeReturnValue = error_code(0, std::generic_category());
    const fs::path directoryPath = ZenUnit::Random<fs::path>();
    //
    const unsigned long long numberOfFilesAndDirectoriesRemoved = _fileSystem.RemoveAll(directoryPath);
    //
-   ARE_EQUAL(1, _remove_all_FunctionCall.numberOfCalls);
-   ARE_EQUAL(directoryPath, _remove_all_FunctionCall.directoryPathArg);
-   ARE_EQUAL(error_code(), _remove_all_FunctionCall.outErrorCodeArg);
-   ARE_EQUAL(_remove_all_FunctionCall.returnValue, numberOfFilesAndDirectoriesRemoved);
+   ARE_EQUAL(1, _remove_all_CallHistory.numberOfCalls);
+   ARE_EQUAL(directoryPath, _remove_all_CallHistory.directoryPathArg);
+   ARE_EQUAL(error_code(), _remove_all_CallHistory.outErrorCodeArg);
+   ARE_EQUAL(_remove_all_CallHistory.returnValue, numberOfFilesAndDirectoriesRemoved);
 }
 
 TEST1X1(RemoveAll_FsRemoveAllReturnsNon0ErrorCode_ThrowsFileSystemException,
@@ -293,8 +293,8 @@ TEST1X1(RemoveAll_FsRemoveAllReturnsNon0ErrorCode_ThrowsFileSystemException,
 {
    remove_allMock.CallInstead(std::bind(&FileSystemTests::remove_all_CallInstead,
       this, std::placeholders::_1, std::placeholders::_2));
-   _remove_all_FunctionCall.returnValue = ZenUnit::Random<unsigned long long>();
-   _remove_all_FunctionCall.outErrorCodeReturnValue = error_code(errorCodeValue, std::generic_category());
+   _remove_all_CallHistory.returnValue = ZenUnit::Random<unsigned long long>();
+   _remove_all_CallHistory.outErrorCodeReturnValue = error_code(errorCodeValue, std::generic_category());
 
    const FileSystemException fileSystemException = _fileSystemExceptionMakerMock->
       MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectoryMock.ReturnRandom();
@@ -304,13 +304,13 @@ TEST1X1(RemoveAll_FsRemoveAllReturnsNon0ErrorCode_ThrowsFileSystemException,
    THROWS_EXCEPTION(_fileSystem.RemoveAll(directoryPath),
       FileSystemException, fileSystemException.what());
    //
-   ARE_EQUAL(1, _remove_all_FunctionCall.numberOfCalls);
-   ARE_EQUAL(directoryPath, _remove_all_FunctionCall.directoryPathArg);
-   ARE_EQUAL(error_code(), _remove_all_FunctionCall.outErrorCodeArg);
+   ARE_EQUAL(1, _remove_all_CallHistory.numberOfCalls);
+   ARE_EQUAL(directoryPath, _remove_all_CallHistory.directoryPathArg);
+   ARE_EQUAL(error_code(), _remove_all_CallHistory.outErrorCodeArg);
 
    METALMOCK(_fileSystemExceptionMakerMock->
       MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectoryMock.CalledOnceWith(
-      directoryPath, _remove_all_FunctionCall.returnValue, errorCodeValue));
+      directoryPath, _remove_all_CallHistory.returnValue, errorCodeValue));
 }
 
 TEST(RenameDirectory_RenamesDirectory_FilesystemRenameReturns0_ReturnsRenamedDirectoryPath)

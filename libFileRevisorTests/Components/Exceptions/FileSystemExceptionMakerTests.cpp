@@ -107,7 +107,7 @@ TEST(MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory_ReturnsExpectedF
       _errorCodeTranslatorMock->GetSystemErrorDescriptionMock.ReturnRandom();
 
    const fs::path fileOrDirectoryPath = ZenUnit::Random<fs::path>();
-   const long long removeAllReturnValue = ZenUnit::Random<long long>();
+   const unsigned long long removeAllReturnValue = ZenUnit::Random<unsigned long long>();
    const int errorCodeValue = ZenUnit::Random<int>();
    //
    const FileSystemException fileSystemException =

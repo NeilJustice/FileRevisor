@@ -54,7 +54,7 @@ MakeFileSystemExceptionForFailedToCloseFile(const fs::path& filePath) const
 FileSystemException FileSystemExceptionMaker::
 MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory(
    const fs::path& fileOrDirectoryPath,
-   long long removeAllReturnValue,
+   unsigned long long removeAllReturnValue,
    int errorCodeValue) const
 {
    const string systemErrorDescription = _errorCodeTranslator->GetSystemErrorDescription(errorCodeValue);

@@ -14,7 +14,7 @@ private:
    // Function Callers
 #ifdef _WIN32
    function<DWORD(const char*)> _call_GetFileAttributesA;
-   function<DWORD(const char*, DWORD)> _call_SetFileAttributesA;
+   function<BOOL(const char*, DWORD)> _call_SetFileAttributesA;
 #endif
 public:
    RecursiveFileDeleter();

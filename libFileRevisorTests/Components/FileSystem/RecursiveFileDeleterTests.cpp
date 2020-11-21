@@ -25,7 +25,7 @@ FileSystemExceptionMakerMock* _fileSystemExceptionMakerMock = nullptr;
 // Function Callers
 #ifdef _WIN32
 METALMOCK_NONVOID1_FREE(DWORD, GetFileAttributesA, const char*)
-METALMOCK_NONVOID2_FREE(DWORD, SetFileAttributesA, const char*, DWORD)
+METALMOCK_NONVOID2_FREE(BOOL, SetFileAttributesA, const char*, DWORD)
 #endif
 
 STARTUP
@@ -99,7 +99,7 @@ TEST(ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissio
       _fileSystemExceptionMakerMock->MakeFileSystemExceptionForFailedToDeleteFileMock.ReturnRandom();
 
    const int errnoValueThatIsNotPermissionDenied =
-      ZenUnit::RandomBetween<int>(0, static_cast<unsigned long long>(ErrnoValue::PermissionDenied) - 1ULL);
+      ZenUnit::RandomBetween<int>(0, static_cast<long long>(ErrnoValue::PermissionDenied) - 1);
    _fileSystemExceptionMakerMock->GetErrnoValueMock.Return(errnoValueThatIsNotPermissionDenied);
 
    const char* const filePath = ZenUnit::Random<const char*>();
@@ -151,8 +151,8 @@ TEST(RemoveReadonlyFlagFromConstCharPointerFilePath_GetsFileAttributesWhichDoesN
 
 TEST1X1(RemoveReadonlyFlagFromConstCharPointerFilePath_GetsFileAttributesWhichIncludeReadonlyAttribute_RemovesReadonlyAttributeWhichSuceeds_Returns,
    DWORD fileAttributes,
-   FILE_ATTRIBUTE_READONLY,
-   FILE_ATTRIBUTE_READONLY | FILE_ATTRIBUTE_HIDDEN)
+   static_cast<DWORD>(FILE_ATTRIBUTE_READONLY),
+   static_cast<DWORD>(FILE_ATTRIBUTE_READONLY | FILE_ATTRIBUTE_HIDDEN))
 {
    GetFileAttributesAMock.Return(fileAttributes);
    SetFileAttributesAMock.Return(TRUE);
@@ -167,8 +167,8 @@ TEST1X1(RemoveReadonlyFlagFromConstCharPointerFilePath_GetsFileAttributesWhichIn
 
 TEST1X1(RemoveReadonlyFlagFromConstCharPointerFilePath_GetsFileAttributesWhichIncludeReadonlyAttribute_RemovesReadonlyAttributeWhichFails_ThrowsFileSystemException,
    DWORD fileAttributes,
-   FILE_ATTRIBUTE_READONLY,
-   FILE_ATTRIBUTE_READONLY | FILE_ATTRIBUTE_HIDDEN)
+   static_cast<DWORD>(FILE_ATTRIBUTE_READONLY),
+   static_cast<DWORD>(FILE_ATTRIBUTE_READONLY | FILE_ATTRIBUTE_HIDDEN))
 {
    const FileSystemException fileSystemException = _fileSystemExceptionMakerMock->
       MakeFileSystemExceptionForFailedToSetFileAttributeMock.ReturnRandom();

@@ -1,5 +1,5 @@
 #pragma once
-#include "libFileRevisor/Compiler/IfMSVCIgnoreTheseWarnings.h"
+#include "libFileRevisor/Compiler/IfWindowsIgnoreTheseWarningsGlobally.h"
 
 #if defined __linux__
    #include <cstddef>
@@ -11,7 +11,10 @@
    #include <parallel/algorithm>
    #endif
 #elif defined _WIN32 || defined __APPLE__
+   #pragma warning(push)
+   #pragma warning(disable: 4365) // signed/unsigned mismatch
    #include <execution>
+   #pragma warning(pop)
    #include <filesystem>
    namespace fs = std::filesystem;
 #endif

@@ -1,4 +1,4 @@
-#include "libFileRevisor/Compiler/IfMSVCIgnoreTheseWarnings.h"
+#include "libFileRevisor/Compiler/IfWindowsIgnoreTheseWarningsGlobally.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorProgram.h"
 
 // Example FileRevisor command line arguments:

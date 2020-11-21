@@ -21,7 +21,7 @@ ErrorCodeTranslator _errorCodeTranslator;
 METALMOCK_NONVOID3_FREE(char*, strerror_r, int, char*, size_t)
 #elif _WIN32
 METALMOCK_NONVOID3_FREE(errno_t, strerror_s, char*, size_t, int)
-METALMOCK_NONVOID0_FREE(int, GetLastError)
+METALMOCK_NONVOID0_FREE(DWORD, GetLastError)
 #endif
 METALMOCK_NONVOID0_FREE(int*, _call_errno)
 

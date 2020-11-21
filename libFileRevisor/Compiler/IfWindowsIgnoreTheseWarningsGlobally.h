@@ -2,7 +2,6 @@
 
 #ifdef _WIN32
    #pragma warning(disable: 4061) // enumerator 'ProgramMode::Unset' in switch of enum 'ProgramMode' is not explicitly handled by a case label
-   #pragma warning(disable: 4365) // signed/unsigned mismatch
    #pragma warning(disable: 4514) // 'Function' unreferenced inline function has been removed
    #pragma warning(disable: 4623) // '__std_type_info_data': default constructor was implicitly defined as deleted
    #pragma warning(disable: 4625) // copy constructor was implicitly defined as deleted

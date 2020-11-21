@@ -27,7 +27,7 @@ public:
 
    virtual FileSystemException MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory(
       const fs::path& fileOrDirectoryPath,
-      long long removeAllReturnValue,
+      unsigned long long removeAllReturnValue,
       int errorCodeValue) const;
 
    virtual FileSystemException MakeFileSystemExceptionForFailedToRenameDirectory(

@@ -19,7 +19,7 @@ public:
       MakeFileSystemExceptionForFailedToCloseFile, const fs::path&)
 
    METALMOCK_NONVOID3_CONST(FileSystemException,
-      MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory, const fs::path&, long long, int)
+      MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory, const fs::path&, unsigned long long, int)
 
    METALMOCK_NONVOID1_CONST(FileSystemException,
       MakeFileSystemExceptionForFailedToDeleteFile, const char*)
