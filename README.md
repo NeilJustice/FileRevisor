@@ -60,35 +60,41 @@ Usage:
       [--verbose]
 ```
 
-FileRevisor command line arguments are parsed using the excellent single-header library [docopt.cpp](https://github.com/docopt/docopt.cpp).
+FileRevisor command line arguments are parsed using the excellent single-header library [docopt.cpp](https://github.com/docopt/docopt.cpp):
+
+![FileRevisorArgsParser](Screenshots/FileRevisorArgsParser.png)
 
 ## FileRevisor Program Modes
 
 ### delete-directory
 
-FileRevisor `delete-directory` mode quickly deletes a directory optionally in parallel to delete its contents even faster.
+FileRevisor `delete-directory` quickly deletes a directory, optionally in parallel for extreme directory deletion performance, especially on Windows.
 
-Shown in this screenshot is FileRevisor `delete-directory` deleting `directory1` in parallel:
+Shown in this screenshot is `filerevisor delete-directory` deleting `directory1` in parallel:
 
 ![delete-directory](Screenshots/delete-directory.png)
 
 ### rename-files
 
-FileRevisor `rename-files` mode renames files in either a specified directory only or with `--recurse` in a specified directory and its subdirectories.
+FileRevisor `rename-files` renames files in a specified directory matching a specified regular expression. `--recurse` can be specified to rename files in and below a specified directory.
 
-Shown in this screenshot is FileRevisor `rename-files` renaming files with name `file` to new name `new_file_name` in the current directory:
+Shown in this screenshot is `filerevisor rename-files` renaming files with name `file` to new name `new_file_name` in the current directory:
 
 ![rename-files](Screenshots/rename-files.png)
 
 ### rename-directories
 
-FileRevisor `rename-directories` mode renames directories in either a specified directory only or with `--recurse` in a specified directory and its subdirectories.
+FileRevisor `rename-directories` renames directories in a specified directory matching a specified regular expression. `--recurse` can be specified to rename directories in and below a specified directory.
 
-Shown in this screenshot is FileRevisor `rename-directories` renaming directories with name `directory` to new name `new_directory_name` in the current directory:
+Shown in this screenshot is `filerevisor rename-directories` renaming directories with name `directory` to new name `new_directory_name` in the current directory:
 
 ![rename-directories](Screenshots/rename-directories.png)
 
 ### replace-text
+
+FileRevisor `replace-text` replaces text in files in a specified directory matching a specified regular expression. `--recurse` can be specified to replace text in files in and below a specified directory.
+
+Shown in this screenshot is `filerevisor replace-text` replacing text in files in the current directory containing text `apple` with replacement text `orange`:
 
 ![replace-text](Screenshots/replace-text.png)
 
@@ -100,13 +106,15 @@ Shown in this screenshot is FileRevisor `rename-directories` renaming directorie
 
 ![Linux Folder Deletion Performance: rm -rf > /dev/null vs. FileRevisor](Screenshots/LinuxFileRevisorPerformanceGraph.png)
 
-CPU and storage hardware that generated the above and below performance numbers: 32-core 64-thread AMD Threadripper 2990WX with a 512 GB Samsung 970 PRO NVMe drive.
+The CPU and storage hardware which generated the above performance numbers is a 32-core 64-thread AMD Threadripper 2990WX with a 512 GB Samsung 970 PRO NVMe drive.
+
+As you can see from the above graphs, the implementation of Linux file deletions is quite a bit faster than the implementation of Windows file deletions, with the time savings from FileRevisor's parallel directory deletion mode being most potent when deleting large directories on Windows.
 
 ### Linux Jenkins Jobs That Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor
 
-A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 31:
+A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 33:
 
-![A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 31 Linux](Screenshots/LinuxJenkinsJobsForFileRevisor.png)
+![A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 33 Linux](Screenshots/LinuxJenkinsJobsForFileRevisor.png)
 
 ### Windows Jenkins Jobs That Compile FileRevisor
 
@@ -123,7 +131,7 @@ CXX=clang++ cmake .. -DCMAKE_BUILD_TYPE=Release
 sudo cmake --build . --target install
 ```
 
-The result from running the above four Linux commands is binary `filerevisor` installed to `/usr/local/bin/filerevisor`:
+Binary `filerevisor` installed to `/usr/local/bin/filerevisor` from having run the above 4 commands on Linux:
 
 ![Linux filerevisor binary in /usr/local/bin](Screenshots/LinuxFileRevisorBinaryInUsrLocalBin.png)
 
@@ -136,6 +144,6 @@ cmake . -G"Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
 cmake --build . --config Release --target install
 ```
 
-The result from running the above four Windows commands is binary `FileRevisor.exe` installed to `C:\bin\FileRevisor.exe`:
+Binary `FileRevisor.exe` installed to `C:\bin\FileRevisor.exe` from having run the above 4 commands on Windows:
 
 ![Windows FileRevisor.exe](Screenshots/WindowsFileRevisorDotExe.png)
