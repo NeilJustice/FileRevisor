@@ -35,15 +35,17 @@ pair<int, string> ErrorCodeTranslator::GetErrnoWithDescription() const
 }
 
 #ifdef _WIN32
+
 pair<DWORD, string> ErrorCodeTranslator::GetWindowsLastErrorWithDescription() const
 {
    const DWORD windowsLastError = _call_GetLastError();
    if (windowsLastError == 0)
    {
-      return make_pair(0, "");
+      return make_pair(0ul, ""s);
    }
    const string windowsLastErrorDescription = GetWindowsLastErrorDescription(windowsLastError);
-   return make_pair(windowsLastError, windowsLastErrorDescription);
+   const pair<DWORD, string> windowsLastErrorAndDescription = make_pair(windowsLastError, windowsLastErrorDescription);
+   return windowsLastErrorAndDescription;
 }
 
 string ErrorCodeTranslator::GetWindowsLastErrorDescription(DWORD windowsLastError) const
@@ -64,30 +66,33 @@ string ErrorCodeTranslator::GetWindowsLastErrorDescription(DWORD windowsLastErro
 }
 #endif
 
-string ErrorCodeTranslator::GetErrnoDescription(int errnoValue) const
-{
-   constexpr size_t maximumErrnoDescriptionLength = 64;
-
-#ifdef _WIN32
-#pragma warning(push)
-#pragma warning(disable: 6255) // _alloca indicates failure by raising a stack overflow exception. Consider using _malloca instead.
-#endif
-   char* errnoDescriptionChars = static_cast<char*>(alloca(maximumErrnoDescriptionLength));
-#ifdef _WIN32
-#pragma warning(pop)
-#endif
+constexpr size_t maximumErrnoDescriptionLength = 64ull;
 
 #ifdef __linux__
-   errnoDescriptionChars = _call_strerror_r(errnoValue, errnoDescriptionChars, maximumErrnoDescriptionLength);
-#elif _WIN32
-   const errno_t strErrorSReturnValue = _call_strerror_s(
-      errnoDescriptionChars, maximumErrnoDescriptionLength, errnoValue);
-   release_assert(strErrorSReturnValue == 0);
-#endif
 
+string ErrorCodeTranslator::GetErrnoDescription(int errnoValue) const
+{
+   char* const errnoDescriptionChars = static_cast<char*>(alloca(maximumErrnoDescriptionLength));
+   errnoDescriptionChars = _call_strerror_r(errnoValue, errnoDescriptionChars, maximumErrnoDescriptionLength);
    const string errnoDescription(errnoDescriptionChars);
    return errnoDescription;
 }
+
+#elif _WIN32
+
+string ErrorCodeTranslator::GetErrnoDescription(int errnoValue) const
+{
+#pragma warning(push)
+#pragma warning(disable: 6255) // _alloca indicates failure by raising a stack overflow exception. Consider using _malloca instead.
+   char* const errnoDescriptionChars = static_cast<char*>(alloca(maximumErrnoDescriptionLength));
+#pragma warning(pop)
+   const errno_t strErrorSReturnValue = _call_strerror_s(errnoDescriptionChars, maximumErrnoDescriptionLength, errnoValue);
+   release_assert(strErrorSReturnValue == 0);
+   const string errnoDescription(errnoDescriptionChars);
+   return errnoDescription;
+}
+
+#endif
 
 string ErrorCodeTranslator::GetSystemErrorDescription(int systemErrorValue) const
 {
