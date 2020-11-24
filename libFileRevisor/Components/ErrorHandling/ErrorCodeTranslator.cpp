@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileRevisor/Components/Exceptions/ErrorCodeTranslator.h"
+#include "libFileRevisor/Components/ErrorHandling/ErrorCodeTranslator.h"
 
 #ifdef __linux__
 int* GetLinuxErrno()

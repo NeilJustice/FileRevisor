@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libFileRevisor/Components/Console/Console.h"
 #include "libFileRevisor/Components/FileSystem/RecursiveFileDeleter.h"
-#include "libFileRevisor/Components/Exceptions/ErrorCodeTranslator.h"
+#include "libFileRevisor/Components/ErrorHandling/ErrorCodeTranslator.h"
 #include "libFileRevisor/Components/Exceptions/FileSystemExceptionMaker.h"
 
 RecursiveFileDeleter::RecursiveFileDeleter()

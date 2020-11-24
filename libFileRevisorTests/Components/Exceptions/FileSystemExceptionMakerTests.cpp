@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libFileRevisor/Components/Exceptions/FileSystemExceptionMaker.h"
-#include "libFileRevisorTests/Components/Exceptions/MetalMock/ErrorCodeTranslatorMock.h"
+#include "libFileRevisorTests/Components/ErrorHandling/MetalMock/ErrorCodeTranslatorMock.h"
 
 TESTS(FileSystemExceptionMakerTests)
 AFACT(Constructor_NewsErrorCodeTranslator)

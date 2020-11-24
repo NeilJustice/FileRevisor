@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileRevisor/Components/Exceptions/ErrorCodeTranslator.h"
+#include "libFileRevisor/Components/ErrorHandling/ErrorCodeTranslator.h"
 #include "libFileRevisor/Components/Exceptions/FileSystemExceptionMaker.h"
 #include "libFileRevisor/Components/FileSystem/RecursiveFileDeleter.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
