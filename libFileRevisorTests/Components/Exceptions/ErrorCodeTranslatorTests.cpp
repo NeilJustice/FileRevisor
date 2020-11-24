@@ -6,13 +6,19 @@ AFACT(DefaultConstructor_SetsFunctionPointers)
 AFACT(GetErrnoValue_ReturnsResultOfCallingErrnoFunction)
 AFACT(GetErrnoWithDescription_ReturnsErrnoValueWithDescription)
 AFACT(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
-#if _WIN32
+
+#ifdef _WIN32
 AFACT(GetWindowsLastErrorWithDescription_GetLastErrorReturns0_Returns0AndEmptyString)
 AFACT(GetWindowsLastErrorWithDescription_GetLastErrorReturnsNon0_ReturnsLastErrorAndErrorDescription)
-AFACT(GetSystemErrorDescription_SystemErrorIs32_ReturnsProcessCannotAccessTheFileMessage)
 #endif
-AFACT(GetSystemErrorDescription_SystemErrorIsLessThan32_ReturnsIntAsString)
-AFACT(GetSystemErrorDescription_SystemErrorIsGreaterThan32_ReturnsIntAsString)
+
+#ifdef __linux__
+AFACT(GetSystemErrorDescriptionOnLinux_SystemErrorIs32_ReturnsIntAsString)
+#elif _WIN32
+AFACT(GetSystemErrorDescriptionOnWindows_SystemErrorIs32_ReturnsProcessCannotAccessTheFileMessage)
+#endif
+AFACT(GetSystemErrorDescription_SystemErrorIsNot32_ReturnsIntAsString)
+
 EVIDENCE
 
 ErrorCodeTranslator _errorCodeTranslator;
@@ -67,11 +73,11 @@ TEST(GetErrnoWithDescription_ReturnsErrnoValueWithDescription)
    {
    public:
       METALMOCK_NONVOID0_FREE(int*, _call_errno)
+      METALMOCK_NONVOID1_CONST(string, GetErrnoDescription, int)
       ErrorCodeTranslatorSelfMocked()
       {
          _call_errno = BIND_0ARG_METALMOCK_OBJECT(_call_errnoMock);
       }
-      METALMOCK_NONVOID1_CONST(string, GetErrnoDescription, int)
    } errorCodeTranslatorSelfMocked;
 
    int errnoValue = ZenUnit::Random<int>();
@@ -142,8 +148,7 @@ TEST(GetWindowsLastErrorWithDescription_GetLastErrorReturnsNon0_ReturnsLastError
    const DWORD windowsLastError = ZenUnit::RandomNon0<DWORD>();
    _errorCodeTranslatorSelfMocked._call_GetLastErrorMock.Return(windowsLastError);
 
-   const string windowsLastErrorDescription =
-      _errorCodeTranslatorSelfMocked.GetWindowsLastErrorDescriptionMock.ReturnRandom();
+   const string windowsLastErrorDescription = _errorCodeTranslatorSelfMocked.GetWindowsLastErrorDescriptionMock.ReturnRandom();
    //
    const pair<DWORD, string> windowsLastErrorWithDescription =
       _errorCodeTranslatorSelfMocked.GetWindowsLastErrorWithDescription();
@@ -153,6 +158,8 @@ TEST(GetWindowsLastErrorWithDescription_GetLastErrorReturnsNon0_ReturnsLastError
    const pair<DWORD, string> expectedWindowsLastErrorWithDescription(windowsLastError, windowsLastErrorDescription);
    ARE_EQUAL(expectedWindowsLastErrorWithDescription, windowsLastErrorWithDescription);
 }
+
+#endif
 
 struct strerror_s_FunctionCall
 {
@@ -167,8 +174,7 @@ struct strerror_s_FunctionCall
 };
 strerror_s_FunctionCall _strerror_s_FunctionCall;
 
-const errno_t& _strerror_s_CallInstead(
-   char* outErrnoDescriptionChars, size_t outErrnoDescriptionCharsSize, int errnoValue)
+const errno_t& _strerror_s_CallInstead(char* outErrnoDescriptionChars, size_t outErrnoDescriptionCharsSize, int errnoValue)
 {
    ++_strerror_s_FunctionCall.numberOfCalls;
    _strerror_s_FunctionCall.outErrnoDescriptionChars = outErrnoDescriptionChars;
@@ -177,8 +183,6 @@ const errno_t& _strerror_s_CallInstead(
    _strerror_s_FunctionCall.errnoValue = errnoValue;
    return _strerror_s_FunctionCall.returnValue;
 }
-
-#endif
 
 TEST(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
 {
@@ -213,27 +217,29 @@ TEST(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
 #endif
 }
 
-#ifdef _WIN32
-TEST(GetSystemErrorDescription_SystemErrorIs32_ReturnsProcessCannotAccessTheFileMessage)
-{
-   const string systemErrorDescription = _errorCodeTranslator.GetSystemErrorDescription(ERROR_SHARING_VIOLATION);
-   ARE_EQUAL("The process cannot access the file because it is being used by another process.", systemErrorDescription);
-}
-#endif
+#ifdef __linux__
 
-TEST(GetSystemErrorDescription_SystemErrorIsLessThan32_ReturnsIntAsString)
+TEST(GetSystemErrorDescriptionOnLinux_SystemErrorIs32_ReturnsIntAsString)
 {
-   const int systemErrorValue = ZenUnit::RandomBetween<int>(0, 31);
-   //
-   const string systemErrorDescription = _errorCodeTranslator.GetSystemErrorDescription(systemErrorValue);
+   const string systemErrorDescription = _errorCodeTranslator.GetSystemErrorDescription(32);
    //
    const string expectedSystemErrorDescription = to_string(systemErrorValue);
    ARE_EQUAL(expectedSystemErrorDescription, systemErrorDescription);
 }
 
-TEST(GetSystemErrorDescription_SystemErrorIsGreaterThan32_ReturnsIntAsString)
+#elif _WIN32
+
+TEST(GetSystemErrorDescriptionOnWindows_SystemErrorIs32_ReturnsProcessCannotAccessTheFileMessage)
 {
-   const int systemErrorValue = ZenUnit::RandomBetween<int>(33, 100);
+   const string systemErrorDescription = _errorCodeTranslator.GetSystemErrorDescription(ERROR_SHARING_VIOLATION);
+   ARE_EQUAL("The process cannot access the file because it is being used by another process.", systemErrorDescription);
+}
+
+#endif
+
+TEST(GetSystemErrorDescription_SystemErrorIsNot32_ReturnsIntAsString)
+{
+   const int systemErrorValue = ZenUnit::RandomBetween<int>(0, 31);
    //
    const string systemErrorDescription = _errorCodeTranslator.GetSystemErrorDescription(systemErrorValue);
    //
