@@ -26,8 +26,8 @@ TEST(FromArgcArgv_ReturnsArgsVector)
 TEST(Join_EmptyIntVector_ReturnsEmptyStringRegardlessOfSeparator)
 {
    const vector<int> emptyIntVector = {};
-	ARE_EQUAL("", Vector::Join(emptyIntVector, ' '));
-	ARE_EQUAL("", Vector::Join(emptyIntVector, ','));
+	IS_EMPTY_STRING(Vector::Join(emptyIntVector, ' '));
+	IS_EMPTY_STRING(Vector::Join(emptyIntVector, ','));
 }
 
 TEST(Join_1ElementIntVector_ReturnsFirstElementRegardlessOfSeparator)

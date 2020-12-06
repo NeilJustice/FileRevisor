@@ -145,7 +145,7 @@ TEST(GetOptionalBool_ArgInMap_ReturnsTrue)
 TEST(GetOptionalString_ArgNotInMap_ReturnsEmptyString)
 {
    const string argValue = _docoptParser.GetOptionalString(_docoptArgs, _argName);
-   ARE_EQUAL("", argValue);
+   IS_EMPTY_STRING(argValue);
 }
 
 TEST(GetOptionalString_ArgInMap_ReturnsValue)

@@ -202,7 +202,7 @@ TEST(ReadText_FileExists_FileIsEmpty_ReturnsEmptyString)
    //
    const string fileText = _fileSystem.ReadText(textFilePath);
    //
-   ARE_EQUAL("", fileText);
+   IS_EMPTY_STRING(fileText);
 }
 
 TEST(ReadText_FileExists_FileIsNotEmptyAndContainsTrailingBinaryZeros_ReturnsFileTextMinusTrailingBinaryZeros)
