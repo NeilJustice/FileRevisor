@@ -8,9 +8,6 @@
          "preLaunchTask": "Ninja Build Debug",
          "cwd": "${workspaceRoot}",
          "program": "Debug/libFileRevisorTests/libFileRevisorTests",
-         "args": [
-            ""
-         ]
       },
       {
          "name": "GDB Debug libFileRevisorTests",
@@ -19,9 +16,6 @@
          "preLaunchTask": "Ninja Build Debug",
          "cwd": "${workspaceRoot}",
          "program": "Debug/libFileRevisorTests/libFileRevisorTests",
-         "args": [
-            ""
-         ],
          "linux": {
             "MIMode": "gdb"
          }
