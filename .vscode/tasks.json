@@ -67,9 +67,11 @@
          "args": [
             "-std=c++17",
             "-g",
-            "${file}",
+            "-I${workspaceRoot}",
+            "-I${workspaceRoot}/libFileRevisor",
+            "-I${workspaceRoot}/libFileRevisorTests",
             "-I/usr/local/include/ZenUnit",
-            "-I/usr/local/include/MetalMock",
+            "${file}",
             "-o",
             "${fileDirname}/${fileBasenameNoExtension}"
          ],
