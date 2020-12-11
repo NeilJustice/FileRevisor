@@ -1,19 +1,17 @@
 {
-    "configurations": [
-        {
-            "name": "Linux",
-            "includePath": [
-                "${workspaceFolder}/**",
-                "/usr/local/include/ZenUnit",
-                "/usr/local/include/MetalMock"
-            ],
-            "defines": [],
-            "compilerPath": "/usr/bin/clang",
-            "cStandard": "c11",
-            "cppStandard": "c++17",
-            "intelliSenseMode": "clang-x64",
-            "compileCommands": "${workspaceFolder}/Debug/compile_commands.json"
-        }
-    ],
-    "version": 4
+   "configurations": [
+      {
+         "name": "Linux",
+         "includePath": [
+            "${workspaceFolder}/**",
+            "/usr/local/include/ZenUnit"
+         ],
+         "defines": [],
+         "compilerPath": "/usr/bin/clang",
+         "cStandard": "c11",
+         "cppStandard": "c++17",
+         "intelliSenseMode": "clang-x64"
+      }
+   ],
+   "version": 4
 }

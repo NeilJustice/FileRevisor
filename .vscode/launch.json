@@ -1,7 +1,6 @@
 {
    "version": "0.2.0",
-   "configurations":
-   [
+   "configurations": [
       {
          "name": "LLDB Debug libFileRevisorTests",
          "type": "lldb",
@@ -9,7 +8,9 @@
          "preLaunchTask": "Ninja Build Debug",
          "cwd": "${workspaceRoot}",
          "program": "Debug/libFileRevisorTests/libFileRevisorTests",
-         "args": [ "" ]
+         "args": [
+            ""
+         ]
       },
       {
          "name": "GDB Debug libFileRevisorTests",
@@ -18,8 +19,12 @@
          "preLaunchTask": "Ninja Build Debug",
          "cwd": "${workspaceRoot}",
          "program": "Debug/libFileRevisorTests/libFileRevisorTests",
-         "args": [ "" ],
-         "linux": { "MIMode": "gdb" }
+         "args": [
+            ""
+         ],
+         "linux": {
+            "MIMode": "gdb"
+         }
       }
    ]
 }
