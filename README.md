@@ -2,13 +2,15 @@
 
 [![Standard](https://img.shields.io/badge/c%2B%2B-17-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B17) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 
-FileRevisor is a C++ command line program for quickly deleting large directories in parallel, renaming files and directories, and replacing text in files that match a regular expression. FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">ZenUnit and MetalMock</a>.
+FileRevisor is a C++ command line program that quickly deletes large directories in parallel, renames files and directories, and replaces text in files that match a regular expression.
 
 |Build Type|Build Status|
 |----------|------------|
 |Travis CI Linux (Clang 7.0.0 and GCC 7.5.0)|<a href="https://travis-ci.org/NeilJustice/FileRevisor"><img src="https://travis-ci.org/NeilJustice/FileRevisor.svg?branch=master"/></a>|
 |AppVeyor Windows (Visual Studio 2019 x64)|<a href="https://ci.appveyor.com/project/NeilJustice/FileRevisor"><img src="https://ci.appveyor.com/api/projects/status/fl8f0jle01k04nwp?svg=true"/></a>|
 |Code Coverage For The Travis CI Linux GCC 7.5.0 Release Build|[![codecov](https://codecov.io/gh/NeilJustice/FileRevisor/branch/master/graph/badge.svg)](https://codecov.io/gh/NeilJustice/FileRevisor)|
+
+FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">ZenUnit and MetalMock</a>.
 
 * [FileRevisor Command Line Usage](#filerevisor-command-line-usage)
 * [FileRevisor Program Modes](#filerevisor-program-modes)
@@ -18,10 +20,10 @@ FileRevisor is a C++ command line program for quickly deleting large directories
   * [replace-text](#replace-text)
 * [Windows Folder Deletion Performance: CMD vs. Git Bash vs. PowerShell vs. FileRevisor delete-directory --parallel](#windows-folder-deletion-performance-cmd-vs-git-bash-vs-powershell-vs-filerevisor-delete-directory---parallel)
 * [Linux Folder Deletion Performance: rm -rf > /dev/null vs. FileRevisor](#linux-folder-deletion-performance-rm-rf->-dev-null-vs-FileRevisor)
-* [Linux Jenkins Jobs That Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor](#linux-jenkins-jobs-that-compile-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filerevisor)
-* [Windows Jenkins Jobs That Compile FileRevisor](#windows-jenkins-jobs-that-compile-filerevisor)
-* [4 Commands To Build And Install FileRevisor On Linux](#4-commands-to-build-and-install-filerevisor-on-linux)
-* [4 Commands To Build And Install FileRevisor On Windows](#4-commands-to-build-and-install-filerevisor-on-windows)
+* [Linux Jenkins Jobs Which Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor](#linux-jenkins-jobs-which-compile-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filerevisor)
+* [Windows Jenkins Jobs Which Compile FileRevisor](#windows-jenkins-jobs-which-compile-filerevisor)
+* [How To Build FileRevisor From Source On Linux](#how-to-build-filerevisor-from-source-on-linux)
+* [How To Build FileRevisor From Source on Windows](#how-to-build-filerevisor-from-source-on-windows)
 
 ## FileRevisor Command Line Usage
 
@@ -110,19 +112,19 @@ The CPU and storage hardware which generated the above performance numbers is a 
 
 As you can see from the above graphs, the implementation of Linux file deletions is quite a bit faster than the implementation of Windows file deletions, with the time savings from FileRevisor's parallel directory deletion mode being most potent when deleting large directories on Windows.
 
-### Linux Jenkins Jobs That Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor
+### Linux Jenkins Jobs Which Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor
 
 A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 33:
 
 ![A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 33 Linux](Screenshots/LinuxJenkinsJobsForFileRevisor.png)
 
-### Windows Jenkins Jobs That Compile FileRevisor
+### Windows Jenkins Jobs Which Compile FileRevisor
 
 A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Windows 10:
 
 ![Jenkins Jobs That Compile FileRevisor On Windows](Screenshots/WindowsJenkinsJobsForFileRevisor.png)
 
-## 4 Commands To Build And Install FileRevisor On Linux
+## How To Build FileRevisor From Source On Linux
 
 ```
 git clone https://github.com/NeilJustice/FileRevisor
@@ -135,7 +137,7 @@ Binary `filerevisor` installed to `/usr/local/bin/filerevisor` from having run t
 
 ![Linux filerevisor binary in /usr/local/bin](Screenshots/LinuxFileRevisorBinaryInUsrLocalBin.png)
 
-## 4 Commands To Build And Install FileRevisor On Windows
+## How To Build FileRevisor From Source On Windows
 
 ```
 git clone https://github.com/NeilJustice/FileRevisor
@@ -147,3 +149,4 @@ cmake --build . --config Release --target install
 Binary `FileRevisor.exe` installed to `C:\bin\FileRevisor.exe` from having run the above 4 commands on Windows:
 
 ![Windows FileRevisor.exe](Screenshots/WindowsFileRevisorDotExe.png)
+
