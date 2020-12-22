@@ -3,8 +3,11 @@ project(FileRevisor)
 include(${CMAKE_SOURCE_DIR}/CMakeMacros.cmake)
 
 if(UNIX)
-   set(CMAKE_CXX_FLAGS "-std=c++17 -Wall -Wextra -Werror -pthread -Wno-unused-parameter")
-   #replace(CMAKE_CXX_FLAGS_RELEASE "-O2" "-Os -march=native -flto -ffat-lto-objects")
+   set(CMAKE_CXX_FLAGS "-std=c++2a -Wall -Wextra -Werror -pthread -Wno-unused-parameter")
+
+   # Experimental
+   # replace(CMAKE_CXX_FLAGS_RELEASE "-O2" "-Os -march=native -flto -ffat-lto-objects")
+
    if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
       append(CMAKE_CXX_FLAGS "-fopenmp -DLIBCXX_PARALLEL")
    elseif(CMAKE_CXX_COMPILER_ID STREQUAL "AppleClang")
@@ -29,7 +32,7 @@ if(UNIX)
    endif()
 elseif(MSVC)
    set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-   set(CMAKE_CXX_FLAGS "/std:c++17 /EHsc /Wall /WX /sdl /permissive- /MP /D_CRT_SECURE_NO_WARNINGS")
+   set(CMAKE_CXX_FLAGS "/std:c++latest /EHsc /Wall /WX /sdl /permissive- /MP /D_CRT_SECURE_NO_WARNINGS")
    replace(CMAKE_EXE_LINKER_FLAGS_DEBUG "/debug" "/debug:fastlink")
    replace(CMAKE_EXE_LINKER_FLAGS_RELEASE "/INCREMENTAL:NO" "/INCREMENTAL")
 endif()
