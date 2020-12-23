@@ -3,7 +3,7 @@ project(FileRevisor)
 include(${CMAKE_SOURCE_DIR}/CMakeMacros.cmake)
 
 if(UNIX)
-   set(CMAKE_CXX_FLAGS "-std=c++2a -Wall -Wextra -pedantic -Werror -pthread")
+   set(CMAKE_CXX_FLAGS "-std=c++2a -Wall -Wextra -pedantic -Werror -pthread -Wno-gnu-zero-variadic-macro-arguments")
 
    # Experimental
    # replace(CMAKE_CXX_FLAGS_RELEASE "-O2" "-Os -march=native -flto -ffat-lto-objects")

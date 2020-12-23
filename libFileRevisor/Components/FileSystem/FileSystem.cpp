@@ -282,7 +282,7 @@ void FileSystem::RemoveFile(const char* filePath) const
    }
 }
 
-void FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows(const fs::path& directoryPath) const
+void FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows([[maybe_unused]]const fs::path& directoryPath) const
 {
 #ifdef _WIN32
    const vector<fs::path> topLevelFilePathsInDirectory = GetFilePathsInDirectory(directoryPath, false);
