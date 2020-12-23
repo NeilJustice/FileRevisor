@@ -41,7 +41,7 @@ add_subdirectory(FileRevisor)
 add_subdirectory(libFileRevisor)
 add_subdirectory(libFileRevisorTests)
 
-set(CMAKE_CONFIGURATION_TYPES "Debug;Release")
+set(CMAKE_CONFIGURATION_TYPES "Debug;Release;RelWithDebInfo")
 
 if(UNIX)
    include(ProcessorCount)
