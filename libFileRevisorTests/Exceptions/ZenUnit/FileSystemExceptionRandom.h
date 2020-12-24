@@ -8,5 +8,4 @@ namespace ZenUnit
 {
    template<>
    FileSystemException Random();
-};
-
+}

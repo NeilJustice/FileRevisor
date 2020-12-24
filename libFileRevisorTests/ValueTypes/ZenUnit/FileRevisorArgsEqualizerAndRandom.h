@@ -10,6 +10,6 @@ namespace ZenUnit
 
    template<>
    FileRevisorArgs Random();
-};
+}
 
 FileRevisorArgs TestableRandomFileRevisorArgs(const ZenUnit::RandomGenerator* randomGenerator);

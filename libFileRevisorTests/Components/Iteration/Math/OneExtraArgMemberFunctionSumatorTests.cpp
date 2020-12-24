@@ -69,5 +69,5 @@ TEST(SumElementsWithFunction_CallsMemberFunctionElementsNumberOfTimes_ReturnsSum
    ARE_EQUAL(expectedSum, sum);
 }
 
-RUN_TEMPLATE_TESTS(OneExtraArgMemberFunctionSumatorTests, long long, vector, int, int);
-THEN_RUN_TEMPLATE_TESTS(OneExtraArgMemberFunctionSumatorTests, long long, vector, short, short);
+RUN_TEMPLATE_TESTS(OneExtraArgMemberFunctionSumatorTests, long long, vector, int, int)
+THEN_RUN_TEMPLATE_TESTS(OneExtraArgMemberFunctionSumatorTests, long long, vector, short, short)

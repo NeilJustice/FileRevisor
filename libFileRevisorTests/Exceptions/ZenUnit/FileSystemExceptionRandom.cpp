@@ -18,5 +18,5 @@ namespace ZenUnit
       ZenUnit::RandomGenerator randomGenerator;
       const FileSystemException randomFileSystemException = TestableRandomFileSystemException(&randomGenerator);
       return randomFileSystemException;
-   };
+   }
 }
