@@ -6,7 +6,7 @@ FileRevisor is a C++ command line program that quickly deletes large directories
 
 |Build Type|Build Status|
 |----------|------------|
-|Travis CI Linux (Clang 7.0.0 and GCC 7.5.0)|<a href="https://travis-ci.org/NeilJustice/FileRevisor"><img src="https://travis-ci.org/NeilJustice/FileRevisor.svg?branch=master"/></a>|
+|Travis CI Linux (Clang 7.0.0 and GCC 7.5.0)|[![Build Status](https://travis-ci.com/NeilJustice/FileRevisor.svg?branch=main)](https://travis-ci.com/NeilJustice/FileRevisor)|
 |AppVeyor Windows (Visual Studio 2019 x64)|<a href="https://ci.appveyor.com/project/NeilJustice/FileRevisor"><img src="https://ci.appveyor.com/api/projects/status/fl8f0jle01k04nwp?svg=true"/></a>|
 |Code Coverage For The Travis CI Linux GCC 7.5.0 Release Build|[![codecov](https://codecov.io/gh/NeilJustice/FileRevisor/branch/master/graph/badge.svg)](https://codecov.io/gh/NeilJustice/FileRevisor)|
 
