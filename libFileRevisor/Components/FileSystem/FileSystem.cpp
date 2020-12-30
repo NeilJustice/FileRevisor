@@ -42,7 +42,7 @@ FileSystem::~FileSystem()
 
 fs::path FileSystem::GetAbsolutePath(const fs::path& fileOrDirectoryPath) const
 {
-#ifdef __linux__
+#if defined __linux__|| defined __APPLE__
    fs::path absoluteFileOrDirectoryPath = fs::absolute(fileOrDirectoryPath);
    const fs::path absoluteFileOrDirectoryPathFileName = absoluteFileOrDirectoryPath.filename();
    if (absoluteFileOrDirectoryPathFileName == ".")
@@ -178,7 +178,7 @@ bool FileSystem::IsFileEmptyOrBinaryOrNonAnsi(const fs::path& filePath) const
 {
    FILE* const fileOpenInReadBinaryMode = OpenFile(filePath, "rb");
    char first1KBytesInFile[1024];
-#if defined __linux__
+#if defined __linux__|| defined __APPLE__
    const size_t numberOfBytesRead = fread(
       first1KBytesInFile, 1, sizeof(first1KBytesInFile), fileOpenInReadBinaryMode);
 #else
@@ -269,7 +269,7 @@ fs::path FileSystem::RenameDirectory(const fs::path& directoryPath, string_view 
 
 void FileSystem::RemoveFile(const char* filePath) const
 {
-#ifdef __linux__
+#if defined __linux__|| defined __APPLE__
    const int unlinkReturnValue = unlink(filePath);
 #elif _WIN32
    const int unlinkReturnValue = _unlink(filePath);

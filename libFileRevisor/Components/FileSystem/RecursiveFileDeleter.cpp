@@ -25,7 +25,7 @@ NOINLINE void PrintDeletedFileMessage(const char* filePath)
    cout << "[FileRevisor] Deleted file " << filePath << '\n';
 }
 
-#ifdef __linux__
+#if defined __linux__|| defined __APPLE__
 void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* directoryPath, const FileRevisorArgs& args) const
 {
    DIR* const dirPointer = opendir(directoryPath);

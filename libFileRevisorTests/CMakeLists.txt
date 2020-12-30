@@ -66,14 +66,14 @@ source_group("" FILES ${Sources})
 
 add_executable(libFileRevisorTests ${Sources})
 target_link_libraries(libFileRevisorTests libFileRevisor)
-if(UNIX)
+if(UNIX AND NOT APPLE)
    target_link_libraries(libFileRevisorTests stdc++fs)
 endif()
 
 EnablePrecompiledHeaders()
 IfMSVCAddRunTestsPostBuildStep()
 
-if(UNIX)
+if(UNIX AND NOT APPLE)
    if(CodeCovMode)
      target_link_libraries(libFileRevisorTests CodeCovLibraryInterface)
    endif()

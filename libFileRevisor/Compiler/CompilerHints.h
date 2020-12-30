@@ -1,6 +1,6 @@
 #pragma once
 
-#ifdef __linux__
+#if defined __linux__|| defined __APPLE__
 
 #define NOINLINE __attribute__((noinline))
 #define ALWAYSINLINE __attribute__((always_inline)) inline

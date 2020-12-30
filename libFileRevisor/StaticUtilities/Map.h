@@ -39,7 +39,7 @@ public:
 private:
    template<typename KeyType>
    static
-#ifdef __linux__
+#if defined __linux__|| defined __APPLE__
       __attribute__((noreturn))
 #elif _WIN32
       __declspec(noreturn)

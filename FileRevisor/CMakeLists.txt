@@ -13,13 +13,13 @@ if(UNIX)
 endif()
 
 target_link_libraries(FileRevisor libFileRevisor)
-if(UNIX)
+if(UNIX AND NOT APPLE)
    target_link_libraries(FileRevisor stdc++fs)
 endif()
 
 install(TARGETS FileRevisor DESTINATION "bin")
 
-if(UNIX)
+if(UNIX AND NOT APPLE)
    if(CodeCovMode)
      target_link_libraries(FileRevisor CodeCovLibraryInterface)
    endif()
