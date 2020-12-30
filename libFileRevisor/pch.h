@@ -1,11 +1,21 @@
 #pragma once
 #include "libFileRevisor/Compiler/IfWindowsIgnoreTheseWarningsGlobally.h"
 
+#include <assert.h>
+#include <fstream>
+#include <filesystem>
+#include <functional>
+#include <iostream>
+#include <map>
+#include <regex>
+#include <sstream>
+#include <unordered_set>
+namespace fs = std::filesystem;
+using namespace std;
+
 #if defined __linux__
    #include <cstddef>
    #include <dirent.h>
-   #include <experimental/filesystem>
-   namespace fs = std::experimental::filesystem;
    #include <ios>
    #include <memory>
    #include <mutex>
@@ -19,19 +29,7 @@
    #pragma warning(disable: 4365) // signed/unsigned mismatch
    #include <execution>
    #pragma warning(pop)
-   #include <filesystem>
-   namespace fs = std::filesystem;
 #endif
-
-#include <assert.h>
-#include <fstream>
-#include <functional>
-#include <iostream>
-#include <map>
-#include <regex>
-#include <sstream>
-#include <unordered_set>
-using namespace std;
 
 #ifdef _WIN32
 #define WIN32_LEAN_AND_MEAN

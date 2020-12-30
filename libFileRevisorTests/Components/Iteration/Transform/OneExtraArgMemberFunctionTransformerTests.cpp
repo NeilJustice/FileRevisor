@@ -7,7 +7,7 @@ AFACT(Transform_ElementsEmpty_DoesNotCallTransformFunction_ReturnsEmptyVector)
 AFACT(Transform_TwoElements_CallsTransformFunctionOnEachElement_ReturnsTransformedElements)
 EVIDENCE
 
-#ifdef __linux__
+#if defined __linux__|| defined __APPLE____linux__
 OneExtraArgMemberFunctionTransformerTests()
 {
 }

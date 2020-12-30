@@ -9,7 +9,7 @@
 
 TESTS(FileSystemTests)
 AFACT(DefaultConstructor_NewsComponents_SetsFunctionPointers)
-#ifdef __linux__
+#if defined __linux__|| defined __APPLE____linux__
 AFACT(GetAbsolutePath_ReturnsNonEmptyPath)
 #elif _WIN32
 AFACT(GetAbsolutePath_ReturnsResultOfCallingStdFilesystemAbsolute)
@@ -28,7 +28,7 @@ AFACT(OpenFile_FOpenReturnsNullFILEPointer_ThrowsFileSystemException)
 AFACT(OpenFile_FOpenReturnsNonNullFILEPointer_ReturnsFilePointer)
 FACTS(CloseFile_fcloseReturnValueIsNot0_ThrowsFileCloseException)
 AFACT(CloseFile_fcloseReturnValueIs0_Returns)
-#ifdef __linux__
+#if defined __linux__|| defined __APPLE____linux__
 AFACT(RemoveReadOnlyFlagsFromTopLevelFilesInDirectoryIfWindows_OnLinuxDoesNothing)
 #elif _WIN32
 AFACT(RemoveReadOnlyFlagsFromTopLevelFilesInDirectoryIfWindows_CallsRemoveReadonlyFlagOnAllTopLevelFilesInDirectory)
@@ -105,7 +105,7 @@ TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
 #endif
 }
 
-#ifdef __linux__
+#if defined __linux__|| defined __APPLE____linux__
 TEST(GetAbsolutePath_ReturnsNonEmptyPath)
 {
    const fs::path relativeFileOrDirectoryPath = ZenUnit::Random<fs::path>();
@@ -449,7 +449,7 @@ TEST(CloseFile_fcloseReturnValueIs0_Returns)
    METALMOCK(fcloseMock.CalledOnceWith(file));
 }
 
-#ifdef __linux__
+#if defined __linux__|| defined __APPLE____linux__
 
 TEST(RemoveReadOnlyFlagsFromTopLevelFilesInDirectoryIfWindows_OnLinuxDoesNothing)
 {
