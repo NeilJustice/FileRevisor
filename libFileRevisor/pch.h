@@ -13,7 +13,7 @@
 namespace fs = std::filesystem;
 using namespace std;
 
-#if defined __linux__
+#if defined __linux__ || defined __APPLE__
    #include <cstddef>
    #include <dirent.h>
    #include <ios>
@@ -24,9 +24,9 @@ using namespace std;
    #endif
    #include <string.h>
    #include <unistd.h>
-#elif defined _WIN32 || defined __APPLE__
+#elif defined _WIN32
    #pragma warning(push)
-   #pragma warning(disable: 4365) // signed/unsigned mismatch
+   #pragma warning(disable: 4365) // signed / unsigned mismatch
    #include <execution>
    #pragma warning(pop)
 #endif
@@ -38,11 +38,17 @@ using namespace std;
 #include "Windows.h"
 #endif
 
+#if defined _WIN32
+#pragma warning(push)
+#pragma warning(disable: 4365) // signed / unsigned mismatch
+#endif
+#include "libFileRevisor/Components/Docopt/docopt.h"
+#if defined _WIN32
+#pragma warning(pop)
+#endif
+
 // libFileRevisor Constants
 #include "libFileRevisor/Constants/ErrnoValue.h"
-
-// libFileRevisor Docopt
-#include "libFileRevisor/Components/Docopt/docopt.h"
 
 // libFileRevisor StaticUtilities
 #include "libFileRevisor/StaticUtilities/ReleaseAssert.h"

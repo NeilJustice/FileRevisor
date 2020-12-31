@@ -1,8 +1,17 @@
 #pragma once
 #include "libFileRevisor/Compiler/IfWindowsIgnoreTheseWarningsGlobally.h"
 
-#include <assert.h>
+#ifdef _WIN32
+#pragma warning(push)
+#pragma warning(disable: 4365) // signed / unsigned mismatch
+#endif
+#include <execution>
 #include <filesystem>
+#ifdef _WIN32
+#pragma warning(pop)
+#endif
+
+#include <assert.h>
 #include <regex>
 namespace fs = std::filesystem;
 using namespace std;
@@ -14,13 +23,6 @@ using namespace std;
    #if defined(__GNUG__) && !defined(__clang__)
    #include <parallel/algorithm>
    #endif
-#endif
-
-#if defined _WIN32
-   #pragma warning(push)
-   #pragma warning(disable: 4365) // signed/unsigned mismatch
-   #include <execution>
-   #pragma warning(pop)
 #endif
 
 #include "ZenUnit/ZenUnit.h"
