@@ -9,7 +9,6 @@
 #include <map>
 #include <regex>
 #include <sstream>
-#include <string.h>
 #include <unordered_map>
 #include <unordered_set>
 namespace fs = std::filesystem;
@@ -21,23 +20,20 @@ using namespace std;
    #include <ios>
    #include <memory>
    #include <mutex>
+   #include <string.h>
+   #include <unistd.h>
    #if defined(__GNUG__) && !defined(__clang__)
    #include <parallel/algorithm>
    #endif
-   #include <string.h>
-   #include <unistd.h>
 #elif defined _WIN32
    #pragma warning(push)
    #pragma warning(disable: 4365) // signed / unsigned mismatch
    #include <execution>
    #pragma warning(pop)
-#endif
-
-#ifdef _WIN32
-#define WIN32_LEAN_AND_MEAN
-#define NOGDI
-#define NOMINMAX
-#include "Windows.h"
+   #define WIN32_LEAN_AND_MEAN
+   #define NOGDI
+   #define NOMINMAX
+   #include "Windows.h"
 #endif
 
 #if defined _WIN32

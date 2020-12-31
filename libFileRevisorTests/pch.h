@@ -1,32 +1,33 @@
 #pragma once
 #include "libFileRevisor/Compiler/IfWindowsIgnoreTheseWarningsGlobally.h"
 
-#ifdef _WIN32
-#pragma warning(push)
-#pragma warning(disable: 4365) // signed / unsigned mismatch
-#endif
-#include <execution>
-#include <filesystem>
-#ifdef _WIN32
-#pragma warning(pop)
-#endif
-
-#include <assert.h>
-#include <regex>
-#include <string.h>
-#include <unordered_map>
-#include <unordered_set>
-namespace fs = std::filesystem;
-using namespace std;
-
-#if defined __linux__
+#if defined __linux__ || defined __APPLE__
+   #include <assert.h>
    #include <cstddef>
+   #include <filesystem>
    #include <ios>
    #include <memory>
+   #include <regex>
+   #include <string.h>
+   #include <unordered_map>
+   #include <unordered_set>
    #if defined(__GNUG__) && !defined(__clang__)
    #include <parallel/algorithm>
    #endif
+#elif defined _WIN32
+   #pragma warning(push)
+   #pragma warning(disable: 4365) // signed / unsigned mismatch
+   #include <assert.h>
+   #include <execution>
+   #include <filesystem>
+   #include <regex>
+   #include <unordered_map>
+   #include <unordered_set>
+   #pragma warning(pop)
 #endif
+
+namespace fs = std::filesystem;
+using namespace std;
 
 #include "ZenUnit/ZenUnit.h"
 #include "ZenUnit/MetalMock.h"
