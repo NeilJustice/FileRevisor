@@ -13,6 +13,7 @@
 
 #include <assert.h>
 #include <regex>
+#include <string.h>
 #include <unordered_map>
 #include <unordered_set>
 namespace fs = std::filesystem;
