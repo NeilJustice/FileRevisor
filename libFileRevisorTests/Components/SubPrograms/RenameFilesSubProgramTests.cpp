@@ -130,7 +130,9 @@ TEST(RenameFileIfFileNameMatchesFromPattern_RegexReplacedFileNameEqualsSourceFil
 TEST(RenameFileIfFileNameMatchesFromPattern_RegexReplacedFileNameDoesNotEqualSourceFileName_PreviewIsTrue_PrintsWouldRenameMessage_ReturnsTrueRenameResult)
 {
    const string regexReplacedFileName = _regexerMock->ReplaceMock.ReturnRandom();
+
    _protected_consoleMock->WriteLineMock.Expect();
+
    const fs::path filePath = ZenUnit::Random<fs::path>();
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    args.preview = true;
@@ -150,8 +152,11 @@ TEST(RenameFileIfFileNameMatchesFromPattern_RegexReplacedFileNameDoesNotEqualSou
 TEST(RenameFileIfFileNameMatchesFromPattern_RegexReplacedFileNameDoesNotEqualSourceFileName_PreviewIsFalse_RenamesTheFile_ReturnsTrueRenameResult)
 {
    const string regexReplacedFileName = _regexerMock->ReplaceMock.ReturnRandom();
+
    const fs::path renamedFilePath = _protected_fileSystemMock->RenameFileMock.ReturnRandom();
+
    _protected_consoleMock->WriteLineMock.Expect();
+
    const fs::path filePath = ZenUnit::RandomNotEqualToValue<fs::path>(regexReplacedFileName);
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    args.preview = false;
