@@ -1,4 +1,4 @@
-# FileRevisor 🗂️
+# 🗂️ FileRevisor 🗂️
 
 [![Standard](https://img.shields.io/badge/c%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B20) ![GitHub](https://img.shields.io/github/license/NeilJustice/FileRevisor) ![GitHub last commit](https://img.shields.io/github/last-commit/NeilJustice/FileRevisor)
 
@@ -22,8 +22,8 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
 * [Linux Folder Deletion Performance: rm -rf > /dev/null vs. FileRevisor](#linux-folder-deletion-performance-rm-rf->-dev-null-vs-FileRevisor)
 * [Linux Jenkins Jobs Which Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor](#linux-jenkins-jobs-which-compile-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filerevisor)
 * [Windows Jenkins Jobs Which Compile FileRevisor](#windows-jenkins-jobs-which-compile-filerevisor)
-* [How To Build FileRevisor From Source On Linux](#how-to-build-filerevisor-from-source-on-linux)
-* [How To Build FileRevisor From Source on Windows](#how-to-build-filerevisor-from-source-on-windows)
+* [How To Build Binary filerevisor On Linux With Clang](#how-to-build-binary-filerevisor-on-linux-with-clang)
+* [How To Build FileRevisor.exe On Windows With Visual Studio 2019](#how-to-build-filerevisor.exe-on-windows-with-visual-studio-2019)
 
 ## FileRevisor Command Line Usage
 
@@ -124,7 +124,7 @@ A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins job
 
 ![Jenkins Jobs That Compile FileRevisor On Windows](Screenshots/WindowsJenkinsJobsForFileRevisor.png)
 
-## How To Build FileRevisor From Source On Linux
+## How To Build Binary filerevisor On Linux With Clang
 
 ```bash
 git clone https://github.com/NeilJustice/FileRevisor
@@ -137,7 +137,7 @@ Result binary `/usr/local/bin/filerevisor`:
 
 ![Linux filerevisor binary in /usr/local/bin](Screenshots/LinuxFileRevisorBinaryInUsrLocalBin.png)
 
-## How To Build FileRevisor From Source On Windows
+## How To Build FileRevisor.exe On Windows With Visual Studio 2019
 
 ```powershell
 git clone https://github.com/NeilJustice/FileRevisor
