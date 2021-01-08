@@ -2,7 +2,7 @@
 
 [![Standard](https://img.shields.io/badge/c%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B20) ![GitHub](https://img.shields.io/github/license/NeilJustice/FileRevisor) ![GitHub last commit](https://img.shields.io/github/last-commit/NeilJustice/FileRevisor)
 
-FileRevisor is a C++ command line program for quickly deleting large directories in parallel, bulk renaming files and directories with names that match a regular expression, and bulk replacing text in files that matches a regular expression.
+FileRevisor is a cross-platform C++ command line program for quickly deleting large directories in parallel, bulk renaming files and directories with names that match a regular expression, and bulk replacing text in files that matches a regular expression.
 
 |Build Type|Build Status|
 |----------|------------|
