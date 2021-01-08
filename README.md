@@ -126,27 +126,27 @@ A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins job
 
 ## How To Build FileRevisor From Source On Linux
 
-```
+```bash
 git clone https://github.com/NeilJustice/FileRevisor
 cd FileRevisor && mkdir Release && cd Release
 CXX=clang++ cmake .. -DCMAKE_BUILD_TYPE=Release
 sudo cmake --build . --target install
 ```
 
-Binary `filerevisor` installed to `/usr/local/bin/filerevisor` from having run the above 4 commands on Linux:
+Result binary `/usr/local/bin/filerevisor`:
 
 ![Linux filerevisor binary in /usr/local/bin](Screenshots/LinuxFileRevisorBinaryInUsrLocalBin.png)
 
 ## How To Build FileRevisor From Source On Windows
 
-```
+```powershell
 git clone https://github.com/NeilJustice/FileRevisor
 cd FileRevisor
 cmake . -G"Visual Studio 16 2019" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
 cmake --build . --config Release --target install
 ```
 
-Binary `FileRevisor.exe` installed to `C:\bin\FileRevisor.exe` from having run the above 4 commands on Windows:
+Resulting executable `C:\bin\FileRevisor.exe`:
 
 ![Windows FileRevisor.exe](Screenshots/WindowsFileRevisorDotExe.png)
 
