@@ -23,7 +23,7 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
 * [Linux Jenkins Jobs Which Compile, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor](#linux-jenkins-jobs-which-compile-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filerevisor)
 * [Windows Jenkins Jobs Which Compile FileRevisor](#windows-jenkins-jobs-which-compile-filerevisor)
 * [How To Build Binary filerevisor On Linux With Clang](#how-to-build-binary-filerevisor-on-linux-with-clang)
-* [How To Build FileRevisor.exe On Windows With Visual Studio 2019](#how-to-build-filerevisor-exe-on-windows-with-visual-studio-2019)
+* [How To Build FileRevisor.exe On Windows With Visual Studio 2019](#how-to-build-filerevisorexe-on-windows-with-visual-studio-2019)
 
 ## FileRevisor Command Line Usage
 
