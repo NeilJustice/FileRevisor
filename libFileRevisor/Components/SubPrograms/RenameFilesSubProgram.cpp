@@ -4,9 +4,9 @@
 #include "libFileRevisor/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
 #include "libFileRevisor/Components/Iteration/Counter/PredicateCounter.h"
 #include "libFileRevisor/Components/Iteration/Transform/OneExtraArgMemberFunctionTransformer.h"
-#include "libFileRevisor/Components/SubPrograms/RenameFilesSubProgram.h"
 #include "libFileRevisor/Components/Strings/Pluralizer.h"
 #include "libFileRevisor/Components/Strings/Regexer.h"
+#include "libFileRevisor/Components/SubPrograms/RenameFilesSubProgram.h"
 
 RenameFilesSubProgram::RenameFilesSubProgram()
    // Constant Components

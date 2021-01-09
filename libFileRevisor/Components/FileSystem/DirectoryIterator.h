@@ -18,7 +18,7 @@ public:
    virtual fs::path NextNonIgnoredFilePath();
    virtual fs::path NextNonIgnoredDirectoryPath();
 private:
-   bool PathContainsAnySubstringCaseInsensitive(const fs::path& path, const vector<string>& pathSubstrings);
+   static bool PathContainsAnySubstringCaseInsensitive(const fs::path& path, const vector<string>& pathSubstrings);
 
    template<typename DirectoryIteratorType>
    fs::path NextNonIgnoredPath(DirectoryIteratorType& iter, fs::file_type requiredFileType);

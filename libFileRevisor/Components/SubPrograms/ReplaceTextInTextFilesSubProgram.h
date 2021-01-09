@@ -4,9 +4,9 @@ class Console;
 struct FileRevisorArgs;
 
 template<
-      typename ClassType,
-      typename AccumulatedType,
-      template<typename _ElementType, typename...>
+   typename ClassType,
+   typename AccumulatedType,
+   template<typename...>
    typename ContainerType,
    typename ElementType,
    typename ExtraArgType>

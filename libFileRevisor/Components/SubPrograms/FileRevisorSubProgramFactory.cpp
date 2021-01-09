@@ -1,5 +1,4 @@
 #include "pch.h"
-
 #include "libFileRevisor/Components/Console/Console.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
@@ -7,13 +6,12 @@
 #include "libFileRevisor/Components/Iteration/Math/OneExtraArgMemberFunctionSumator.h"
 #include "libFileRevisor/Components/Iteration/Transform/OneExtraArgMemberFunctionTransformer.h"
 #include "libFileRevisor/Components/Strings/Pluralizer.h"
-
+#include "libFileRevisor/Components/Strings/Regexer.h"
 #include "libFileRevisor/Components/SubPrograms/DeleteDirectorySubProgram.h"
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgramFactory.h"
 #include "libFileRevisor/Components/SubPrograms/RenameDirectoriesSubProgram.h"
 #include "libFileRevisor/Components/SubPrograms/RenameFilesSubProgram.h"
 #include "libFileRevisor/Components/SubPrograms/ReplaceTextInTextFilesSubProgram.h"
-#include "libFileRevisor/Components/Strings/Regexer.h"
 
 shared_ptr<FileRevisorSubProgram> FileRevisorSubProgramFactory::NewFileRevisorSubProgram(ProgramMode programMode) const
 {

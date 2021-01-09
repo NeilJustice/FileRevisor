@@ -3,7 +3,7 @@
 template<
    typename ClassType,
    typename SumType,
-   template<typename _ElementType, typename...> typename ContainerType,
+   template<typename...> typename ContainerType,
    typename ElementType,
    typename ExtraArgType>
    class OneExtraArgMemberFunctionSumator

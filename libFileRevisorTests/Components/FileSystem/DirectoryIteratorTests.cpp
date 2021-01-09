@@ -27,7 +27,7 @@ TEST3X3(PathContainsAnySubstringCaseInsensitive_ReturnsTrueIfFilePathCaseInsensi
    "C:\\Directory\\SubdirectoryC\\FileName.ext", vector<string>{"subdirectoryA\\", "subdirectoryB\\", "subdirectoryC\\"}, true,
    "C:\\Directory\\SubdirectoryC", vector<string>{"subdirectoryA\\", "subdirectoryB\\", "subdirectoryC\\"}, false)
 {
-   bool pathContainsAnySubstringCaseInsensitive = _directoryIterator.PathContainsAnySubstringCaseInsensitive(path, substrings);
+   bool pathContainsAnySubstringCaseInsensitive = DirectoryIterator::PathContainsAnySubstringCaseInsensitive(path, substrings);
    ARE_EQUAL(expectedReturnValue, pathContainsAnySubstringCaseInsensitive);
 }
 

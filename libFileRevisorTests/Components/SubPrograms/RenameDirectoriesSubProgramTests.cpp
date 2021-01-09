@@ -95,8 +95,7 @@ TEST(RenameDirectory_RegexReplacedDirectoryNameEqualsSourceDirectoryName_PrintsD
 {
    const fs::path directoryPath = ZenUnit::Random<fs::path>();
    const string directoryName = directoryPath.filename().string();
-   const string regexReplaceDirectoryName = directoryName;
-   _regexerMock->ReplaceMock.Return(regexReplaceDirectoryName);
+   _regexerMock->ReplaceMock.Return(directoryName);
 
    _call_PrintDidNotMatchDirectoryMessageIfVerboseModeMock->ConstCallMock.Expect();
 

@@ -20,7 +20,7 @@ int FileSystemExceptionMaker::GetErrnoValue() const
 
 pair<int, string> FileSystemExceptionMaker::GetErrnoWithDescription() const
 {
-   const pair<int, string> errnoWithDescription = _errorCodeTranslator->GetErrnoWithDescription();
+   pair<int, string> errnoWithDescription = _errorCodeTranslator->GetErrnoWithDescription();
    return errnoWithDescription;
 }
 
@@ -31,7 +31,7 @@ MakeFileSystemExceptionForFailedToOpenFileWithFOpen(const fs::path& filePath, co
    const string exceptionMessage = String::Concat("fopen() returned nullptr for filePath=\"", filePath.string(),
       "\" and fileOpenMode=\"", fileOpenMode, "\". errno=",
       errnoWithDescription.first, " (", errnoWithDescription.second, ")");
-   const FileSystemException fileSystemException(FileExceptionType::FailedToOpenFile, exceptionMessage);
+   FileSystemException fileSystemException(FileExceptionType::FailedToOpenFile, exceptionMessage);
    return fileSystemException;
 }
 
@@ -39,7 +39,7 @@ FileSystemException FileSystemExceptionMaker::
 MakeFileSystemExceptionForFailedToOpenFileWithFStream(const fs::path& filePath) const
 {
    const string exceptionMessage = String::Concat("Failed to open file: \"", filePath.string(), "\"");
-   const FileSystemException fileSystemException(FileExceptionType::FailedToOpenFile, exceptionMessage);
+   FileSystemException fileSystemException(FileExceptionType::FailedToOpenFile, exceptionMessage);
    return fileSystemException;
 }
 
@@ -47,7 +47,7 @@ FileSystemException FileSystemExceptionMaker::
 MakeFileSystemExceptionForFailedToCloseFile(const fs::path& filePath) const
 {
    const string exceptionMessage = "Failed to close file: \"" + filePath.string() + "\"";
-   const FileSystemException fileSystemException(FileExceptionType::FailedToCloseFile, exceptionMessage);
+   FileSystemException fileSystemException(FileExceptionType::FailedToCloseFile, exceptionMessage);
    return fileSystemException;
 }
 
@@ -61,7 +61,7 @@ MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory(
    const string exceptionMessage = String::Concat(
       "fs::remove_all(\"", fileOrDirectoryPath.string(), "\", errorCode) returned ",
       removeAllReturnValue, " with errorCode.value()=", errorCodeValue, " (", systemErrorDescription, ")");
-   const FileSystemException fileSystemException(FileExceptionType::FailedToDeleteDirectory, exceptionMessage);
+   FileSystemException fileSystemException(FileExceptionType::FailedToDeleteDirectory, exceptionMessage);
    return fileSystemException;
 }
 
@@ -77,7 +77,7 @@ MakeFileSystemExceptionForFailedToRenameDirectory(
       "Failed to rename directory ", directoryPath, " to ", renamedDirectoryPath,
       ". renameErrorCode=", renameErrorCodeValue,
       ", renameErrorCodeMessage=\"", renameErrorCodeMessage, "\"");
-   const FileSystemException fileSystemException(FileExceptionType::FailedToRenameDirectory, exceptionMessage);
+   FileSystemException fileSystemException(FileExceptionType::FailedToRenameDirectory, exceptionMessage);
    return fileSystemException;
 }
 
@@ -87,7 +87,7 @@ MakeFileSystemExceptionForFailedToDeleteFile(const char* filePath) const
    const pair<int, string> errnoWithDescription = _errorCodeTranslator->GetErrnoWithDescription();
    const string exceptionMessage = String::Concat("unlink(\"", filePath,
       "\") failed with errno = ", errnoWithDescription.first, " (", errnoWithDescription.second, ")");
-   const FileSystemException fileSystemException(FileExceptionType::FailedToDeleteFile, exceptionMessage);
+   FileSystemException fileSystemException(FileExceptionType::FailedToDeleteFile, exceptionMessage);
    return fileSystemException;
 }
 
@@ -98,7 +98,7 @@ MakeFileSystemExceptionForFindFirstFileExHavingReturnedInvalidHandleValue(
 {
    const string exceptionMessage = String::Concat(
       "FindFirstFileEx(\"", directoryPathSearchPatternChars, "\") returned INVALID_HANDLE_VALUE. Administrator rights are likely required in order to query this folder.");
-   const FileSystemException fileSystemException(
+   FileSystemException fileSystemException(
       FileExceptionType::WindowsFindFirstFileExReturnedInvalidHandleValue, exceptionMessage);
    return fileSystemException;
 }
@@ -111,7 +111,7 @@ MakeFileSystemExceptionForFailedToSetFileAttribute(const char* filePath, DWORD f
    const string exceptionMessage = String::Concat(
       "SetFileAttributes(\"", filePath, "\", ", fileAttributes, ") failed. GetLastError()=",
       windowsLastErrorWithDescription.first, " (", windowsLastErrorWithDescription.second, ")");
-   const FileSystemException fileSystemException(
+   FileSystemException fileSystemException(
       FileExceptionType::WindowsFailedToSetFileAttribute, exceptionMessage);
    return fileSystemException;
 }

@@ -23,7 +23,7 @@ namespace ZenUnit
    FileRevisorArgs Random()
    {
       ZenUnit::RandomGenerator randomGenerator;
-      const FileRevisorArgs randomFileRevisorArgs = TestableRandomFileRevisorArgs(&randomGenerator);
+      FileRevisorArgs randomFileRevisorArgs = TestableRandomFileRevisorArgs(&randomGenerator);
       return randomFileRevisorArgs;
    }
 }

@@ -14,7 +14,7 @@ namespace ZenUnit
    RenameResult Random<RenameResult>()
    {
       ZenUnit::RandomGenerator randomGenerator;
-      const RenameResult randomRenameResult = ::TestableRenameResultRandom(&randomGenerator);
+      RenameResult randomRenameResult = ::TestableRenameResultRandom(&randomGenerator);
       return randomRenameResult;
    }
 }

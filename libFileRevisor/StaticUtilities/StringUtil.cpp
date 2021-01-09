@@ -21,7 +21,7 @@ string String::RegexReplace(string_view stringView, string_view matchingRegex, s
    const string matchingRegexString(matchingRegex);
    const regex matchingRegexObject(matchingRegexString);
    const string replacingRegexString(replacingRegex);
-   const string regexReplacedString = regex_replace(stringViewString, matchingRegexObject, replacingRegexString);
+   string regexReplacedString = regex_replace(stringViewString, matchingRegexObject, replacingRegexString);
    return regexReplacedString;
 }
 

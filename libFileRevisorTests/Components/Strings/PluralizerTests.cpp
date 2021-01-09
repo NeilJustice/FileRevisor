@@ -20,9 +20,9 @@ TEST(PotentiallyPluralizeWord_CountIs1_ReturnsSingularWord)
 
 TEST1X1(PotentiallyPluralizeWord_CountIsNot1_ReturnsPluralWord,
    size_t count,
-   0ull,
-   2ull,
-   3ull)
+   0ULL,
+   2ULL,
+   3ULL)
 {
    const string singularWord = ZenUnit::Random<string>();
    const string pluralWord = ZenUnit::Random<string>();

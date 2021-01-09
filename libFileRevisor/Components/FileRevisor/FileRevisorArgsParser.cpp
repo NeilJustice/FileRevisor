@@ -77,7 +77,7 @@ tuple<fs::path, string, string> FileRevisorArgsParser::ParseTargetAndFromAndToAr
       toRegexPattern = _docoptParser->GetRequiredString(docoptValues, "--to");
    }
    fs::path targetDirectoryPath = _fileSystem->GetAbsolutePath(targetDirectoryPathString);
-   const tuple<fs::path, string, string> targetDirectoryPath_fromRegexPattern_toRegexPattern(
+   tuple<fs::path, string, string> targetDirectoryPath_fromRegexPattern_toRegexPattern(
       targetDirectoryPath, fromRegexPattern, toRegexPattern);
    return targetDirectoryPath_fromRegexPattern_toRegexPattern;
 }

@@ -60,7 +60,7 @@ fs::path FileSystem::GetAbsolutePath(const fs::path& fileOrDirectoryPath) const
 
 fs::path FileSystem::CurrentDirectoryPath() const
 {
-   const fs::path currentDirectoryPath = _call_std_filesystem_current_path();
+   fs::path currentDirectoryPath = _call_std_filesystem_current_path();
    return currentDirectoryPath;
 }
 
@@ -225,7 +225,7 @@ fs::path FileSystem::RenameFile(const fs::path& filePath, string_view newFileNam
       throw runtime_error(exceptionMessage);
    }
    const fs::path sourceDirectoryPath = filePath.parent_path();
-   const fs::path renamedFilePath = sourceDirectoryPath / newFileName;
+   fs::path renamedFilePath = sourceDirectoryPath / newFileName;
    const bool destinationFilePathExists = _caller_Exists->ConstCall(
       this, &FileSystem::FileOrDirectoryExists, renamedFilePath);
    if (destinationFilePathExists)
@@ -253,7 +253,7 @@ fs::path FileSystem::RenameDirectory(const fs::path& directoryPath, string_view 
    {
       return fs::path(directoryPath).remove_filename();
    }();
-   const fs::path renamedDirectoryPath = directoryPathMinusLeafDirectory / newDirectoryName;
+   fs::path renamedDirectoryPath = directoryPathMinusLeafDirectory / newDirectoryName;
    error_code renameErrorCode;
    _call_std_filesystem_rename(directoryPath, renamedDirectoryPath, renameErrorCode);
    const int renameErrorCodeValue = renameErrorCode.value();

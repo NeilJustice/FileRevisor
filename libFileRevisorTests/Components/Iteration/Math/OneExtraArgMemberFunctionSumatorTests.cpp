@@ -3,7 +3,7 @@
 
 template<
    typename SumType,
-   template<typename _ElementType, typename...>
+   template<typename...>
    typename ContainerType,
    typename ElementType,
    typename ExtraArgType>

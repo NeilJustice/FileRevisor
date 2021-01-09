@@ -245,8 +245,7 @@ TEST2X2(RenameFile_FilePathExists_DestinationFilePathDoesNotExist_RenamesFile_Th
 
 int _stdFileSystemRenameErrorCodeValue = 0;
 
-void StdFileSystemRenameWithSettableErrorCode(
-   const fs::path& /*directoryPath*/, const fs::path& /*destinationDirectoryPath*/, error_code& outErrorCode)
+void StdFileSystemRenameWithSettableErrorCode(const fs::path& /*directoryPath*/, const fs::path& /*destinationDirectoryPath*/, error_code& outErrorCode) const
 {
    error_code errorCode(_stdFileSystemRenameErrorCodeValue, std::generic_category());
    outErrorCode = errorCode;

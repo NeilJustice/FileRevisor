@@ -111,8 +111,7 @@ TEST(RenameFileIfFileNameMatchesFromPattern_RegexReplacedFileNameEqualsSourceFil
 {
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const string fileName = filePath.filename().string();
-   const string regexReplacedFileName = fileName;
-   _regexerMock->ReplaceMock.Return(regexReplacedFileName);
+   _regexerMock->ReplaceMock.Return(fileName);
 
    _caller_PrintDidNotMatchFileMessageIfVerboseModeMock->ConstCallMock.Expect();
 

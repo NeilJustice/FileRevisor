@@ -64,7 +64,7 @@ CLEANUP
    _fileSystem.RemoveAll(_rootDirectoryPath);
 }
 
-void AssertExpectedStartingStateOfFileSystem()
+void AssertExpectedStartingStateOfFileSystem() const
 {
    IS_TRUE(_fileSystem.FileOrDirectoryExists(_rootDirectoryPath));
    IS_TRUE(_fileSystem.FileOrDirectoryExists(_root_file1));
@@ -81,7 +81,7 @@ void AssertExpectedStartingStateOfFileSystem()
    IS_TRUE(_fileSystem.FileOrDirectoryExists(_root_subdirectory5_file1));
 }
 
-void AssertExpectedEndingStateOfFileSystem()
+void AssertExpectedEndingStateOfFileSystem() const
 {
    IS_TRUE(_fileSystem.FileOrDirectoryExists(_rootDirectoryPath));
    IS_FALSE(_fileSystem.FileOrDirectoryExists(_root_file1));
@@ -122,7 +122,7 @@ TEST(RecursivelyDeleteAllFilesInDirectory_MinimalIsFalse_RecursivelyDeletesAllFi
 
 #if defined __linux__|| defined __APPLE____linux__
 // chmod 555 = "dr-xr-xr-x"
-void Chmod555Directory(const fs::path& directoryPath)
+static void Chmod555Directory(const fs::path& directoryPath)
 {
    const int userRead_groupRead_othersRead = S_IRUSR | S_IRGRP | S_IROTH;
    const int chmodReturnValue = chmod(directoryPath.string().c_str(), userRead_groupRead_othersRead);
@@ -130,7 +130,7 @@ void Chmod555Directory(const fs::path& directoryPath)
 }
 
 // chmod 777 = "drwxrwxrwx"
-void Chmod777Directory(const fs::path& directoryPath)
+static void Chmod777Directory(const fs::path& directoryPath)
 {
    const int chmodReturnValue = chmod(directoryPath.string().c_str(), 0777);
    release_assert(chmodReturnValue == 0);
