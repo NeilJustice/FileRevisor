@@ -32,7 +32,7 @@ if [ "$TRAVIS_COMPILER" = "gcc" ]; then
 else
    ninja -v
 fi
-./libFileRevisorTests/libFileRevisorTests --test-runs=5 --random-test-ordering --exit-1-if-tests-skipped
+./libFileRevisorTests/libFileRevisorTests --test-runs=5 --random --exit-1-if-tests-skipped
 
 if [ "$CODE_COV_MODE" == "ON" ]; then
   lcov --directory . --capture --output-file coverage.info
