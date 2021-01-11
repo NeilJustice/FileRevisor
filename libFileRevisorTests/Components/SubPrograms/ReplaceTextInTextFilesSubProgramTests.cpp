@@ -136,7 +136,7 @@ TEST(RegexReplaceTextInTextFile_PreviewIsTrue_ReplacedFileTextDiffersFromOrigina
       args.verbose, textFilePath));
 	METALMOCK(_protected_fileSystemMock->ReadTextMock.CalledOnceWith(textFilePath));
 	METALMOCK(_regexerMock->ReplaceMock.CalledOnceWith(textFileText, args.fromRegexPattern, args.toRegexPattern));
-	const string expectedReplacedTextMessage = "[FileRevisor] Preview: Would replace text in file " + textFilePath.string();;
+	const string expectedReplacedTextMessage = "[FileRevisor]  Preview: Would replace text in file " + textFilePath.string();;
 	METALMOCK(_protected_consoleMock->WriteLineMock.CalledOnceWith(expectedReplacedTextMessage));
    ARE_EQUAL(1, numberOfFilesThatWereOrWouldBeModified);
 }

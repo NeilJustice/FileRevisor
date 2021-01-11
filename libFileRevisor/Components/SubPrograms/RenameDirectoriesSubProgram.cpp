@@ -65,7 +65,7 @@ RenameDirectory(const fs::path& directoryPath, const FileRevisorArgs& args) cons
       const fs::path parentDirectoryPath = directoryPath.parent_path();
       const fs::path renamedDirectoryPath = parentDirectoryPath / regexReplacedDirectoryName;
       const string wouldRenameMessage = String::Concat(
-         "[FileRevisor] Preview: Would rename directory ", directoryPath.string(), " to ", regexReplacedDirectoryName);
+         "[FileRevisor]  Preview: Would rename directory ", directoryPath.string(), " to ", regexReplacedDirectoryName);
       _protected_console->WriteLine(wouldRenameMessage);
       return RenameResult(true, directoryPath, renamedDirectoryPath);
    }

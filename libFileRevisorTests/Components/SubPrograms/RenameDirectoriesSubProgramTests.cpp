@@ -131,7 +131,7 @@ TEST(RenameDirectory_RegexReplacedDirectoryNameDoesNotEqualSourceDirectoryName_P
    METALMOCK(_regexerMock->ReplaceMock.CalledOnceWith(originalDirectoryName, args.fromRegexPattern, args.toRegexPattern));
    const fs::path expectedRenamedDirectoryPath = directoryPath.parent_path() / regexReplacedDirectoryName;
    const string expectedFileRenamedMessage =
-      "[FileRevisor] Preview: Would rename directory " + directoryPath.string() + " to " + regexReplacedDirectoryName;
+      "[FileRevisor]  Preview: Would rename directory " + directoryPath.string() + " to " + regexReplacedDirectoryName;
    METALMOCK(_protected_consoleMock->WriteLineMock.CalledOnceWith(expectedFileRenamedMessage));
    const RenameResult expectedRenameResult(true, directoryPath, expectedRenamedDirectoryPath);
    ARE_EQUAL(expectedRenameResult, renameResult);

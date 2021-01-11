@@ -142,7 +142,7 @@ TEST(RenameFileIfFileNameMatchesFromPattern_RegexReplacedFileNameDoesNotEqualSou
    METALMOCK(_regexerMock->ReplaceMock.CalledOnceWith(originalFileName, args.fromRegexPattern, args.toRegexPattern));
    const fs::path expectedRenamedFilePath = filePath.parent_path() / regexReplacedFileName;
    const string expectedFileRenamedMessage = String::Concat(
-      "[FileRevisor] Preview: Would rename file ", filePath.string(), " to ", regexReplacedFileName);
+      "[FileRevisor]  Preview: Would rename file ", filePath.string(), " to ", regexReplacedFileName);
    METALMOCK(_protected_consoleMock->WriteLineMock.CalledOnceWith(expectedFileRenamedMessage));
    const RenameResult expectedRenameResult(true, filePath, expectedRenamedFilePath);
    ARE_EQUAL(expectedRenameResult, fileRenameResult);
