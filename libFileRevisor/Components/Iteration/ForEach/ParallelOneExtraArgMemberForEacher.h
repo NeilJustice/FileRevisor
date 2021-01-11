@@ -4,12 +4,6 @@ template<typename T, typename ClassType, typename MemberFunctionType, typename E
 class ParallelOneExtraArgMemberForEacher
 {
 public:
-   ParallelOneExtraArgMemberForEacher() = default;
-   ParallelOneExtraArgMemberForEacher(const ParallelOneExtraArgMemberForEacher&) = default;
-   ParallelOneExtraArgMemberForEacher& operator=(const ParallelOneExtraArgMemberForEacher&) = default;
-   ParallelOneExtraArgMemberForEacher(ParallelOneExtraArgMemberForEacher&&) = default;
-   ParallelOneExtraArgMemberForEacher& operator=(ParallelOneExtraArgMemberForEacher&&) = default;
-
    virtual ~ParallelOneExtraArgMemberForEacher() = default;
 
    virtual void ParallelOneExtraArgMemberForEach(
