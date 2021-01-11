@@ -26,7 +26,7 @@ int ReplaceTextInTextFilesSubProgram::Run(const FileRevisorArgs& args) const
    if (args.preview)
    {
       const string message = String::Concat(
-         "[FileRevisor] Result: Would replace text in ", numberOfFilesThatWereOrWouldBeModified, " ", fileOrFiles);
+         "[FileRevisor] PreviewResult: Would replace text in ", numberOfFilesThatWereOrWouldBeModified, " ", fileOrFiles);
       _protected_console->WriteLine(message);
    }
    else

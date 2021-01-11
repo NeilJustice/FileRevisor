@@ -61,7 +61,7 @@ TEST(DefaultConstructor_NewsFileSystem)
 
 TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsRegexReplaceFileTextOnEachTextFilePath_Returns0,
    bool preview, const string& expectedMessagePrefix,
-   true, "[FileRevisor] Result: Would replace text in ",
+   true, "[FileRevisor] PreviewResult: Would replace text in ",
    false, "[FileRevisor] Result: Replaced text in ")
 {
    const vector<fs::path> nonEmptyTextFilePaths =
