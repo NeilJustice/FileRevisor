@@ -9,13 +9,13 @@
 #include "libFileRevisor/Components/SubPrograms/RenameDirectoriesSubProgram.h"
 
 RenameDirectoriesSubProgram::RenameDirectoriesSubProgram()
-   // Constant Components
-   : _predicateCounter(make_unique<PredicateCounter<vector<RenameResult>, RenameResult>>())
-   , _regexer(make_unique<Regexer>())
    // Function Callers
-   , _call_PrintDidNotMatchDirectoryMessageIfVerboseMode(
+   : _call_PrintDidNotMatchDirectoryMessageIfVerboseMode(
       make_unique<VoidTwoArgMemberFunctionCaller<RenameDirectoriesSubProgram, bool, const fs::path& >>())
    , _directoryPathsTransformer_RenameDirectory(make_unique<OneExtraArgMemberFunctionTransformerType>())
+   // Constant Components
+   , _predicateCounter(make_unique<PredicateCounter<vector<RenameResult>, RenameResult>>())
+   , _regexer(make_unique<Regexer>())
 {
 }
 

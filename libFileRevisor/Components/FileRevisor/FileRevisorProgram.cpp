@@ -9,14 +9,14 @@
 #include "libFileRevisor/StaticUtilities/Exception.h"
 
 FileRevisorProgram::FileRevisorProgram()
+   // Function Callers
+   : _call_Utils_Exception_GetExceptionClassNameAndMessage(Exception::GetExceptionClassNameAndMessage)
+   , _call_Utils_Vector_FromArgcArgv(Vector::FromArgcArgv)
    // Constant Components
-   : _argsParser(make_unique<FileRevisorArgsParser>())
+   , _argsParser(make_unique<FileRevisorArgsParser>())
    , _console(make_unique<Console>())
    , _fileRevisorSubProgramFactory(make_unique<FileRevisorSubProgramFactory>())
    , _tryCatchCaller(make_unique<TryCatchCaller<FileRevisorProgram, const vector<string>&>>())
-   // Function Callers
-   , _call_Utils_Exception_GetExceptionClassNameAndMessage(Exception::GetExceptionClassNameAndMessage)
-   , _call_Utils_Vector_FromArgcArgv(Vector::FromArgcArgv)
    // Mutable Components
 	, _stopwatch(make_unique<Stopwatch>())
 {

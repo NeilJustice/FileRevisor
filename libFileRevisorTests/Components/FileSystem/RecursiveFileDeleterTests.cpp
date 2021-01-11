@@ -19,38 +19,38 @@ FACTS(RemoveReadonlyFlagFromConstCharPointerFilePath_GetsFileAttributesWhichIncl
 EVIDENCE
 
 RecursiveFileDeleter _recursiveFileDeleter;
-// Constant Components
-ConsoleMock* _consoleMock = nullptr;
-FileSystemExceptionMakerMock* _fileSystemExceptionMakerMock = nullptr;
-// Function Callers
+// Function Pointers
 #ifdef _WIN32
 METALMOCK_NONVOID1_FREE(DWORD, GetFileAttributesA, const char*)
 METALMOCK_NONVOID2_FREE(BOOL, SetFileAttributesA, const char*, DWORD)
 #endif
+// Constant Components
+ConsoleMock* _consoleMock = nullptr;
+FileSystemExceptionMakerMock* _fileSystemExceptionMakerMock = nullptr;
 
 STARTUP
 {
-   // Constant Components
-   _recursiveFileDeleter._console.reset(_consoleMock = new ConsoleMock);
-   _recursiveFileDeleter._fileSystemExceptionMaker.reset(_fileSystemExceptionMakerMock = new FileSystemExceptionMakerMock);
-   // Function Callers
+   // Function Pointers
 #ifdef _WIN32
    _recursiveFileDeleter._call_GetFileAttributesA = BIND_1ARG_METALMOCK_OBJECT(GetFileAttributesAMock);
    _recursiveFileDeleter._call_SetFileAttributesA = BIND_2ARG_METALMOCK_OBJECT(SetFileAttributesAMock);
 #endif
+   // Constant Components
+   _recursiveFileDeleter._console.reset(_consoleMock = new ConsoleMock);
+   _recursiveFileDeleter._fileSystemExceptionMaker.reset(_fileSystemExceptionMakerMock = new FileSystemExceptionMakerMock);
 }
 
 TEST(Constructor_NewsComponents_SetsFunctionCallers)
 {
    RecursiveFileDeleter recursiveFileDeleter;
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(recursiveFileDeleter._console);
-   DELETE_TO_ASSERT_NEWED(recursiveFileDeleter._fileSystemExceptionMaker);
-   // Function Callers
+   // Function Pointers
 #ifdef _WIN32
    STD_FUNCTION_TARGETS(::GetFileAttributesA, recursiveFileDeleter._call_GetFileAttributesA);
    STD_FUNCTION_TARGETS(::SetFileAttributesA, recursiveFileDeleter._call_SetFileAttributesA);
 #endif
+   // Constant Components
+   DELETE_TO_ASSERT_NEWED(recursiveFileDeleter._console);
+   DELETE_TO_ASSERT_NEWED(recursiveFileDeleter._fileSystemExceptionMaker);
 }
 
 TEST(ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissionDenied_SkipFilesInUseIsFalse_ThrowsFileSystemException)

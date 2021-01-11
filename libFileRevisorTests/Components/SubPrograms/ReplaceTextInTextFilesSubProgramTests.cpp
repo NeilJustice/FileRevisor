@@ -18,14 +18,9 @@ AFACT(PrintReadingFileMessageIfVerboseIsTrue_VerboseIsTrue_PrintsReadingFileMess
 EVIDENCE
 
 ReplaceTextInTextFilesSubProgram _replaceTextInTextFilesSubProgram;
-// Constant Components
-ConsoleMock* _protected_consoleMock = nullptr;
-FileSystemMock* _protected_fileSystemMock = nullptr;
-PluralizerMock* _protected_pluralizerMock = nullptr;
-RegexerMock* _regexerMock = nullptr;
 // Function Callers
 const VoidTwoArgMemberFunctionCallerMock<ReplaceTextInTextFilesSubProgram, bool, const fs::path&>*
-   _call_PrintReadingFileMessageIfVerboseModeMock = nullptr;
+_call_PrintReadingFileMessageIfVerboseModeMock = nullptr;
 using OneExtraArgMemberFunctionSumatorMockType = OneExtraArgMemberFunctionSumatorMock<
    ReplaceTextInTextFilesSubProgram,
    size_t,
@@ -33,30 +28,35 @@ using OneExtraArgMemberFunctionSumatorMockType = OneExtraArgMemberFunctionSumato
    fs::path,
    const FileRevisorArgs&>;
 OneExtraArgMemberFunctionSumatorMockType* _memberFunctionSumator_RegexReplaceTextInTextFileMock = nullptr;
+// Constant Components
+ConsoleMock* _protected_consoleMock = nullptr;
+FileSystemMock* _protected_fileSystemMock = nullptr;
+PluralizerMock* _protected_pluralizerMock = nullptr;
+RegexerMock* _regexerMock = nullptr;
 
 STARTUP
 {
+   // Function Callers
+   _replaceTextInTextFilesSubProgram._call_PrintReadingFileMessageIfVerboseMode.reset(_call_PrintReadingFileMessageIfVerboseModeMock = new VoidTwoArgMemberFunctionCallerMock<ReplaceTextInTextFilesSubProgram, bool, const fs::path&>);
+   _replaceTextInTextFilesSubProgram._memberFunctionSumator_RegexReplaceTextInTextFile.reset(_memberFunctionSumator_RegexReplaceTextInTextFileMock = new OneExtraArgMemberFunctionSumatorMockType);
    // Constant Components
    _replaceTextInTextFilesSubProgram._protected_console.reset(_protected_consoleMock = new ConsoleMock);
    _replaceTextInTextFilesSubProgram._protected_fileSystem.reset(_protected_fileSystemMock = new FileSystemMock);
    _replaceTextInTextFilesSubProgram._protected_pluralizer.reset(_protected_pluralizerMock = new PluralizerMock);
    _replaceTextInTextFilesSubProgram._regexer.reset(_regexerMock = new RegexerMock);
-   // Function Callers
-   _replaceTextInTextFilesSubProgram._call_PrintReadingFileMessageIfVerboseMode.reset(_call_PrintReadingFileMessageIfVerboseModeMock = new VoidTwoArgMemberFunctionCallerMock<ReplaceTextInTextFilesSubProgram, bool, const fs::path&>);
-   _replaceTextInTextFilesSubProgram._memberFunctionSumator_RegexReplaceTextInTextFile.reset(_memberFunctionSumator_RegexReplaceTextInTextFileMock = new OneExtraArgMemberFunctionSumatorMockType);
 }
 
 TEST(DefaultConstructor_NewsFileSystem)
 {
 	ReplaceTextInTextFilesSubProgram replaceTextInTextFilesSubProgram;
+   // Function Callers
+   DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._call_PrintReadingFileMessageIfVerboseMode);
+   DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._memberFunctionSumator_RegexReplaceTextInTextFile);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._protected_console);
    DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._protected_fileSystem);
    DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._protected_pluralizer);
    DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._regexer);
-   // Function Callers
-   DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._call_PrintReadingFileMessageIfVerboseMode);
-   DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._memberFunctionSumator_RegexReplaceTextInTextFile);
 }
 
 TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsRegexReplaceFileTextOnEachTextFilePath_Returns0,

@@ -14,16 +14,16 @@ class FileRevisorArgsParser
 {
    friend class FileRevisorArgsParserTests;
 private:
-   // Constant Components
-   unique_ptr<const Console> _console;
-   unique_ptr<const FileSystem> _fileSystem;
-   unique_ptr<const DocoptParser> _docoptParser;
-   unique_ptr<const FileRevisorPreambleMaker> _fileRevisorPreambleMaker;
    // Function Callers
    function<ProgramMode(bool, bool, bool, bool)> _call_DetermineProgramMode;
    using NonVoidTwoArgMemberFunctionCallerType = NonVoidTwoArgMemberFunctionCaller<
       tuple<fs::path, string, string>, FileRevisorArgsParser, const map<string, docopt::Value>&, bool>;
    unique_ptr<const NonVoidTwoArgMemberFunctionCallerType> _caller_ParseDirAndFromAndToArguments;
+   // Constant Components
+   unique_ptr<const Console> _console;
+   unique_ptr<const FileSystem> _fileSystem;
+   unique_ptr<const DocoptParser> _docoptParser;
+   unique_ptr<const FileRevisorPreambleMaker> _fileRevisorPreambleMaker;
 public:
    FileRevisorArgsParser();
    virtual ~FileRevisorArgsParser();

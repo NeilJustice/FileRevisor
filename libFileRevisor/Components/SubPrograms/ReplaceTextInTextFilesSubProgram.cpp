@@ -8,11 +8,11 @@
 #include "libFileRevisor/Components/SubPrograms/ReplaceTextInTextFilesSubProgram.h"
 
 ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFilesSubProgram()
-   // Constant Components
-   : _regexer(make_unique<Regexer>())
    // Function Callers
-   , _call_PrintReadingFileMessageIfVerboseMode(make_unique<VoidTwoArgMemberFunctionCaller<ReplaceTextInTextFilesSubProgram, bool, const fs::path&>>())
+   : _call_PrintReadingFileMessageIfVerboseMode(make_unique<VoidTwoArgMemberFunctionCaller<ReplaceTextInTextFilesSubProgram, bool, const fs::path&>>())
    , _memberFunctionSumator_RegexReplaceTextInTextFile(make_unique<OneExtraArgMemberFunctionSumatorType>())
+   // Constant Components
+   , _regexer(make_unique<Regexer>())
 {
 }
 
@@ -38,8 +38,7 @@ int ReplaceTextInTextFilesSubProgram::Run(const FileRevisorArgs& args) const
    return 0;
 }
 
-size_t ReplaceTextInTextFilesSubProgram::
-RegexReplaceTextInTextFile(const fs::path& textFilePath, const FileRevisorArgs& args) const
+size_t ReplaceTextInTextFilesSubProgram::RegexReplaceTextInTextFile(const fs::path& textFilePath, const FileRevisorArgs& args) const
 {
    _call_PrintReadingFileMessageIfVerboseMode->ConstCall(
       this, &ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue, args.verbose, textFilePath);
@@ -61,8 +60,7 @@ RegexReplaceTextInTextFile(const fs::path& textFilePath, const FileRevisorArgs& 
    return 0;
 }
 
-void ReplaceTextInTextFilesSubProgram::
-PrintReadingFileMessageIfVerboseIsTrue(bool verbose, const fs::path& textFilePath) const
+void ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue(bool verbose, const fs::path& textFilePath) const
 {
    if (verbose)
    {

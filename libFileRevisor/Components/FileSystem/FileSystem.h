@@ -17,14 +17,10 @@ class FileSystem
 {
    friend class ::FileSystemTests;
 private:
-   // Constant Components
-   unique_ptr<const ConstCharPointerGetter> _constCharPointerGetter;
-   unique_ptr<const FileSystemExceptionMaker> _fileSystemExceptionMaker;
-   unique_ptr<const RecursiveFileDeleter> _recursiveFileDeleter;
    // Function Callers
    unique_ptr<const NonVoidOneArgMemberFunctionCaller<bool, FileSystem, const fs::path&>> _caller_Exists;
    unique_ptr<const VoidTwoArgMemberFunctionCaller<FileSystem, const fs::path&, FILE*>> _caller_CloseFile;
-   function<FILE*(const char*, const char*)> _call_fopen;
+   function<FILE* (const char*, const char*)> _call_fopen;
    function<int(FILE*)> _call_fclose;
    function<uintmax_t(const fs::path&, error_code&)> _call_fs_remove_all;
    function<int(const char*, const char*)> _call_std_rename;
@@ -42,6 +38,10 @@ private:
 
    void(*_call_std_filesystem_rename_as_assignable_function_pointer)(const fs::path&, const fs::path&, std::error_code&);
    function<void(const fs::path&, const fs::path&, std::error_code&)> _call_std_filesystem_rename;
+   // Constant Components
+   unique_ptr<const ConstCharPointerGetter> _constCharPointerGetter;
+   unique_ptr<const FileSystemExceptionMaker> _fileSystemExceptionMaker;
+   unique_ptr<const RecursiveFileDeleter> _recursiveFileDeleter;
 public:
    FileSystem();
    virtual ~FileSystem();

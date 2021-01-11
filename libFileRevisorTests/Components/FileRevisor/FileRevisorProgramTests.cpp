@@ -20,27 +20,27 @@ AFACT(ExceptionHandler_PrintsExceptionClassNameAndWhat_Returns1)
 EVIDENCE
 
 FileRevisorProgram _fileRevisorProgram;
+// Function Callers
+METALMOCK_NONVOID2_STATIC(vector<string>, Vector, FromArgcArgv, int, char**)
+METALMOCK_NONVOID1_STATIC(string, Exception, ClassNameAndWhat, const exception*)
 // Constant Components
 FileRevisorArgsParserMock* _argsParserMock = nullptr;
 ConsoleMock* _consoleMock = nullptr;
 FileRevisorSubProgramFactoryMock* _fileRevisorSubProgramFactoryMock = nullptr;
 TryCatchCallerMock<FileRevisorProgram, const vector<string>&>* _tryCatchCallerMock = nullptr;
-// Function Callers
-METALMOCK_NONVOID2_STATIC(vector<string>, Vector, FromArgcArgv, int, char**)
-METALMOCK_NONVOID1_STATIC(string, Exception, ClassNameAndWhat, const exception*)
 // Mutable Components
 StopwatchMock* _stopwatchMock = nullptr;
 
 STARTUP
 {
+   // Function Callers
+   _fileRevisorProgram._call_Utils_Vector_FromArgcArgv = BIND_2ARG_METALMOCK_OBJECT(FromArgcArgvMock);
+   _fileRevisorProgram._call_Utils_Exception_GetExceptionClassNameAndMessage = BIND_1ARG_METALMOCK_OBJECT(ClassNameAndWhatMock);
    // Components
    _fileRevisorProgram._console.reset(_consoleMock = new ConsoleMock);
    _fileRevisorProgram._tryCatchCaller.reset(_tryCatchCallerMock = new TryCatchCallerMock<FileRevisorProgram, const vector<string>&>);
    _fileRevisorProgram._argsParser.reset(_argsParserMock = new FileRevisorArgsParserMock);
    _fileRevisorProgram._fileRevisorSubProgramFactory.reset(_fileRevisorSubProgramFactoryMock = new FileRevisorSubProgramFactoryMock);
-   // Function Callers
-   _fileRevisorProgram._call_Utils_Vector_FromArgcArgv = BIND_2ARG_METALMOCK_OBJECT(FromArgcArgvMock);
-   _fileRevisorProgram._call_Utils_Exception_GetExceptionClassNameAndMessage = BIND_1ARG_METALMOCK_OBJECT(ClassNameAndWhatMock);
    // Mutable Components
 	_fileRevisorProgram._stopwatch.reset(_stopwatchMock = new StopwatchMock);
 }
@@ -48,14 +48,14 @@ STARTUP
 TEST(DefaultConstructor_NewsComponents)
 {
    FileRevisorProgram textChangerProgram;
+   // Function Callers
+   STD_FUNCTION_TARGETS(Vector::FromArgcArgv, textChangerProgram._call_Utils_Vector_FromArgcArgv);
+   STD_FUNCTION_TARGETS(Exception::GetExceptionClassNameAndMessage, textChangerProgram._call_Utils_Exception_GetExceptionClassNameAndMessage);
    // Components
    DELETE_TO_ASSERT_NEWED(textChangerProgram._argsParser);
    DELETE_TO_ASSERT_NEWED(textChangerProgram._console);
    DELETE_TO_ASSERT_NEWED(textChangerProgram._fileRevisorSubProgramFactory);
    DELETE_TO_ASSERT_NEWED(textChangerProgram._tryCatchCaller);
-   // Function Callers
-	STD_FUNCTION_TARGETS(Vector::FromArgcArgv, textChangerProgram._call_Utils_Vector_FromArgcArgv);
-   STD_FUNCTION_TARGETS(Exception::GetExceptionClassNameAndMessage, textChangerProgram._call_Utils_Exception_GetExceptionClassNameAndMessage);
    // Mutable Components
    DELETE_TO_ASSERT_NEWED(textChangerProgram._stopwatch);
 }

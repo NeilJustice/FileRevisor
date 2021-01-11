@@ -20,42 +20,42 @@ AFACT(PrintDidNotMatchDirectoryMessageIfVerboseMode_VerboseIsTrue_PrintsDidNotMa
 EVIDENCE
 
 RenameDirectoriesSubProgram _renameDirectoriesSubProgram;
+// Function Callers
+using OneExtraArgMemberFunctionTransformerMockType = OneExtraArgMemberFunctionTransformerMock<RenameDirectoriesSubProgram, fs::path, RenameResult, const FileRevisorArgs&>;
+OneExtraArgMemberFunctionTransformerMockType* _directoryPathsTransformer_RenameDirectoryMock = nullptr;
+const VoidTwoArgMemberFunctionCallerMock<RenameDirectoriesSubProgram, bool, const fs::path&>* _call_PrintDidNotMatchDirectoryMessageIfVerboseModeMock = nullptr;
 // Constant Components
 ConsoleMock* _protected_consoleMock = nullptr;
 FileSystemMock* _protected_fileSystemMock = nullptr;
 PluralizerMock* _protected_pluralizerMock = nullptr;
 PredicateCounterMock<vector<RenameResult>, RenameResult>* _predicateCounterMock = nullptr;
 RegexerMock* _regexerMock = nullptr;
-// Function Callers
-using OneExtraArgMemberFunctionTransformerMockType = OneExtraArgMemberFunctionTransformerMock<RenameDirectoriesSubProgram, fs::path, RenameResult, const FileRevisorArgs&>;
-OneExtraArgMemberFunctionTransformerMockType* _directoryPathsTransformer_RenameDirectoryMock = nullptr;
-const VoidTwoArgMemberFunctionCallerMock<RenameDirectoriesSubProgram, bool, const fs::path&>* _call_PrintDidNotMatchDirectoryMessageIfVerboseModeMock = nullptr;
 
 STARTUP
 {
+   // Function Callers
+   _renameDirectoriesSubProgram._directoryPathsTransformer_RenameDirectory.reset(_directoryPathsTransformer_RenameDirectoryMock = new OneExtraArgMemberFunctionTransformerMockType);
+   _renameDirectoriesSubProgram._call_PrintDidNotMatchDirectoryMessageIfVerboseMode.reset(_call_PrintDidNotMatchDirectoryMessageIfVerboseModeMock = new VoidTwoArgMemberFunctionCallerMock<RenameDirectoriesSubProgram, bool, const fs::path&>);
    // Constant Components
 	_renameDirectoriesSubProgram._protected_console.reset(_protected_consoleMock = new ConsoleMock);
    _renameDirectoriesSubProgram._protected_fileSystem.reset(_protected_fileSystemMock = new FileSystemMock);
    _renameDirectoriesSubProgram._protected_pluralizer.reset(_protected_pluralizerMock = new PluralizerMock);
    _renameDirectoriesSubProgram._predicateCounter.reset(_predicateCounterMock = new PredicateCounterMock<vector<RenameResult>, RenameResult>);
    _renameDirectoriesSubProgram._regexer.reset(_regexerMock = new RegexerMock);
-   // Function Callers
-   _renameDirectoriesSubProgram._directoryPathsTransformer_RenameDirectory.reset(_directoryPathsTransformer_RenameDirectoryMock = new OneExtraArgMemberFunctionTransformerMockType);
-   _renameDirectoriesSubProgram._call_PrintDidNotMatchDirectoryMessageIfVerboseMode.reset(_call_PrintDidNotMatchDirectoryMessageIfVerboseModeMock = new VoidTwoArgMemberFunctionCallerMock<RenameDirectoriesSubProgram, bool, const fs::path&>);
 }
 
 TEST(DefaultConstructor_NewsComponents)
 {
    RenameDirectoriesSubProgram renameDirectoriesSubProgram;
+   // Function Callers
+   DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._directoryPathsTransformer_RenameDirectory);
+   DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._call_PrintDidNotMatchDirectoryMessageIfVerboseMode);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._protected_console);
    DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._protected_fileSystem);
    DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._protected_pluralizer);
    DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._predicateCounter);
    DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._regexer);
-   // Function Callers
-   DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._directoryPathsTransformer_RenameDirectory);
-   DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._call_PrintDidNotMatchDirectoryMessageIfVerboseMode);
 }
 
 TEST2X2(Run_CallsRenameDirectoryOnEachDirectoryPathInArgsDirPath_PrintsNumberOfDirectoriesRenamedOrWouldBeRenamed_Returns0,

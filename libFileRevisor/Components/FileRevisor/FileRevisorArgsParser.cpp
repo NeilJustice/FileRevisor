@@ -8,14 +8,14 @@
 #include "libFileRevisor/Components/Iteration/Transform/OneExtraArgMemberFunctionTransformer.h"
 
 FileRevisorArgsParser::FileRevisorArgsParser()
+   // Function Callers
+   : _call_DetermineProgramMode(FileRevisorArgsParser::DetermineProgramMode)
+   , _caller_ParseDirAndFromAndToArguments(make_unique<NonVoidTwoArgMemberFunctionCallerType>())
    // Constant Components
-   : _console(make_unique<Console>())
+   , _console(make_unique<Console>())
    , _fileSystem(make_unique<FileSystem>())
    , _docoptParser(make_unique<DocoptParser>())
    , _fileRevisorPreambleMaker(make_unique<FileRevisorPreambleMaker>())
-   // Function Callers
-   , _call_DetermineProgramMode(FileRevisorArgsParser::DetermineProgramMode)
-   , _caller_ParseDirAndFromAndToArguments(make_unique<NonVoidTwoArgMemberFunctionCallerType>())
 {
 }
 

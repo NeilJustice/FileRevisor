@@ -20,14 +20,14 @@ class ReplaceTextInTextFilesSubProgram : public FileRevisorSubProgram
 {
    friend class ReplaceTextInTextFilesSubProgramTests;
 private:
-   // Constant Components
-   unique_ptr<const Regexer> _regexer;
    // Function Callers
    unique_ptr<const VoidTwoArgMemberFunctionCaller<
       ReplaceTextInTextFilesSubProgram, bool, const fs::path&>> _call_PrintReadingFileMessageIfVerboseMode;
    using OneExtraArgMemberFunctionSumatorType = OneExtraArgMemberFunctionSumator<
       ReplaceTextInTextFilesSubProgram, size_t, vector, fs::path, const FileRevisorArgs&>;
    unique_ptr<const OneExtraArgMemberFunctionSumatorType> _memberFunctionSumator_RegexReplaceTextInTextFile;
+   // Constant Components
+   unique_ptr<const Regexer> _regexer;
 public:
    ReplaceTextInTextFilesSubProgram();
    virtual ~ReplaceTextInTextFilesSubProgram() = default;

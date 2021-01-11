@@ -8,14 +8,14 @@ class RecursiveFileDeleter
 {
    friend class RecursiveFileDeleterTests;
 private:
-   // Constant Components
-   unique_ptr<const Console> _console;
-   unique_ptr<const FileSystemExceptionMaker> _fileSystemExceptionMaker;
-   // Function Callers
+   // Function Pointers
 #ifdef _WIN32
    function<DWORD(const char*)> _call_GetFileAttributesA;
    function<BOOL(const char*, DWORD)> _call_SetFileAttributesA;
 #endif
+   // Constant Components
+   unique_ptr<const Console> _console;
+   unique_ptr<const FileSystemExceptionMaker> _fileSystemExceptionMaker;
 public:
    RecursiveFileDeleter();
    virtual ~RecursiveFileDeleter();

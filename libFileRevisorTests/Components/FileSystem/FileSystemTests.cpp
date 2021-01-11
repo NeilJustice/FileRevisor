@@ -36,10 +36,6 @@ AFACT(RemoveReadOnlyFlagsFromTopLevelFilesInDirectoryIfWindows_CallsRemoveReadon
 EVIDENCE
 
 FileSystem _fileSystem;
-// Constant Components
-ConstCharPointerGetterMock* _constCharPointerGetterMock = nullptr;
-FileSystemExceptionMakerMock* _fileSystemExceptionMakerMock = nullptr;
-RecursiveFileDeleterMock* _recursiveFileDeleterMock = nullptr;
 // Function Callers
 NonVoidOneArgMemberFunctionCallerMock<bool, FileSystem, const fs::path&>* _caller_ExistsMock = nullptr;
 #ifdef _WIN32
@@ -52,13 +48,13 @@ METALMOCK_VOID3_NAMESPACED_FREE(std::filesystem, rename, const fs::path&, const 
 METALMOCK_NONVOID2_FREE(FILE*, fopen, const char*, const char*)
 METALMOCK_NONVOID1_FREE(int, fclose, FILE*)
 METALMOCK_NONVOID2_NAMESPACED_FREE(uintmax_t, fs, remove_all, const fs::path&, error_code&)
+// Constant Components
+ConstCharPointerGetterMock* _constCharPointerGetterMock = nullptr;
+FileSystemExceptionMakerMock* _fileSystemExceptionMakerMock = nullptr;
+RecursiveFileDeleterMock* _recursiveFileDeleterMock = nullptr;
 
 STARTUP
 {
-   // Constant Components
-   _fileSystem._constCharPointerGetter.reset(_constCharPointerGetterMock = new ConstCharPointerGetterMock);
-   _fileSystem._fileSystemExceptionMaker.reset(_fileSystemExceptionMakerMock = new FileSystemExceptionMakerMock);
-   _fileSystem._recursiveFileDeleter.reset(_recursiveFileDeleterMock = new RecursiveFileDeleterMock);
    // Function Callers
    _fileSystem._caller_Exists.reset(_caller_ExistsMock = new NonVoidOneArgMemberFunctionCallerMock<bool, FileSystem, const fs::path&>);
    _fileSystem._call_fopen = BIND_2ARG_METALMOCK_OBJECT(fopenMock);
@@ -71,15 +67,15 @@ STARTUP
    _fileSystem._call_std_filesystem_rename = BIND_3ARG_METALMOCK_OBJECT(renameMock_fs);
    _fileSystem._call_std_filesystem_current_path = BIND_0ARG_METALMOCK_OBJECT(current_pathMock);
    _fileSystem._call_std_filesystem_exists = BIND_1ARG_METALMOCK_OBJECT(existsMock);
+   // Constant Components
+   _fileSystem._constCharPointerGetter.reset(_constCharPointerGetterMock = new ConstCharPointerGetterMock);
+   _fileSystem._fileSystemExceptionMaker.reset(_fileSystemExceptionMakerMock = new FileSystemExceptionMakerMock);
+   _fileSystem._recursiveFileDeleter.reset(_recursiveFileDeleterMock = new RecursiveFileDeleterMock);
 }
 
 TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
 {
    FileSystem fileSystem;
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(fileSystem._constCharPointerGetter);
-   DELETE_TO_ASSERT_NEWED(fileSystem._fileSystemExceptionMaker);
-   DELETE_TO_ASSERT_NEWED(fileSystem._recursiveFileDeleter);
    // Function Callers
    DELETE_TO_ASSERT_NEWED(fileSystem._caller_Exists);
    STD_FUNCTION_TARGETS(::fopen, fileSystem._call_fopen);
@@ -103,6 +99,10 @@ TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
    STD_FUNCTION_TARGETS_OVERLOAD(StdFilesystemExistsFunctionType,
       fs::exists, fileSystem._call_std_filesystem_exists);
 #endif
+   // Constant Components
+   DELETE_TO_ASSERT_NEWED(fileSystem._constCharPointerGetter);
+   DELETE_TO_ASSERT_NEWED(fileSystem._fileSystemExceptionMaker);
+   DELETE_TO_ASSERT_NEWED(fileSystem._recursiveFileDeleter);
 }
 
 #if defined __linux__|| defined __APPLE____linux__

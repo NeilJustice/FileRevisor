@@ -10,23 +10,23 @@
 #include "libFileRevisor/Exceptions/FileSystemException.h"
 
 FileSystem::FileSystem()
-   // Constant Components
-   : _constCharPointerGetter(make_unique<ConstCharPointerGetter>())
-   , _fileSystemExceptionMaker(make_unique<FileSystemExceptionMaker>())
-   , _recursiveFileDeleter(make_unique<RecursiveFileDeleter>())
    // Function Callers
-   , _caller_Exists(make_unique<NonVoidOneArgMemberFunctionCaller<bool, FileSystem, const fs::path&>>())
+   : _caller_Exists(make_unique<NonVoidOneArgMemberFunctionCaller<bool, FileSystem, const fs::path&>>())
    , _caller_CloseFile(make_unique<VoidTwoArgMemberFunctionCaller<FileSystem, const fs::path&, FILE*>>())
    , _call_fopen(::fopen)
    , _call_fclose(::fclose)
    , _call_fs_remove_all(static_cast<uintmax_t(*)(const fs::path&, error_code&)>(fs::remove_all))
    , _call_std_rename(std::rename)
-#ifdef _WIN32
+   #ifdef _WIN32
    , _call_std_filesystem_absolute_as_assignable_function_pointer(fs::absolute)
-#endif
+   #endif
    , _call_std_filesystem_current_path_as_assignable_function_pointer(fs::current_path)
    , _call_std_filesystem_exists_as_assignable_function_pointer(fs::exists)
    , _call_std_filesystem_rename_as_assignable_function_pointer(fs::rename)
+   // Constant Components
+   , _constCharPointerGetter(make_unique<ConstCharPointerGetter>())
+   , _fileSystemExceptionMaker(make_unique<FileSystemExceptionMaker>())
+   , _recursiveFileDeleter(make_unique<RecursiveFileDeleter>())
 {
 #ifdef _WIN32
    _call_std_filesystem_absolute = _call_std_filesystem_absolute_as_assignable_function_pointer;
