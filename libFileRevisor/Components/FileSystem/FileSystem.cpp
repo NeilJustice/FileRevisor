@@ -88,7 +88,8 @@ vector<fs::path> FileSystem::GetFilePathsInDirectory(const fs::path& directoryPa
    return filePaths;
 }
 
-vector<fs::path> FileSystem::GetNonEmptyNonGitTextFilePathsInDirectory(const fs::path& directoryPath, bool recurse) const
+vector<fs::path> FileSystem::GetNonEmptyNonGitTextFilePathsInDirectory(
+   const fs::path& directoryPath, bool recurse, bool /*skipArgsInUse*/) const
 {
    vector<fs::path> textFilePaths;
    DirectoryIterator directoryIterator;

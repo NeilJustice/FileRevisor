@@ -165,7 +165,7 @@ TEST(GetStringDirectoryPathsInDirectory_RecurseIsTrue_ReturnsDirectoryPathsInAnd
 TEST(GetNonEmptyNonGitTextFilePathsInDirectory_RecurseIsFalse_ReturnsTopLevelFilePathsThatDoNotHaveABinary0InTheFirst1024Bytes)
 {
    const vector<fs::path> topLevelNonEmptyTextFilesInDirectory =
-      _fileSystem.GetNonEmptyNonGitTextFilePathsInDirectory(_rootDirectoryPath, false);
+      _fileSystem.GetNonEmptyNonGitTextFilePathsInDirectory(_rootDirectoryPath, false, false);
    //
    const vector<fs::path> expectedTopLevelNonEmptyTextFilesInDirectory =
    {
@@ -178,7 +178,7 @@ TEST(GetNonEmptyNonGitTextFilePathsInDirectory_RecurseIsFalse_ReturnsTopLevelFil
 TEST(GetNonEmptyNonGitTextFilePathsInDirectory_RecurseIsTrue_ReturnsAllFilePathsInAndBelowDirectoryThatDoNotHaveABinary0InTheFirst1024Bytes)
 {
    const vector<fs::path> allNonEmptyTextFilePathsInAndBelowDirectory =
-      _fileSystem.GetNonEmptyNonGitTextFilePathsInDirectory(_rootDirectoryPath, true);
+      _fileSystem.GetNonEmptyNonGitTextFilePathsInDirectory(_rootDirectoryPath, true, false);
    //
    const vector<fs::path> expectedAllNonEmptyTextFilePathsInAndBelowDirectory =
    {

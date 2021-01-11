@@ -9,7 +9,8 @@
 
 ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFilesSubProgram()
    // Function Pointers
-   : _call_PrintReadingFileMessageIfVerboseMode(make_unique<VoidTwoArgMemberFunctionCaller<ReplaceTextInTextFilesSubProgram, bool, const fs::path&>>())
+   : _call_PrintReadingFileMessageIfVerboseMode(make_unique<
+      VoidTwoArgMemberFunctionCaller<ReplaceTextInTextFilesSubProgram, bool, const fs::path&>>())
    // Function Callers
    , _memberFunctionAccumulator_RegexReplaceTextInTextFile(make_unique<OneExtraArgMemberFunctionAccumulatorType>())
    // Constant Components
@@ -19,10 +20,11 @@ ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFilesSubProgram()
 
 int ReplaceTextInTextFilesSubProgram::Run(const FileRevisorArgs& args) const
 {
-   const vector<fs::path> nonEmptyTextFilePathsInTargetDirectory =
-      _protected_fileSystem->GetNonEmptyNonGitTextFilePathsInDirectory(args.targetDirectoryPath, args.recurse);
+   const vector<fs::path> nonEmptyNonGitTextFilePathsInTargetDirectory =
+      _protected_fileSystem->GetNonEmptyNonGitTextFilePathsInDirectory(args.targetDirectoryPath, args.recurse, args.skipFilesInUse);
    const size_t numberOfFilesThatWereOrWouldBeModified = _memberFunctionAccumulator_RegexReplaceTextInTextFile->SumElementsWithFunction(
-      this, nonEmptyTextFilePathsInTargetDirectory, &ReplaceTextInTextFilesSubProgram::RegexReplaceTextInTextFile, args);
+      this, nonEmptyNonGitTextFilePathsInTargetDirectory,
+      &ReplaceTextInTextFilesSubProgram::RegexReplaceTextInTextFile, args);
    const string fileOrFiles = _protected_pluralizer->PotentiallyPluralizeWord(numberOfFilesThatWereOrWouldBeModified, "file", "files");
    if (args.preview)
    {

@@ -55,7 +55,8 @@ public:
    virtual void RecursivelyDeleteAllFilesInDirectory(
       const string& directoryPath, const FileRevisorArgs& args) const;
    virtual vector<fs::path> GetFilePathsInDirectory(const fs::path& directoryPath, bool recurse) const;
-   virtual vector<fs::path> GetNonEmptyNonGitTextFilePathsInDirectory(const fs::path& directoryPath, bool recurse) const;
+   virtual vector<fs::path> GetNonEmptyNonGitTextFilePathsInDirectory(
+      const fs::path& directoryPath, bool recurse, bool skipArgsInUse) const;
    virtual vector<fs::path> GetDirectoryPathsInDirectory(const fs::path& directoryPath, bool recurse) const;
    virtual vector<string> GetStringDirectoryPathsInDirectory(const fs::path& directoryPath, bool recurse) const;
    virtual bool FileOrDirectoryExists(const fs::path& fileOrDirectoryPath) const;
