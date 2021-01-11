@@ -88,10 +88,16 @@ vector<fs::path> FileSystem::GetFilePathsInDirectory(const fs::path& directoryPa
    return filePaths;
 }
 
-vector<fs::path> FileSystem::GetNonEmptyTextFilePathsInDirectory(const fs::path& directoryPath, bool recurse) const
+vector<fs::path> FileSystem::GetNonEmptyNonGitTextFilePathsInDirectory(const fs::path& directoryPath, bool recurse) const
 {
    vector<fs::path> textFilePaths;
    DirectoryIterator directoryIterator;
+#if defined __linux__ || defined __APPLE__
+   static const vector<string> fileAndDirectoryPathIgnoreSubstrings = { "/.git/" };
+#elif defined _WIN32
+   static const vector<string> fileAndDirectoryPathIgnoreSubstrings = { "\\.git\\" };
+#endif
+   directoryIterator.SetFileAndDirectoryPathIgnoreSubstrings(fileAndDirectoryPathIgnoreSubstrings);
    directoryIterator.SetDirectoryIterator(directoryPath, recurse);
    while (true)
    {

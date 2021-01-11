@@ -8,7 +8,7 @@ public:
    METALMOCK_NONVOID1_CONST(fs::path, GetAbsolutePath, const fs::path&)
    METALMOCK_NONVOID0_CONST(fs::path, CurrentDirectoryPath)
    METALMOCK_NONVOID2_CONST(vector<fs::path>, GetFilePathsInDirectory, const fs::path&, bool)
-   METALMOCK_NONVOID2_CONST(vector<fs::path>, GetNonEmptyTextFilePathsInDirectory, const fs::path&, bool)
+   METALMOCK_NONVOID2_CONST(vector<fs::path>, GetNonEmptyNonGitTextFilePathsInDirectory, const fs::path&, bool)
    METALMOCK_NONVOID2_CONST(vector<fs::path>, GetDirectoryPathsInDirectory, const fs::path&, bool)
    METALMOCK_NONVOID2_CONST(vector<string>, GetStringDirectoryPathsInDirectory, const fs::path&, bool)
    METALMOCK_NONVOID1_CONST(bool, FileOrDirectoryExists, const fs::path&)

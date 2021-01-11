@@ -12,8 +12,8 @@ AFACT(GetDirectoryPathsInDirectory_RecurseIsFalse_ReturnsTopLevelDirectoryPaths)
 AFACT(GetDirectoryPathsInDirectory_RecurseIsTrue_ReturnsDirectoryPathsInAndBelowDirectoryPath)
 AFACT(GetStringDirectoryPathsInDirectory_RecurseIsFalse_ReturnsTopLevelDirectoryPaths)
 AFACT(GetStringDirectoryPathsInDirectory_RecurseIsTrue_ReturnsDirectoryPathsInAndBelowDirectoryPath)
-AFACT(GetNonEmptyTextFilePathsInDirectory_RecurseIsFalse_ReturnsTopLevelFilePathsThatDoNotHaveABinary0InTheFirst1024Bytes)
-AFACT(GetNonEmptyTextFilePathsInDirectory_RecurseIsTrue_ReturnsAllFilePathsInAndBelowDirectoryThatDoNotHaveABinary0InTheFirst1024Bytes)
+AFACT(GetNonEmptyNonGitTextFilePathsInDirectory_RecurseIsFalse_ReturnsTopLevelFilePathsThatDoNotHaveABinary0InTheFirst1024Bytes)
+AFACT(GetNonEmptyNonGitTextFilePathsInDirectory_RecurseIsTrue_ReturnsAllFilePathsInAndBelowDirectoryThatDoNotHaveABinary0InTheFirst1024Bytes)
 AFACT(ReadText_FileDoesNotExist_ThrowsFileSystemException)
 AFACT(ReadText_FileExists_FileIsEmpty_ReturnsEmptyString)
 AFACT(ReadText_FileExists_FileIsNotEmptyAndContainsTrailingBinaryZeros_ReturnsFileTextMinusTrailingBinaryZeros)
@@ -32,6 +32,9 @@ void CreateIntegrationTestsDirectoryStructure()
    FileSystem fileSystem;
    const char bytesContaining0A[] = { 1, 0 };
    const char bytesContaining0B[] = { 1, 2, 0, 3 };
+   fileSystem.CreateTextFile(_rootDirectoryPath / ".git/gitfile1", "");
+   fileSystem.CreateTextFile(_rootDirectoryPath / ".git/gitfile2", "");
+   fileSystem.CreateTextFile(_rootDirectoryPath / ".git/gitfile3", "");
    fileSystem.CreateTextFile(_rootDirectoryPath / "root.emptyFile1", "");
    fileSystem.CreateTextFile(_rootDirectoryPath / "root.textFile1", "abc");
    fileSystem.CreateBinaryFile(_rootDirectoryPath / "root.binaryFile1", bytesContaining0A, sizeof(bytesContaining0A));
@@ -60,8 +63,7 @@ CLEANUP
 
 TEST(GetFilePathsInDirectory_RecurseIsFalse_ReturnsTopLevelFilePaths)
 {
-   const vector<fs::path> topLevelFilePathsInDirectory =
-      _fileSystem.GetFilePathsInDirectory(_rootDirectoryPath, false);
+   const vector<fs::path> topLevelFilePathsInDirectory = _fileSystem.GetFilePathsInDirectory(_rootDirectoryPath, false);
    //
    const vector<fs::path> expectedTopLevelFilePathsInDirectory =
    {
@@ -79,6 +81,9 @@ TEST(GetFilePathsInDirectory_RecurseIsTrue_ReturnsFilePathsInAndBelowDirectoryPa
    //
    const vector<fs::path> expectedFilePathsInAndBelowDirectory =
    {
+      _rootDirectoryPath / ".git/gitfile1",
+      _rootDirectoryPath / ".git/gitfile2",
+      _rootDirectoryPath / ".git/gitfile3",
       _rootDirectoryPath / "root.binaryFile1",
       _rootDirectoryPath / "root.emptyFile1",
       _rootDirectoryPath / "root.textFile1",
@@ -99,6 +104,7 @@ TEST(GetDirectoryPathsInDirectory_RecurseIsFalse_ReturnsTopLevelDirectoryPaths)
    //
    const vector<fs::path> expectedTopLevelDirectoryPathsInDirectory =
    {
+      _rootDirectoryPath / ".git",
       _rootDirectoryPath / "subdirectory1",
       _rootDirectoryPath / "subdirectory2",
       _rootDirectoryPath / "subdirectory3"
@@ -112,6 +118,7 @@ TEST(GetDirectoryPathsInDirectory_RecurseIsTrue_ReturnsDirectoryPathsInAndBelowD
    //
    const vector<fs::path> expectedDirectoryPathsInAndBelowDirectory =
    {
+      _rootDirectoryPath / ".git",
       _rootDirectoryPath / "subdirectory1",
       _rootDirectoryPath / "subdirectory1/subdirectoryA",
       _rootDirectoryPath / "subdirectory1/subdirectoryA/subdirectoryB",
@@ -129,6 +136,7 @@ TEST(GetStringDirectoryPathsInDirectory_RecurseIsFalse_ReturnsTopLevelDirectoryP
    //
    const vector<string> expectedTopLevelDirectoryPathsInDirectory =
    {
+      (_rootDirectoryPath / ".git").string(),
       (_rootDirectoryPath / "subdirectory1").string(),
       (_rootDirectoryPath / "subdirectory2").string(),
       (_rootDirectoryPath / "subdirectory3").string()
@@ -143,6 +151,7 @@ TEST(GetStringDirectoryPathsInDirectory_RecurseIsTrue_ReturnsDirectoryPathsInAnd
    //
    const vector<string> expectedDirectoryPathsInAndBelowDirectory =
    {
+      (_rootDirectoryPath / ".git").string(),
       (_rootDirectoryPath / "subdirectory1").string(),
       (_rootDirectoryPath / "subdirectory1" / "subdirectoryA").string(),
       (_rootDirectoryPath / "subdirectory1" / "subdirectoryA" / "subdirectoryB").string(),
@@ -153,10 +162,10 @@ TEST(GetStringDirectoryPathsInDirectory_RecurseIsTrue_ReturnsDirectoryPathsInAnd
    INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedDirectoryPathsInAndBelowDirectory, directoryPathsInAndBelowDirectory);
 }
 
-TEST(GetNonEmptyTextFilePathsInDirectory_RecurseIsFalse_ReturnsTopLevelFilePathsThatDoNotHaveABinary0InTheFirst1024Bytes)
+TEST(GetNonEmptyNonGitTextFilePathsInDirectory_RecurseIsFalse_ReturnsTopLevelFilePathsThatDoNotHaveABinary0InTheFirst1024Bytes)
 {
    const vector<fs::path> topLevelNonEmptyTextFilesInDirectory =
-      _fileSystem.GetNonEmptyTextFilePathsInDirectory(_rootDirectoryPath, false);
+      _fileSystem.GetNonEmptyNonGitTextFilePathsInDirectory(_rootDirectoryPath, false);
    //
    const vector<fs::path> expectedTopLevelNonEmptyTextFilesInDirectory =
    {
@@ -166,10 +175,10 @@ TEST(GetNonEmptyTextFilePathsInDirectory_RecurseIsFalse_ReturnsTopLevelFilePaths
    INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedTopLevelNonEmptyTextFilesInDirectory, topLevelNonEmptyTextFilesInDirectory);
 }
 
-TEST(GetNonEmptyTextFilePathsInDirectory_RecurseIsTrue_ReturnsAllFilePathsInAndBelowDirectoryThatDoNotHaveABinary0InTheFirst1024Bytes)
+TEST(GetNonEmptyNonGitTextFilePathsInDirectory_RecurseIsTrue_ReturnsAllFilePathsInAndBelowDirectoryThatDoNotHaveABinary0InTheFirst1024Bytes)
 {
    const vector<fs::path> allNonEmptyTextFilePathsInAndBelowDirectory =
-      _fileSystem.GetNonEmptyTextFilePathsInDirectory(_rootDirectoryPath, true);
+      _fileSystem.GetNonEmptyNonGitTextFilePathsInDirectory(_rootDirectoryPath, true);
    //
    const vector<fs::path> expectedAllNonEmptyTextFilePathsInAndBelowDirectory =
    {
@@ -178,9 +187,7 @@ TEST(GetNonEmptyTextFilePathsInDirectory_RecurseIsTrue_ReturnsAllFilePathsInAndB
       _rootDirectoryPath / "subdirectory1/subdirectory1.textFile1",
       _rootDirectoryPath / "subdirectory2/subdirectory2.textFile1",
    };
-   INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(
-      expectedAllNonEmptyTextFilePathsInAndBelowDirectory,
-      allNonEmptyTextFilePathsInAndBelowDirectory);
+   INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedAllNonEmptyTextFilePathsInAndBelowDirectory, allNonEmptyTextFilePathsInAndBelowDirectory);
 }
 
 TEST(ReadText_FileDoesNotExist_ThrowsFileSystemException)

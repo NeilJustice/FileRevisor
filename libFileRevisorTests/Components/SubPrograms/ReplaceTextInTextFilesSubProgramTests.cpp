@@ -68,7 +68,7 @@ TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsRegexReplaceFileTextOnEachText
    false, "[FileRevisor] Result: Replaced text in ")
 {
    const vector<fs::path> nonEmptyTextFilePaths =
-      _protected_fileSystemMock->GetNonEmptyTextFilePathsInDirectoryMock.ReturnRandom();
+      _protected_fileSystemMock->GetNonEmptyNonGitTextFilePathsInDirectoryMock.ReturnRandom();
 
    const size_t numberOfFilesThatWereOrWouldBeModified =
       _memberFunctionAccumulator_RegexReplaceTextInTextFileMock->SumElementsWithFunctionMock.ReturnRandom();
@@ -82,7 +82,7 @@ TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsRegexReplaceFileTextOnEachText
 	//
 	const int exitCode = _replaceTextInTextFilesSubProgram.Run(args);
 	//
-	METALMOCK(_protected_fileSystemMock->GetNonEmptyTextFilePathsInDirectoryMock.CalledOnceWith(args.targetDirectoryPath, args.recurse));
+	METALMOCK(_protected_fileSystemMock->GetNonEmptyNonGitTextFilePathsInDirectoryMock.CalledOnceWith(args.targetDirectoryPath, args.recurse));
 	METALMOCK(_memberFunctionAccumulator_RegexReplaceTextInTextFileMock->SumElementsWithFunctionMock.CalledOnceWith(
 		&_replaceTextInTextFilesSubProgram, nonEmptyTextFilePaths, &ReplaceTextInTextFilesSubProgram::RegexReplaceTextInTextFile, args));
    METALMOCK(_protected_pluralizerMock->PotentiallyPluralizeWordMock.CalledOnceWith(numberOfFilesThatWereOrWouldBeModified, "file", "files"));
