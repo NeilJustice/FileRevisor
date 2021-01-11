@@ -49,12 +49,11 @@ fs::path FileSystem::GetAbsolutePath(const fs::path& fileOrDirectoryPath) const
    if (absoluteFileOrDirectoryPathFileName == ".")
    {
       // On Linux, "/dir/subdir/." becomes "/dir/subdir"
-      const fs::path parentPath = absoluteFileOrDirectoryPath.parent_path();
-      absoluteFileOrDirectoryPath = parentPath;
+      absoluteFileOrDirectoryPath = absoluteFileOrDirectoryPath.parent_path();
    }
    return absoluteFileOrDirectoryPath;
 #elif _WIN32
-   const fs::path absoluteFileOrDirectoryPath = _call_std_filesystem_absolute(fileOrDirectoryPath);
+   fs::path absoluteFileOrDirectoryPath = _call_std_filesystem_absolute(fileOrDirectoryPath);
    return absoluteFileOrDirectoryPath;
 #endif
 }
@@ -76,15 +75,15 @@ vector<fs::path> FileSystem::GetFilePathsInDirectory(const fs::path& directoryPa
    vector<fs::path> filePaths;
    DirectoryIterator directoryIterator;
    directoryIterator.SetDirectoryIterator(directoryPath, recurse);
-   static const fs::path endIterationMarker;
+   static const fs::path endIterationMarker{};
    while (true)
    {
-      const fs::path nextNonIgnoredFilePath = directoryIterator.NextNonIgnoredFilePath();
+      fs::path nextNonIgnoredFilePath = directoryIterator.NextNonIgnoredFilePath();
       if (nextNonIgnoredFilePath == endIterationMarker)
       {
          break;
       }
-      filePaths.push_back(nextNonIgnoredFilePath);
+      filePaths.emplace_back(std::move(nextNonIgnoredFilePath));
    }
    return filePaths;
 }
@@ -96,8 +95,8 @@ vector<fs::path> FileSystem::GetNonEmptyTextFilePathsInDirectory(const fs::path&
    directoryIterator.SetDirectoryIterator(directoryPath, recurse);
    while (true)
    {
-      const fs::path nextNonIgnoredFilePath = directoryIterator.NextNonIgnoredFilePath();
-      static const fs::path endIterationMarker;
+      fs::path nextNonIgnoredFilePath = directoryIterator.NextNonIgnoredFilePath();
+      static const fs::path endIterationMarker{};
       if (nextNonIgnoredFilePath == endIterationMarker)
       {
          break;
@@ -107,7 +106,7 @@ vector<fs::path> FileSystem::GetNonEmptyTextFilePathsInDirectory(const fs::path&
       {
          continue;
       }
-      textFilePaths.push_back(nextNonIgnoredFilePath);
+      textFilePaths.emplace_back(std::move(nextNonIgnoredFilePath));
    }
    return textFilePaths;
 }
@@ -119,13 +118,13 @@ vector<fs::path> FileSystem::GetDirectoryPathsInDirectory(const fs::path& direct
    directoryIterator.SetDirectoryIterator(directoryPath, recurse);
    while (true)
    {
-      const fs::path nonIgnoredDirectoryPath = directoryIterator.NextNonIgnoredDirectoryPath();
-      static const fs::path endIterationMarker;
+      fs::path nonIgnoredDirectoryPath = directoryIterator.NextNonIgnoredDirectoryPath();
+      static const fs::path endIterationMarker{};
       if (nonIgnoredDirectoryPath == endIterationMarker)
       {
          break;
       }
-      directoryPaths.push_back(nonIgnoredDirectoryPath);
+      directoryPaths.emplace_back(std::move(nonIgnoredDirectoryPath));
    }
    return directoryPaths;
 }
@@ -138,8 +137,7 @@ vector<string> FileSystem::GetStringDirectoryPathsInDirectory(const fs::path& di
    for (size_t i = 0; i < numberOfSubdirectoryPaths; ++i)
    {
       const fs::path& subdirectoryPath = subdirectoryPaths[i];
-      const string stringSubdirectoryPath = subdirectoryPath.string();
-      stringSubdirectoryPaths[i] = stringSubdirectoryPath;
+      stringSubdirectoryPaths[i] = subdirectoryPath.string();
    }
    return stringSubdirectoryPaths;
 }
@@ -332,7 +330,8 @@ FILE* FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) c
    return filePointer;
 }
 
-void FileSystem::CreateBinaryOrTextFile(const fs::path& filePath, bool trueBinaryFalseText, const char* bytes, size_t bytesLength) const
+void FileSystem::CreateBinaryOrTextFile(
+   const fs::path& filePath, bool trueBinaryFalseText, const char* bytes, size_t bytesLength) const
 {
    const fs::path parentDirectoryPath = filePath.parent_path();
    fs::create_directories(parentDirectoryPath);

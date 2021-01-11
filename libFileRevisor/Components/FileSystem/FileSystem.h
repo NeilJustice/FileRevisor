@@ -83,6 +83,7 @@ public:
    virtual void CloseFile(const fs::path& filePath, FILE* filePointer) const;
 private:
    virtual size_t GetFileSize(std::ifstream& file) const;
-   virtual void CreateBinaryOrTextFile(const fs::path& filePath, bool trueBinaryFalseText, const char* bytes, size_t bytesLength) const;
+   virtual void CreateBinaryOrTextFile(
+      const fs::path& filePath, bool trueBinaryFalseText, const char* bytes, size_t bytesLength) const;
    virtual void EraseTrailingBinaryZeros(std::string& outStr) const;
 };

@@ -55,7 +55,7 @@ fs::path DirectoryIterator::NextNonIgnoredDirectoryPath()
 template<typename DirectoryIteratorType>
 fs::path DirectoryIterator::NextNonIgnoredPath(DirectoryIteratorType& iter, fs::file_type requiredFileType)
 {
-   static const DirectoryIteratorType noMorePathsMarker;
+   static const DirectoryIteratorType noMorePathsMarker{};
    while (true)
    {
       if (iter == noMorePathsMarker)
@@ -74,7 +74,7 @@ fs::path DirectoryIterator::NextNonIgnoredPath(DirectoryIteratorType& iter, fs::
       const fs::file_type nextDirectoryEntryStatusType = nextDirectoryEntryStatus.type();
       if (nextDirectoryEntryStatusType == requiredFileType)
       {
-			const fs::path& nextPathWithMatchingFileType = nextDirectoryEntry.path();
+			fs::path nextPathWithMatchingFileType = nextDirectoryEntry.path();
 			const bool pathIsIgnored = PathContainsAnySubstringCaseInsensitive(
             nextPathWithMatchingFileType, _fileAndDirectoryPathIgnoreSubstrings);
 			if (pathIsIgnored)
