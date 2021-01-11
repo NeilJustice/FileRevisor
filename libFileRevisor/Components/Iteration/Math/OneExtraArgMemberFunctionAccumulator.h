@@ -6,7 +6,7 @@ template<
    template<typename...> typename ContainerType,
    typename ElementType,
    typename ExtraArgType>
-   class OneExtraArgMemberFunctionSumator
+   class OneExtraArgMemberFunctionAccumulator
 {
 public:
    virtual SumType SumElementsWithFunction(
@@ -24,5 +24,5 @@ public:
       return sum;
    }
 
-   virtual ~OneExtraArgMemberFunctionSumator() = default;
+   virtual ~OneExtraArgMemberFunctionAccumulator() = default;
 };

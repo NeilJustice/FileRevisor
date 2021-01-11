@@ -9,7 +9,7 @@
 #include "libFileRevisor/StaticUtilities/Exception.h"
 
 FileRevisorProgram::FileRevisorProgram()
-   // Function Callers
+   // Function Pointers
    : _call_Utils_Exception_GetExceptionClassNameAndMessage(Exception::GetExceptionClassNameAndMessage)
    , _call_Utils_Vector_FromArgcArgv(Vector::FromArgcArgv)
    // Constant Components

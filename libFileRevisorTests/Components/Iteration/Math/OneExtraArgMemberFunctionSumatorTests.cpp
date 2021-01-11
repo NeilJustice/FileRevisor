@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileRevisor/Components/Iteration/Math/OneExtraArgMemberFunctionSumator.h"
+#include "libFileRevisor/Components/Iteration/Math/OneExtraArgMemberFunctionAccumulator.h"
 
 template<
    typename SumType,
@@ -7,12 +7,12 @@ template<
    typename ContainerType,
    typename ElementType,
    typename ExtraArgType>
-TEMPLATE_TESTS(OneExtraArgMemberFunctionSumatorTests, SumType, ContainerType, ElementType, ExtraArgType)
+TEMPLATE_TESTS(OneExtraArgMemberFunctionAccumulatorTests, SumType, ContainerType, ElementType, ExtraArgType)
 AFACT(SumElementsWithFunction_ElementsAreEmpty_DoesNotCallMemberFunction_ReturnsDefaultSumType)
 AFACT(SumElementsWithFunction_CallsMemberFunctionElementsNumberOfTimes_ReturnsSumOfFunctionReturnValues)
 EVIDENCE
 
-class SumatorTestClass
+class AccumulatorTestClass
 {
 public:
    mutable size_t _numberOfFunctionCalls = 0;
@@ -29,16 +29,16 @@ public:
    }
 };
 
-OneExtraArgMemberFunctionSumator<SumatorTestClass, SumType, vector, ElementType, ExtraArgType> _oneExtraArgMemberFunctionSumator;
-SumatorTestClass _sumatorTestClass;
+OneExtraArgMemberFunctionAccumulator<AccumulatorTestClass, SumType, vector, ElementType, ExtraArgType> _oneExtraArgMemberFunctionAccumulator;
+AccumulatorTestClass _sumatorTestClass;
 
 TEST(SumElementsWithFunction_ElementsAreEmpty_DoesNotCallMemberFunction_ReturnsDefaultSumType)
 {
    const ContainerType<ElementType> emptyElements;
    const ExtraArgType extraArg = ZenUnit::Random<ExtraArgType>();
    //
-   const SumType sum = _oneExtraArgMemberFunctionSumator.SumElementsWithFunction(
-      &_sumatorTestClass, emptyElements, &SumatorTestClass::SumationFunction, extraArg);
+   const SumType sum = _oneExtraArgMemberFunctionAccumulator.SumElementsWithFunction(
+      &_sumatorTestClass, emptyElements, &AccumulatorTestClass::SumationFunction, extraArg);
    //
    ARE_EQUAL(0, _sumatorTestClass._numberOfFunctionCalls);
    IS_EMPTY(_sumatorTestClass._elementArgs);
@@ -54,8 +54,8 @@ TEST(SumElementsWithFunction_CallsMemberFunctionElementsNumberOfTimes_ReturnsSum
    const ContainerType<ElementType> elements = { ZenUnit::Random<ElementType>(), ZenUnit::Random<ElementType>() };
    const ExtraArgType extraArg = ZenUnit::Random<ExtraArgType>();
    //
-   const SumType sum = _oneExtraArgMemberFunctionSumator.SumElementsWithFunction(
-      &_sumatorTestClass, elements, &SumatorTestClass::SumationFunction, extraArg);
+   const SumType sum = _oneExtraArgMemberFunctionAccumulator.SumElementsWithFunction(
+      &_sumatorTestClass, elements, &AccumulatorTestClass::SumationFunction, extraArg);
    //
    ARE_EQUAL(2, _sumatorTestClass._numberOfFunctionCalls);
 
@@ -69,5 +69,5 @@ TEST(SumElementsWithFunction_CallsMemberFunctionElementsNumberOfTimes_ReturnsSum
    ARE_EQUAL(expectedSum, sum);
 }
 
-RUN_TEMPLATE_TESTS(OneExtraArgMemberFunctionSumatorTests, long long, vector, int, int)
-THEN_RUN_TEMPLATE_TESTS(OneExtraArgMemberFunctionSumatorTests, long long, vector, short, short)
+RUN_TEMPLATE_TESTS(OneExtraArgMemberFunctionAccumulatorTests, long long, vector, int, int)
+THEN_RUN_TEMPLATE_TESTS(OneExtraArgMemberFunctionAccumulatorTests, long long, vector, short, short)

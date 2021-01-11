@@ -2,15 +2,16 @@
 #include "libFileRevisor/Components/Console/Console.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
-#include "libFileRevisor/Components/Iteration/Math/OneExtraArgMemberFunctionSumator.h"
+#include "libFileRevisor/Components/Iteration/Math/OneExtraArgMemberFunctionAccumulator.h"
 #include "libFileRevisor/Components/Strings/Pluralizer.h"
 #include "libFileRevisor/Components/Strings/Regexer.h"
 #include "libFileRevisor/Components/SubPrograms/ReplaceTextInTextFilesSubProgram.h"
 
 ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFilesSubProgram()
-   // Function Callers
+   // Function Pointers
    : _call_PrintReadingFileMessageIfVerboseMode(make_unique<VoidTwoArgMemberFunctionCaller<ReplaceTextInTextFilesSubProgram, bool, const fs::path&>>())
-   , _memberFunctionSumator_RegexReplaceTextInTextFile(make_unique<OneExtraArgMemberFunctionSumatorType>())
+   // Function Callers
+   , _memberFunctionAccumulator_RegexReplaceTextInTextFile(make_unique<OneExtraArgMemberFunctionAccumulatorType>())
    // Constant Components
    , _regexer(make_unique<Regexer>())
 {
@@ -20,7 +21,7 @@ int ReplaceTextInTextFilesSubProgram::Run(const FileRevisorArgs& args) const
 {
    const vector<fs::path> nonEmptyTextFilePathsInTargetDirectory =
       _protected_fileSystem->GetNonEmptyTextFilePathsInDirectory(args.targetDirectoryPath, args.recurse);
-   const size_t numberOfFilesThatWereOrWouldBeModified = _memberFunctionSumator_RegexReplaceTextInTextFile->SumElementsWithFunction(
+   const size_t numberOfFilesThatWereOrWouldBeModified = _memberFunctionAccumulator_RegexReplaceTextInTextFile->SumElementsWithFunction(
       this, nonEmptyTextFilePathsInTargetDirectory, &ReplaceTextInTextFilesSubProgram::RegexReplaceTextInTextFile, args);
    const string fileOrFiles = _protected_pluralizer->PotentiallyPluralizeWord(numberOfFilesThatWereOrWouldBeModified, "file", "files");
    if (args.preview)

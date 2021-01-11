@@ -11,7 +11,7 @@ public:
    virtual TransformedContainerType Transform(
       const SourceContainerType& sourceElements, TransformFunctionType transformFunction, Arg2Type arg2) const
    {
-      TransformedContainerType transformedElements;
+      TransformedContainerType transformedElements{};
       transformedElements.reserve(sourceElements.size());
       const auto endSourceIter = sourceElements.end();
       size_t index = 0;

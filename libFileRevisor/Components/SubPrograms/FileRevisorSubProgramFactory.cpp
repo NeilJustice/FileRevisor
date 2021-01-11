@@ -3,7 +3,7 @@
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
 #include "libFileRevisor/Components/Iteration/Counter/PredicateCounter.h"
-#include "libFileRevisor/Components/Iteration/Math/OneExtraArgMemberFunctionSumator.h"
+#include "libFileRevisor/Components/Iteration/Math/OneExtraArgMemberFunctionAccumulator.h"
 #include "libFileRevisor/Components/Iteration/Transform/OneExtraArgMemberFunctionTransformer.h"
 #include "libFileRevisor/Components/Strings/Pluralizer.h"
 #include "libFileRevisor/Components/Strings/Regexer.h"

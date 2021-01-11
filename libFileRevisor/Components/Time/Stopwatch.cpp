@@ -2,6 +2,7 @@
 #include "libFileRevisor/Components/Time/Stopwatch.h"
 
 Stopwatch::Stopwatch()
+   // Function Pointers
    : _call_now(chrono::high_resolution_clock::now)
 {
 }

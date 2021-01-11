@@ -20,10 +20,11 @@ AFACT(PrintDidNotMatchDirectoryMessageIfVerboseMode_VerboseIsTrue_PrintsDidNotMa
 EVIDENCE
 
 RenameDirectoriesSubProgram _renameDirectoriesSubProgram;
+// Function Pointers
+const VoidTwoArgMemberFunctionCallerMock<RenameDirectoriesSubProgram, bool, const fs::path&>* _call_PrintDidNotMatchDirectoryMessageIfVerboseModeMock = nullptr;
 // Function Callers
 using OneExtraArgMemberFunctionTransformerMockType = OneExtraArgMemberFunctionTransformerMock<RenameDirectoriesSubProgram, fs::path, RenameResult, const FileRevisorArgs&>;
 OneExtraArgMemberFunctionTransformerMockType* _directoryPathsTransformer_RenameDirectoryMock = nullptr;
-const VoidTwoArgMemberFunctionCallerMock<RenameDirectoriesSubProgram, bool, const fs::path&>* _call_PrintDidNotMatchDirectoryMessageIfVerboseModeMock = nullptr;
 // Constant Components
 ConsoleMock* _protected_consoleMock = nullptr;
 FileSystemMock* _protected_fileSystemMock = nullptr;
@@ -33,9 +34,10 @@ RegexerMock* _regexerMock = nullptr;
 
 STARTUP
 {
+   // Function Pointers
+   _renameDirectoriesSubProgram._call_PrintDidNotMatchDirectoryMessageIfVerboseMode.reset(_call_PrintDidNotMatchDirectoryMessageIfVerboseModeMock = new VoidTwoArgMemberFunctionCallerMock<RenameDirectoriesSubProgram, bool, const fs::path&>);
    // Function Callers
    _renameDirectoriesSubProgram._directoryPathsTransformer_RenameDirectory.reset(_directoryPathsTransformer_RenameDirectoryMock = new OneExtraArgMemberFunctionTransformerMockType);
-   _renameDirectoriesSubProgram._call_PrintDidNotMatchDirectoryMessageIfVerboseMode.reset(_call_PrintDidNotMatchDirectoryMessageIfVerboseModeMock = new VoidTwoArgMemberFunctionCallerMock<RenameDirectoriesSubProgram, bool, const fs::path&>);
    // Constant Components
 	_renameDirectoriesSubProgram._protected_console.reset(_protected_consoleMock = new ConsoleMock);
    _renameDirectoriesSubProgram._protected_fileSystem.reset(_protected_fileSystemMock = new FileSystemMock);
@@ -47,9 +49,10 @@ STARTUP
 TEST(DefaultConstructor_NewsComponents)
 {
    RenameDirectoriesSubProgram renameDirectoriesSubProgram;
+   // Function Pointers
+   DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._call_PrintDidNotMatchDirectoryMessageIfVerboseMode);
    // Function Callers
    DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._directoryPathsTransformer_RenameDirectory);
-   DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._call_PrintDidNotMatchDirectoryMessageIfVerboseMode);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._protected_console);
    DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._protected_fileSystem);

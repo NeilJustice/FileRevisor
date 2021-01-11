@@ -3,7 +3,7 @@
 #include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 #include "libFileRevisorTests/Components/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
-#include "libFileRevisorTests/Components/Iteration/Math/MetalMock/OneExtraArgMemberFunctionSumatorMock.h"
+#include "libFileRevisorTests/Components/Iteration/Math/MetalMock/OneExtraArgMemberFunctionAccumulatorMock.h"
 #include "libFileRevisorTests/Components/Strings/MetalMock/PluralizerMock.h"
 #include "libFileRevisorTests/Components/Strings/MetalMock/RegexerMock.h"
 
@@ -18,16 +18,17 @@ AFACT(PrintReadingFileMessageIfVerboseIsTrue_VerboseIsTrue_PrintsReadingFileMess
 EVIDENCE
 
 ReplaceTextInTextFilesSubProgram _replaceTextInTextFilesSubProgram;
-// Function Callers
+// Function Pointers
 const VoidTwoArgMemberFunctionCallerMock<ReplaceTextInTextFilesSubProgram, bool, const fs::path&>*
 _call_PrintReadingFileMessageIfVerboseModeMock = nullptr;
-using OneExtraArgMemberFunctionSumatorMockType = OneExtraArgMemberFunctionSumatorMock<
+// Function Callers
+using OneExtraArgMemberFunctionAccumulatorMockType = OneExtraArgMemberFunctionAccumulatorMock<
    ReplaceTextInTextFilesSubProgram,
    size_t,
    vector,
    fs::path,
    const FileRevisorArgs&>;
-OneExtraArgMemberFunctionSumatorMockType* _memberFunctionSumator_RegexReplaceTextInTextFileMock = nullptr;
+OneExtraArgMemberFunctionAccumulatorMockType* _memberFunctionAccumulator_RegexReplaceTextInTextFileMock = nullptr;
 // Constant Components
 ConsoleMock* _protected_consoleMock = nullptr;
 FileSystemMock* _protected_fileSystemMock = nullptr;
@@ -36,9 +37,10 @@ RegexerMock* _regexerMock = nullptr;
 
 STARTUP
 {
-   // Function Callers
+   // Function Pointers
    _replaceTextInTextFilesSubProgram._call_PrintReadingFileMessageIfVerboseMode.reset(_call_PrintReadingFileMessageIfVerboseModeMock = new VoidTwoArgMemberFunctionCallerMock<ReplaceTextInTextFilesSubProgram, bool, const fs::path&>);
-   _replaceTextInTextFilesSubProgram._memberFunctionSumator_RegexReplaceTextInTextFile.reset(_memberFunctionSumator_RegexReplaceTextInTextFileMock = new OneExtraArgMemberFunctionSumatorMockType);
+   // Function Callers
+   _replaceTextInTextFilesSubProgram._memberFunctionAccumulator_RegexReplaceTextInTextFile.reset(_memberFunctionAccumulator_RegexReplaceTextInTextFileMock = new OneExtraArgMemberFunctionAccumulatorMockType);
    // Constant Components
    _replaceTextInTextFilesSubProgram._protected_console.reset(_protected_consoleMock = new ConsoleMock);
    _replaceTextInTextFilesSubProgram._protected_fileSystem.reset(_protected_fileSystemMock = new FileSystemMock);
@@ -49,9 +51,10 @@ STARTUP
 TEST(DefaultConstructor_NewsFileSystem)
 {
 	ReplaceTextInTextFilesSubProgram replaceTextInTextFilesSubProgram;
-   // Function Callers
+   // Function Pointers
    DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._call_PrintReadingFileMessageIfVerboseMode);
-   DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._memberFunctionSumator_RegexReplaceTextInTextFile);
+   // Function Callers
+   DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._memberFunctionAccumulator_RegexReplaceTextInTextFile);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._protected_console);
    DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._protected_fileSystem);
@@ -68,7 +71,7 @@ TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsRegexReplaceFileTextOnEachText
       _protected_fileSystemMock->GetNonEmptyTextFilePathsInDirectoryMock.ReturnRandom();
 
    const size_t numberOfFilesThatWereOrWouldBeModified =
-      _memberFunctionSumator_RegexReplaceTextInTextFileMock->SumElementsWithFunctionMock.ReturnRandom();
+      _memberFunctionAccumulator_RegexReplaceTextInTextFileMock->SumElementsWithFunctionMock.ReturnRandom();
 
    const string fileOrFiles = _protected_pluralizerMock->PotentiallyPluralizeWordMock.ReturnRandom();
 
@@ -80,7 +83,7 @@ TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsRegexReplaceFileTextOnEachText
 	const int exitCode = _replaceTextInTextFilesSubProgram.Run(args);
 	//
 	METALMOCK(_protected_fileSystemMock->GetNonEmptyTextFilePathsInDirectoryMock.CalledOnceWith(args.targetDirectoryPath, args.recurse));
-	METALMOCK(_memberFunctionSumator_RegexReplaceTextInTextFileMock->SumElementsWithFunctionMock.CalledOnceWith(
+	METALMOCK(_memberFunctionAccumulator_RegexReplaceTextInTextFileMock->SumElementsWithFunctionMock.CalledOnceWith(
 		&_replaceTextInTextFilesSubProgram, nonEmptyTextFilePaths, &ReplaceTextInTextFilesSubProgram::RegexReplaceTextInTextFile, args));
    METALMOCK(_protected_pluralizerMock->PotentiallyPluralizeWordMock.CalledOnceWith(numberOfFilesThatWereOrWouldBeModified, "file", "files"));
    const string expectedMessage = expectedMessagePrefix + to_string(numberOfFilesThatWereOrWouldBeModified) + " " + fileOrFiles;

@@ -20,7 +20,7 @@ AFACT(ExceptionHandler_PrintsExceptionClassNameAndWhat_Returns1)
 EVIDENCE
 
 FileRevisorProgram _fileRevisorProgram;
-// Function Callers
+// Function Pointers
 METALMOCK_NONVOID2_STATIC(vector<string>, Vector, FromArgcArgv, int, char**)
 METALMOCK_NONVOID1_STATIC(string, Exception, ClassNameAndWhat, const exception*)
 // Constant Components
@@ -33,7 +33,7 @@ StopwatchMock* _stopwatchMock = nullptr;
 
 STARTUP
 {
-   // Function Callers
+   // Function Pointers
    _fileRevisorProgram._call_Utils_Vector_FromArgcArgv = BIND_2ARG_METALMOCK_OBJECT(FromArgcArgvMock);
    _fileRevisorProgram._call_Utils_Exception_GetExceptionClassNameAndMessage = BIND_1ARG_METALMOCK_OBJECT(ClassNameAndWhatMock);
    // Components

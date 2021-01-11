@@ -8,6 +8,7 @@ class FileRevisorSubProgram
 {
    friend class FileRevisorSubProgramTests;
 protected:
+   // Constant Components
    unique_ptr<const Console> _protected_console;
    unique_ptr<const FileSystem> _protected_fileSystem;
    unique_ptr<const Pluralizer> _protected_pluralizer;

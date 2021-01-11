@@ -18,10 +18,11 @@ AFACT(DetermineProgramMode_AllFourProgramModeBoolsAreFalse_ThrowsInvalidArgument
 EVIDENCE
 
 FileRevisorArgsParser _fileRevisorArgsParser;
-// Function Callers
+// Function Pointers
 METALMOCK_NONVOID4_STATIC(ProgramMode, FileRevisorArgsParser, DetermineProgramMode, bool, bool, bool, bool)
 using NonVoidTwoArgMemberFunctionCallerMockType = NonVoidTwoArgMemberFunctionCallerMock<
    tuple<fs::path, string, string>, FileRevisorArgsParser, const map<string, docopt::Value>&, bool>;
+// Function Callers
 NonVoidTwoArgMemberFunctionCallerMockType* _caller_ParseDirAndFromAndToArgumentsMock = nullptr;
 // Constant Components
 ConsoleMock* _consoleMock = nullptr;
@@ -31,8 +32,9 @@ FileRevisorPreambleMakerMock* _fileRevisorPreambleMakerMock = nullptr;
 
 STARTUP
 {
-   // Function Callers
+   // Function Pointers
    _fileRevisorArgsParser._call_DetermineProgramMode = BIND_4ARG_METALMOCK_OBJECT(DetermineProgramModeMock);
+   // Function Callers
    _fileRevisorArgsParser._caller_ParseDirAndFromAndToArguments.reset(
       _caller_ParseDirAndFromAndToArgumentsMock = new NonVoidTwoArgMemberFunctionCallerMockType);
    // Constant Components
@@ -45,8 +47,9 @@ STARTUP
 TEST(DefaultConstructor_NewsComponents_SetsDetermineProgramModeFunctionPointer)
 {
    FileRevisorArgsParser argsParser;
-   // Function Callers
+   // Function Pointers
    STD_FUNCTION_TARGETS(FileRevisorArgsParser::DetermineProgramMode, argsParser._call_DetermineProgramMode);
+   // Function Callers
    DELETE_TO_ASSERT_NEWED(argsParser._caller_ParseDirAndFromAndToArguments);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(argsParser._console);

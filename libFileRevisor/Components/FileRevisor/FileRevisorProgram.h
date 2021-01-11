@@ -12,7 +12,7 @@ class FileRevisorProgram
 {
    friend class FileRevisorProgramTests;
 private:
-   // Function Callers
+   // Function Pointers
    std::function<std::string(const std::exception*)> _call_Utils_Exception_GetExceptionClassNameAndMessage;
    std::function<std::vector<std::string>(int, char**)> _call_Utils_Vector_FromArgcArgv;
    // Constant Components

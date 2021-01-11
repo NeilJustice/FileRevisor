@@ -10,7 +10,7 @@ template<
    typename ContainerType,
    typename ElementType,
    typename ExtraArgType>
-class OneExtraArgMemberFunctionSumator;
+class OneExtraArgMemberFunctionAccumulator;
 class Regexer;
 
 template<typename ClassType, typename Arg1Type, typename Arg2Type>
@@ -20,12 +20,13 @@ class ReplaceTextInTextFilesSubProgram : public FileRevisorSubProgram
 {
    friend class ReplaceTextInTextFilesSubProgramTests;
 private:
-   // Function Callers
+   // Function Pointers
    unique_ptr<const VoidTwoArgMemberFunctionCaller<
       ReplaceTextInTextFilesSubProgram, bool, const fs::path&>> _call_PrintReadingFileMessageIfVerboseMode;
-   using OneExtraArgMemberFunctionSumatorType = OneExtraArgMemberFunctionSumator<
+   using OneExtraArgMemberFunctionAccumulatorType = OneExtraArgMemberFunctionAccumulator<
       ReplaceTextInTextFilesSubProgram, size_t, vector, fs::path, const FileRevisorArgs&>;
-   unique_ptr<const OneExtraArgMemberFunctionSumatorType> _memberFunctionSumator_RegexReplaceTextInTextFile;
+   // Function Callers
+   unique_ptr<const OneExtraArgMemberFunctionAccumulatorType> _memberFunctionAccumulator_RegexReplaceTextInTextFile;
    // Constant Components
    unique_ptr<const Regexer> _regexer;
 public:
