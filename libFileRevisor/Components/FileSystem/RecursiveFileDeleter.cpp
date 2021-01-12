@@ -4,14 +4,18 @@
 #include "libFileRevisor/Components/FileSystem/RecursiveFileDeleter.h"
 
 RecursiveFileDeleter::RecursiveFileDeleter()
+#ifdef __linux__
+   // Constant Components
+   : _console(make_unique<Console>())
+   , _fileSystemExceptionMaker(make_unique<FileSystemExceptionMaker>())
+#elif _WIN32
    // Function Pointers
-   #ifdef _WIN32
    : _call_GetFileAttributesA(::GetFileAttributesA)
    , _call_SetFileAttributesA(::SetFileAttributesA)
-   #endif
    // Constant Components
    , _console(make_unique<Console>())
    , _fileSystemExceptionMaker(make_unique<FileSystemExceptionMaker>())
+#endif
 {
 }
 

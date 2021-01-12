@@ -1,4 +1,6 @@
 #include "pch.h"
+#include "libFileRevisor/Components/FileSystem/DirectoryIterator.h"
+#include "libFileRevisor/Components/FileSystem/FileOpenerCloser.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
 #include "libFileRevisor/Components/Iteration/Counter/PredicateCounter.h"
