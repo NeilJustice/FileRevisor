@@ -9,9 +9,11 @@ template<typename ClassType, typename Arg1Type, typename Arg2Type>
 class VoidTwoArgMemberFunctionCaller;
 
 class ConstCharPointerGetter;
+class DirectoryIterator;
+class FileOpenerCloser;
 class FileSystemExceptionMaker;
-class RecursiveFileDeleter;
 struct FileRevisorArgs;
+class RecursiveFileDeleter;
 
 class FileSystem
 {
@@ -39,10 +41,10 @@ private:
 
    // Function Callers
    unique_ptr<const NonVoidOneArgMemberFunctionCaller<bool, FileSystem, const fs::path&>> _caller_Exists;
-   unique_ptr<const VoidTwoArgMemberFunctionCaller<FileSystem, const fs::path&, FILE*>> _caller_CloseFile;
 
    // Constant Components
    unique_ptr<const ConstCharPointerGetter> _constCharPointerGetter;
+   unique_ptr<const FileOpenerCloser> _fileOpenerCloser;
    unique_ptr<const FileSystemExceptionMaker> _fileSystemExceptionMaker;
    unique_ptr<const RecursiveFileDeleter> _recursiveFileDeleter;
 public:
@@ -55,15 +57,12 @@ public:
    virtual void RecursivelyDeleteAllFilesInDirectory(
       const string& directoryPath, const FileRevisorArgs& args) const;
    virtual vector<fs::path> GetFilePathsInDirectory(const fs::path& directoryPath, bool recurse) const;
-   virtual vector<fs::path> GetNonEmptyNonGitTextFilePathsInDirectory(
-      const fs::path& directoryPath, bool recurse, bool skipArgsInUse) const;
    virtual vector<fs::path> GetDirectoryPathsInDirectory(const fs::path& directoryPath, bool recurse) const;
    virtual vector<string> GetStringDirectoryPathsInDirectory(const fs::path& directoryPath, bool recurse) const;
    virtual bool FileOrDirectoryExists(const fs::path& fileOrDirectoryPath) const;
 
    // Reads
    virtual std::string ReadText(const fs::path& textFilePath) const;
-   bool IsFileEmptyOrBinaryOrNonAnsi(const fs::path& filePath) const;
 
    // Writes
    virtual void CreateDirectories(const fs::path& directoryPath) const;
@@ -81,7 +80,6 @@ public:
 
    // Open And Close Files
    virtual FILE* OpenFile(const fs::path& filePath, const char* fileOpenMode) const;
-   virtual void CloseFile(const fs::path& filePath, FILE* filePointer) const;
 private:
    virtual size_t GetFileSize(std::ifstream& file) const;
    virtual void CreateBinaryOrTextFile(

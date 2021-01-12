@@ -2,6 +2,7 @@
 #include "libFileRevisor/Components/Console/Console.h"
 #include "libFileRevisor/Components/Exceptions/FileSystemExceptionMaker.h"
 #include "libFileRevisor/Components/FileSystem/DirectoryIterator.h"
+#include "libFileRevisor/Components/FileSystem/FileOpenerCloser.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Components/FileSystem/RecursiveFileDeleter.h"
 #include "libFileRevisor/Components/FunctionCallers/Member/NonVoidOneArgMemberFunctionCaller.h"
@@ -23,9 +24,9 @@ FileSystem::FileSystem()
    , _call_std_filesystem_rename_as_assignable_function_pointer(fs::rename)
    // Function Callers
    , _caller_Exists(make_unique<NonVoidOneArgMemberFunctionCaller<bool, FileSystem, const fs::path&>>())
-   , _caller_CloseFile(make_unique<VoidTwoArgMemberFunctionCaller<FileSystem, const fs::path&, FILE*>>())
    // Constant Components
    , _constCharPointerGetter(make_unique<ConstCharPointerGetter>())
+   , _fileOpenerCloser(make_unique<FileOpenerCloser>())
    , _fileSystemExceptionMaker(make_unique<FileSystemExceptionMaker>())
    , _recursiveFileDeleter(make_unique<RecursiveFileDeleter>())
 {
@@ -88,36 +89,6 @@ vector<fs::path> FileSystem::GetFilePathsInDirectory(const fs::path& directoryPa
    return filePaths;
 }
 
-vector<fs::path> FileSystem::GetNonEmptyNonGitTextFilePathsInDirectory(
-   const fs::path& directoryPath, bool recurse, bool /*skipArgsInUse*/) const
-{
-   vector<fs::path> textFilePaths;
-   DirectoryIterator directoryIterator;
-#if defined __linux__ || defined __APPLE__
-   static const vector<string> fileAndDirectoryPathIgnoreSubstrings = { "/.git/" };
-#elif defined _WIN32
-   static const vector<string> fileAndDirectoryPathIgnoreSubstrings = { "\\.git\\" };
-#endif
-   directoryIterator.SetFileAndDirectoryPathIgnoreSubstrings(fileAndDirectoryPathIgnoreSubstrings);
-   directoryIterator.SetDirectoryIterator(directoryPath, recurse);
-   while (true)
-   {
-      fs::path nextNonIgnoredFilePath = directoryIterator.NextNonIgnoredFilePath();
-      static const fs::path endIterationMarker{};
-      if (nextNonIgnoredFilePath == endIterationMarker)
-      {
-         break;
-      }
-      const bool fileIsEmptyOrBinaryOrNonAnsi = IsFileEmptyOrBinaryOrNonAnsi(nextNonIgnoredFilePath);
-      if (fileIsEmptyOrBinaryOrNonAnsi)
-      {
-         continue;
-      }
-      textFilePaths.emplace_back(std::move(nextNonIgnoredFilePath));
-   }
-   return textFilePaths;
-}
-
 vector<fs::path> FileSystem::GetDirectoryPathsInDirectory(const fs::path& directoryPath, bool recurse) const
 {
    vector<fs::path> directoryPaths;
@@ -178,33 +149,6 @@ size_t FileSystem::GetFileSize(ifstream& fileStream) const
    fileStream.seekg(0, ios::beg);
    const size_t fileSizeAsSizeT = static_cast<size_t>(fileSizeAsStreamPos);
    return fileSizeAsSizeT;
-}
-
-bool FileSystem::IsFileEmptyOrBinaryOrNonAnsi(const fs::path& filePath) const
-{
-   FILE* const fileOpenInReadBinaryMode = OpenFile(filePath, "rb");
-   char first1KBytesInFile[1024];
-#if defined __linux__|| defined __APPLE__
-   const size_t numberOfBytesRead = fread(
-      first1KBytesInFile, 1, sizeof(first1KBytesInFile), fileOpenInReadBinaryMode);
-#else
-   const size_t numberOfBytesRead = _fread_nolock_s(
-      first1KBytesInFile, sizeof(first1KBytesInFile), 1, sizeof(first1KBytesInFile), fileOpenInReadBinaryMode);
-#endif
-   _caller_CloseFile->ConstCall(this, &FileSystem::CloseFile, filePath, fileOpenInReadBinaryMode);
-   if (numberOfBytesRead == 0)
-   {
-      return true;
-   }
-   for (size_t i = 0; i < numberOfBytesRead; ++i)
-   {
-      const char b = first1KBytesInFile[i];
-      if (b == 0)
-      {
-         return true;
-      }
-   }
-   return false;
 }
 
 void FileSystem::CreateDirectories(const fs::path& directoryPath) const
@@ -314,17 +258,6 @@ unsigned long long FileSystem::RemoveAll(const fs::path& directoryPath) const
    return numberOfFilesAndDirectoriesRemoved;
 }
 
-void FileSystem::CloseFile(const fs::path& filePath, FILE* filePointer) const
-{
-   const int fcloseReturnValue = _call_fclose(filePointer);
-   if (fcloseReturnValue != 0)
-   {
-      const FileSystemException fileSystemException =
-         _fileSystemExceptionMaker->MakeFileSystemExceptionForFailedToCloseFile(filePath);
-      throw fileSystemException;
-   }
-}
-
 FILE* FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) const
 {
    FILE* const filePointer = _call_fopen(filePath.string().c_str(), fileOpenMode);
@@ -349,7 +282,7 @@ void FileSystem::CreateBinaryOrTextFile(
    const size_t numberOfBytesWritten = fwrite(bytes, 1, bytesLength, binaryOrTextFileOpenInWriteMode);
 #endif
    release_assert(numberOfBytesWritten == bytesLength);
-   _caller_CloseFile->ConstCall(this, &FileSystem::CloseFile, filePath, binaryOrTextFileOpenInWriteMode);
+   _fileOpenerCloser->CloseFile(binaryOrTextFileOpenInWriteMode, filePath);
 }
 
 void FileSystem::EraseTrailingBinaryZeros(string& outStr) const

@@ -1,8 +1,8 @@
 #pragma once
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgram.h"
-class Console;
-struct FileRevisorArgs;
 
+class Console;
+class DirectoryIterator;
 template<
    typename ClassType,
    typename AccumulatedType,
@@ -12,9 +12,9 @@ template<
    typename ExtraArgType>
 class OneExtraArgMemberFunctionAccumulator;
 class Regexer;
-
 template<typename ClassType, typename Arg1Type, typename Arg2Type>
 class VoidTwoArgMemberFunctionCaller;
+struct FileRevisorArgs;
 
 class ReplaceTextInTextFilesSubProgram : public FileRevisorSubProgram
 {
@@ -29,6 +29,8 @@ private:
    unique_ptr<const OneExtraArgMemberFunctionAccumulatorType> _memberFunctionAccumulator_RegexReplaceTextInTextFile;
    // Constant Components
    unique_ptr<const Regexer> _regexer;
+   // Mutable Components
+   unique_ptr<DirectoryIterator> _directoryIterator;
 public:
    ReplaceTextInTextFilesSubProgram();
    virtual ~ReplaceTextInTextFilesSubProgram() = default;

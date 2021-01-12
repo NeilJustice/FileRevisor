@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "libFileRevisor/Components/Console/Console.h"
+#include "libFileRevisor/Components/FileSystem/DirectoryIterator.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
 #include "libFileRevisor/Components/Iteration/Math/OneExtraArgMemberFunctionAccumulator.h"
@@ -15,15 +16,24 @@ ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFilesSubProgram()
    , _memberFunctionAccumulator_RegexReplaceTextInTextFile(make_unique<OneExtraArgMemberFunctionAccumulatorType>())
    // Constant Components
    , _regexer(make_unique<Regexer>())
+   // Mutable Components
+   , _directoryIterator(make_unique<DirectoryIterator>())
 {
 }
 
 int ReplaceTextInTextFilesSubProgram::Run(const FileRevisorArgs& args) const
 {
-   const vector<fs::path> nonEmptyNonGitTextFilePathsInTargetDirectory =
-      _protected_fileSystem->GetNonEmptyNonGitTextFilePathsInDirectory(args.targetDirectoryPath, args.recurse, args.skipFilesInUse);
+   _directoryIterator->SetDirectoryIterator(args.targetDirectoryPath, args.recurse);
+#if defined __linux__ || defined __APPLE__
+   static const vector<string> fileAndDirectoryPathIgnoreSubstrings = { "/.git/" };
+#elif defined _WIN32
+   static const vector<string> fileAndDirectoryPathIgnoreSubstrings = { "\\.git\\" };
+#endif
+   _directoryIterator->SetFileAndDirectoryPathIgnoreSubstrings(fileAndDirectoryPathIgnoreSubstrings);
+   const vector<fs::path> nonEmptyNonIgnoredTextFilePathsInTargetDirectory =
+      _directoryIterator->GetNonEmptyNonIgnoredTextFilePaths(args.skipFilesInUse);
    const size_t numberOfFilesThatWereOrWouldBeModified = _memberFunctionAccumulator_RegexReplaceTextInTextFile->SumElementsWithFunction(
-      this, nonEmptyNonGitTextFilePathsInTargetDirectory,
+      this, nonEmptyNonIgnoredTextFilePathsInTargetDirectory,
       &ReplaceTextInTextFilesSubProgram::RegexReplaceTextInTextFile, args);
    const string fileOrFiles = _protected_pluralizer->PotentiallyPluralizeWord(numberOfFilesThatWereOrWouldBeModified, "file", "files");
    if (args.preview)

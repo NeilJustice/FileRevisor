@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Enums/FileExceptionType.h"
+#include "libFileRevisorTests/Components/FileSystem/MetalMock/DirectoryIteratorMock.h"
+#include "libFileRevisorTests/Components/FileSystem/MetalMock/FileOpenerCloserMock.h"
 #include "libFileRevisorTests/Components/Exceptions/MetalMock/FileSystemExceptionMakerMock.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/RecursiveFileDeleterMock.h"
 #include "libFileRevisorTests/Components/FunctionCallers/Member/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
@@ -26,8 +28,6 @@ AFACT(RenameDirectory_RenamesDirectory_FilesystemRenameReturns0_ReturnsRenamedDi
 FACTS(RenameDirectory_RenamesDirectory_FilesystemRenameReturnsNot0_ThrowsFileSystemException)
 AFACT(OpenFile_FOpenReturnsNullFILEPointer_ThrowsFileSystemException)
 AFACT(OpenFile_FOpenReturnsNonNullFILEPointer_ReturnsFilePointer)
-FACTS(CloseFile_fcloseReturnValueIsNot0_ThrowsFileCloseException)
-AFACT(CloseFile_fcloseReturnValueIs0_Returns)
 #if defined __linux__|| defined __APPLE____linux__
 AFACT(RemoveReadOnlyFlagsFromTopLevelFilesInDirectoryIfWindows_OnLinuxDoesNothing)
 #elif _WIN32
@@ -51,6 +51,7 @@ METALMOCK_NONVOID2_NAMESPACED_FREE(uintmax_t, fs, remove_all, const fs::path&, e
 NonVoidOneArgMemberFunctionCallerMock<bool, FileSystem, const fs::path&>* _caller_ExistsMock = nullptr;
 // Constant Components
 ConstCharPointerGetterMock* _constCharPointerGetterMock = nullptr;
+FileOpenerCloserMock* _fileOpenerCloserMock = nullptr;
 FileSystemExceptionMakerMock* _fileSystemExceptionMakerMock = nullptr;
 RecursiveFileDeleterMock* _recursiveFileDeleterMock = nullptr;
 
@@ -71,6 +72,7 @@ STARTUP
    _fileSystem._caller_Exists.reset(_caller_ExistsMock = new NonVoidOneArgMemberFunctionCallerMock<bool, FileSystem, const fs::path&>);
    // Constant Components
    _fileSystem._constCharPointerGetter.reset(_constCharPointerGetterMock = new ConstCharPointerGetterMock);
+   _fileSystem._fileOpenerCloser.reset(_fileOpenerCloserMock = new FileOpenerCloserMock);
    _fileSystem._fileSystemExceptionMaker.reset(_fileSystemExceptionMakerMock = new FileSystemExceptionMakerMock);
    _fileSystem._recursiveFileDeleter.reset(_recursiveFileDeleterMock = new RecursiveFileDeleterMock);
 }
@@ -104,6 +106,7 @@ TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
    DELETE_TO_ASSERT_NEWED(fileSystem._caller_Exists);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(fileSystem._constCharPointerGetter);
+   DELETE_TO_ASSERT_NEWED(fileSystem._fileOpenerCloser);
    DELETE_TO_ASSERT_NEWED(fileSystem._fileSystemExceptionMaker);
    DELETE_TO_ASSERT_NEWED(fileSystem._recursiveFileDeleter);
 }
@@ -416,39 +419,6 @@ TEST(OpenFile_FOpenReturnsNonNullFILEPointer_ReturnsFilePointer)
    const vector<pair<string, string>> expected_fopen_Arguments = { { filePath.string(), fileOpenMode } };
    ARE_EQUAL(expected_fopen_Arguments, _fopen_Arguments);
    ARE_EQUAL(&nonNullFOpenReturnValue, filePointer);
-}
-
-TEST1X1(CloseFile_fcloseReturnValueIsNot0_ThrowsFileCloseException,
-   int fcloseReturnValue,
-   -2,
-   -1,
-   1,
-   2)
-{
-   fcloseMock.Return(fcloseReturnValue);
-
-   const FileSystemException fileSystemException = ZenUnit::Random<FileSystemException>();
-   _fileSystemExceptionMakerMock->MakeFileSystemExceptionForFailedToCloseFileMock.Return(fileSystemException);
-
-   const fs::path filePath = ZenUnit::Random<fs::path>();
-   FILE* const file = nullptr;
-   //
-   THROWS_EXCEPTION(_fileSystem.CloseFile(filePath, file),
-      FileSystemException, fileSystemException.what());
-   //
-   METALMOCK(fcloseMock.CalledOnceWith(file));
-   METALMOCK(_fileSystemExceptionMakerMock->MakeFileSystemExceptionForFailedToCloseFileMock.CalledOnceWith(filePath));
-}
-
-TEST(CloseFile_fcloseReturnValueIs0_Returns)
-{
-   fcloseMock.Return(0);
-   const fs::path filePath = ZenUnit::Random<fs::path>();
-   FILE* const file = nullptr;
-   //
-   _fileSystem.CloseFile(filePath, file);
-   //
-   METALMOCK(fcloseMock.CalledOnceWith(file));
 }
 
 #if defined __linux__|| defined __APPLE____linux__

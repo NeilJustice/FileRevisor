@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "libFileRevisor/Components/SubPrograms/ReplaceTextInTextFilesSubProgram.h"
 #include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libFileRevisorTests/Components/FileSystem/MetalMock/DirectoryIteratorMock.h"
+#include "libFileRevisorTests/Components/FileSystem/MetalMock/FileOpenerCloserMock.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 #include "libFileRevisorTests/Components/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
 #include "libFileRevisorTests/Components/Iteration/Math/MetalMock/OneExtraArgMemberFunctionAccumulatorMock.h"
@@ -34,6 +36,8 @@ ConsoleMock* _protected_consoleMock = nullptr;
 FileSystemMock* _protected_fileSystemMock = nullptr;
 PluralizerMock* _protected_pluralizerMock = nullptr;
 RegexerMock* _regexerMock = nullptr;
+// Mutable Components
+DirectoryIteratorMock* _directoryIteratorMock = nullptr;
 
 STARTUP
 {
@@ -46,6 +50,8 @@ STARTUP
    _replaceTextInTextFilesSubProgram._protected_fileSystem.reset(_protected_fileSystemMock = new FileSystemMock);
    _replaceTextInTextFilesSubProgram._protected_pluralizer.reset(_protected_pluralizerMock = new PluralizerMock);
    _replaceTextInTextFilesSubProgram._regexer.reset(_regexerMock = new RegexerMock);
+   // Mutable Components
+   _replaceTextInTextFilesSubProgram._directoryIterator.reset(_directoryIteratorMock = new DirectoryIteratorMock);
 }
 
 TEST(DefaultConstructor_NewsFileSystem)
@@ -60,6 +66,8 @@ TEST(DefaultConstructor_NewsFileSystem)
    DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._protected_fileSystem);
    DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._protected_pluralizer);
    DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._regexer);
+   // Mutable Components
+   DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._directoryIterator);
 }
 
 TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsRegexReplaceFileTextOnEachTextFilePath_Returns0,
@@ -67,8 +75,12 @@ TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsRegexReplaceFileTextOnEachText
    true, "[FileRevisor] PreviewResult: Would replace text in ",
    false, "[FileRevisor] Result: Replaced text in ")
 {
-   const vector<fs::path> nonEmptyNonGitTextFilePathsInTargetDirectory =
-      _protected_fileSystemMock->GetNonEmptyNonGitTextFilePathsInDirectoryMock.ReturnRandom();
+   _directoryIteratorMock->SetDirectoryIteratorMock.Expect();
+
+   _directoryIteratorMock->SetFileAndDirectoryPathIgnoreSubstringsMock.Expect();
+
+   const vector<fs::path> nonEmptyNonIgnoredTextFilePathsInTargetDirectory =
+      _directoryIteratorMock->GetNonEmptyNonIgnoredTextFilePathsMock.ReturnRandom();
 
    const size_t numberOfFilesThatWereOrWouldBeModified =
       _memberFunctionAccumulator_RegexReplaceTextInTextFileMock->SumElementsWithFunctionMock.ReturnRandom();
@@ -82,10 +94,16 @@ TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsRegexReplaceFileTextOnEachText
 	//
 	const int exitCode = _replaceTextInTextFilesSubProgram.Run(args);
 	//
-	METALMOCK(_protected_fileSystemMock->GetNonEmptyNonGitTextFilePathsInDirectoryMock.CalledOnceWith(
-      args.targetDirectoryPath, args.recurse, args.skipFilesInUse));
+   METALMOCK(_directoryIteratorMock->SetDirectoryIteratorMock.CalledOnceWith(args.targetDirectoryPath, args.recurse));
+#if defined __linux__ || defined __APPLE__
+   static const vector<string> fileAndDirectoryPathIgnoreSubstrings = { "/.git/" };
+#elif defined _WIN32
+   static const vector<string> fileAndDirectoryPathIgnoreSubstrings = { "\\.git\\" };
+#endif
+   METALMOCK(_directoryIteratorMock->SetFileAndDirectoryPathIgnoreSubstringsMock.CalledOnceWith(fileAndDirectoryPathIgnoreSubstrings));
+	METALMOCK(_directoryIteratorMock->GetNonEmptyNonIgnoredTextFilePathsMock.CalledOnceWith(args.skipFilesInUse));
 	METALMOCK(_memberFunctionAccumulator_RegexReplaceTextInTextFileMock->SumElementsWithFunctionMock.CalledOnceWith(
-		&_replaceTextInTextFilesSubProgram, nonEmptyNonGitTextFilePathsInTargetDirectory,
+		&_replaceTextInTextFilesSubProgram, nonEmptyNonIgnoredTextFilePathsInTargetDirectory,
       &ReplaceTextInTextFilesSubProgram::RegexReplaceTextInTextFile, args));
    METALMOCK(_protected_pluralizerMock->PotentiallyPluralizeWordMock.CalledOnceWith(numberOfFilesThatWereOrWouldBeModified, "file", "files"));
    const string expectedMessage = expectedMessagePrefix + to_string(numberOfFilesThatWereOrWouldBeModified) + " " + fileOrFiles;

@@ -12,8 +12,6 @@ AFACT(GetDirectoryPathsInDirectory_RecurseIsFalse_ReturnsTopLevelDirectoryPaths)
 AFACT(GetDirectoryPathsInDirectory_RecurseIsTrue_ReturnsDirectoryPathsInAndBelowDirectoryPath)
 AFACT(GetStringDirectoryPathsInDirectory_RecurseIsFalse_ReturnsTopLevelDirectoryPaths)
 AFACT(GetStringDirectoryPathsInDirectory_RecurseIsTrue_ReturnsDirectoryPathsInAndBelowDirectoryPath)
-AFACT(GetNonEmptyNonGitTextFilePathsInDirectory_RecurseIsFalse_ReturnsTopLevelFilePathsThatDoNotHaveABinary0InTheFirst1024Bytes)
-AFACT(GetNonEmptyNonGitTextFilePathsInDirectory_RecurseIsTrue_ReturnsAllFilePathsInAndBelowDirectoryThatDoNotHaveABinary0InTheFirst1024Bytes)
 AFACT(ReadText_FileDoesNotExist_ThrowsFileSystemException)
 AFACT(ReadText_FileExists_FileIsEmpty_ReturnsEmptyString)
 AFACT(ReadText_FileExists_FileIsNotEmptyAndContainsTrailingBinaryZeros_ReturnsFileTextMinusTrailingBinaryZeros)
@@ -160,34 +158,6 @@ TEST(GetStringDirectoryPathsInDirectory_RecurseIsTrue_ReturnsDirectoryPathsInAnd
       (_rootDirectoryPath / "subdirectory3" / "subdirectory4").string()
    };
    INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedDirectoryPathsInAndBelowDirectory, directoryPathsInAndBelowDirectory);
-}
-
-TEST(GetNonEmptyNonGitTextFilePathsInDirectory_RecurseIsFalse_ReturnsTopLevelFilePathsThatDoNotHaveABinary0InTheFirst1024Bytes)
-{
-   const vector<fs::path> topLevelNonEmptyTextFilesInDirectory =
-      _fileSystem.GetNonEmptyNonGitTextFilePathsInDirectory(_rootDirectoryPath, false, false);
-   //
-   const vector<fs::path> expectedTopLevelNonEmptyTextFilesInDirectory =
-   {
-      _rootDirectoryPath / "root.textFile1",
-      _rootDirectoryPath / "root.textFile2"
-   };
-   INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedTopLevelNonEmptyTextFilesInDirectory, topLevelNonEmptyTextFilesInDirectory);
-}
-
-TEST(GetNonEmptyNonGitTextFilePathsInDirectory_RecurseIsTrue_ReturnsAllFilePathsInAndBelowDirectoryThatDoNotHaveABinary0InTheFirst1024Bytes)
-{
-   const vector<fs::path> allNonEmptyTextFilePathsInAndBelowDirectory =
-      _fileSystem.GetNonEmptyNonGitTextFilePathsInDirectory(_rootDirectoryPath, true, false);
-   //
-   const vector<fs::path> expectedAllNonEmptyTextFilePathsInAndBelowDirectory =
-   {
-      _rootDirectoryPath / "root.textFile1",
-      _rootDirectoryPath / "root.textFile2",
-      _rootDirectoryPath / "subdirectory1/subdirectory1.textFile1",
-      _rootDirectoryPath / "subdirectory2/subdirectory2.textFile1",
-   };
-   INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedAllNonEmptyTextFilePathsInAndBelowDirectory, allNonEmptyTextFilePathsInAndBelowDirectory);
 }
 
 TEST(ReadText_FileDoesNotExist_ThrowsFileSystemException)
