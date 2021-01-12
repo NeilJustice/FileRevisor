@@ -1,6 +1,7 @@
 #pragma once
 #include "libFileRevisor/Compiler/IfWindowsIgnoreTheseWarningsGlobally.h"
 
+#include <array>
 #include <assert.h>
 #include <fstream>
 #include <filesystem>
@@ -47,6 +48,9 @@ using namespace std;
 
 // libFileRevisor Constants
 #include "libFileRevisor/Constants/ErrnoValue.h"
+
+// libFileRevisor Components
+#include "libFileRevisor/Components/Console/Console.h"
 
 // libFileRevisor StaticUtilities
 #include "libFileRevisor/StaticUtilities/ReleaseAssert.h"

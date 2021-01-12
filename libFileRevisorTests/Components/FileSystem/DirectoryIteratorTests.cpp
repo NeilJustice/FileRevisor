@@ -12,11 +12,13 @@ EVIDENCE
 
 DirectoryIterator _directoryIterator;
 // Constant Components
+ConsoleMock* _consoleMock = nullptr;
 FileOpenerCloserMock* _fileOpenerCloserMock = nullptr;
 
 STARTUP
 {
    // Constant Components
+   _directoryIterator._console.reset(_consoleMock = new ConsoleMock);
    _directoryIterator._fileOpenerCloser.reset(_fileOpenerCloserMock = new FileOpenerCloserMock);
 }
 
@@ -24,6 +26,7 @@ TEST(DefaultConstructor_SetsFieldsToDefaultValues)
 {
    DirectoryIterator directoryIterator;
    // Constant Components
+   DELETE_TO_ASSERT_NEWED(directoryIterator._console);
    DELETE_TO_ASSERT_NEWED(directoryIterator._fileOpenerCloser);
    // Mutable Fields
 	ARE_EQUAL(fs::directory_iterator(), directoryIterator._directoryIterator);

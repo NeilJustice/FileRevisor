@@ -4,13 +4,14 @@
 
 DirectoryIterator::DirectoryIterator() noexcept
    // Constant Components
-   : _fileOpenerCloser(make_unique<FileOpenerCloser>())
+   : _console(make_unique<Console>())
+   , _fileOpenerCloser(make_unique<FileOpenerCloser>())
    // Mutable Fields
 	, _recursiveMode(false)
 {
 }
 
-vector<fs::path> DirectoryIterator::GetNonEmptyNonIgnoredTextFilePaths(bool /*skipFilesInUse*/)
+vector<fs::path> DirectoryIterator::GetNonEmptyNonIgnoredTextFilePaths()
 {
    vector<fs::path> textFilePaths;
    while (true)
@@ -21,8 +22,8 @@ vector<fs::path> DirectoryIterator::GetNonEmptyNonIgnoredTextFilePaths(bool /*sk
       {
          break;
       }
-      const bool fileIsEmptyOrBinaryOrNonAnsi = IsFileEmptyOrBinaryOrNonAnsi(nextNonIgnoredFilePath);
-      if (fileIsEmptyOrBinaryOrNonAnsi)
+      const bool fileIsEmptyOrBinaryOrNonAnsiOrNotOpenable = IsFileEmptyOrBinaryOrNonAnsiOrNotOpenable(nextNonIgnoredFilePath);
+      if (fileIsEmptyOrBinaryOrNonAnsiOrNotOpenable)
       {
          continue;
       }
@@ -79,16 +80,22 @@ void DirectoryIterator::SetFileAndDirectoryPathIgnoreSubstrings(const vector<str
 
 // Private Functions
 
-bool DirectoryIterator::IsFileEmptyOrBinaryOrNonAnsi(const fs::path& filePath) const
+bool DirectoryIterator::IsFileEmptyOrBinaryOrNonAnsiOrNotOpenable(const fs::path& filePath) const
 {
-   FILE* const fileOpenInReadBinaryMode = _fileOpenerCloser->OpenReadModeBinaryFile(filePath);
-   char first1KBytesInFile[1024];
+   FILE* const fileOpenInReadBinaryMode = _fileOpenerCloser->OpenReadModeBinaryFile(filePath, false);
+   if (fileOpenInReadBinaryMode == nullptr)
+   {
+      const string skippedReadingFileMessage = String::Concat("[FileRevisor]     Note: Unable to open file ", filePath.string());
+      _console->WriteLine(skippedReadingFileMessage);
+      return true;
+   }
+   array<char, 1024> first1KBytesInFile{};
 #if defined __linux__|| defined __APPLE__
    const size_t numberOfBytesRead = fread(
-      first1KBytesInFile, 1, sizeof(first1KBytesInFile), fileOpenInReadBinaryMode);
+      first1KBytesInFile.data(), 1, first1KBytesInFile.size(), fileOpenInReadBinaryMode);
 #else
    const size_t numberOfBytesRead = _fread_nolock_s(
-      first1KBytesInFile, sizeof(first1KBytesInFile), 1, sizeof(first1KBytesInFile), fileOpenInReadBinaryMode);
+      first1KBytesInFile.data(), first1KBytesInFile.size(), 1, first1KBytesInFile.size(), fileOpenInReadBinaryMode);
 #endif
    _fileOpenerCloser->CloseFile(fileOpenInReadBinaryMode, filePath);
    if (numberOfBytesRead == 0)
@@ -97,8 +104,8 @@ bool DirectoryIterator::IsFileEmptyOrBinaryOrNonAnsi(const fs::path& filePath) c
    }
    for (size_t i = 0; i < numberOfBytesRead; ++i)
    {
-      const char b = first1KBytesInFile[i];
-      if (b == 0)
+      const char ithFileByte = first1KBytesInFile[i];
+      if (ithFileByte == 0)
       {
          return true;
       }

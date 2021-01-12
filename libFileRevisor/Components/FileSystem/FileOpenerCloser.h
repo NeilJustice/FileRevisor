@@ -19,15 +19,15 @@ public:
    virtual ~FileOpenerCloser();
    virtual FILE* CreateWriteModeBinaryFile(const fs::path& filePath) const;
    virtual FILE* CreateWriteModeTextFile(const fs::path& filePath) const;
-   virtual FILE* OpenReadModeBinaryFile(const fs::path& filePath) const;
+   virtual FILE* OpenReadModeBinaryFile(const fs::path& filePath, bool throwIfFileNotOpenable) const;
    virtual FILE* OpenReadModeTextFile(const fs::path& filePath) const;
    virtual FILE* OpenAppendModeTextFile(const fs::path& filePath) const;
    virtual void CloseFile(FILE* filePointer, const fs::path& filePath) const;
 private:
 #if defined __linux__ || defined __APPLE__
-   FILE* OpenFileOnLinux(const fs::path& filePath, const char* fileOpenMode) const;
+   FILE* OpenFileOnLinux(const fs::path& filePath, const char* fileOpenMode, bool throwIfFileNotOpenable) const;
 #elif _WIN32
-   FILE* OpenFileOnWindows(const fs::path& filePath, const wchar_t* fileOpenMode) const;
+   FILE* OpenFileOnWindows(const fs::path& filePath, const wchar_t* fileOpenMode, bool throwIfFileNotOpenable) const;
 #endif
-   void ThrowFileOpenExceptionIfFileOpenFailed(FILE* filePointer, const fs::path& filePath) const;
+   void ThrowFileOpenExceptionIfFileOpenFailed(FILE* filePointer, const fs::path& filePath, bool throwIfFileNotOpenable) const;
 };

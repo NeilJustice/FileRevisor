@@ -1,5 +1,4 @@
 #include "pch.h"
-#include "libFileRevisor/Components/Console/Console.h"
 #include "libFileRevisor/Components/FileSystem/DirectoryIterator.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
@@ -30,8 +29,7 @@ int ReplaceTextInTextFilesSubProgram::Run(const FileRevisorArgs& args) const
    static const vector<string> fileAndDirectoryPathIgnoreSubstrings = { "\\.git\\" };
 #endif
    _directoryIterator->SetFileAndDirectoryPathIgnoreSubstrings(fileAndDirectoryPathIgnoreSubstrings);
-   const vector<fs::path> nonEmptyNonIgnoredTextFilePathsInTargetDirectory =
-      _directoryIterator->GetNonEmptyNonIgnoredTextFilePaths(args.skipFilesInUse);
+   const vector<fs::path> nonEmptyNonIgnoredTextFilePathsInTargetDirectory = _directoryIterator->GetNonEmptyNonIgnoredTextFilePaths();
    const size_t numberOfFilesThatWereOrWouldBeModified = _memberFunctionAccumulator_RegexReplaceTextInTextFile->SumElementsWithFunction(
       this, nonEmptyNonIgnoredTextFilePathsInTargetDirectory,
       &ReplaceTextInTextFilesSubProgram::RegexReplaceTextInTextFile, args);

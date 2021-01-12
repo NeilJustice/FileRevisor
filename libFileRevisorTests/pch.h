@@ -35,8 +35,11 @@ using namespace std;
 // libFileRevisor Constants
 #include "libFileRevisor/Constants/ErrnoValue.h"
 
-// libFileRevisor Docopt
+// libFileRevisorTests Components Docopt
 #include "libFileRevisor/Components/Docopt/docopt.h"
+
+// libFileRevisorTests Components MetalMock
+#include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
 
 // libFileRevisor StaticUtilities
 #include "libFileRevisor/StaticUtilities/Map.h"

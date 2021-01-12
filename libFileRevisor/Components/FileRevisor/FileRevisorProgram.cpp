@@ -1,5 +1,4 @@
 #include "pch.h"
-#include "libFileRevisor/Components/Console/Console.h"
 #include "libFileRevisor/Components/Exceptions/TryCatchCaller.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorArgsParser.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorProgram.h"

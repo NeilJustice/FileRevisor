@@ -101,7 +101,7 @@ TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsRegexReplaceFileTextOnEachText
    static const vector<string> fileAndDirectoryPathIgnoreSubstrings = { "\\.git\\" };
 #endif
    METALMOCK(_directoryIteratorMock->SetFileAndDirectoryPathIgnoreSubstringsMock.CalledOnceWith(fileAndDirectoryPathIgnoreSubstrings));
-	METALMOCK(_directoryIteratorMock->GetNonEmptyNonIgnoredTextFilePathsMock.CalledOnceWith(args.skipFilesInUse));
+	METALMOCK(_directoryIteratorMock->GetNonEmptyNonIgnoredTextFilePathsMock.CalledOnce());
 	METALMOCK(_memberFunctionAccumulator_RegexReplaceTextInTextFileMock->SumElementsWithFunctionMock.CalledOnceWith(
 		&_replaceTextInTextFilesSubProgram, nonEmptyNonIgnoredTextFilePathsInTargetDirectory,
       &ReplaceTextInTextFilesSubProgram::RegexReplaceTextInTextFile, args));

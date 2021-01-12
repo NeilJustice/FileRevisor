@@ -4,7 +4,7 @@
 class DirectoryIteratorMock : public Metal::Mock<DirectoryIterator>
 {
 public:
-   METALMOCK_NONVOID1(vector<fs::path>, GetNonEmptyNonIgnoredTextFilePaths, bool)
+   METALMOCK_NONVOID0(vector<fs::path>, GetNonEmptyNonIgnoredTextFilePaths)
    METALMOCK_NONVOID0(fs::path, NextNonIgnoredFilePath)
    METALMOCK_NONVOID0(fs::path, NextNonIgnoredDirectoryPath)
    METALMOCK_VOID2(SetDirectoryIterator, const fs::path&, bool)
