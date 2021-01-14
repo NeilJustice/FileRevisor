@@ -70,7 +70,7 @@ FileRevisor command line arguments are parsed using the excellent single-header 
 
 ### delete-directory
 
-FileRevisor `delete-directory` quickly deletes a directory, optionally in parallel for extreme directory deletion performance, especially on Windows.
+FileRevisor `delete-directory --target=<TargetDirectoryPath>` quickly deletes all files in and below `TargetDirectoryPath`. For extreme directory deletion performance, especially on Windows, specify `--parallel` to delete subdirectories below `TargetDirectoryPath` using one thread per subdirectory.
 
 Shown in this screenshot is `filerevisor delete-directory` deleting `directory1` in parallel:
 
@@ -149,4 +149,3 @@ cmake --build . --config Release --target install
 Resulting executable `C:\bin\FileRevisor.exe`:
 
 ![Windows FileRevisor.exe](Screenshots/WindowsFileRevisorDotExe.png)
-
