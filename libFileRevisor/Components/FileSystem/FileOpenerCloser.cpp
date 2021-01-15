@@ -103,10 +103,9 @@ FILE* FileOpenerCloser::OpenFileOnWindows(const fs::path& filePath, const wchar_
 
 #endif
 
-void FileOpenerCloser::ThrowFileOpenExceptionIfFileOpenFailed(
-   FILE* fileHandle, const fs::path& filePath, bool throwIfFileNotOpenable) const
+void FileOpenerCloser::ThrowFileOpenExceptionIfFileOpenFailed(FILE* filePointer, const fs::path& filePath, bool throwIfFileNotOpenable) const
 {
-   if (fileHandle == nullptr)
+   if (filePointer == nullptr)
    {
       if (throwIfFileNotOpenable)
       {
