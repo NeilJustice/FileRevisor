@@ -2,11 +2,11 @@
 
 [![Standard](https://img.shields.io/badge/c%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B20) ![GitHub](https://img.shields.io/github/license/NeilJustice/FileRevisor) ![GitHub last commit](https://img.shields.io/github/last-commit/NeilJustice/FileRevisor)
 
-FileRevisor is a cross-platform C++ command line program for quickly deleting large directories in parallel, bulk renaming files and directories with names that match a regular expression, and bulk replacing text in files that matches a regular expression.
+FileRevisor is a cross-platform C++ command line program for quickly deleting large directories in parallel, conveniently renaming files and directories, and conveniently replacing text in files.
 
 |Build Type|Build Status|
 |----------|------------|
-|Travis CI Linux Clang 9.0.1 and Linux GCC 9.3.0|[![Build Status](https://travis-ci.com/NeilJustice/FileRevisor.svg?branch=main)](https://travis-ci.com/NeilJustice/FileRevisor)|
+|Travis CI Linux Clang 9.0.1 and Linux GCC 9.3.0 Debug and Release|[![Build Status](https://travis-ci.com/NeilJustice/FileRevisor.svg?branch=main)](https://travis-ci.com/NeilJustice/FileRevisor)|
 |AppVeyor Windows Visual Studio 2019 x64 Debug and Release|<a href="https://ci.appveyor.com/project/NeilJustice/FileRevisor"><img src="https://ci.appveyor.com/api/projects/status/fl8f0jle01k04nwp?svg=true"/></a>|
 |Code Coverage For The Travis CI Linux GCC 9.3.0 Release Build|[![codecov](https://codecov.io/gh/NeilJustice/FileRevisor/branch/master/graph/badge.svg)](https://codecov.io/gh/NeilJustice/FileRevisor)|
 
@@ -24,6 +24,7 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
 * [Windows Jenkins Jobs Which Build FileRevisor](#windows-jenkins-jobs-which-build-filerevisor)
 * [How To Build Binary filerevisor On Linux With Clang](#how-to-build-binary-filerevisor-on-linux-with-clang)
 * [How To Build FileRevisor.exe On Windows With Visual Studio 2019](#how-to-build-filerevisorexe-on-windows-with-visual-studio-2019)
+* [FileRevisor Roadmap](#filerevisor-roadmap)
 
 ## FileRevisor Command Line Usage
 
@@ -114,7 +115,7 @@ As you can see from the above graphs, the implementation of Linux file deletions
 
 ### Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor
 
-A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 33:
+A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 33 with Clang and GCC:
 
 ![A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 33 Linux](Screenshots/LinuxJenkinsJobsForFileRevisor.png)
 
@@ -149,3 +150,13 @@ cmake --build . --config Release --target install
 Resulting executable `C:\bin\FileRevisor.exe`:
 
 ![Windows FileRevisor.exe](Screenshots/WindowsFileRevisorDotExe.png)
+
+## FileRevisor Roadmap
+
+|Future FileRevisor Feature|Estimated Delivery Month|Implementation Status|
+|--------------------------|------------------------|---------------------|
+|GitHub Actions build|February 2021|Awaiting implementation|
+|Linux and Windows SonarQube static analysis Jenkins jobs for Cloudundancy|February 2021|Awaiting implementation|
+|SonarCloud static analysis badge|February 2021|Awaiting implementation|
+|Coverity static analysis badge|February 2021|Awaiting implementation|
+|Automated acceptance testing for FileRevisor|May 2021|Awaiting implementation|
