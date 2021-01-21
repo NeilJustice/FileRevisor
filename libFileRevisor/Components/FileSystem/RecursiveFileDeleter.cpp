@@ -86,10 +86,10 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* dire
    directoryPathSearchPatternChars[directoryPathLength + 2] = 0;
 
    WIN32_FIND_DATA win32FindData;
-   const HANDLE findFirstFileHandle = FindFirstFileEx(
+   const HANDLE findFirstFilePointer = FindFirstFileEx(
       directoryPathSearchPatternChars, FindExInfoBasic, &win32FindData, FindExSearchNameMatch, NULL, NULL);
    ThrowFileSystemExceptionIfFindFirstFileExReturnedInvalidHandleValue(
-      findFirstFileHandle, directoryPathSearchPatternChars);
+      findFirstFilePointer, directoryPathSearchPatternChars);
 
    do
    {
@@ -131,11 +131,11 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* dire
             }
          }
       }
-   } while (FindNextFile(findFirstFileHandle, &win32FindData) != FALSE);
+   } while (FindNextFile(findFirstFilePointer, &win32FindData) != FALSE);
    const DWORD lastError = GetLastError();
    release_assert(lastError == ERROR_NO_MORE_FILES);
-   const BOOL didCloseFileHandle = FindClose(findFirstFileHandle);
-   release_assert(didCloseFileHandle == TRUE);
+   const BOOL didCloseFilePointer = FindClose(findFirstFilePointer);
+   release_assert(didCloseFilePointer == TRUE);
 }
 
 void RecursiveFileDeleter::

@@ -22,51 +22,51 @@ FileOpenerCloser::~FileOpenerCloser()
 FILE* FileOpenerCloser::CreateWriteModeBinaryFile(const fs::path& filePath) const
 {
 #if defined __linux__ || defined __APPLE__
-   FILE* const writeModeBinaryFileHandle = OpenFileOnLinux(filePath, "wb", true);
+   FILE* const writeModeBinaryFilePointer = OpenFileOnLinux(filePath, "wb", true);
 #elif _WIN32
-   FILE* const writeModeBinaryFileHandle = OpenFileOnWindows(filePath, L"wb", true);
+   FILE* const writeModeBinaryFilePointer = OpenFileOnWindows(filePath, L"wb", true);
 #endif
-   return writeModeBinaryFileHandle;
+   return writeModeBinaryFilePointer;
 }
 
 FILE* FileOpenerCloser::CreateWriteModeTextFile(const fs::path& filePath) const
 {
 #if defined __linux__ || defined __APPLE__
-   FILE* const writeModeTextFileHandle = OpenFileOnLinux(filePath, "w", true);
+   FILE* const writeModeTextFilePointer = OpenFileOnLinux(filePath, "w", true);
 #elif _WIN32
-   FILE* const writeModeTextFileHandle = OpenFileOnWindows(filePath, L"w", true);
+   FILE* const writeModeTextFilePointer = OpenFileOnWindows(filePath, L"w", true);
 #endif
-   return writeModeTextFileHandle;
+   return writeModeTextFilePointer;
 }
 
 FILE* FileOpenerCloser::OpenReadModeBinaryFile(const fs::path& filePath, bool throwIfFileNotOpenable) const
 {
 #if defined __linux__ || defined __APPLE__
-   FILE* const readModeBinaryFileHandle = OpenFileOnLinux(filePath, "rb", throwIfFileNotOpenable);
+   FILE* const readModeBinaryFilePointer = OpenFileOnLinux(filePath, "rb", throwIfFileNotOpenable);
 #elif _WIN32
-   FILE* const readModeBinaryFileHandle = OpenFileOnWindows(filePath, L"rb", throwIfFileNotOpenable);
+   FILE* const readModeBinaryFilePointer = OpenFileOnWindows(filePath, L"rb", throwIfFileNotOpenable);
 #endif
-   return readModeBinaryFileHandle;
+   return readModeBinaryFilePointer;
 }
 
 FILE* FileOpenerCloser::OpenReadModeTextFile(const fs::path& filePath) const
 {
 #if defined __linux__ || defined __APPLE__
-   FILE* const readModeTextFileHandle = OpenFileOnLinux(filePath, "r", true);
+   FILE* const readModeTextFilePointer = OpenFileOnLinux(filePath, "r", true);
 #elif _WIN32
-   FILE* const readModeTextFileHandle = OpenFileOnWindows(filePath, L"r", true);
+   FILE* const readModeTextFilePointer = OpenFileOnWindows(filePath, L"r", true);
 #endif
-   return readModeTextFileHandle;
+   return readModeTextFilePointer;
 }
 
 FILE* FileOpenerCloser::OpenAppendModeTextFile(const fs::path& filePath) const
 {
 #if defined __linux__ || defined __APPLE__
-   FILE* const appendModeTextFileHandle = OpenFileOnLinux(filePath, "a", true);
+   FILE* const appendModeTextFilePointer = OpenFileOnLinux(filePath, "a", true);
 #elif _WIN32
-   FILE* const appendModeTextFileHandle = OpenFileOnWindows(filePath, L"a", true);
+   FILE* const appendModeTextFilePointer = OpenFileOnWindows(filePath, L"a", true);
 #endif
-   return appendModeTextFileHandle;
+   return appendModeTextFilePointer;
 }
 
 void FileOpenerCloser::CloseFile(FILE* filePointer, const fs::path& filePath) const
@@ -87,18 +87,18 @@ void FileOpenerCloser::CloseFile(FILE* filePointer, const fs::path& filePath) co
 
 FILE* FileOpenerCloser::OpenFileOnLinux(const fs::path& filePath, const char* fileOpenMode, bool throwIfFileNotOpenable) const
 {
-   FILE* const fileHandle = _call_fopen(filePath.c_str(), fileOpenMode);
-   ThrowFileOpenExceptionIfFileOpenFailed(fileHandle, filePath, throwIfFileNotOpenable);
-   return fileHandle;
+   FILE* const filePointer = _call_fopen(filePath.c_str(), fileOpenMode);
+   ThrowFileOpenExceptionIfFileOpenFailed(filePointer, filePath, throwIfFileNotOpenable);
+   return filePointer;
 }
 
 #elif _WIN32
 
 FILE* FileOpenerCloser::OpenFileOnWindows(const fs::path& filePath, const wchar_t* fileOpenMode, bool throwIfFileNotOpenable) const
 {
-   FILE* const fileHandle = _call_wfsopen(filePath.c_str(), fileOpenMode, _SH_DENYWR);
-   ThrowFileOpenExceptionIfFileOpenFailed(fileHandle, filePath, throwIfFileNotOpenable);
-   return fileHandle;
+   FILE* const filePointer = _call_wfsopen(filePath.c_str(), fileOpenMode, _SH_DENYWR);
+   ThrowFileOpenExceptionIfFileOpenFailed(filePointer, filePath, throwIfFileNotOpenable);
+   return filePointer;
 }
 
 #endif

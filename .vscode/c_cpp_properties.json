@@ -4,7 +4,7 @@
          "name": "Linux",
          "includePath": [
             "${workspaceFolder}/**",
-            "/usr/local/include/ZenUnit"
+            "/usr/local/include/ZenUnitAndMetalMock"
          ],
          "defines": [],
          "compilerPath": "/usr/bin/clang",

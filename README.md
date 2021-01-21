@@ -22,6 +22,7 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
 * [Linux Folder Deletion Performance: rm -rf > /dev/null vs. FileRevisor](#linux-folder-deletion-performance-rm-rf->-dev-null-vs-FileRevisor)
 * [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filerevisor)
 * [Windows Jenkins Jobs Which Build FileRevisor](#windows-jenkins-jobs-which-build-filerevisor)
+* [FileRevisor Code Structure As It Appears in VS Code](#filerevisor-code-structure-as-it-appears-in-vs-code)
 * [How To Build Binary filerevisor On Linux With Clang](#how-to-build-binary-filerevisor-on-linux-with-clang)
 * [How To Build FileRevisor.exe On Windows With Visual Studio 2019](#how-to-build-filerevisorexe-on-windows-with-visual-studio-2019)
 * [FileRevisor Roadmap](#filerevisor-roadmap)
@@ -124,6 +125,10 @@ A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins job
 A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Windows 10:
 
 ![Jenkins Jobs That Compile FileRevisor On Windows](Screenshots/WindowsJenkinsJobsForFileRevisor.png)
+
+## FileRevisor Code Structure As It Appears In VS Code
+
+
 
 ## How To Build Binary filerevisor On Linux With Clang
 

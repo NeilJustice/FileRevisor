@@ -15,9 +15,9 @@ def log_exception(message):
    logger.exception(callerFunctionName)
 
 logging.basicConfig(level=logging.INFO)
-loggingFileHandler = logging.FileHandler('log.txt')
+loggingFilePointerr = logging.FilePointerr('log.txt')
 loggingFormatter = logging.Formatter('%(asctime)s %(name)s %(levelname)s %(message)s')
-loggingFileHandler.setFormatter(loggingFormatter)
+loggingFilePointerr.setFormatter(loggingFormatter)
 
 logger = logging.getLogger(__name__)
-logger.addHandler(loggingFileHandler)
+logger.addHandler(loggingFilePointerr)

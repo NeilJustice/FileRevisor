@@ -4,17 +4,17 @@
 
 TESTS(FileOpenerCloserTests)
 AFACT(DefaultConstructor_SetsFunctionPointers)
-AFACT(CreateWriteModeBinaryFile_ReturnsFileHandleOpenedInBinaryWriteMode)
-AFACT(CreateWriteModeTextFile_ReturnsFileHandleOpenedInTextWriteMode)
-AFACT(OpenReadModeBinaryFile_ReturnsFileHandleOpenedInBinaryReadMode)
-AFACT(OpenReadModeTextFile_ReturnsFileHandleOpenedInTextReadMode)
-AFACT(OpenAppendModeTextFile_ReturnsFileHandleOpenedInTextAppendMode)
-AFACT(CloseFile_CallsFCloseOnFileHandleWhichReturns0_Returns)
-AFACT(CloseFile_CallsFCloseOnFileHandleWhichReturnsNon0_ThrowsRuntimeError)
+AFACT(CreateWriteModeBinaryFile_ReturnsFilePointerOpenedInBinaryWriteMode)
+AFACT(CreateWriteModeTextFile_ReturnsFilePointerOpenedInTextWriteMode)
+AFACT(OpenReadModeBinaryFile_ReturnsFilePointerOpenedInBinaryReadMode)
+AFACT(OpenReadModeTextFile_ReturnsFilePointerOpenedInTextReadMode)
+AFACT(OpenAppendModeTextFile_ReturnsFilePointerOpenedInTextAppendMode)
+AFACT(CloseFile_CallsFCloseOnFilePointerWhichReturns0_Returns)
+AFACT(CloseFile_CallsFCloseOnFilePointerWhichReturnsNon0_ThrowsRuntimeError)
 // Private Functions
-AFACT(ThrowFileOpenExceptionIfFileOpenFailed_FileHandleIsNullptr_ThrowIfFileNotOpenableIsFalse_DoesNothing)
-AFACT(ThrowFileOpenExceptionIfFileOpenFailed_FileHandleIsNullptr_ThrowIfFileNotOpenableIsTrue_ThrowsFileOpenException)
-AFACT(ThrowFileOpenExceptionIfFileOpenFailed_FileHandleIsNotNullptr_ThrowIfFileNotOpenableIsTrueOrFalse_DoesNothing)
+AFACT(ThrowFileOpenExceptionIfFileOpenFailed_FilePointerIsNullptr_ThrowIfFileNotOpenableIsFalse_DoesNothing)
+AFACT(ThrowFileOpenExceptionIfFileOpenFailed_FilePointerIsNullptr_ThrowIfFileNotOpenableIsTrue_ThrowsFileOpenException)
+AFACT(ThrowFileOpenExceptionIfFileOpenFailed_FilePointerIsNotNullptr_ThrowIfFileNotOpenableIsTrueOrFalse_DoesNothing)
 EVIDENCE
 
 FileOpenerCloser _fileOpenerCloser;
@@ -52,140 +52,140 @@ TEST(DefaultConstructor_SetsFunctionPointers)
 #endif
 }
 
-TEST(CreateWriteModeBinaryFile_ReturnsFileHandleOpenedInBinaryWriteMode)
+TEST(CreateWriteModeBinaryFile_ReturnsFilePointerOpenedInBinaryWriteMode)
 {
-   FILE writeModeBinaryFileHandle{};
+   FILE writeModeBinaryFilePointer{};
 #if defined __linux__ || defined __APPLE__
-   fopenMock.Return(&writeModeBinaryFileHandle);
+   fopenMock.Return(&writeModeBinaryFilePointer);
 #elif _WIN32
-   _wfsopenMock.Return(&writeModeBinaryFileHandle);
+   _wfsopenMock.Return(&writeModeBinaryFilePointer);
 #endif
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
-   FILE* const returnedWriteModeBinaryFileHandle = _fileOpenerCloser.CreateWriteModeBinaryFile(filePath);
+   FILE* const returnedWriteModeBinaryFilePointer = _fileOpenerCloser.CreateWriteModeBinaryFile(filePath);
    //
 #if defined __linux__ || defined __APPLE__
    METALMOCK(fopenMock.CalledOnceWith(filePath.c_str(), "wb"));
 #elif _WIN32
    METALMOCK(_wfsopenMock.CalledOnceWith(filePath.c_str(), L"wb", _SH_DENYWR));
 #endif
-   ARE_EQUAL(&writeModeBinaryFileHandle, returnedWriteModeBinaryFileHandle);
+   ARE_EQUAL(&writeModeBinaryFilePointer, returnedWriteModeBinaryFilePointer);
 }
 
-TEST(CreateWriteModeTextFile_ReturnsFileHandleOpenedInTextWriteMode)
+TEST(CreateWriteModeTextFile_ReturnsFilePointerOpenedInTextWriteMode)
 {
-   FILE writeModeTextFileHandle{};
+   FILE writeModeTextFilePointer{};
 #if defined __linux__ || defined __APPLE__
-   fopenMock.Return(&writeModeTextFileHandle);
+   fopenMock.Return(&writeModeTextFilePointer);
 #elif _WIN32
-   _wfsopenMock.Return(&writeModeTextFileHandle);
+   _wfsopenMock.Return(&writeModeTextFilePointer);
 #endif
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
-   FILE* const returnedWriteModeTextFileHandle = _fileOpenerCloser.CreateWriteModeTextFile(filePath);
+   FILE* const returnedWriteModeTextFilePointer = _fileOpenerCloser.CreateWriteModeTextFile(filePath);
    //
 #if defined __linux__ || defined __APPLE__
    METALMOCK(fopenMock.CalledOnceWith(filePath.c_str(), "w"));
 #elif _WIN32
    METALMOCK(_wfsopenMock.CalledOnceWith(filePath.c_str(), L"w", _SH_DENYWR));
 #endif
-   ARE_EQUAL(&writeModeTextFileHandle, returnedWriteModeTextFileHandle);
+   ARE_EQUAL(&writeModeTextFilePointer, returnedWriteModeTextFilePointer);
 }
 
-TEST(OpenReadModeBinaryFile_ReturnsFileHandleOpenedInBinaryReadMode)
+TEST(OpenReadModeBinaryFile_ReturnsFilePointerOpenedInBinaryReadMode)
 {
-   FILE readModeBinaryFileHandle{};
+   FILE readModeBinaryFilePointer{};
 #if defined __linux__ || defined __APPLE__
-   fopenMock.Return(&readModeBinaryFileHandle);
+   fopenMock.Return(&readModeBinaryFilePointer);
 #elif _WIN32
-   _wfsopenMock.Return(&readModeBinaryFileHandle);
+   _wfsopenMock.Return(&readModeBinaryFilePointer);
 #endif
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const bool skipFilesInUse = ZenUnit::Random<bool>();
    //
-   FILE* const returnedReadModeBinaryFileHandle = _fileOpenerCloser.OpenReadModeBinaryFile(filePath, skipFilesInUse);
+   FILE* const returnedReadModeBinaryFilePointer = _fileOpenerCloser.OpenReadModeBinaryFile(filePath, skipFilesInUse);
    //
 #if defined __linux__ || defined __APPLE__
    METALMOCK(fopenMock.CalledOnceWith(filePath.c_str(), "rb"));
 #elif _WIN32
    METALMOCK(_wfsopenMock.CalledOnceWith(filePath.c_str(), L"rb", _SH_DENYWR));
 #endif
-   ARE_EQUAL(&readModeBinaryFileHandle, returnedReadModeBinaryFileHandle);
+   ARE_EQUAL(&readModeBinaryFilePointer, returnedReadModeBinaryFilePointer);
 }
 
-TEST(OpenReadModeTextFile_ReturnsFileHandleOpenedInTextReadMode)
+TEST(OpenReadModeTextFile_ReturnsFilePointerOpenedInTextReadMode)
 {
-   FILE readModeTextFileHandle{};
+   FILE readModeTextFilePointer{};
 #if defined __linux__ || defined __APPLE__
-   fopenMock.Return(&readModeTextFileHandle);
+   fopenMock.Return(&readModeTextFilePointer);
 #elif _WIN32
-   _wfsopenMock.Return(&readModeTextFileHandle);
+   _wfsopenMock.Return(&readModeTextFilePointer);
 #endif
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
-   FILE* const returnedReadModeTextFileHandle = _fileOpenerCloser.OpenReadModeTextFile(filePath);
+   FILE* const returnedReadModeTextFilePointer = _fileOpenerCloser.OpenReadModeTextFile(filePath);
    //
 #if defined __linux__ || defined __APPLE__
    METALMOCK(fopenMock.CalledOnceWith(filePath.c_str(), "r"));
 #elif _WIN32
    METALMOCK(_wfsopenMock.CalledOnceWith(filePath.c_str(), L"r", _SH_DENYWR));
 #endif
-   ARE_EQUAL(&readModeTextFileHandle, returnedReadModeTextFileHandle);
+   ARE_EQUAL(&readModeTextFilePointer, returnedReadModeTextFilePointer);
 }
 
-TEST(OpenAppendModeTextFile_ReturnsFileHandleOpenedInTextAppendMode)
+TEST(OpenAppendModeTextFile_ReturnsFilePointerOpenedInTextAppendMode)
 {
-   FILE appendModeTextFileHandle{};
+   FILE appendModeTextFilePointer{};
 #if defined __linux__ || defined __APPLE__
-   fopenMock.Return(&appendModeTextFileHandle);
+   fopenMock.Return(&appendModeTextFilePointer);
 #elif _WIN32
-   _wfsopenMock.Return(&appendModeTextFileHandle);
+   _wfsopenMock.Return(&appendModeTextFilePointer);
 #endif
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
-   FILE* const returnedAppendModeTextFileHandle = _fileOpenerCloser.OpenAppendModeTextFile(filePath);
+   FILE* const returnedAppendModeTextFilePointer = _fileOpenerCloser.OpenAppendModeTextFile(filePath);
    //
 #if defined __linux__ || defined __APPLE__
    METALMOCK(fopenMock.CalledOnceWith(filePath.c_str(), "a"));
 #elif _WIN32
    METALMOCK(_wfsopenMock.CalledOnceWith(filePath.c_str(), L"a", _SH_DENYWR));
 #endif
-   ARE_EQUAL(&appendModeTextFileHandle, returnedAppendModeTextFileHandle);
+   ARE_EQUAL(&appendModeTextFilePointer, returnedAppendModeTextFilePointer);
 }
 
-TEST(CloseFile_CallsFCloseOnFileHandleWhichReturns0_Returns)
+TEST(CloseFile_CallsFCloseOnFilePointerWhichReturns0_Returns)
 {
    fcloseMock.Return(0);
-   FILE fileHandle{};
+   FILE FilePointer{};
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
-   _fileOpenerCloser.CloseFile(&fileHandle, filePath);
+   _fileOpenerCloser.CloseFile(&FilePointer, filePath);
    //
-   METALMOCK(fcloseMock.CalledOnceWith(&fileHandle));
+   METALMOCK(fcloseMock.CalledOnceWith(&FilePointer));
 }
 
-TEST(CloseFile_CallsFCloseOnFileHandleWhichReturnsNon0_ThrowsRuntimeError)
+TEST(CloseFile_CallsFCloseOnFilePointerWhichReturnsNon0_ThrowsRuntimeError)
 {
    const int non0FCloseReturnValue = ZenUnit::RandomNon0<int>();
    fcloseMock.Return(non0FCloseReturnValue);
 
    const pair<int, string> errnoWithDescription = _errorCodeTranslatorMock->GetErrnoWithDescriptionMock.ReturnRandom();
 
-   FILE fileHandle{};
+   FILE FilePointer{};
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
    const string expectedExceptionMessage = String::Concat("fclose(FILE*) unexpectedly returned ", non0FCloseReturnValue,
       ". filePath=\"", filePath.string(), "\", errno=", errnoWithDescription.first, " (", errnoWithDescription.second, ")");
-   THROWS_EXCEPTION(_fileOpenerCloser.CloseFile(&fileHandle, filePath),
+   THROWS_EXCEPTION(_fileOpenerCloser.CloseFile(&FilePointer, filePath),
       runtime_error, expectedExceptionMessage);
    //
    METALMOCK(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce());
-   METALMOCK(fcloseMock.CalledOnceWith(&fileHandle));
+   METALMOCK(fcloseMock.CalledOnceWith(&FilePointer));
 }
 
 // Private Functions
 
-TEST(ThrowFileOpenExceptionIfFileOpenFailed_FileHandleIsNullptr_ThrowIfFileNotOpenableIsFalse_DoesNothing)
+TEST(ThrowFileOpenExceptionIfFileOpenFailed_FilePointerIsNullptr_ThrowIfFileNotOpenableIsFalse_DoesNothing)
 {
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const bool throwIfFileNotOpenable = false;
@@ -193,7 +193,7 @@ TEST(ThrowFileOpenExceptionIfFileOpenFailed_FileHandleIsNullptr_ThrowIfFileNotOp
    _fileOpenerCloser.ThrowFileOpenExceptionIfFileOpenFailed(nullptr, filePath, throwIfFileNotOpenable);
 }
 
-TEST(ThrowFileOpenExceptionIfFileOpenFailed_FileHandleIsNullptr_ThrowIfFileNotOpenableIsTrue_ThrowsFileOpenException)
+TEST(ThrowFileOpenExceptionIfFileOpenFailed_FilePointerIsNullptr_ThrowIfFileNotOpenableIsTrue_ThrowsFileOpenException)
 {
    const pair<int, string> errnoWithDescription = _errorCodeTranslatorMock->GetErrnoWithDescriptionMock.ReturnRandom();
    const fs::path filePath = ZenUnit::Random<fs::path>();
@@ -207,13 +207,13 @@ TEST(ThrowFileOpenExceptionIfFileOpenFailed_FileHandleIsNullptr_ThrowIfFileNotOp
    METALMOCK(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce());
 }
 
-TEST(ThrowFileOpenExceptionIfFileOpenFailed_FileHandleIsNotNullptr_ThrowIfFileNotOpenableIsTrueOrFalse_DoesNothing)
+TEST(ThrowFileOpenExceptionIfFileOpenFailed_FilePointerIsNotNullptr_ThrowIfFileNotOpenableIsTrueOrFalse_DoesNothing)
 {
-   FILE nonNullFileHandle{};
+   FILE nonNullFilePointer{};
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const bool throwIfFileNotOpenable = ZenUnit::Random<bool>();
    //
-   _fileOpenerCloser.ThrowFileOpenExceptionIfFileOpenFailed(&nonNullFileHandle, filePath, throwIfFileNotOpenable);
+   _fileOpenerCloser.ThrowFileOpenExceptionIfFileOpenFailed(&nonNullFilePointer, filePath, throwIfFileNotOpenable);
 }
 
 RUN_TESTS(FileOpenerCloserTests)
