@@ -20,6 +20,7 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
   * [replace-text](#replace-text)
 * [Linux Directory Deletion Performance: rm -rf > /dev/null vs. FileRevisor](#linux-directory-deletion-performance-rm-rf->-dev-null-vs-FileRevisor)
 * [Windows Folder Deletion Performance: CMD vs. Git Bash vs. PowerShell vs. FileRevisor delete-directory --parallel](#windows-folder-deletion-performance-cmd-vs-git-bash-vs-powershell-vs-filerevisor-delete-directory---parallel)
+* [FileRevisor Code Structure As It Appears In Visual Studio 2019](#filerevisor-code-structure-as-it-appears-in-visual-studio-2019)
 * [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filerevisor)
 * [Windows Jenkins Jobs Which Build FileRevisor](#windows-jenkins-jobs-which-build-filerevisor)
 * [How To Build Binary filerevisor On Linux With Clang](#how-to-build-binary-filerevisor-on-linux-with-clang)
@@ -150,6 +151,10 @@ Shown in this screenshot is `filerevisor replace-text` replacing text in files i
 As you can see from the above two graphs, the implementation of Linux file deletions is quite a bit faster than the implementation of Windows file deletions, with modest time savings on Linux and massive time savings on Windows available by way of FileRevisor parallel folder deletion.
 
 The CPU and storage hardware which generated the above performance numbers is a 32-core 64-thread AMD Threadripper 2990WX with a 512 GB Samsung 970 PRO NVMe drive.
+
+### FileRevisor Code Structure As It Appears In Visual Studio 2019
+
+![FileRevisor Code Structure As It Appears In Visual Studio 2019](Screenshots/Windows/FileRevisorCodeStructureAsItAppearsInVisualStudio2019.png)
 
 ### Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor
 
