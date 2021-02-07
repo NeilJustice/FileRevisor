@@ -38,15 +38,15 @@ EVIDENCE
 FileSystem _fileSystem;
 // Function Pointers
 #ifdef _WIN32
-METALMOCK_NONVOID1_NAMESPACED_FREE(fs::path, std::filesystem, absolute, const fs::path&)
+METALMOCK_NONVOID1_FREE(fs::path, _call_std_filesystem_absolute, const fs::path&)
 #endif
-METALMOCK_NONVOID0_NAMESPACED_FREE(fs::path, std::filesystem, current_path)
+METALMOCK_NONVOID0_FREE(fs::path, _call_std_filesystem_current_path)
 METALMOCK_NONVOID1_FREE(bool, exists, const fs::path&)
-METALMOCK_NONVOID2_NAMESPACED_FREE(int, std, rename, const char*, const char*)
+METALMOCK_NONVOID2_FREE(int, _call_std_rename, const char*, const char*)
 METALMOCK_VOID3_NAMESPACED_FREE(std::filesystem, rename, const fs::path&, const fs::path&, std::error_code&, _fs)
 METALMOCK_NONVOID2_FREE(FILE*, fopen, const char*, const char*)
 METALMOCK_NONVOID1_FREE(int, fclose, FILE*)
-METALMOCK_NONVOID2_NAMESPACED_FREE(uintmax_t, fs, remove_all, const fs::path&, error_code&)
+METALMOCK_NONVOID2_FREE(uintmax_t, _call_fs_remove_all, const fs::path&, error_code&)
 // Function Callers
 NonVoidOneArgMemberFunctionCallerMock<bool, FileSystem, const fs::path&>* _caller_ExistsMock = nullptr;
 // Constant Components
@@ -60,13 +60,13 @@ STARTUP
    // Function Pointers
    _fileSystem._call_fopen = BIND_2ARG_METALMOCK_OBJECT(fopenMock);
    _fileSystem._call_fclose = BIND_1ARG_METALMOCK_OBJECT(fcloseMock);
-   _fileSystem._call_fs_remove_all = BIND_2ARG_METALMOCK_OBJECT(remove_allMock);
+   _fileSystem._call_fs_remove_all = BIND_2ARG_METALMOCK_OBJECT(_call_fs_remove_allMock);
 #ifdef _WIN32
-   _fileSystem._call_std_filesystem_absolute = BIND_1ARG_METALMOCK_OBJECT(absoluteMock);
+   _fileSystem._call_std_filesystem_absolute = BIND_1ARG_METALMOCK_OBJECT(_call_std_filesystem_absoluteMock);
 #endif
-   _fileSystem._call_std_rename = BIND_2ARG_METALMOCK_OBJECT(renameMock);
+   _fileSystem._call_std_rename = BIND_2ARG_METALMOCK_OBJECT(_call_std_renameMock);
    _fileSystem._call_std_filesystem_rename = BIND_3ARG_METALMOCK_OBJECT(renameMock_fs);
-   _fileSystem._call_std_filesystem_current_path = BIND_0ARG_METALMOCK_OBJECT(current_pathMock);
+   _fileSystem._call_std_filesystem_current_path = BIND_0ARG_METALMOCK_OBJECT(_call_std_filesystem_current_pathMock);
    _fileSystem._call_std_filesystem_exists = BIND_1ARG_METALMOCK_OBJECT(existsMock);
    // Function Callers
    _fileSystem._caller_Exists.reset(_caller_ExistsMock = new NonVoidOneArgMemberFunctionCallerMock<bool, FileSystem, const fs::path&>);
@@ -122,22 +122,22 @@ TEST(GetAbsolutePath_ReturnsNonEmptyPath)
 #elif _WIN32
 TEST(GetAbsolutePath_ReturnsResultOfCallingStdFilesystemAbsolute)
 {
-   const fs::path absoluteFileOrDirectoryPath = absoluteMock.ReturnRandom();
+   const fs::path absoluteFileOrDirectoryPath = _call_std_filesystem_absoluteMock.ReturnRandom();
    const fs::path relativeFileOrDirectoryPath = ZenUnit::Random<fs::path>();
    //
    const fs::path returnedAbsoluteFileOrDirectoryPath = _fileSystem.GetAbsolutePath(relativeFileOrDirectoryPath);
    //
-   METALMOCK(absoluteMock.CalledOnceWith(relativeFileOrDirectoryPath));
+   METALMOCK(_call_std_filesystem_absoluteMock.CalledOnceWith(relativeFileOrDirectoryPath));
 }
 #endif
 
 TEST(CurrentDirectoryPath_ReturnsResultOfCallingFilesystemCurrentPath)
 {
-   const fs::path currentPathReturnValue = current_pathMock.ReturnRandom();
+   const fs::path currentPathReturnValue = _call_std_filesystem_current_pathMock.ReturnRandom();
    //
    const fs::path currentDirectoryPath = _fileSystem.CurrentDirectoryPath();
    //
-   METALMOCK(current_pathMock.CalledOnce());
+   METALMOCK(_call_std_filesystem_current_pathMock.CalledOnce());
    ARE_EQUAL(currentPathReturnValue, currentDirectoryPath);
 }
 
@@ -217,7 +217,7 @@ TEST2X2(RenameFile_FilePathExists_DestinationFilePathDoesNotExist_RenamesFile_Th
    const char* const destinationFilePathStringCCP = destinationFilePathString.c_str();
    _constCharPointerGetterMock->GetStringConstCharPointerMock.ReturnValues(filePathStringCCP, destinationFilePathStringCCP);
 
-   renameMock.Return(renameReturnValue);
+   _call_std_renameMock.Return(renameReturnValue);
    //
    const fs::path expectedDirectoryPath = filePath.parent_path();
    const fs::path expectedRenamedFilePath = expectedDirectoryPath / newFileName;
@@ -246,7 +246,7 @@ TEST2X2(RenameFile_FilePathExists_DestinationFilePathDoesNotExist_RenamesFile_Th
       expectedFilePathString,
       expectedRenamedFilePathString
    }));
-   METALMOCK(renameMock.CalledOnceWith(filePathStringCCP, destinationFilePathStringCCP));
+   METALMOCK(_call_std_renameMock.CalledOnceWith(filePathStringCCP, destinationFilePathStringCCP));
 }
 
 int _stdFileSystemRenameErrorCodeValue = 0;
@@ -277,7 +277,7 @@ unsigned long long remove_all_CallInstead(const fs::path& directoryPath, error_c
 
 TEST(RemoveAll_FsRemoveAllReturns0ErrorCode_ReturnsNumberOfFilesAndDirectoriesRemoved)
 {
-   remove_allMock.CallInstead(std::bind(&FileSystemTests::remove_all_CallInstead,
+   _call_fs_remove_allMock.CallInstead(std::bind(&FileSystemTests::remove_all_CallInstead,
       this, std::placeholders::_1, std::placeholders::_2));
    _remove_all_CallHistory.returnValue = ZenUnit::Random<unsigned long long>();
    _remove_all_CallHistory.outErrorCodeReturnValue = error_code(0, std::generic_category());
@@ -296,7 +296,7 @@ TEST1X1(RemoveAll_FsRemoveAllReturnsNon0ErrorCode_ThrowsFileSystemException,
    -1,
    1)
 {
-   remove_allMock.CallInstead(std::bind(&FileSystemTests::remove_all_CallInstead,
+   _call_fs_remove_allMock.CallInstead(std::bind(&FileSystemTests::remove_all_CallInstead,
       this, std::placeholders::_1, std::placeholders::_2));
    _remove_all_CallHistory.returnValue = ZenUnit::Random<unsigned long long>();
    _remove_all_CallHistory.outErrorCodeReturnValue = error_code(errorCodeValue, std::generic_category());
