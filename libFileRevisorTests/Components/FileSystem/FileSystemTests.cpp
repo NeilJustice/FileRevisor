@@ -43,7 +43,7 @@ METALMOCK_NONVOID1_FREE(fs::path, _call_std_filesystem_absolute, const fs::path&
 METALMOCK_NONVOID0_FREE(fs::path, _call_std_filesystem_current_path)
 METALMOCK_NONVOID1_FREE(bool, exists, const fs::path&)
 METALMOCK_NONVOID2_FREE(int, _call_std_rename, const char*, const char*)
-METALMOCK_VOID3_NAMESPACED_FREE(std::filesystem, rename, const fs::path&, const fs::path&, std::error_code&, _fs)
+METALMOCK_VOID3_FREE(_call_std_filesystem_rename_with_error_code, const fs::path&, const fs::path&, std::error_code&)
 METALMOCK_NONVOID2_FREE(FILE*, fopen, const char*, const char*)
 METALMOCK_NONVOID1_FREE(int, fclose, FILE*)
 METALMOCK_NONVOID2_FREE(uintmax_t, _call_fs_remove_all, const fs::path&, error_code&)
@@ -65,7 +65,7 @@ STARTUP
    _fileSystem._call_std_filesystem_absolute = BIND_1ARG_METALMOCK_OBJECT(_call_std_filesystem_absoluteMock);
 #endif
    _fileSystem._call_std_rename = BIND_2ARG_METALMOCK_OBJECT(_call_std_renameMock);
-   _fileSystem._call_std_filesystem_rename = BIND_3ARG_METALMOCK_OBJECT(renameMock_fs);
+   _fileSystem._call_std_filesystem_rename_with_error_code = BIND_3ARG_METALMOCK_OBJECT(_call_std_filesystem_rename_with_error_codeMock);
    _fileSystem._call_std_filesystem_current_path = BIND_0ARG_METALMOCK_OBJECT(_call_std_filesystem_current_pathMock);
    _fileSystem._call_std_filesystem_exists = BIND_1ARG_METALMOCK_OBJECT(existsMock);
    // Function Callers
@@ -321,7 +321,7 @@ TEST1X1(RemoveAll_FsRemoveAllReturnsNon0ErrorCode_ThrowsFileSystemException,
 TEST(RenameDirectory_RenamesDirectory_FilesystemRenameReturns0_ReturnsRenamedDirectoryPath)
 {
    _stdFileSystemRenameErrorCodeValue = 0;
-   renameMock_fs.CallInstead(std::bind(
+   _call_std_filesystem_rename_with_error_codeMock.CallInstead(std::bind(
       &FileSystemTests::StdFileSystemRenameWithSettableErrorCode,
       this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
    const fs::path directoryPath = ZenUnit::Random<fs::path>();
@@ -335,7 +335,7 @@ TEST(RenameDirectory_RenamesDirectory_FilesystemRenameReturns0_ReturnsRenamedDir
    }();
    const fs::path expectedRenamedDirectoryPath = expectedDirectoryPathMinusLeafDirectory / newDirectoryName;
    error_code expectedRenameErrorCodeArgument;
-   METALMOCK(renameMock_fs.CalledOnceWith(directoryPath, expectedRenamedDirectoryPath, expectedRenameErrorCodeArgument));
+   METALMOCK(_call_std_filesystem_rename_with_error_codeMock.CalledOnceWith(directoryPath, expectedRenamedDirectoryPath, expectedRenameErrorCodeArgument));
    ARE_EQUAL(expectedRenamedDirectoryPath, renamedDirectoryPath);
 }
 
@@ -348,7 +348,7 @@ TEST1X1(RenameDirectory_RenamesDirectory_FilesystemRenameReturnsNot0_ThrowsFileS
 {
    _stdFileSystemRenameErrorCodeValue = stdFileSystemRenameErrorCodeValue;
 
-   renameMock_fs.CallInstead(std::bind(
+   _call_std_filesystem_rename_with_error_codeMock.CallInstead(std::bind(
       &FileSystemTests::StdFileSystemRenameWithSettableErrorCode,
       this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 
@@ -368,7 +368,8 @@ TEST1X1(RenameDirectory_RenamesDirectory_FilesystemRenameReturnsNot0_ThrowsFileS
       FileSystemException, fileSystemException.what());
    //
    error_code expectedRenameArgumentErrorCode;
-   METALMOCK(renameMock_fs.CalledOnceWith(directoryPath, expectedRenamedDirectoryPath, expectedRenameArgumentErrorCode));
+   METALMOCK(_call_std_filesystem_rename_with_error_codeMock.CalledOnceWith(
+      directoryPath, expectedRenamedDirectoryPath, expectedRenameArgumentErrorCode));
 
    error_code expectedErrorCode(_stdFileSystemRenameErrorCodeValue, std::generic_category());
    METALMOCK(_fileSystemExceptionMakerMock->MakeFileSystemExceptionForFailedToRenameDirectoryMock.CalledOnceWith(

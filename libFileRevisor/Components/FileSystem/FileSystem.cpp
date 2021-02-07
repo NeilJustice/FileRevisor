@@ -15,12 +15,12 @@ FileSystem::FileSystem()
    , _call_fclose(::fclose)
    , _call_fs_remove_all(static_cast<uintmax_t(*)(const fs::path&, error_code&)>(fs::remove_all))
    , _call_std_rename(std::rename)
-   #ifdef _WIN32
+#ifdef _WIN32
    , _call_std_filesystem_absolute_as_assignable_function_pointer(fs::absolute)
-   #endif
+#endif
    , _call_std_filesystem_current_path_as_assignable_function_pointer(fs::current_path)
    , _call_std_filesystem_exists_as_assignable_function_pointer(fs::exists)
-   , _call_std_filesystem_rename_as_assignable_function_pointer(fs::rename)
+   , _call_std_filesystem_rename_with_error_code_as_assignable_function_pointer(fs::rename)
    // Function Callers
    , _caller_Exists(make_unique<NonVoidOneArgMemberFunctionCaller<bool, FileSystem, const fs::path&>>())
    // Constant Components
@@ -34,7 +34,7 @@ FileSystem::FileSystem()
 #endif
    _call_std_filesystem_current_path = _call_std_filesystem_current_path_as_assignable_function_pointer;
    _call_std_filesystem_exists = _call_std_filesystem_exists_as_assignable_function_pointer;
-   _call_std_filesystem_rename = _call_std_filesystem_rename_as_assignable_function_pointer;
+   _call_std_filesystem_rename_with_error_code = _call_std_filesystem_rename_with_error_code_as_assignable_function_pointer;
 }
 
 FileSystem::~FileSystem()
@@ -204,7 +204,7 @@ fs::path FileSystem::RenameDirectory(const fs::path& directoryPath, string_view 
    }();
    fs::path renamedDirectoryPath = directoryPathMinusLeafDirectory / newDirectoryName;
    error_code renameErrorCode;
-   _call_std_filesystem_rename(directoryPath, renamedDirectoryPath, renameErrorCode);
+   _call_std_filesystem_rename_with_error_code(directoryPath, renamedDirectoryPath, renameErrorCode);
    const int renameErrorCodeValue = renameErrorCode.value();
    if (renameErrorCodeValue != 0)
    {

@@ -36,8 +36,8 @@ private:
    bool(*_call_std_filesystem_exists_as_assignable_function_pointer)(const fs::path&);
    function<bool(const fs::path&)> _call_std_filesystem_exists;
 
-   void(*_call_std_filesystem_rename_as_assignable_function_pointer)(const fs::path&, const fs::path&, std::error_code&);
-   function<void(const fs::path&, const fs::path&, std::error_code&)> _call_std_filesystem_rename;
+   void(*_call_std_filesystem_rename_with_error_code_as_assignable_function_pointer)(const fs::path&, const fs::path&, std::error_code&);
+   function<void(const fs::path&, const fs::path&, std::error_code&)> _call_std_filesystem_rename_with_error_code;
 
    // Function Callers
    unique_ptr<const NonVoidOneArgMemberFunctionCaller<bool, FileSystem, const fs::path&>> _caller_Exists;
