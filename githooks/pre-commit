@@ -3,9 +3,10 @@ set -eu
 
 osname="$(uname --operating-system)"
 if [[ "$osname" == *"Linux" ]]; then
-   ./"JenkinsJobs/Linux/FileRevisor-Debug-Clang.sh"
+   ./JenkinsJobs/Linux/FileRevisor-Debug-Clang.sh
 elif [ "$osname" == "Msys" ]; then
-   powershell.exe -noprofile -file JenkinsJobs/Windows/FileRevisor-Debug.ps1
+   powershell.exe JenkinsJobs/Windows/FileRevisor-PyUtils.ps1
+   powershell.exe JenkinsJobs/Windows/FileRevisor-Debug.ps1
 fi
 jenkinsJobExitCode=$?
 if [ "$jenkinsJobExitCode" -ne 0 ]; then

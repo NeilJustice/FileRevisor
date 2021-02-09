@@ -1,6 +1,7 @@
 Set-PSDebug -Trace 1
 
-$env:PYTHONPATH = ''
-python.exe PyUtils\CoverageLintInstallPythonLibrary.py --project=PyUtils --test-project=PyUtilsTests --run-tests-with-coverage-python-file=RunAllWithCoverage.py
+$env:PYTHONPATH = '.'
+python.exe FileRevisorPyUtils\CoverageLintInstallPythonLibrary.py --project=PyUtils --run-tests-with-coverage-python-file=FileRevisorPyUtilsTests/RunAllWithCoverage.py
 
 Set-PSDebug -Trace 0
+exit $LastExitCode

@@ -9,9 +9,10 @@ install_manifest.txt
 
 # Python
 __pycache__/
+CodeCoverageHTMLReport/
 htmlcov/
-coverage.xml
 .coverage
+CoberturaCodeCoverageResults_FileRevisorPyUtilsTests.xml
 
 # Linux
 covhtml/
@@ -19,7 +20,6 @@ coverage.profdata
 coverage.profraw
 
 # Windows
-.axoCover/
 .vs/
 x64/
 *.bin
