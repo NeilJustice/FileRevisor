@@ -2,7 +2,11 @@
 
 [![Standard](https://img.shields.io/badge/c%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B20) ![GitHub](https://img.shields.io/github/license/NeilJustice/FileRevisor) ![GitHub last commit](https://img.shields.io/github/last-commit/NeilJustice/FileRevisor)
 
-FileRevisor is a cross-platform C++ command line program for quickly deleting large directories in parallel, renaming files and directories, and replacing text in files. FileRevisor's signature feature is its extreme parallel folder deletion performance on Windows.
+FileRevisor is a cross-platform C++ command line program for quickly deleting large directories in parallel, renaming files and directories, and replacing text in files.
+
+FileRevisor's key feature is its extreme performance when deleting large folders in parallel on Windows.
+
+On Linux, sequential file deletions are quite a bit faster than on Windows, and so the parallel file deletion peformance boost which FileRevisor provides is much more modest on Linux relative to Windows.
 
 |Build Type|Build Status|
 |----------|------------|
@@ -150,7 +154,7 @@ Shown in this screenshot is `filerevisor replace-text` replacing text in files i
 
 As you can see from the above two graphs, the implementation of Linux file deletions is quite a bit faster than the implementation of Windows file deletions, with modest time savings on Linux and massive time savings on Windows available by way of FileRevisor parallel folder deletion.
 
-The CPU and storage hardware which generated the above performance numbers is a 32-core 64-thread AMD Threadripper 2990WX with a 512 GB Samsung 970 PRO NVMe drive.
+CPU and storage hardware which generated the above performance numbers: 32-core 64-thread AMD Threadripper 2990WX with a 512 GB Samsung 970 PRO NVMe drive.
 
 ### FileRevisor Code Structure As It Appears In Visual Studio 2019
 
@@ -196,10 +200,11 @@ Resulting executable `C:\bin\FileRevisor.exe`:
 
 ## FileRevisor Roadmap
 
-|Future FileRevisor Feature|Estimated Delivery Month|Implementation Status|
-|--------------------------|------------------------|---------------------|
-|GitHub Actions build|February 2021|Awaiting implementation|
-|Linux and Windows SonarQube static analysis Jenkins jobs for Cloudundancy|February 2021|Awaiting implementation|
-|SonarCloud static analysis badge|February 2021|Awaiting implementation|
-|Coverity static analysis badge|March 2021|Awaiting implementation|
-|Automated acceptance testing for FileRevisor|May 2021|Awaiting implementation|
+|Future FileRevisor Feature|Implementation Status|
+|--------------------------|---------------------|
+|SonarCloud static analysis badge for FileRevisorPyUtils Python code|Awaiting implementation|
+|GitHub Actions build|Awaiting implementation|
+|SonarCloud static analysis badge for FileRevisor C++ code|Awaiting implementation|
+|Linux and Windows SonarQube Python and C++ static analysis Jenkins job screenshots|Awaiting implementation|
+|Coverity static analysis badge|Awaiting implementation|
+|Automated acceptance testing for FileRevisor|Awaiting implementation|
