@@ -26,7 +26,7 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
 * [Windows Folder Deletion Performance: CMD vs. Git Bash vs. PowerShell vs. FileRevisor delete-directory --parallel](#windows-folder-deletion-performance-cmd-vs-git-bash-vs-powershell-vs-filerevisor-delete-directory---parallel)
 * [FileRevisor Code Structure As It Appears In Visual Studio 2019](#filerevisor-code-structure-as-it-appears-in-visual-studio-2019)
 * [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filerevisor)
-* [Windows Jenkins Jobs Which Build FileRevisor](#windows-jenkins-jobs-which-build-filerevisor)
+* [Windows Jenkins Jobs Which Build FileRevisor And SonarQube Scan FileRevisor's Python Code](#windows-jenkins-jobs-which-build-filerevisor-and-sonarqube-scan-filerevisors-python-code)
 * [How To Build Binary filerevisor On Linux With Clang](#how-to-build-binary-filerevisor-on-linux-with-clang)
 * [How To Build FileRevisor.exe On Windows With Visual Studio 2019](#how-to-build-filerevisorexe-on-windows-with-visual-studio-2019)
 * [FileRevisor Roadmap](#filerevisor-roadmap)
@@ -166,11 +166,11 @@ A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins job
 
 ![A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 33 Linux](Screenshots/LinuxJenkinsJobsForFileRevisor.png)
 
-### Windows Jenkins Jobs Which Build FileRevisor
+### Windows Jenkins Jobs Which Build FileRevisor And SonarQube Scan FileRevisor's Python Code
 
 A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Windows 10:
 
-![Jenkins Jobs That Compile FileRevisor On Windows](Screenshots/WindowsJenkinsJobsForFileRevisor.png)
+![Windows Jenkins Jobs](Screenshots/Windows/WindowsJenkinsJobs.png)
 
 ## How To Build Binary filerevisor On Linux With Clang
 
