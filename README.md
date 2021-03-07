@@ -200,11 +200,12 @@ Resulting executable `C:\bin\FileRevisor.exe`:
 
 ## FileRevisor Roadmap
 
-|Future FileRevisor Feature|Implementation Status|
-|--------------------------|---------------------|
-|SonarCloud static analysis badge for FileRevisorPyUtils Python code|Awaiting implementation|
+|Future FileRevisor Feature|Implementation Status As Of 3/6/2021|
+|--------------------------|------------------------------------|
+|SonarQube scans of FileRevisor's Python code on Linux and Windows|In progress|
 |GitHub Actions build|Awaiting implementation|
-|SonarCloud static analysis badge for FileRevisor C++ code|Awaiting implementation|
-|Linux and Windows SonarQube Python and C++ static analysis Jenkins job screenshots|Awaiting implementation|
+|SonarCloud Python static analysis badge|Awaiting implementation|
+|SonarQube scan of FileRevisor C++ code on Linux and Windows|Awaiting implementation|
+|SonarCloud C++ static analysis badge|Awaiting implementation|
 |Coverity static analysis badge|Awaiting implementation|
-|Automated acceptance testing for FileRevisor|Awaiting implementation|
+|Automated acceptance testing|Awaiting implementation|
