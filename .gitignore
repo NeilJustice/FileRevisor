@@ -50,3 +50,8 @@ x64/
 DirectoryIteratorIntegrationTests/
 FileSystemIntegrationTests/
 RecursiveFileDeleterIntegrationTests/
+
+# Cppcheck
+*.a1
+*.a2
+cppcheck_results.txt

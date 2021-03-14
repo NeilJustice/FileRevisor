@@ -8,8 +8,7 @@ namespace ZenUnit
       static void AssertEqual(const RenameResult& expectedRenameResult, const RenameResult& actualRenameResult);
    };
 
+   RenameResult TestableRenameResultRandom(const ZenUnit::RandomGenerator* randomGenerator);
    template<>
    RenameResult Random<RenameResult>();
 }
-
-RenameResult TestableRenameResultRandom(const ZenUnit::RandomGenerator* randomGenerator);

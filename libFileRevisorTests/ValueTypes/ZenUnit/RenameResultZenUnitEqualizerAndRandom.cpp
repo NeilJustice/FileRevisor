@@ -10,20 +10,20 @@ namespace ZenUnit
       ARE_EQUAL(expectedRenameResult.renamedFileOrDirectoryPath, actualRenameResult.renamedFileOrDirectoryPath);
    }
 
+   RenameResult TestableRenameResultRandom(const ZenUnit::RandomGenerator* randomGenerator)
+   {
+      RenameResult randomRenameResult;
+      randomRenameResult.didRenameFileOrDirectory = randomGenerator->Bool();
+      randomRenameResult.originalFileOrDirectoryPath = randomGenerator->FilesystemPath();
+      randomRenameResult.renamedFileOrDirectoryPath = randomGenerator->FilesystemPath();
+      return randomRenameResult;
+   }
+
    template<>
    RenameResult Random<RenameResult>()
    {
       ZenUnit::RandomGenerator randomGenerator;
-      RenameResult randomRenameResult = ::TestableRenameResultRandom(&randomGenerator);
+      RenameResult randomRenameResult = TestableRenameResultRandom(&randomGenerator);
       return randomRenameResult;
    }
-}
-
-RenameResult TestableRenameResultRandom(const ZenUnit::RandomGenerator* randomGenerator)
-{
-   RenameResult randomRenameResult;
-   randomRenameResult.didRenameFileOrDirectory = randomGenerator->Bool();
-   randomRenameResult.originalFileOrDirectoryPath = randomGenerator->FilesystemPath();
-   randomRenameResult.renamedFileOrDirectoryPath = randomGenerator->FilesystemPath();
-   return randomRenameResult;
 }
