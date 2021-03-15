@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eu
+set -ev
 
 cd FileRevisorPyUtils
 export PYTHONPATH='.'

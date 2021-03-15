@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eu
+set -ev
 
 export CXX=clang++
 python -u FileRevisorPyUtils/FileRevisorPyUtils/BuildAndInstallCPlusPlusProgram.py \
