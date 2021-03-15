@@ -1,3 +1,4 @@
+syntaxError:*
 noExplicitConstructor:libFileRevisor/Components/Docopt/docopt.h:56
 unusedFunction:libFileRevisorTests/ValueTypes/ZenUnit/RenameResultZenUnitEqualizerAndRandom.cpp:23
 
@@ -7,4 +8,3 @@ preprocessorErrorDirective:/usr/include/c++/v1/__config:104
 # Windows
 *:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\ZenUnit.h
 *:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\MetalMock.h
-
