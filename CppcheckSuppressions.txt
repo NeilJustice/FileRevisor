@@ -1,13 +1,10 @@
+noExplicitConstructor:libFileRevisor/Components/Docopt/docopt.h:56
+unusedFunction:libFileRevisorTests/ValueTypes/ZenUnit/RenameResultZenUnitEqualizerAndRandom.cpp:23
+
+# Linux
+preprocessorErrorDirective:/usr/include/c++/v1/__config:104
+
+# Windows
 *:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\ZenUnit.h
 *:C:\include\ZenUnitAndMetalMock\ZenUnitAndMetalMock\MetalMock.h
-noExplicitConstructor:libFileRevisor\Components\Docopt\docopt.h:56
-syntaxError:libFileRevisorTests\Components\Exceptions\TryCatchCallerTests.cpp:83
-syntaxError:libFileRevisorTests\Components\FunctionCallers\Member\NonVoidOneArgMemberFunctionCallerTests.cpp:36
-syntaxError:libFileRevisorTests\Components\FunctionCallers\Member\NonVoidTwoArgMemberFunctionCallerTests.cpp:72
-syntaxError:libFileRevisorTests\Components\FunctionCallers\Member\VoidOneArgMemberFunctionCallerTests.cpp:63
-syntaxError:libFileRevisorTests\Components\FunctionCallers\Member\VoidTwoArgMemberFunctionCallerTests.cpp:63
-syntaxError:libFileRevisorTests\Components\Iteration\ForEach\OneExtraArgMemberForEacherTests.cpp:77
-syntaxError:libFileRevisorTests\Components\Iteration\ForEach\ParallelOneExtraArgMemberForEacherTests.cpp:89
-syntaxError:libFileRevisorTests\Components\Iteration\Math\OneExtraArgMemberFunctionSumatorTests.cpp:73
-syntaxError:libFileRevisorTests\Components\Iteration\Transform\OneExtraArgMemberFunctionTransformerTests.cpp:74
-unusedFunction:libFileRevisorTests\ValueTypes\ZenUnit\RenameResultZenUnitEqualizerAndRandom.cpp:23
+
