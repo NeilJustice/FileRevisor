@@ -24,7 +24,7 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
   * [replace-text](#replace-text)
 * [Linux Directory Deletion Performance: rm -rf > /dev/null vs. FileRevisor](#linux-directory-deletion-performance-rm-rf->-dev-null-vs-FileRevisor)
 * [Windows Folder Deletion Performance: CMD vs. Git Bash vs. PowerShell vs. FileRevisor delete-directory --parallel](#windows-folder-deletion-performance-cmd-vs-git-bash-vs-powershell-vs-filerevisor-delete-directory---parallel)
-* [FileRevisor Code Structure As It Appears In Visual Studio 2019](#filerevisor-code-structure-as-it-appears-in-visual-studio-2019)
+* [FileRevisor Code Structure As It Appears In Visual Studio 2019 On Windows](#filerevisor-code-structure-as-it-appears-in-visual-studio-2019-on-windows)
 * [Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize FileRevisor](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-and-undefinedbehaviorsanitize-filerevisor)
 * [Windows Jenkins Jobs Which Build And Cppcheck FileRevisor](#windows-jenkins-jobs-which-and-cppcheck-filerevisor)
 * [How To Build Binary filerevisor On Linux With Clang](#how-to-build-binary-filerevisor-on-linux-with-clang)
@@ -68,10 +68,6 @@ Usage:
       [--preview]
       [--verbose]
 ```
-
-FileRevisor command line arguments are parsed using the excellent single-header library [docopt.cpp](https://github.com/docopt/docopt.cpp):
-
-![FileRevisorArgsParser](Screenshots/FileRevisorArgsParser.png)
 
 ## FileRevisor Program Modes
 
@@ -156,13 +152,21 @@ As you can see from the above two graphs, the implementation of Linux file delet
 
 CPU and storage hardware which generated the above performance numbers: 32-core 64-thread AMD Threadripper 2990WX with a 512 GB Samsung 970 PRO NVMe drive.
 
-### FileRevisor Code Structure As It Appears In Visual Studio 2019
+### FileRevisor Code Structure As It Appears In Visual Studio Code On Linux
 
-![FileRevisor Code Structure As It Appears In Visual Studio 2019](Screenshots/Windows/FileRevisorCodeStructureAsItAppearsInVisualStudio2019.png)
+FileRevisor command line arguments are parsed using the excellent single-header library [docopt.cpp](https://github.com/docopt/docopt.cpp):
+
+![FileRevisor Code Structure As It Appears In Visual Studio Code On Linux](Screenshots/Linux/VisualStudioCode.png)
+
+### FileRevisor Code Structure As It Appears In Visual Studio 2019 On Windows
+
+Shown in this screenshot is `class FileRevisorSubProgramFactory`:
+
+![FileRevisor Code Structure As It Appears In Visual Studio 2019 On Windows](Screenshots/Windows/VisualStudio2019.png)
 
 ### Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize FileRevisor
 
-A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 33:
+A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 33 with Clang 11.0.0 and GCC 10.2.1:
 
 ![Linux FileRevisor Jenkins Jobs](Screenshots/Linux/LinuxJenkinsJobs.png)
 
