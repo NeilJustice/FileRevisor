@@ -25,10 +25,10 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
 * [Linux Directory Deletion Performance: rm -rf > /dev/null vs. FileRevisor](#linux-directory-deletion-performance-rm-rf->-dev-null-vs-FileRevisor)
 * [Windows Folder Deletion Performance: CMD vs. Git Bash vs. PowerShell vs. FileRevisor delete-directory --parallel](#windows-folder-deletion-performance-cmd-vs-git-bash-vs-powershell-vs-filerevisor-delete-directory---parallel)
 * [FileRevisor Code Structure As It Appears In Visual Studio 2019](#filerevisor-code-structure-as-it-appears-in-visual-studio-2019)
-* [Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor](#linux-jenkins-jobs-which-build-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filerevisor)
+* [Linux Jenkins Jobs Which Build, clang-tidy, Cppcheck, AddressSanitize, and UndefinedBehaviorSanitize FileRevisor](#linux-jenkins-jobs-which-build-clang-tidy-cppcheck-addresssanitize-and-undefinedbehaviorsanitize-filerevisor)
 * [Windows Jenkins Jobs Which Build FileRevisor And SonarQube Scan FileRevisor's Python Code](#windows-jenkins-jobs-which-build-filerevisor-and-sonarqube-scan-filerevisors-python-code)
 * [How To Build Binary filerevisor On Linux With Clang](#how-to-build-binary-filerevisor-on-linux-with-clang)
-* [How To Build FileRevisor.exe On Windows With Visual Studio 2019](#how-to-build-filerevisorexe-on-windows-with-visual-studio-2019)
+* [How To Build Executable FileRevisor.exe On Windows With Visual Studio 2019](#how-to-build-filerevisorexe-on-windows-with-visual-studio-2019)
 * [FileRevisor Roadmap](#filerevisor-roadmap)
 
 ## FileRevisor Command Line Usage
@@ -160,11 +160,11 @@ CPU and storage hardware which generated the above performance numbers: 32-core 
 
 ![FileRevisor Code Structure As It Appears In Visual Studio 2019](Screenshots/Windows/FileRevisorCodeStructureAsItAppearsInVisualStudio2019.png)
 
-### Linux Jenkins Jobs Which Build, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor
+### Linux Jenkins Jobs Which Build, clang-tidy, Cppcheck, AddressSanitize, and UndefinedBehaviorSanitize FileRevisor
 
 A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 33 with Clang and GCC:
 
-![A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 33 Linux](Screenshots/LinuxJenkinsJobsForFileRevisor.png)
+![Linux FileRevisor Jenkins Jobs](Screenshots/Linux/LinuxFileRevisorJenkinsJobs.png)
 
 ### Windows Jenkins Jobs Which Build FileRevisor And SonarQube Scan FileRevisor's Python Code
 
@@ -185,7 +185,7 @@ Result binary `/usr/local/bin/filerevisor`:
 
 ![Linux filerevisor binary in /usr/local/bin](Screenshots/LinuxFileRevisorBinaryInUsrLocalBin.png)
 
-## How To Build FileRevisor.exe On Windows With Visual Studio 2019
+## How To Build Executable FileRevisor.exe On Windows With Visual Studio 2019
 
 ```powershell
 git clone https://github.com/NeilJustice/FileRevisor
@@ -200,12 +200,10 @@ Resulting executable `C:\bin\FileRevisor.exe`:
 
 ## FileRevisor Roadmap
 
-|Future FileRevisor Feature|Implementation Status As Of 3/6/2021|
+|Future FileRevisor Feature|Implementation Status As Of 3/15/2021|
 |--------------------------|------------------------------------|
-|SonarQube scans of FileRevisor's Python code on Linux and Windows|In progress|
 |GitHub Actions build|Awaiting implementation|
-|SonarCloud Python static analysis badge|Awaiting implementation|
-|SonarQube scan of FileRevisor C++ code on Linux and Windows|Awaiting implementation|
+|SonarCloud Python static analysis badge for FileRevisorPyUtils|Awaiting implementation|
 |SonarCloud C++ static analysis badge|Awaiting implementation|
-|Coverity static analysis badge|Awaiting implementation|
+|Coverity C++ static analysis badge|Awaiting implementation|
 |Automated acceptance testing|Awaiting implementation|
