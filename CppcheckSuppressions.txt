@@ -1,4 +1,5 @@
 syntaxError:*
+unmatchedSuppression:*
 noExplicitConstructor:libFileRevisor/Components/Docopt/docopt.h:56
 unusedFunction:libFileRevisorTests/ValueTypes/ZenUnit/RenameResultZenUnitEqualizerAndRandom.cpp:23
 
