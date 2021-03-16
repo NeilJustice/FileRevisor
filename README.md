@@ -24,6 +24,7 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
   * [replace-text](#replace-text)
 * [Linux Directory Deletion Performance: rm -rf > /dev/null vs. FileRevisor](#linux-directory-deletion-performance-rm-rf->-dev-null-vs-FileRevisor)
 * [Windows Folder Deletion Performance: CMD vs. Git Bash vs. PowerShell vs. FileRevisor delete-directory --parallel](#windows-folder-deletion-performance-cmd-vs-git-bash-vs-powershell-vs-filerevisor-delete-directory---parallel)
+* [FileRevisor Code Structure As It Appears In Visual Studio Code On Linux](#filerevisor-code-structure-as-it-appears-in-visual-studio-code-on-linux)
 * [FileRevisor Code Structure As It Appears In Visual Studio 2019 On Windows](#filerevisor-code-structure-as-it-appears-in-visual-studio-2019-on-windows)
 * [Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, and UndefinedBehaviorSanitize FileRevisor](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-and-undefinedbehaviorsanitize-filerevisor)
 * [Windows Jenkins Jobs Which Build And Cppcheck FileRevisor](#windows-jenkins-jobs-which-and-cppcheck-filerevisor)
