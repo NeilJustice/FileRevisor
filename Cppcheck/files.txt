@@ -1,8 +1,6 @@
-CMakeCCompilerId.a1::Debug/CMakeFiles/3.18.4/CompilerIdC/CMakeCCompilerId.c
-CMakeCXXCompilerId.a1::Debug/CMakeFiles/3.18.4/CompilerIdCXX/CMakeCXXCompilerId.cpp
+CMakeCCompilerId.a1::CMakeFiles/3.19.5/CompilerIdC/CMakeCCompilerId.c
+CMakeCXXCompilerId.a1::CMakeFiles/3.19.5/CompilerIdCXX/CMakeCXXCompilerId.cpp
 FileRevisorMain.a1::FileRevisor/FileRevisorMain.cpp
-CMakeCCompilerId.a2::Release/CMakeFiles/3.18.4/CompilerIdC/CMakeCCompilerId.c
-CMakeCXXCompilerId.a2::Release/CMakeFiles/3.18.4/CompilerIdCXX/CMakeCXXCompilerId.cpp
 Console.a1::libFileRevisor/Components/Console/Console.cpp
 DocoptParser.a1::libFileRevisor/Components/Docopt/DocoptParser.cpp
 ErrorCodeTranslator.a1::libFileRevisor/Components/ErrorHandling/ErrorCodeTranslator.cpp
