@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "libFileRevisor/Components/Docopt/docopt.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorArgsParser.h"
 #include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
 #include "libFileRevisorTests/Components/Docopt/MetalMock/DocoptParserMock.h"

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "libFileRevisor/Components/Docopt/DocoptParser.h"
+#include "libFileRevisor/Components/Docopt/docopt.h"
 
 DocoptParser::DocoptParser()
    : _call_docopt_docopt(docopt::docopt)
