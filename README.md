@@ -26,8 +26,8 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
 * [Windows Folder Deletion Performance: CMD vs. Git Bash vs. PowerShell vs. FileRevisor delete-directory --parallel](#windows-folder-deletion-performance-cmd-vs-git-bash-vs-powershell-vs-filerevisor-delete-directory---parallel)
 * [FileRevisor Code Structure As It Appears In Visual Studio Code On Linux](#filerevisor-code-structure-as-it-appears-in-visual-studio-code-on-linux)
 * [FileRevisor Code Structure As It Appears In Visual Studio 2019 On Windows](#filerevisor-code-structure-as-it-appears-in-visual-studio-2019-on-windows)
-* [Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filerevisor)
-* [Windows Jenkins Jobs Which Build And Cppcheck FileRevisor](#windows-jenkins-jobs-which-build-and-cppcheck-filerevisor)
+* [Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor's C++ Code and SonarQube Scan FileRevisor's Python Code](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filerevisors-c++-code-and-sonarqube-scan-filerevisors-python-code)
+* [Windows Jenkins Jobs Which Build And Cppcheck FileRevisor's C++ Code and SonarQube Scan FileRevisor's Python Code](#windows-jenkins-jobs-which-build-and-cppcheck-filerevisors-c++-code-and-sonarnqube-scan-filerevisors-python-code)
 * [How To Build Binary filerevisor On Linux With Clang](#how-to-build-binary-filerevisor-on-linux-with-clang)
 * [How To Build Executable FileRevisor.exe On Windows With Visual Studio 2019](#how-to-build-filerevisorexe-on-windows-with-visual-studio-2019)
 * [FileRevisor Roadmap](#filerevisor-roadmap)
@@ -151,11 +151,11 @@ Shown in this screenshot is `filerevisor replace-text` replacing text in files i
 
 As you can see from the above two graphs, the implementation of Linux file deletions is quite a bit faster than the implementation of Windows file deletions, with modest time savings on Linux and massive time savings on Windows available by way of FileRevisor parallel folder deletion.
 
-CPU and storage hardware which generated the above performance numbers: 32-core 64-thread AMD Threadripper 2990WX with a 512 GB Samsung 970 PRO NVMe drive.
+The CPU and storage hardware which generated the above performance numbers is a 32-core 64-thread AMD Threadripper 2990WX with a 512 GB Samsung 970 PRO NVMe drive.
 
 ### FileRevisor Code Structure As It Appears In Visual Studio Code On Linux
 
-FileRevisor command line arguments are parsed using the excellent single-header library [docopt.cpp](https://github.com/docopt/docopt.cpp):
+Shown in this screenshot is function `FileRevisorArgsParser::ParseArgs` which uses the excellent single-header command line arguments parsing library [docopt.cpp](https://github.com/docopt/docopt.cpp) to parse FileRevisor's command line arguments:
 
 ![FileRevisor Code Structure As It Appears In Visual Studio Code On Linux](Screenshots/Linux/VisualStudioCode.png)
 
@@ -165,13 +165,13 @@ Shown in this screenshot is `class FileRevisorSubProgramFactory`:
 
 ![FileRevisor Code Structure As It Appears In Visual Studio 2019 On Windows](Screenshots/Windows/VisualStudio2019.png)
 
-### Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor
+### Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor's C++ Code and SonarQube Scan FileRevisor's Python Code
 
 A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 33 with Clang 11.0.0 and GCC 10.2.1:
 
 ![Linux FileRevisor Jenkins Jobs](Screenshots/Linux/LinuxJenkinsJobs.png)
 
-### Windows Jenkins Jobs Which Build And Cppcheck FileRevisor
+### Windows Jenkins Jobs Which Build And Cppcheck FileRevisor's C++ Code and SonarQube Scan FileRevisor's Python Code
 
 A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Windows 10 with Visual Studio 2019:
 
