@@ -4,9 +4,7 @@
 
 FileRevisor is a cross-platform C++ command line program for quickly deleting large directories in parallel, renaming files and directories, and replacing text in files.
 
-FileRevisor's key feature is its extreme performance when deleting large folders in parallel on Windows.
-
-On Linux, sequential file deletions are quite a bit faster than on Windows, and so the parallel file deletion peformance boost which FileRevisor provides is much more modest on Linux relative to Windows.
+FileRevisor's key feature is its extreme performance when deleting large folders in parallel on Windows. On Linux, file deletions are quite a bit faster than on Windows, and so the parallel file deletion peformance boost which FileRevisor provides is much more modest on Linux relative to Windows.
 
 |Build Type|Build Status|
 |----------|------------|
@@ -161,9 +159,9 @@ Shown in this screenshot is function `FileRevisorArgsParser::ParseArgs` which us
 
 ### FileRevisor Code Structure As It Appears In Visual Studio 2019 On Windows
 
-Shown in this screenshot is `class FileRevisorSubProgramFactory`:
+Shown in this screenshot is function `DeleteDirectorySubProgram::Run` with the key if-statement highlighted for determining whether to delete a given directory's subdirectories in parallel or sequentially:
 
-![FileRevisor Code Structure As It Appears In Visual Studio 2019 On Windows](Screenshots/Windows/VisualStudio2019.png)
+![FileRevisor Code Structure As It Appears In Visual Studio 2019 On Windows](Screenshots/Windows/VisualStudio.png)
 
 ### Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor's C++ Code and SonarQube Scan FileRevisor's Python Code
 
