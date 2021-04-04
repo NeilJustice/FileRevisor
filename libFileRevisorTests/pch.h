@@ -15,6 +15,7 @@
    #include <cstddef>
    #include <ios>
    #include <memory>
+   #include <mutex>
    #include <string.h>
 #endif
 namespace fs = std::filesystem;

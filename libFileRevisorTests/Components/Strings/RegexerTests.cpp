@@ -5,7 +5,7 @@ TESTS(RegexerTests)
 FACTS(RegexReplace_ReturnsRegexReplacedString)
 EVIDENCE
 
-const Regexer _regexer;
+Regexer _regexer;
 
 TEST4X4(RegexReplace_ReturnsRegexReplacedString,
    string_view str, string_view matchPattern, string_view replacementPattern, const string& expectedReturnValue,

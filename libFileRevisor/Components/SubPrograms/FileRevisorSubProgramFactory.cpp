@@ -1,4 +1,15 @@
 #include "pch.h"
+#if defined __linux__
+#include "libFileRevisor/Components/FileSystem/DirectoryIterator.h"
+#include "libFileRevisor/Components/FileSystem/FileOpenerCloser.h"
+#include "libFileRevisor/Components/FileSystem/FileSystem.h"
+#include "libFileRevisor/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
+#include "libFileRevisor/Components/Iteration/Counter/PredicateCounter.h"
+#include "libFileRevisor/Components/Iteration/Math/OneExtraArgMemberFunctionAccumulator.h"
+#include "libFileRevisor/Components/Iteration/Transform/OneExtraArgMemberFunctionTransformer.h"
+#include "libFileRevisor/Components/Strings/Pluralizer.h"
+#include "libFileRevisor/Components/Strings/Regexer.h"
+#endif
 #include "libFileRevisor/Components/SubPrograms/DeleteDirectorySubProgram.h"
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgramFactory.h"
 #include "libFileRevisor/Components/SubPrograms/RenameDirectoriesSubProgram.h"
