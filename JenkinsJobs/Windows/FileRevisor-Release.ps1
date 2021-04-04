@@ -6,7 +6,7 @@ python.exe -u FileRevisorPyUtils\FileRevisorPyUtils\BuildAndInstallCPlusPlusProg
    --cmake-generator="Visual Studio 16 2019" `
    --cmake-build-type=Release `
    --tests-project-name=libFileRevisorTests `
-   --cmake-definitions="-DCMAKE_INSTALL_PREFIX=$cmakeInstallPrefix" `
+   --cmake-definitions="-DCMAKE_INSTALL_PREFIX=C:\" `
    --install
 
 Set-PSDebug -Trace 0
