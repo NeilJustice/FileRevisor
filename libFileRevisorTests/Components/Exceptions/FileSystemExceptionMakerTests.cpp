@@ -19,13 +19,17 @@ AFACT(MakeFileSystemExceptionForFailedToSetFileAttribute_ReturnsExpectedFileSyst
 EVIDENCE
 
 FileSystemExceptionMaker _fileSystemExceptionMaker;
+// Constant Components
 ErrorCodeTranslatorMock* _errorCodeTranslatorMock = nullptr;
+// Testing Fields
 fs::path _filePath;
 string _fileOpenMode;
 
 STARTUP
 {
+   // Constant Components
    _fileSystemExceptionMaker._errorCodeTranslator.reset(_errorCodeTranslatorMock = new ErrorCodeTranslatorMock);
+   // Testing Fields
    _filePath = ZenUnit::Random<fs::path>();
    _fileOpenMode = ZenUnit::Random<string>();
 }
@@ -33,6 +37,7 @@ STARTUP
 TEST(Constructor_NewsErrorCodeTranslator)
 {
    FileSystemExceptionMaker fileSystemExceptionThrower;
+   // Constant Components
    DELETE_TO_ASSERT_NEWED(fileSystemExceptionThrower._errorCodeTranslator);
 }
 

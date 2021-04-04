@@ -7,6 +7,7 @@ class FileSystemExceptionMaker
 {
    friend class FileSystemExceptionMakerTests;
 private:
+   // Constant Components
    unique_ptr<const ErrorCodeTranslator> _errorCodeTranslator;
 public:
    FileSystemExceptionMaker();

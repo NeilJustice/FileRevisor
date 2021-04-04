@@ -25,7 +25,7 @@ AFACT(GetSystemErrorDescription_SystemErrorIsNot32_ReturnsIntAsString)
 EVIDENCE
 
 ErrorCodeTranslator _errorCodeTranslator;
-
+// Function Pointers
 #if defined __linux__|| defined __APPLE__
 METALMOCK_NONVOID3_FREE(char*, strerror_r, int, char*, size_t)
 #elif _WIN32
@@ -36,6 +36,7 @@ METALMOCK_NONVOID0_FREE(int*, _call_errno)
 
 STARTUP
 {
+   // Function Pointers
    _errorCodeTranslator._call_errno = BIND_0ARG_METALMOCK_OBJECT(_call_errnoMock);
 #if defined __linux__|| defined __APPLE__
    _errorCodeTranslator._call_strerror_r = BIND_3ARG_METALMOCK_OBJECT(strerror_rMock);
@@ -55,7 +56,8 @@ TEST(GetLinuxErrno_ReturnsAddressOfErrno)
 
 TEST(DefaultConstructor_SetsFunctionPointers)
 {
-   ErrorCodeTranslator errorCodeTranslator;
+   const ErrorCodeTranslator errorCodeTranslator;
+   // Function Pointers
 #if defined __linux__|| defined __APPLE__
    STD_FUNCTION_TARGETS(GetLinuxErrno, errorCodeTranslator._call_errno);
    STD_FUNCTION_TARGETS(strerror_r, errorCodeTranslator._call_strerror_r);

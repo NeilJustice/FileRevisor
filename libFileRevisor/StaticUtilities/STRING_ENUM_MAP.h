@@ -16,7 +16,7 @@
 		static std::string EnumToString(enumTypeName enumValue) \
 		{ \
 			PopulateMapsIfUnpopulated(); \
-			const std::string enumAsString = Map::At(StringEnumMap_##enumTypeName::enumToStringMap, enumValue); \
+			std::string enumAsString = Map::At(StringEnumMap_##enumTypeName::enumToStringMap, enumValue); \
          return enumAsString; \
 		} \
    private: \
@@ -24,13 +24,13 @@
 		{ \
 			if (!enumToStringMap.empty()) return;
 
-#define ADD_ENUM_TO_STRING_AND_STRING_TO_ENUM_MAPPINGS(enumClassName, enumValueName) \
+#define STRING_ENUM_MAP(enumClassName, enumValueName) \
 	enumToStringMap[enumClassName::enumValueName] = #enumValueName; \
-	stringToEnumMap[#enumClassName "::" #enumValueName] = enumClassName::enumValueName;
+	stringToEnumMap[#enumValueName] = enumClassName::enumValueName;
 
 #define END_STRING_ENUM_MAP } };
 
-#define INITIALIZE_ENUM_TO_STRING_AND_STRING_TO_ENUM_MAPS(enumTypeName) \
+#define INITIALIZE_STRING_ENUM_MAP(enumTypeName) \
 	std::unordered_map<enumTypeName, std::string> StringEnumMap_##enumTypeName::enumToStringMap; \
 	std::unordered_map<std::string, enumTypeName> StringEnumMap_##enumTypeName::stringToEnumMap;
 

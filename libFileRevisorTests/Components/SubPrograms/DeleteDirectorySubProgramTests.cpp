@@ -15,17 +15,17 @@ AFACT(DeleteDirectory_CallsRecursivelyDeleteAllFilesInDirectoryOnDirectoryPath)
 EVIDENCE
 
 DeleteDirectorySubProgram _deleteDirectorySubProgram;
+// Base Class Constant Components
 ConsoleMock* _protected_consoleMock = nullptr;
 FileSystemMock* _protected_fileSystemMock = nullptr;
 PluralizerMock* _protected_pluralizerMock = nullptr;
-
+// Function Callers
 using OneExtraArgMemberForEacherMockType = OneExtraArgMemberForEacherMock<
    string,
    DeleteDirectorySubProgram,
    void (DeleteDirectorySubProgram::*)(const string&, const FileRevisorArgs&) const,
    const FileRevisorArgs&>;
 OneExtraArgMemberForEacherMockType* _oneExtraArgMemberForEacher_DeleteDirectoryMock = nullptr;
-
 using ParallelOneExtraArgMemberForEacherMockType = ParallelOneExtraArgMemberForEacherMock<
    string,
    DeleteDirectorySubProgram,
@@ -35,18 +35,13 @@ ParallelOneExtraArgMemberForEacherMockType* _parallelOneExtraArgMemberForEacher_
 
 STARTUP
 {
-   _deleteDirectorySubProgram._protected_console.reset(
-      _protected_consoleMock = new ConsoleMock);
-
-   _deleteDirectorySubProgram._protected_fileSystem.reset(
-      _protected_fileSystemMock = new FileSystemMock);
-
-   _deleteDirectorySubProgram._protected_pluralizer.reset(
-      _protected_pluralizerMock = new PluralizerMock);
-
+   // Base Class Constant Components
+   _deleteDirectorySubProgram._protected_console.reset(_protected_consoleMock = new ConsoleMock);
+   _deleteDirectorySubProgram._protected_fileSystem.reset(_protected_fileSystemMock = new FileSystemMock);
+   _deleteDirectorySubProgram._protected_pluralizer.reset(_protected_pluralizerMock = new PluralizerMock);
+   // Function Callers
    _deleteDirectorySubProgram._oneExtraArgMemberForEacher_DeleteDirectory.reset(
       _oneExtraArgMemberForEacher_DeleteDirectoryMock = new OneExtraArgMemberForEacherMockType);
-
    _deleteDirectorySubProgram._parallelOneExtraArgMemberForEacher_DeleteDirectory.reset(
       _parallelOneExtraArgMemberForEacher_DeleteDirectoryMock = new ParallelOneExtraArgMemberForEacherMockType);
 }
@@ -54,9 +49,11 @@ STARTUP
 TEST(DefaultConstructor_NewsComponents)
 {
    DeleteDirectorySubProgram DeleteDirectorySubProgram;
+   // Base Class Constant Components
    DELETE_TO_ASSERT_NEWED(DeleteDirectorySubProgram._protected_console);
    DELETE_TO_ASSERT_NEWED(DeleteDirectorySubProgram._protected_fileSystem);
    DELETE_TO_ASSERT_NEWED(DeleteDirectorySubProgram._protected_pluralizer);
+   // Function Callers
    DELETE_TO_ASSERT_NEWED(DeleteDirectorySubProgram._oneExtraArgMemberForEacher_DeleteDirectory);
    DELETE_TO_ASSERT_NEWED(DeleteDirectorySubProgram._parallelOneExtraArgMemberForEacher_DeleteDirectory);
 }

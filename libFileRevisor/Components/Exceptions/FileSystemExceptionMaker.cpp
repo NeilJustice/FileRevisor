@@ -4,6 +4,7 @@
 #include "libFileRevisor/Exceptions/FileSystemException.h"
 
 FileSystemExceptionMaker::FileSystemExceptionMaker()
+   // Constant Components
    : _errorCodeTranslator(make_unique<ErrorCodeTranslator>())
 {
 }

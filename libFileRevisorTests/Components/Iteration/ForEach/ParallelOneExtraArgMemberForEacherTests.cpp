@@ -13,11 +13,6 @@ EVIDENCE
 class TestingClass
 {
 public:
-   TestingClass() = default;
-   TestingClass(const TestingClass&) = default;
-   TestingClass& operator=(const TestingClass&) = default;
-   TestingClass(TestingClass&&) noexcept = default;
-   TestingClass& operator=(TestingClass&&) noexcept = default;
    virtual void TwoArgMemberFunction(ElementType, ExtraArgType) const {}
    virtual ~TestingClass() = default;
 };
@@ -45,7 +40,7 @@ TEST(ParallelOneExtraArgMemberForEach_EmptyElements_DoesNotCallMemberFunction)
 
 TEST(ParallelOneExtraArgMemberForEach_OneItemElements_CallsMemberFunctionWithElementAndExtraArgOnce)
 {
-   TestingClassMock testingClassMock;
+   TestingClassMock testingClassMock{};
    testingClassMock.elements = { ZenUnit::Random<ElementType>() };
    testingClassMock.TwoArgMemberFunctionMock.Expect();
    const ExtraArgType extraArg = ZenUnit::Random<ExtraArgType>();
@@ -81,7 +76,7 @@ TEST(ParallelOneExtraArgMemberForEach_TwoItemElements_CallsInParallelOnBothEleme
 
 TEST(TestingClassTwoArgMemberFunction_DoesNothing)
 {
-   TestingClass testingClass;
+   const TestingClass testingClass{};
    testingClass.TwoArgMemberFunction(ZenUnit::Random<ElementType>(), ZenUnit::Random<ExtraArgType>());
 }
 

@@ -7,12 +7,13 @@ int* GetLinuxErrno();
 
 class ErrorCodeTranslator
 {
-   friend class ::ErrorCodeTranslatorTests;
+   friend class ErrorCodeTranslatorTests;
 public:
 #ifdef _WIN32
    using strerror_s_function_type = errno_t(*)(char*, size_t, int);
 #endif
 private:
+   // Function Pointers
    function<int* ()> _call_errno;
 #if defined __linux__|| defined __APPLE____linux__
    std::function<char* (int, char*, size_t)> _call_strerror_r;

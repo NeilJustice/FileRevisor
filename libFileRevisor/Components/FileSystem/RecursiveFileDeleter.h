@@ -2,7 +2,6 @@
 #include "libFileRevisor/Compiler/CompilerHints.h"
 class Console;
 class FileSystemExceptionMaker;
-struct FileRevisorArgs;
 
 class RecursiveFileDeleter
 {

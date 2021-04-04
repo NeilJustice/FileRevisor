@@ -4,6 +4,7 @@
 #include "libFileRevisorTests/Components/Docopt/ZenUnit/docoptvalueRandom.h"
 
 TESTS(DocoptParserTests)
+AFACT(DefaultConstructor_SetsDocoptFunctionPointer)
 AFACT(ParseArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
 AFACT(ParseArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
 AFACT(GetRequiredString_ArgNotInMap_ThrowsOutOfRange)
@@ -22,6 +23,7 @@ AFACT(GetOptionalStringWithDefaultValue_ArgInMap_ReturnsValue)
 EVIDENCE
 
 DocoptParser _docoptParser;
+// Function Pointers
 METALMOCK_NONVOID5_FREE(map<string COMMA docopt::Value>, docopt, const string&, const vector<string>&, bool, const string&, bool)
 
 map<string, docopt::Value> _docoptArgs;
@@ -30,11 +32,19 @@ string _expectedKeyNotFoundWhat;
 
 STARTUP
 {
+   // Function Pointers
    _docoptParser._call_docopt_docopt = BIND_5ARG_METALMOCK_OBJECT(docoptMock);
 
    _docoptArgs = ZenUnit::RandomOrderedMap<string, docopt::Value>();
    _argName = ZenUnit::Random<string>() + "_argName";
    _expectedKeyNotFoundWhat = "Error: Key not found in map: [" + _argName + "]";
+}
+
+TEST(DefaultConstructor_SetsDocoptFunctionPointer)
+{
+   const DocoptParser docoptParser;
+   // Function Pointers
+   STD_FUNCTION_TARGETS(docopt::docopt, docoptParser._call_docopt_docopt);
 }
 
 TEST(ParseArgs_ArgvVectorEmpty_ThrowsInvalidArgument)

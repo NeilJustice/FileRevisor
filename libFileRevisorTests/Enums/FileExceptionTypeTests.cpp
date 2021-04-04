@@ -9,10 +9,8 @@ EVIDENCE
 TEST(OStreamLeftShiftOperator_FileExceptionTypeValueIsNotWithinRange_WritesFileExceptionTypeAsInt)
 {
    ostringstream oss;
-   const FileExceptionType firstFileExceptionTypeValue =
-      static_cast<FileExceptionType>(ZenUnit::RandomBetween<int>(10, 20));
-   const FileExceptionType secondFileExceptionTypeValue =
-      static_cast<FileExceptionType>(ZenUnit::RandomBetween<int>(10, 20));
+   const FileExceptionType firstFileExceptionTypeValue = static_cast<FileExceptionType>(ZenUnit::RandomBetween<int>(10, 20));
+   const FileExceptionType secondFileExceptionTypeValue = static_cast<FileExceptionType>(ZenUnit::RandomBetween<int>(10, 20));
    //
    oss << firstFileExceptionTypeValue << secondFileExceptionTypeValue;
    //
@@ -26,17 +24,14 @@ TEST(OStreamLeftShiftOperator_FileExceptionTypeValueIsNotWithinRange_WritesFileE
 TEST(OStreamLeftShiftOperator_FileExceptionTypeValueIsWithinRange_WritesFileExceptionTypeAsString)
 {
    ostringstream oss;
-   const FileExceptionType firstFileExceptionTypeValue =
-      ZenUnit::RandomEnum<FileExceptionType>(FileExceptionType::MaxValue);
-   const FileExceptionType secondFileExceptionTypeValue =
-      ZenUnit::RandomEnum<FileExceptionType>(FileExceptionType::MaxValue);
+   const FileExceptionType firstFileExceptionTypeValue = ZenUnit::RandomEnum<FileExceptionType>(FileExceptionType::MaxValue);
+   const FileExceptionType secondFileExceptionTypeValue = ZenUnit::RandomEnum<FileExceptionType>(FileExceptionType::MaxValue);
    //
    oss << firstFileExceptionTypeValue << secondFileExceptionTypeValue;
    //
    const string ossString = oss.str();
    const string expectedOssString =
-      ENUM_TO_STRING(FileExceptionType, firstFileExceptionTypeValue) +
-      ENUM_TO_STRING(FileExceptionType, secondFileExceptionTypeValue);
+      ENUM_TO_STRING(FileExceptionType, firstFileExceptionTypeValue) + ENUM_TO_STRING(FileExceptionType, secondFileExceptionTypeValue);
    ARE_EQUAL(expectedOssString, ossString);
 }
 

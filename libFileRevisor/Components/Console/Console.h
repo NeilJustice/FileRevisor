@@ -3,7 +3,9 @@ class ConsoleTests;
 
 class Console
 {
-   friend class ::ConsoleTests;
+   friend class ConsoleTests;
+private:
+   mutable mutex _coutMutex;
 public:
    virtual ~Console() = default;
    virtual void WriteInt(int Value) const;

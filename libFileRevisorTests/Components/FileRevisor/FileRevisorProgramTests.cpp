@@ -12,7 +12,7 @@
 #include "libFileRevisorTests/Components/Time/MetalMock/StopwatchMock.h"
 
 TESTS(FileRevisorProgramTests)
-AFACT(DefaultConstructor_NewsComponents)
+AFACT(DefaultConstructor_SetsFunctionPointers_NewsComponents)
 AFACT(Main_ArgcIs1_WritesCommandLineUsage_Returns0)
 AFACT(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTime_ReturnsTryCatchCallReturnValue)
 AFACT(Run_ParsesArgs_GetsAndRunsSubProgramSpecifiedByCommandLineArguments_ReturnsSubProgramExitCode)
@@ -45,7 +45,7 @@ STARTUP
 	_fileRevisorProgram._stopwatch.reset(_stopwatchMock = new StopwatchMock);
 }
 
-TEST(DefaultConstructor_NewsComponents)
+TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
 {
    FileRevisorProgram textChangerProgram;
    // Function Callers

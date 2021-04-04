@@ -11,7 +11,7 @@ RenameFilesSubProgram::RenameFilesSubProgram()
    // Function Callers
    : _caller_PrintDidNotMatchFileMessageIfVerboseMode(make_unique<VoidTwoArgMemberFunctionCaller<
       RenameFilesSubProgram, bool, const fs::path& >>())
-      , _transformer_RenameFileIfFileNameMatchesFromPattern(make_unique<OneExtraArgMemberFunctionTransformerType>())
+   , _transformer_RenameFileIfFileNameMatchesFromPattern(make_unique<OneExtraArgMemberFunctionTransformerType>())
    // Constant Components
    , _predicateCounter(make_unique<PredicateCounter<vector<RenameResult>, RenameResult>>())
    , _regexer(make_unique<Regexer>())

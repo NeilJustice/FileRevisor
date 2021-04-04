@@ -25,10 +25,11 @@ const VoidTwoArgMemberFunctionCallerMock<RenameDirectoriesSubProgram, bool, cons
 // Function Callers
 using OneExtraArgMemberFunctionTransformerMockType = OneExtraArgMemberFunctionTransformerMock<RenameDirectoriesSubProgram, fs::path, RenameResult, const FileRevisorArgs&>;
 OneExtraArgMemberFunctionTransformerMockType* _directoryPathsTransformer_RenameDirectoryMock = nullptr;
-// Constant Components
+// Base Class Constant Components
 ConsoleMock* _protected_consoleMock = nullptr;
 FileSystemMock* _protected_fileSystemMock = nullptr;
 PluralizerMock* _protected_pluralizerMock = nullptr;
+// Constant Components
 PredicateCounterMock<vector<RenameResult>, RenameResult>* _predicateCounterMock = nullptr;
 RegexerMock* _regexerMock = nullptr;
 
@@ -38,10 +39,11 @@ STARTUP
    _renameDirectoriesSubProgram._call_PrintDidNotMatchDirectoryMessageIfVerboseMode.reset(_call_PrintDidNotMatchDirectoryMessageIfVerboseModeMock = new VoidTwoArgMemberFunctionCallerMock<RenameDirectoriesSubProgram, bool, const fs::path&>);
    // Function Callers
    _renameDirectoriesSubProgram._directoryPathsTransformer_RenameDirectory.reset(_directoryPathsTransformer_RenameDirectoryMock = new OneExtraArgMemberFunctionTransformerMockType);
-   // Constant Components
+   // Base Class Constant Components
 	_renameDirectoriesSubProgram._protected_console.reset(_protected_consoleMock = new ConsoleMock);
    _renameDirectoriesSubProgram._protected_fileSystem.reset(_protected_fileSystemMock = new FileSystemMock);
    _renameDirectoriesSubProgram._protected_pluralizer.reset(_protected_pluralizerMock = new PluralizerMock);
+   // Constant Components
    _renameDirectoriesSubProgram._predicateCounter.reset(_predicateCounterMock = new PredicateCounterMock<vector<RenameResult>, RenameResult>);
    _renameDirectoriesSubProgram._regexer.reset(_regexerMock = new RegexerMock);
 }
@@ -53,10 +55,11 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._call_PrintDidNotMatchDirectoryMessageIfVerboseMode);
    // Function Callers
    DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._directoryPathsTransformer_RenameDirectory);
-   // Constant Components
+   // Base Class Constant Components
    DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._protected_console);
    DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._protected_fileSystem);
    DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._protected_pluralizer);
+   // Constant Components
    DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._predicateCounter);
    DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._regexer);
 }

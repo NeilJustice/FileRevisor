@@ -12,13 +12,6 @@ EVIDENCE
 class ClassType
 {
 public:
-   // Rule of 5 to satisfy clang-tidy hicpp-special-member-functions
-   ClassType() = default;
-   ClassType(const ClassType&) = default;
-   ClassType& operator=(const ClassType&) = default;
-   ClassType(ClassType&&) noexcept = default;
-   ClassType& operator=(ClassType&&) noexcept = default;
-
    virtual void TwoArgFunction(ElementType, Arg2Type) const {}
    virtual ~ClassType() = default;
 };
@@ -43,7 +36,7 @@ TEST(TwoArgMemberForEach_EmptyCollection_DoesNotCallFunc)
 
 TEST(TwoArgMemberForEach_OneItemCollection_CallsThisPointerBoundFuncOnce)
 {
-   ClassTypeMock classInstance;
+   ClassTypeMock classInstance{};
    classInstance.vec = { 1 };
    classInstance.TwoArgFunctionMock.Expect();
    //
@@ -54,7 +47,7 @@ TEST(TwoArgMemberForEach_OneItemCollection_CallsThisPointerBoundFuncOnce)
 
 TEST(TwoArgMemberForEach_TwoItemCollection_CallsThisPointerBoundFuncTwice)
 {
-   ClassTypeMock classInstance;
+   ClassTypeMock classInstance{};
    classInstance.vec = { 1, 2 };
    classInstance.TwoArgFunctionMock.Expect();
    //
@@ -69,7 +62,7 @@ TEST(TwoArgMemberForEach_TwoItemCollection_CallsThisPointerBoundFuncTwice)
 
 TEST(TwoArgFunction_CodeCoverage)
 {
-   ClassType classInstance;
+   ClassType classInstance{};
    classInstance.TwoArgFunction(ElementType{}, Arg2Type{});
 }
 

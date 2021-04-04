@@ -4,7 +4,7 @@
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgram.h"
 
 FileRevisorSubProgram::FileRevisorSubProgram()
-   // Constant Components
+   // Base Class Constant Components
    : _protected_console(make_unique<Console>())
    , _protected_fileSystem(make_unique<FileSystem>())
    , _protected_pluralizer(make_unique<Pluralizer>())

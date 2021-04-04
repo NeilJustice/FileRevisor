@@ -3,6 +3,7 @@
 #include "libFileRevisor/Components/Docopt/docopt.h"
 
 DocoptParser::DocoptParser()
+   // Function Pointers
    : _call_docopt_docopt(docopt::docopt)
 {
 }

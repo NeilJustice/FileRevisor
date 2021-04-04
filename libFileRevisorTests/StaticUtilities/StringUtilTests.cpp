@@ -12,6 +12,7 @@ struct UserType
 {
 	int x;
 	explicit UserType(int x) : x(x) {}
+
 	friend ostream& operator<<(ostream& os, const UserType& userType)
 	{
 		os << userType.x;
@@ -20,7 +21,7 @@ struct UserType
 };
 
 TEST3X3(ContainsSubstring_ReturnsTrueIfStringContainsSubstring,
-   bool expectedReturnValue, const string& str, const string& substring,
+   bool expectedReturnValue, string_view str, string_view substring,
    true, "", "",
    true, " ", "",
    true, " ", " ",
@@ -37,7 +38,7 @@ TEST3X3(ContainsSubstring_ReturnsTrueIfStringContainsSubstring,
 }
 
 TEST3X3(CaseInsensitiveContainsSubstring_ReturnsTrueIfStringCaseInsensitiveContainsSubstring,
-   bool expectedReturnValue, const string& str, const string& substring,
+   bool expectedReturnValue, string_view str, string_view substring,
    true, "", "",
    true, " ", "",
    true, " ", " ",
@@ -55,7 +56,7 @@ TEST3X3(CaseInsensitiveContainsSubstring_ReturnsTrueIfStringCaseInsensitiveConta
 }
 
 TEST4X4(RegexReplace_ReturnsRegexReplacedString,
-   const string& str, const string& pattern, const string& replacement, const string& expectedReturnValue,
+   string_view str, string_view pattern, string_view replacement, string_view expectedReturnValue,
    "", "", "", "",
    "a", "b", "c", "a",
    "a", "a", "b", "b",

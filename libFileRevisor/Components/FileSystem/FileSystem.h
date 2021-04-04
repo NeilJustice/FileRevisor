@@ -1,23 +1,18 @@
 #pragma once
-
 class FileSystemTests;
-
 template<typename ReturnType, typename ClassType, typename ArgumentType>
 class NonVoidOneArgMemberFunctionCaller;
-
 template<typename ClassType, typename Arg1Type, typename Arg2Type>
 class VoidTwoArgMemberFunctionCaller;
-
 class ConstCharPointerGetter;
 class DirectoryIterator;
 class FileOpenerCloser;
 class FileSystemExceptionMaker;
-struct FileRevisorArgs;
 class RecursiveFileDeleter;
 
 class FileSystem
 {
-   friend class ::FileSystemTests;
+   friend class FileSystemTests;
 private:
    // Function Pointers
    function<FILE* (const char*, const char*)> _call_fopen;

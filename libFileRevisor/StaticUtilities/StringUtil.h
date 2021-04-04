@@ -3,39 +3,39 @@
 class String
 {
 public:
-   static bool ContainsSubstring(std::string_view stringView, std::string_view substring);
-   static bool CaseInsensitiveContainsSubstring(std::string_view stringView, std::string_view substring);
-   static std::string RegexReplace(std::string_view stringView, std::string_view matchingRegex, std::string_view replacingRegex);
+   static bool ContainsSubstring(string_view stringView, string_view substring);
+   static bool CaseInsensitiveContainsSubstring(string_view stringView, string_view substring);
+   static string RegexReplace(string_view stringView, string_view matchingRegex, string_view replacingRegex);
 
    template<typename T, typename... Ts>
-   static std::string Concat(const T& value, const Ts&... values)
+   static string Concat(const T& value, const Ts&... values)
    {
-      std::ostringstream stringStream;
+      ostringstream stringStream;
       stringStream << value;
       RecursivelyConcatenate(&stringStream, values...);
-      const std::string stringStreamConcatedValues = stringStream.str();
+      const string stringStreamConcatedValues = stringStream.str();
       return stringStreamConcatedValues;
    }
 
    template<typename T, typename... Ts>
-   static void RecursivelyConcatenate(std::ostringstream* outStringStream, const T& value, const Ts&... values)
+   static void RecursivelyConcatenate(ostringstream* outStringStream, const T& value, const Ts&... values)
    {
       (*outStringStream) << value;
       RecursivelyConcatenate(outStringStream, values...);
    }
 
    template<typename T, typename... Ts>
-   static void RecursivelyConcatenate(std::ostringstream* outStringStream, const T& value)
+   static void RecursivelyConcatenate(ostringstream* outStringStream, const T& value)
    {
       (*outStringStream) << value;
    }
 
    template<typename... T>
-   static void RecursivelyConcatenate(std::ostringstream*)
+   static void RecursivelyConcatenate(ostringstream*)
    {
    }
 
    String() = delete;
 private:
-   static std::string ToAllLowercase(std::string_view str);
+   static string ToAllLowercase(string_view str);
 };

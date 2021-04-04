@@ -24,7 +24,6 @@ void Console::WriteLine(string_view message) const
 
 void Console::LockingWriteLine(string_view message) const
 {
-   static mutex staticLockingWriteLineMutex;
-   unique_lock<mutex> lockingWriteLineMutex(staticLockingWriteLineMutex);
+   unique_lock<mutex> coutLock(_coutMutex);
    cout << message << endl;
 }

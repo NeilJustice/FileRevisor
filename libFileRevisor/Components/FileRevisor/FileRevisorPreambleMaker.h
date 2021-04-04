@@ -1,11 +1,11 @@
 #pragma once
 class FileSystem;
-struct FileRevisorArgs;
 
 class FileRevisorPreambleMaker
 {
    friend class FileRevisorPreambleMakerTests;
 private:
+   // Constant Components
    unique_ptr<const FileSystem> _fileSystem;
 public:
    FileRevisorPreambleMaker();

@@ -3,20 +3,18 @@
 #include "libFileRevisor/Exceptions/FileSystemException.h"
 
 TESTS(FileExceptionTests)
-AFACT(Constructor_MakesWhatReturnExpectedExceptionMessage)
+AFACT(TwoArgConstructor_MakesWhatReturnExpectedExceptionMessage)
 EVIDENCE
 
-TEST(Constructor_MakesWhatReturnExpectedExceptionMessage)
+TEST(TwoArgConstructor_MakesWhatReturnExpectedExceptionMessage)
 {
-   const FileExceptionType fileExceptionType =
-      ZenUnit::RandomEnum<FileExceptionType>(FileExceptionType::MaxValue);
+   const FileExceptionType fileExceptionType = ZenUnit::RandomEnum<FileExceptionType>(FileExceptionType::MaxValue);
    const string exceptionMessage = ZenUnit::Random<string>();
    //
    const FileSystemException fileException(fileExceptionType, exceptionMessage);
    const char* const fullExceptionMessage = fileException.what();
    //
-   const string expectedFullExceptionMessage =
-      ENUM_TO_STRING(FileExceptionType, fileExceptionType) + ": " + string(exceptionMessage);
+   const string expectedFullExceptionMessage = ENUM_TO_STRING(FileExceptionType, fileExceptionType) + ": " + string(exceptionMessage);
    ARE_EQUAL(expectedFullExceptionMessage, fullExceptionMessage);
 }
 

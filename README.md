@@ -34,7 +34,9 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
 
 ```
 FileRevisor v0.9.6
-Quickly deletes directories in parallel, renames files and directories, and replaces text in files.
+Quickly deletes directories in parallel,
+bulk renames files and directories,
+and replaces text in files that matches a regular expression.
 https://github.com/NeilJustice/FileRevisor
 
 Usage:

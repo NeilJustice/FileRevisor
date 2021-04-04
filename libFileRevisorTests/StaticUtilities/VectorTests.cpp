@@ -38,7 +38,7 @@ TEST(Join_1ElementIntVector_ReturnsFirstElementRegardlessOfSeparator)
 }
 
 TEST3X3(Join_2ElementIntVector_ReturnsElementsJoinedBySeparator,
-   const string& expectedJoinedVector, const vector<int>& vec, char separator,
+   string_view expectedJoinedVector, const vector<int>& vec, char separator,
 	"1 2", vector<int>{ 1, 2 }, ' ',
 	"1,2", vector<int>{ 1, 2 }, ',',
 	"1 2 3", vector<int>{ 1, 2, 3 }, ' ',

@@ -9,7 +9,9 @@ EVIDENCE
 TEST(CommandLineUsage_IsExpectedString)
 {
    ARE_EQUAL(R"(FileRevisor v0.9.6
-Quickly deletes directories in parallel, renames files and directories, and replaces text in files.
+Quickly deletes directories in parallel,
+bulk renames files and directories,
+and replaces text in files that matches a regular expression.
 https://github.com/NeilJustice/FileRevisor
 
 Usage:

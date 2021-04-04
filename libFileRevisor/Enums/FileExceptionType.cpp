@@ -15,4 +15,4 @@ ostream& operator<<(ostream& os, FileExceptionType fileExceptionType)
    return os;
 }
 
-INITIALIZE_ENUM_TO_STRING_AND_STRING_TO_ENUM_MAPS(FileExceptionType)
+INITIALIZE_STRING_ENUM_MAP(FileExceptionType)

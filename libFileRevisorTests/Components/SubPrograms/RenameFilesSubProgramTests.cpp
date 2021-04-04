@@ -26,9 +26,10 @@ using OneExtraArgMemberFunctionTransformerMockType = OneExtraArgMemberFunctionTr
 OneExtraArgMemberFunctionTransformerMockType* _transformer_RenameFileIfFileNameMatchesFromPatternMock = nullptr;
 const VoidTwoArgMemberFunctionCallerMock<RenameFilesSubProgram, bool, const fs::path&>*
 _caller_PrintDidNotMatchFileMessageIfVerboseModeMock = nullptr;
-// Constant Components
+// Base Class Constant Components
 ConsoleMock* _protected_consoleMock = nullptr;
 FileSystemMock* _protected_fileSystemMock = nullptr;
+// Constant Components
 PluralizerMock* _pluralizerMock = nullptr;
 PredicateCounterMock<vector<RenameResult>, RenameResult>* _predicateCounterMock = nullptr;
 RegexerMock* _regexerMock = nullptr;
@@ -38,9 +39,10 @@ STARTUP
    // Function Callers
    _renameFilesSubProgram._caller_PrintDidNotMatchFileMessageIfVerboseMode.reset(_caller_PrintDidNotMatchFileMessageIfVerboseModeMock = new VoidTwoArgMemberFunctionCallerMock<RenameFilesSubProgram, bool, const fs::path&>);
    _renameFilesSubProgram._transformer_RenameFileIfFileNameMatchesFromPattern.reset(_transformer_RenameFileIfFileNameMatchesFromPatternMock = new OneExtraArgMemberFunctionTransformerMockType);
-   // Constant Components
+   // Base Class Constant Components
    _renameFilesSubProgram._protected_console.reset(_protected_consoleMock = new ConsoleMock);
    _renameFilesSubProgram._protected_fileSystem.reset(_protected_fileSystemMock = new FileSystemMock);
+   // Constant Components
    _renameFilesSubProgram._protected_pluralizer.reset(_pluralizerMock = new PluralizerMock);
    _renameFilesSubProgram._predicateCounter.reset(_predicateCounterMock = new PredicateCounterMock<vector<RenameResult>, RenameResult>);
    _renameFilesSubProgram._regexer.reset(_regexerMock = new RegexerMock);
@@ -52,10 +54,11 @@ TEST(DefaultConstructor_NewsComponents)
    // Function Callers
    DELETE_TO_ASSERT_NEWED(renameFilesSubProgram._caller_PrintDidNotMatchFileMessageIfVerboseMode);
    DELETE_TO_ASSERT_NEWED(renameFilesSubProgram._transformer_RenameFileIfFileNameMatchesFromPattern);
-   // Constant Components
+   // Base Class Constant Components
    DELETE_TO_ASSERT_NEWED(renameFilesSubProgram._protected_console);
    DELETE_TO_ASSERT_NEWED(renameFilesSubProgram._protected_fileSystem);
    DELETE_TO_ASSERT_NEWED(renameFilesSubProgram._protected_pluralizer);
+   // Constant Components
    DELETE_TO_ASSERT_NEWED(renameFilesSubProgram._predicateCounter);
    DELETE_TO_ASSERT_NEWED(renameFilesSubProgram._regexer);
 }

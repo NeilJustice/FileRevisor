@@ -1,4 +1,3 @@
-
 project(libFileRevisorTests)
 include(${CMAKE_SOURCE_DIR}/CMakeMacros.cmake)
 

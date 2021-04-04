@@ -3,7 +3,7 @@
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileOpenerCloserMock.h"
 
 TESTS(DirectoryIteratorTests)
-AFACT(DefaultConstructor_SetsFieldsToDefaultValues)
+AFACT(DefaultConstructor_NewsComponents_SetsFieldsToDefaultValues)
 FACTS(PathContainsAnySubstringCaseInsensitive_ReturnsTrueIfFilePathCaseInsensitiveContainsAnySubstring)
 AFACT(SetDirectoryIterator_RecurseIsTrue_SetsRecursiveDirectoryIterator_SetsRecursiveModeToTrue)
 AFACT(SetDirectoryIterator_RecurseIsFalse_SetsDirectoryIterator)
@@ -22,7 +22,7 @@ STARTUP
    _directoryIterator._fileOpenerCloser.reset(_fileOpenerCloserMock = new FileOpenerCloserMock);
 }
 
-TEST(DefaultConstructor_SetsFieldsToDefaultValues)
+TEST(DefaultConstructor_NewsComponents_SetsFieldsToDefaultValues)
 {
    DirectoryIterator directoryIterator;
    // Constant Components

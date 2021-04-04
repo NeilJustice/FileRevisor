@@ -12,7 +12,7 @@ EVIDENCE
 TEST(DefaultConstructor_NewsComponents)
 {
    FileRevisorSubProgram fileRevisorSubProgram;
-   // Constant Components
+   // Base Class Constant Components
    DELETE_TO_ASSERT_NEWED(fileRevisorSubProgram._protected_console);
    DELETE_TO_ASSERT_NEWED(fileRevisorSubProgram._protected_fileSystem);
    DELETE_TO_ASSERT_NEWED(fileRevisorSubProgram._protected_pluralizer);

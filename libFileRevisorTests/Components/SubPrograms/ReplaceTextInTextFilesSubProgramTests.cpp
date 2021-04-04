@@ -31,10 +31,11 @@ using OneExtraArgMemberFunctionAccumulatorMockType = OneExtraArgMemberFunctionAc
    fs::path,
    const FileRevisorArgs&>;
 OneExtraArgMemberFunctionAccumulatorMockType* _memberFunctionAccumulator_RegexReplaceTextInTextFileMock = nullptr;
-// Constant Components
+// Base Class Constant Components
 ConsoleMock* _protected_consoleMock = nullptr;
 FileSystemMock* _protected_fileSystemMock = nullptr;
 PluralizerMock* _protected_pluralizerMock = nullptr;
+// Constant Components
 RegexerMock* _regexerMock = nullptr;
 // Mutable Components
 DirectoryIteratorMock* _directoryIteratorMock = nullptr;
@@ -45,10 +46,11 @@ STARTUP
    _replaceTextInTextFilesSubProgram._call_PrintReadingFileMessageIfVerboseMode.reset(_call_PrintReadingFileMessageIfVerboseModeMock = new VoidTwoArgMemberFunctionCallerMock<ReplaceTextInTextFilesSubProgram, bool, const fs::path&>);
    // Function Callers
    _replaceTextInTextFilesSubProgram._memberFunctionAccumulator_RegexReplaceTextInTextFile.reset(_memberFunctionAccumulator_RegexReplaceTextInTextFileMock = new OneExtraArgMemberFunctionAccumulatorMockType);
-   // Constant Components
+   // Base Class Constant Components
    _replaceTextInTextFilesSubProgram._protected_console.reset(_protected_consoleMock = new ConsoleMock);
    _replaceTextInTextFilesSubProgram._protected_fileSystem.reset(_protected_fileSystemMock = new FileSystemMock);
    _replaceTextInTextFilesSubProgram._protected_pluralizer.reset(_protected_pluralizerMock = new PluralizerMock);
+   // Constant Components
    _replaceTextInTextFilesSubProgram._regexer.reset(_regexerMock = new RegexerMock);
    // Mutable Components
    _replaceTextInTextFilesSubProgram._directoryIterator.reset(_directoryIteratorMock = new DirectoryIteratorMock);
@@ -61,10 +63,11 @@ TEST(DefaultConstructor_NewsFileSystem)
    DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._call_PrintReadingFileMessageIfVerboseMode);
    // Function Callers
    DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._memberFunctionAccumulator_RegexReplaceTextInTextFile);
-   // Constant Components
+   // Base Class Constant Components
    DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._protected_console);
    DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._protected_fileSystem);
    DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._protected_pluralizer);
+   // Constant Components
    DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._regexer);
    // Mutable Components
    DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._directoryIterator);

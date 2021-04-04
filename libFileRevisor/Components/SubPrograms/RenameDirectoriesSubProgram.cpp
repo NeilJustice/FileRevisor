@@ -48,8 +48,7 @@ int RenameDirectoriesSubProgram::Run(const FileRevisorArgs& args) const
    return 0;
 }
 
-RenameResult RenameDirectoriesSubProgram::
-RenameDirectory(const fs::path& directoryPath, const FileRevisorArgs& args) const
+RenameResult RenameDirectoriesSubProgram::RenameDirectory(const fs::path& directoryPath, const FileRevisorArgs& args) const
 {
    const string directoryName = directoryPath.filename().string();
    const string regexReplacedDirectoryName = _regexer->Replace(directoryName, args.fromRegexPattern, args.toRegexPattern);
@@ -75,8 +74,7 @@ RenameDirectory(const fs::path& directoryPath, const FileRevisorArgs& args) cons
    return RenameResult(true, directoryPath, renamedDirectoryPath);
 }
 
-void RenameDirectoriesSubProgram::
-PrintDidNotMatchDirectoryMessageIfVerboseMode(bool verbose, const fs::path& directoryPath) const
+void RenameDirectoriesSubProgram::PrintDidNotMatchDirectoryMessageIfVerboseMode(bool verbose, const fs::path& directoryPath) const
 {
    if (verbose)
    {

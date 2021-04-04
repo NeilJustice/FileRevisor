@@ -3,6 +3,7 @@
 #include "libFileRevisor/Exceptions/FileSystemException.h"
 
 FileSystemException::FileSystemException(FileExceptionType fileExceptionType, string_view exceptionMessage)
+   // Constant Fields
    : _exceptionMessage(ENUM_TO_STRING(FileExceptionType, fileExceptionType) + ": " + string(exceptionMessage))
 {
 }

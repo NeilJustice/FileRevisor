@@ -3,7 +3,7 @@
 #include "libFileRevisor/Components/FileSystem/FileOpenerCloser.h"
 
 FileOpenerCloser::FileOpenerCloser()
-// Function Pointers
+   // Function Pointers
    : _call_fclose(fclose)
 #if defined __linux__ || defined __APPLE__
    , _call_fopen(fopen)

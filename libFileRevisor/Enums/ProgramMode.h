@@ -13,10 +13,10 @@ enum class ProgramMode : unsigned char
 ostream& operator<<(ostream& os, ProgramMode programMode);
 
 BEGIN_STRING_ENUM_MAP(ProgramMode)
-ADD_ENUM_TO_STRING_AND_STRING_TO_ENUM_MAPPINGS(ProgramMode, Unset)
-ADD_ENUM_TO_STRING_AND_STRING_TO_ENUM_MAPPINGS(ProgramMode, RenameFiles)
-ADD_ENUM_TO_STRING_AND_STRING_TO_ENUM_MAPPINGS(ProgramMode, RenameDirectories)
-ADD_ENUM_TO_STRING_AND_STRING_TO_ENUM_MAPPINGS(ProgramMode, ReplaceTextInTextFiles)
-ADD_ENUM_TO_STRING_AND_STRING_TO_ENUM_MAPPINGS(ProgramMode, DeleteDirectory)
-ADD_ENUM_TO_STRING_AND_STRING_TO_ENUM_MAPPINGS(ProgramMode, MaxValue)
+STRING_ENUM_MAP(ProgramMode, Unset)
+STRING_ENUM_MAP(ProgramMode, RenameFiles)
+STRING_ENUM_MAP(ProgramMode, RenameDirectories)
+STRING_ENUM_MAP(ProgramMode, ReplaceTextInTextFiles)
+STRING_ENUM_MAP(ProgramMode, DeleteDirectory)
+STRING_ENUM_MAP(ProgramMode, MaxValue)
 END_STRING_ENUM_MAP

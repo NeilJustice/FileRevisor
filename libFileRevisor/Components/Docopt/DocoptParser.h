@@ -7,8 +7,9 @@ class DocoptParserTests;
 
 class DocoptParser
 {
-   friend class ::DocoptParserTests;
+   friend class DocoptParserTests;
 private:
+   // Function Pointers
    function<map<string, docopt::Value>(string, const vector<string>&, bool, string, bool)> _call_docopt_docopt;
 public:
    DocoptParser();

@@ -14,7 +14,6 @@ class OneExtraArgMemberFunctionAccumulator;
 class Regexer;
 template<typename ClassType, typename Arg1Type, typename Arg2Type>
 class VoidTwoArgMemberFunctionCaller;
-struct FileRevisorArgs;
 
 class ReplaceTextInTextFilesSubProgram : public FileRevisorSubProgram
 {

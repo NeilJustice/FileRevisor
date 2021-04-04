@@ -8,16 +8,19 @@ FACTS(MakePreambleLines_ReturnsExpectedPreambleLinesAsAString)
 EVIDENCE
 
 FileRevisorPreambleMaker _fileRevisorPreambleMaker;
+// Constant Components
 FileSystemMock* _fileSystemMock = nullptr;
 
 STARTUP
 {
+   // Constant Components
    _fileRevisorPreambleMaker._fileSystem.reset(_fileSystemMock = new FileSystemMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
 {
    FileRevisorPreambleMaker fileRevisorPreambleMaker;
+   // Constant Components
    DELETE_TO_ASSERT_NEWED(fileRevisorPreambleMaker._fileSystem);
 }
 
