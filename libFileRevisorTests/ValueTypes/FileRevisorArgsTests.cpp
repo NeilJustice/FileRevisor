@@ -8,10 +8,10 @@ EVIDENCE
 
 TEST(CommandLineUsage_IsExpectedString)
 {
-   ARE_EQUAL(R"(FileRevisor v0.9.6
+   ARE_EQUAL(R"(FileRevisor v0.10.0
 Quickly deletes directories in parallel,
-bulk renames files and directories,
-and replaces text in files that matches a regular expression.
+bulk renames files or directories,
+or replaces text in files that matches a regular expression.
 https://github.com/NeilJustice/FileRevisor
 
 Usage:

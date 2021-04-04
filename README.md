@@ -33,10 +33,10 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
 ## FileRevisor Command Line Usage
 
 ```
-FileRevisor v0.9.6
+FileRevisor v0.10.0
 Quickly deletes directories in parallel,
-bulk renames files and directories,
-and replaces text in files that matches a regular expression.
+bulk renames files or directories,
+or replaces text in files that matches a regular expression.
 https://github.com/NeilJustice/FileRevisor
 
 Usage:
@@ -44,7 +44,6 @@ Usage:
       --target=<TargetDirectoryPath>
       [--parallel]
       [--minimal]
-
    filerevisor rename-files
       --target=<TargetDirectoryPath>
       --from=<FileNameRegex>
@@ -52,7 +51,6 @@ Usage:
       [--recurse]
       [--preview]
       [--verbose]
-
    filerevisor rename-directories
       --target=<TargetDirectoryPath>
       --from=<DirectoryNameRegex>
@@ -60,7 +58,6 @@ Usage:
       [--recurse]
       [--preview]
       [--verbose]
-
    filerevisor replace-text
       --target=<TargetDirectoryPath>
       --from=<FileTextRegexPattern>
