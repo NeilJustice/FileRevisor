@@ -53,25 +53,19 @@ TEST(ParallelOneExtraArgMemberForEach_OneItemElements_CallsMemberFunctionWithEle
 
 TEST(ParallelOneExtraArgMemberForEach_TwoItemElements_CallsInParallelOnBothElementsTheMemberFunctionWithElementAndExtraArg)
 {
-   //TestingClassMock testingClassMock;
-   //testingClassMock.elements = { ZenUnit::Random<ElementType>(), ZenUnit::Random<ElementType>() };
-   //testingClassMock.TwoArgMemberFunctionMock.Expect();
-   //const ExtraArgType extraArg = ZenUnit::Random<ExtraArgType>();
-   ////
-   //_parallelOneExtraArgMemberForEacher_DeleteDirectory.ParallelOneExtraArgMemberForEach(
-   //   testingClassMock.elements, &testingClassMock, &TestingClass::TwoArgMemberFunction, extraArg);
-   ////
-   //vector<MetalMock::TwoArgumentFunctionCall<ElementType, ExtraArgType>> expectedMetalMockedFunctionCallHistory =
-   //{
-   //   { testingClassMock.elements[0], extraArg },
-   //   { testingClassMock.elements[1], extraArg }
-   //};
-   //INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(
-   //   expectedMetalMockedFunctionCallHistory,
-   //   testingClassMock.TwoArgMemberFunctionMock.metalMockedFunctionCallHistory);
-
-   //// To prevent Fatal Expected But Not Asserted MetalMocked Function
-   //testingClassMock.TwoArgMemberFunctionMock._wasAsserted = true;
+   TestingClassMock testingClassMock{};
+   testingClassMock.elements = { ZenUnit::Random<ElementType>(), ZenUnit::Random<ElementType>() };
+   testingClassMock.TwoArgMemberFunctionMock.Expect();
+   const ExtraArgType extraArg = ZenUnit::Random<ExtraArgType>();
+   //
+   _parallelOneExtraArgMemberForEacher_DeleteDirectory.ParallelOneExtraArgMemberForEach(
+      testingClassMock.elements, &testingClassMock, &TestingClass::TwoArgMemberFunction, extraArg);
+   //
+   METALMOCK(testingClassMock.TwoArgMemberFunctionMock.CalledAsFollowsInAnyOrder(
+   {
+      { testingClassMock.elements[0], extraArg },
+      { testingClassMock.elements[1], extraArg }
+   }));
 }
 
 TEST(TestingClassTwoArgMemberFunction_DoesNothing)
