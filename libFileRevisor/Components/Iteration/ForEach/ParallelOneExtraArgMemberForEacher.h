@@ -1,4 +1,8 @@
 #pragma once
+#if defined __GNUG__ && !defined __clang__
+#include <parallel/algorithm>
+#include <parallel/settings.h>
+#endif
 
 template<typename T, typename ClassType, typename MemberFunctionType, typename ExtraArgType>
 class ParallelOneExtraArgMemberForEacher

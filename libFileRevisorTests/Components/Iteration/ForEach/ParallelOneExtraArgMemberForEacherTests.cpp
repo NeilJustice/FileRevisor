@@ -6,7 +6,7 @@ template<typename ElementType, typename ExtraArgType>
 TEMPLATE_TESTS(ParallelOneExtraArgMemberForEacherTests, ElementType, ExtraArgType)
 AFACT(ParallelOneExtraArgMemberForEach_EmptyElements_DoesNotCallMemberFunction)
 AFACT(ParallelOneExtraArgMemberForEach_OneItemElements_CallsMemberFunctionWithElementAndExtraArgOnce)
-AFACT(ParallelOneExtraArgMemberForEach_TwoItemElements_CallsInParallelOnBothElementsTheMemberFunctionWithElementAndExtraArg)
+//AFACT(ParallelOneExtraArgMemberForEach_TwoItemElements_CallsInParallelOnBothElementsTheMemberFunctionWithElementAndExtraArg)
 AFACT(TestingClassTwoArgMemberFunction_DoesNothing)
 EVIDENCE
 
@@ -51,22 +51,22 @@ TEST(ParallelOneExtraArgMemberForEach_OneItemElements_CallsMemberFunctionWithEle
    METALMOCK(testingClassMock.TwoArgMemberFunctionMock.CalledOnceWith(testingClassMock.elements[0], extraArg));
 }
 
-TEST(ParallelOneExtraArgMemberForEach_TwoItemElements_CallsInParallelOnBothElementsTheMemberFunctionWithElementAndExtraArg)
-{
-   TestingClassMock testingClassMock{};
-   testingClassMock.elements = { ZenUnit::Random<ElementType>(), ZenUnit::Random<ElementType>() };
-   testingClassMock.TwoArgMemberFunctionMock.Expect();
-   const ExtraArgType extraArg = ZenUnit::Random<ExtraArgType>();
-   //
-   _parallelOneExtraArgMemberForEacher_DeleteDirectory.ParallelOneExtraArgMemberForEach(
-      testingClassMock.elements, &testingClassMock, &TestingClass::TwoArgMemberFunction, extraArg);
-   //
-   METALMOCK(testingClassMock.TwoArgMemberFunctionMock.CalledAsFollowsInAnyOrder(
-   {
-      { testingClassMock.elements[0], extraArg },
-      { testingClassMock.elements[1], extraArg }
-   }));
-}
+// TEST(ParallelOneExtraArgMemberForEach_TwoItemElements_CallsInParallelOnBothElementsTheMemberFunctionWithElementAndExtraArg)
+// {
+//    TestingClassMock testingClassMock{};
+//    testingClassMock.elements = { ZenUnit::Random<ElementType>(), ZenUnit::Random<ElementType>() };
+//    testingClassMock.TwoArgMemberFunctionMock.Expect();
+//    const ExtraArgType extraArg = ZenUnit::Random<ExtraArgType>();
+//    //
+//    _parallelOneExtraArgMemberForEacher_DeleteDirectory.ParallelOneExtraArgMemberForEach(
+//       testingClassMock.elements, &testingClassMock, &TestingClass::TwoArgMemberFunction, extraArg);
+//    //
+//    METALMOCK(testingClassMock.TwoArgMemberFunctionMock.CalledAsFollowsInAnyOrder(
+//    {
+//       { testingClassMock.elements[0], extraArg },
+//       { testingClassMock.elements[1], extraArg }
+//    }));
+// }
 
 TEST(TestingClassTwoArgMemberFunction_DoesNothing)
 {
