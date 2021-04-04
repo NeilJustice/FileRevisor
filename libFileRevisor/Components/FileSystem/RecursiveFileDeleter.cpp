@@ -23,9 +23,10 @@ RecursiveFileDeleter::~RecursiveFileDeleter()
 {
 }
 
-NOINLINE void PrintDeletedFileMessage(const char* filePath)
+void RecursiveFileDeleter::PrintDeletedFileMessage(const char* filePath) const
 {
-   cout << "[FileRevisor] Deleted file " << filePath << '\n';
+   const string deletedFileMessage = String::Concat("[FileRevisor] Deleted file ", filePath);
+   _console->WriteLine(deletedFileMessage);
 }
 
 #if defined __linux__|| defined __APPLE__
@@ -85,7 +86,7 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* dire
    directoryPathSearchPatternChars[directoryPathLength + 1] = '*';
    directoryPathSearchPatternChars[directoryPathLength + 2] = 0;
 
-   WIN32_FIND_DATA win32FindData;
+   WIN32_FIND_DATA win32FindData{};
    const HANDLE findFirstFilePointer = FindFirstFileEx(
       directoryPathSearchPatternChars, FindExInfoBasic, &win32FindData, FindExSearchNameMatch, NULL, NULL);
    ThrowFileSystemExceptionIfFindFirstFileExReturnedInvalidHandleValue(
@@ -138,8 +139,7 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* dire
    release_assert(didCloseFilePointer == TRUE);
 }
 
-void RecursiveFileDeleter::
-ThrowFileSystemExceptionIfFindFirstFileExReturnedInvalidHandleValue(
+void RecursiveFileDeleter::ThrowFileSystemExceptionIfFindFirstFileExReturnedInvalidHandleValue(
    HANDLE findFirstFileExHandle, const char* directoryPathSearchPatternChars) const
 {
    if (findFirstFileExHandle == INVALID_HANDLE_VALUE)

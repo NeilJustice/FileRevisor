@@ -24,6 +24,7 @@ public:
    virtual void RemoveReadonlyFlagFromFileSystemFilePath(const fs::path& filePath) const;
 #endif
 private:
+   void PrintDeletedFileMessage(const char* filePath) const;
    virtual void ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissionDenied(
       const char* filePath, const FileRevisorArgs& args) const;
 #ifdef _WIN32
