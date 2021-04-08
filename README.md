@@ -2,9 +2,9 @@
 
 [![Standard](https://img.shields.io/badge/c%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B20) ![GitHub](https://img.shields.io/github/license/NeilJustice/FileRevisor) ![GitHub last commit](https://img.shields.io/github/last-commit/NeilJustice/FileRevisor)
 
-FileRevisor is a cross-platform C++ command line program for quickly deleting large directories in parallel, renaming files and directories, and replacing text in files.
+FileRevisor is a cross-platform C++ command line program for quickly deleting large directories in parallel, bulk renaming files and directories, and replacing text in files that matches a given regular expression.
 
-FileRevisor's key feature is its extreme performance when deleting large folders in parallel on Windows. On Linux, file deletions are quite a bit faster than on Windows, and so the parallel file deletion peformance boost which FileRevisor provides is much more modest on Linux relative to Windows.
+FileRevisor's key feature is its extreme performance when deleting large folders in parallel on Windows. On Linux, file deletions are quite a bit faster than on Windows, and so the parallel file deletion peformance boost which FileRevisor provides is more modest on Linux relative to Windows.
 
 |Build Type|Build Status|
 |----------|------------|
@@ -202,9 +202,9 @@ Resulting executable `C:\bin\FileRevisor.exe`:
 
 ## FileRevisor Roadmap
 
-|Future FileRevisor Feature|Implementation Status As Of 3/15/2021|
+|Future FileRevisor Feature|Implementation Status As Of 4/8/2021|
 |--------------------------|------------------------------------|
-|GitHub Actions build|Awaiting implementation|
+|GitHub Actions build|In progress|
 |SonarCloud Python static analysis badge for FileRevisorPyUtils|Awaiting implementation|
 |SonarCloud C++ static analysis badge|Awaiting implementation|
 |Coverity C++ static analysis badge|Awaiting implementation|
