@@ -24,8 +24,8 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
 * [Windows Folder Deletion Performance: CMD vs. Git Bash vs. PowerShell vs. FileRevisor delete-directory --parallel](#windows-folder-deletion-performance-cmd-vs-git-bash-vs-powershell-vs-filerevisor-delete-directory---parallel)
 * [FileRevisor Code Structure As It Appears In Visual Studio Code On Linux](#filerevisor-code-structure-as-it-appears-in-visual-studio-code-on-linux)
 * [FileRevisor Code Structure As It Appears In Visual Studio 2019 On Windows](#filerevisor-code-structure-as-it-appears-in-visual-studio-2019-on-windows)
-* [Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor's C++ Code and SonarQube Scan FileRevisor's Python Code](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filerevisors-c-code-and-sonarqube-scan-filerevisors-python-code)
-* [Windows Jenkins Jobs Which Build And Cppcheck FileRevisor's C++ Code and Mypy-Flake8-Pylint-SonarQube Scan FileRevisor's Python Code](#windows-jenkins-jobs-which-build-and-cppcheck-filerevisors-c-code-and-mypy-flake8-pylint-sonarqube-filerevisors-python-code)
+* [Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor's C++ Code and Mypy-Flake8-Pylint-SonarQube FileRevisor's CI/CD Python Code](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filerevisors-c-code-and-mypy-flake8-pylint-sonarqube-filerevisors-cicd-python-code)
+* [Windows Jenkins Jobs Which Build And Cppcheck FileRevisor's C++ Code and Mypy-Flake8-Pylint-SonarQube Scan FileRevisor's CI/CD Python Code](#windows-jenkins-jobs-which-build-and-cppcheck-filerevisors-c-code-and-mypy-flake8-pylint-sonarqube-filerevisors-cicd-python-code)
 * [How To Build Binary filerevisor On Linux With Clang](#how-to-build-binary-filerevisor-on-linux-with-clang)
 * [How To Build Executable FileRevisor.exe On Windows With Visual Studio 2019](#how-to-build-executable-filerevisorexe-on-windows-with-visual-studio-2019)
 * [FileRevisor Roadmap](#filerevisor-roadmap)
@@ -162,13 +162,13 @@ Shown in this screenshot is function `DeleteDirectorySubProgram::Run` with the k
 
 ![FileRevisor Code Structure As It Appears In Visual Studio 2019 On Windows](Screenshots/Windows/VisualStudio.png)
 
-### Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor's C++ Code and SonarQube Scan FileRevisor's Python Code
+### Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor's C++ Code and Mypy-Flake8-Pylint-SonarQube FileRevisor's CI/CD Python Code
 
 A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 33 with Clang 11.0.0 and GCC 10.2.1:
 
 ![Linux FileRevisor Jenkins Jobs](Screenshots/Linux/LinuxJenkinsJobs.png)
 
-### Windows Jenkins Jobs Which Build And Cppcheck FileRevisor's C++ Code and Mypy-Flake8-Pylint-SonarQube FileRevisor's Python Code
+### Windows Jenkins Jobs Which Build And Cppcheck FileRevisor's C++ Code and Mypy-Flake8-Pylint-SonarQube FileRevisor's CI/CD Python Code
 
 A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Windows 10 with Visual Studio 2019:
 
