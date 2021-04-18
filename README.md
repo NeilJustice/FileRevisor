@@ -14,23 +14,23 @@ FileRevisor's key feature is its extreme performance when deleting large folders
 
 FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">ZenUnit and MetalMock</a>.
 
-* [FileRevisor Command Line Usage](#filerevisor-command-line-usage)
-* [FileRevisor Program Modes](#filerevisor-program-modes)
+* [FileRevisor command line usage](#filerevisor-command-line-usage)
+* [FileRevisor program modes](#filerevisor-program-modes)
   * [delete-directory](#delete-directory)
   * [rename-files](#rename-files)
   * [rename-directories](#rename-directories)
   * [replace-text](#replace-text)
-* [Linux Directory Deletion Performance: rm -rf > /dev/null vs. FileRevisor](#linux-directory-deletion-performance-rm-rf->-dev-null-vs-FileRevisor)
-* [Windows Folder Deletion Performance: CMD vs. Git Bash vs. PowerShell vs. FileRevisor delete-directory --parallel](#windows-folder-deletion-performance-cmd-vs-git-bash-vs-powershell-vs-filerevisor-delete-directory---parallel)
-* [FileRevisor Code Structure As It Appears In Visual Studio Code On Linux](#filerevisor-code-structure-as-it-appears-in-visual-studio-code-on-linux)
-* [FileRevisor Code Structure As It Appears In Visual Studio 2019 On Windows](#filerevisor-code-structure-as-it-appears-in-visual-studio-2019-on-windows)
-* [Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor's C++ Code and Mypy-Flake8-Pylint-SonarQube FileRevisor's CI/CD Python Code](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filerevisors-c-code-and-mypy-flake8-pylint-sonarqube-filerevisors-cicd-python-code)
-* [Windows Jenkins Jobs Which Build And Cppcheck FileRevisor's C++ Code and Mypy-Flake8-Pylint-SonarQube Scan FileRevisor's CI/CD Python Code](#windows-jenkins-jobs-which-build-and-cppcheck-filerevisors-c-code-and-mypy-flake8-pylint-sonarqube-filerevisors-cicd-python-code)
-* [How To Build Binary filerevisor On Linux With Clang](#how-to-build-binary-filerevisor-on-linux-with-clang)
-* [How To Build Executable FileRevisor.exe On Windows With Visual Studio 2019](#how-to-build-executable-filerevisorexe-on-windows-with-visual-studio-2019)
-* [FileRevisor Roadmap](#filerevisor-roadmap)
+* [Linux directory deletion performance: rm -rf > /dev/null vs. FileRevisor](#linux-directory-deletion-performance-rm-rf->-dev-null-vs-FileRevisor)
+* [Windows folder deletion performance: CMD vs. Git Bash vs. PowerShell vs. FileRevisor delete-directory --parallel](#windows-folder-deletion-performance-cmd-vs-git-bash-vs-powershell-vs-filerevisor-delete-directory---parallel)
+* [FileRevisor code structure as it appears in Visual Studio Code on Linux](#filerevisor-code-structure-as-it-appears-in-visual-studio-code-on-linux)
+* [FileRevisor code structure as it appears in Visual Studio 2019 on Windows](#filerevisor-code-structure-as-it-appears-in-visual-studio-2019-on-windows)
+* [Linux Jenkins jobs which build, cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor's C++ code and mypy-flake8-pylint-SonarQube FileRevisor's CI/CD Python code](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filerevisors-c-code-and-mypy-flake8-pylint-sonarqube-filerevisors-cicd-python-code)
+* [Windows Jenkins jobs which build and cppcheck FileRevisor's C++ code and mypy-flake8-pylint-SonarQube FileRevisor's CI/CD Python code](#windows-jenkins-jobs-which-build-and-cppcheck-filerevisors-c-code-and-mypy-flake8-pylint-sonarqube-filerevisors-cicd-python-code)
+* [How to build binary filerevisor on Linux with Clang](#how-to-build-binary-filerevisor-on-linux-with-clang)
+* [How to build executable FileRevisor.exe on Windows with Visual Studio 2019](#how-to-build-executable-filerevisorexe-on-windows-with-visual-studio-2019)
+* [FileRevisor roadmap](#filerevisor-roadmap)
 
-## FileRevisor Command Line Usage
+## FileRevisor command line usage
 
 ```
 FileRevisor v0.10.0
@@ -67,7 +67,7 @@ Usage:
       [--verbose]
 ```
 
-## FileRevisor Program Modes
+## FileRevisor program modes
 
 ### delete-directory
 
@@ -138,11 +138,11 @@ Shown in this screenshot is `filerevisor replace-text` replacing text in files i
 
 ![replace-text](Screenshots/replace-text.png)
 
-### Linux Directory Deletion Performance: rm -rf > /dev/null vs. FileRevisor
+### Linux directory deletion performance: rm -rf > /dev/null vs. FileRevisor
 
 ![Linux Directory Deletion Performance: rm -rf > /dev/null vs. FileRevisor](Screenshots/LinuxFileRevisorPerformanceGraph.png)
 
-### Windows Folder Deletion Performance: CMD vs. Git Bash vs. PowerShell vs. FileRevisor delete-directory --parallel
+### Windows folder deletion performance: CMD vs. Git Bash vs. PowerShell vs. FileRevisor delete-directory --parallel
 
 ![Windows Folder Deletion Performance: Remove-Item -Recurse vs. FileRevisor delete-directory](Screenshots/WindowsFileRevisorPerformanceGraph.png)
 
@@ -156,25 +156,25 @@ Shown in this screenshot is function `FileRevisorArgsParser::ParseArgs` which us
 
 ![FileRevisor Code Structure As It Appears In Visual Studio Code On Linux](Screenshots/Linux/VisualStudioCode.png)
 
-### FileRevisor Code Structure As It Appears In Visual Studio 2019 On Windows
+### FileRevisor code structure as it appears in Visual Studio 2019 on Windows
 
 Shown in this screenshot is function `DeleteDirectorySubProgram::Run` with the key if-statement highlighted for determining whether to delete a given directory's subdirectories in parallel or sequentially:
 
 ![FileRevisor Code Structure As It Appears In Visual Studio 2019 On Windows](Screenshots/Windows/VisualStudio.png)
 
-### Linux Jenkins Jobs Which Build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor's C++ Code and Mypy-Flake8-Pylint-SonarQube FileRevisor's CI/CD Python Code
+### Linux Jenkins jobs which build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor's C++ code and Mypy-Flake8-Pylint-SonarQube scan FileRevisor's CI/CD Python code
 
 A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 33 with Clang 11.0.0 and GCC 10.2.1:
 
 ![Linux FileRevisor Jenkins Jobs](Screenshots/Linux/LinuxJenkinsJobs.png)
 
-### Windows Jenkins Jobs Which Build And Cppcheck FileRevisor's C++ Code and Mypy-Flake8-Pylint-SonarQube FileRevisor's CI/CD Python Code
+### Windows Jenkins jobs which build and Cppcheck FileRevisor's C++ code and Mypy-Flake8-Pylint-SonarQube scan FileRevisor's CI/CD Python code
 
 A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Windows 10 with Visual Studio 2019:
 
 ![Windows Jenkins Jobs](Screenshots/Windows/WindowsJenkinsJobs.png)
 
-## How To Build Binary filerevisor On Linux With Clang
+## How to build binary filerevisor on Linux with Clang
 
 ```bash
 git clone https://github.com/NeilJustice/FileRevisor
@@ -187,7 +187,7 @@ Result binary `/usr/local/bin/filerevisor`:
 
 ![Linux filerevisor binary in /usr/local/bin](Screenshots/LinuxFileRevisorBinaryInUsrLocalBin.png)
 
-## How To Build Executable FileRevisor.exe On Windows With Visual Studio 2019
+## How to build executable FileRevisor.exe on Windows with Visual Studio 2019
 
 ```powershell
 git clone https://github.com/NeilJustice/FileRevisor
@@ -200,12 +200,10 @@ Resulting executable `C:\bin\FileRevisor.exe`:
 
 ![Windows FileRevisor.exe](Screenshots/WindowsFileRevisorDotExe.png)
 
-## FileRevisor Roadmap
+## FileRevisor roadmap
 
-|Future FileRevisor Feature|Implementation Status As Of 4/8/2021|
-|--------------------------|------------------------------------|
+|Future FileRevisor feature|Implementation status as of 4/17/2021|
+|--------------------------|-------------------------------------|
 |GitHub Actions build|In progress|
 |SonarCloud Python static analysis badge for FileRevisorPyUtils|Awaiting implementation|
 |SonarCloud C++ static analysis badge|Awaiting implementation|
-|Coverity C++ static analysis badge|Awaiting implementation|
-|Automated acceptance testing|Awaiting implementation|
