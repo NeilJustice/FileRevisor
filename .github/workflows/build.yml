@@ -53,3 +53,8 @@ jobs:
         env:
           CXX: "/usr/bin/clang++"
           PYTHONPATH: FileRevisorPyUtils
+
+      - uses: codecov/codecov-action@v1
+        with:
+          files: FileRevisorPyUtils/FileRevisorPyUtilsTests/CoberturaCodeCoverageResults_FileRevisorPyUtilsTests.xml
+          fail_ci_if_error: true
