@@ -47,7 +47,7 @@ jobs:
            python FileRevisorPyUtils/FileRevisorPyUtils/BuildAndInstallCPlusPlusProgram.py \
               --solution-name=FileRevisor \
               --cmake-generator=Ninja \
-              --cmake-build-type=Debug \
+              --cmake-build-type=Release \
               --tests-project-name=libFileRevisorTests \
               --no-install
         env:
