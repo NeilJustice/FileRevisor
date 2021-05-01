@@ -28,7 +28,7 @@ jobs:
         run: pip install --upgrade --upgrade-strategy eager -r dev-requirements.txt
         
       - name: mypy, flake8, pylint, then run all unit tests with coverage and pytest
-        run: python FileRevisorPyUtils/MypyFlake8PylintRunTestsWithCoverage.py --run-tests-with-coverage-python-file=FileRevisorPyUtilsTests/RunAllWithCoverage.py
+        run: python FileRevisorPyUtils/MypyFlake8PylintThenRunTestsWithCoverage.py --run-tests-with-coverage-python-file=FileRevisorPyUtilsTests/RunAllWithCoverage.py
         working-directory: FileRevisorPyUtils
         env:          
           PYTHONPATH: "."

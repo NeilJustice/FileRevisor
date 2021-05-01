@@ -3,5 +3,5 @@ set -ev
 
 cd FileRevisorPyUtils
 export PYTHONPATH='.'
-python FileRevisorPyUtils/MypyFlake8PylintRunTestsWithCoverage.py --run-tests-with-coverage-python-file=FileRevisorPyUtilsTests/RunAllWithCoverage.py
+python FileRevisorPyUtils/MypyFlake8PylintThenRunTestsWithCoverage.py --run-tests-with-coverage-python-file=FileRevisorPyUtilsTests/RunAllWithCoverage.py
 cd ..

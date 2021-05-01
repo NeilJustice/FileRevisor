@@ -30,7 +30,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BuildAndInstallCPlusPlusProgramTests.py" />
-    <Compile Include="MypyFlake8PylintRunTestsWithCoverageTests.py">
+    <Compile Include="MypyFlake8PylintThenRunTestsWithCoverageTests.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="CMakeTests.py">
