@@ -34,7 +34,7 @@ jobs:
           PYTHONPATH: "."
       
       - name: Install ninja-build
-        run: sudo apt-get install ninja-build lcov libtbb-dev
+        run: sudo apt-get install ninja-build lcov
         
       - name: Download ZenUnit.h and MetalMock.h
         run: |
