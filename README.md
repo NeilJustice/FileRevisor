@@ -11,6 +11,7 @@ FileRevisor's key feature is its extreme performance when deleting large folders
 |GitHub Actions Debug build - ubuntu-latest Clang 10.0.0|[![FileRevisor](https://github.com/NeilJustice/FileRevisor/actions/workflows/build.yml/badge.svg)](https://github.com/NeilJustice/FileRevisor/actions/workflows/build.yml)|
 |AppVeyor Debug and Release build - Visual Studio 2019 x64|<a href="https://ci.appveyor.com/project/NeilJustice/FileRevisor"><img src="https://ci.appveyor.com/api/projects/status/fl8f0jle01k04nwp?svg=true"/></a>|
 |Codecov.io code coverage for FileRevisorPyUtils|[![codecov](https://codecov.io/gh/NeilJustice/FileRevisor/branch/master/graph/badge.svg?token=KH1wxoYSdS)](https://codecov.io/gh/NeilJustice/FileRevisor)|
+|SonarCloud scan of FileRevisorPyUtils Python code|[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=NeilJustice_FileRevisor&metric=alert_status)](https://sonarcloud.io/dashboard?id=NeilJustice_FileRevisor)|
 
 FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">ZenUnit and MetalMock</a>.
 
