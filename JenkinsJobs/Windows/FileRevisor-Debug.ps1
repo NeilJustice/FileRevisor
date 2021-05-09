@@ -1,7 +1,7 @@
 Set-PSDebug -Trace 1
 
-$env:PYTHONPATH="FileRevisorPyUtils"
-python.exe -u FileRevisorPyUtils\FileRevisorPyUtils\BuildAndInstallCPlusPlusProgram.py `
+$env:PYTHONPATH="FileRevisorDevOpsPython"
+python.exe -u FileRevisorDevOpsPython\FileRevisorDevOpsPython\BuildAndInstallCPlusPlusProgram.py `
    --solution-name=FileRevisor `
    --cmake-generator="Visual Studio 16 2019" `
    --cmake-build-type=Debug `

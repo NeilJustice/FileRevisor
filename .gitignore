@@ -12,7 +12,7 @@ __pycache__/
 CodeCoverageHTMLReport/
 htmlcov/
 .coverage
-CoberturaCodeCoverageResults_FileRevisorPyUtilsTests.xml
+CoberturaCodeCoverageResults_FileRevisorDevOpsPythonTests.xml
 
 # Linux
 covhtml/
@@ -34,7 +34,7 @@ x64/
 *.log
 *.opendb
 *.sln
-!FileRevisorPyUtils/FileRevisorPyUtils.sln
+!FileRevisorDevOpsPython/FileRevisorDevOpsPython.sln
 *.suo
 *.obj
 *.pch

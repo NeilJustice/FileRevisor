@@ -1,8 +1,8 @@
 import unittest
 from unittest.mock import call, patch
 import docopt
-from FileRevisorPyUtils import MypyFlake8PylintThenRunTestsWithCoverage, Process, Python
-from FileRevisorPyUtilsTests import Random, UnitTester
+from FileRevisorDevOpsPython import MypyFlake8PylintThenRunTestsWithCoverage, Process, Python
+from FileRevisorDevOpsPythonTests import Random, UnitTester
 
 testNames = [
 'test_docstring_ReturnsExpected',
@@ -19,10 +19,10 @@ Usage: MypyFlake8PylintThenRunTestsWithCoverage.py --run-tests-with-coverage-pyt
 MypyFlake8PylintThenRunTestsWithCoverage.__doc__)
 
    @patch('docopt.docopt', spec_set=True)
-   @patch('FileRevisorPyUtils.Python.run_mypy', spec_set=True)
-   @patch('FileRevisorPyUtils.Python.run_flake8', spec_set=True)
-   @patch('FileRevisorPyUtils.Python.run_pylint_on_all_files_in_parallel', spec_set=True)
-   @patch('FileRevisorPyUtils.Process.fail_fast_run', spec_set=True)
+   @patch('FileRevisorDevOpsPython.Python.run_mypy', spec_set=True)
+   @patch('FileRevisorDevOpsPython.Python.run_flake8', spec_set=True)
+   @patch('FileRevisorDevOpsPython.Python.run_pylint_on_all_files_in_parallel', spec_set=True)
+   @patch('FileRevisorDevOpsPython.Process.fail_fast_run', spec_set=True)
    @patch('builtins.print', spec_set=True)
    def test_main_RunsMypy_Flake8_Pylint_ThenRunTestsWithCoverage(self, printMock, _2, _3, _4, _5, _6):
       runTestsWithCoveragePythonFileName = Random.string()

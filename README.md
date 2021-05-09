@@ -206,5 +206,5 @@ Resulting executable `C:\bin\FileRevisor.exe`:
 |Future FileRevisor feature|Implementation status as of 4/17/2021|
 |--------------------------|-------------------------------------|
 |GitHub Actions build|In progress|
-|SonarCloud Python static analysis badge for FileRevisorPyUtils|Awaiting implementation|
+|SonarCloud Python static analysis badge for FileRevisorDevOpsPython|Awaiting implementation|
 |SonarCloud C++ static analysis badge|Awaiting implementation|

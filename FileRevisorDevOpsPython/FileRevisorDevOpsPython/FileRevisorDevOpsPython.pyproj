@@ -8,12 +8,12 @@
     </ProjectHome>
     <StartupFile>MypyFlake8PylintThenRunTestsWithCoverage.py</StartupFile>
     <SearchPath>..\</SearchPath>
-    <WorkingDirectory>D:\Code\FileRevisor\FileRevisorPyUtils</WorkingDirectory>
+    <WorkingDirectory>D:\Code\FileRevisor\FileRevisorDevOpsPython</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>PyUtils</Name>
     <RootNamespace>PyUtils</RootNamespace>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
-    <CommandLineArguments>--project=FileRevisorPyUtils --run-tests-with-coverage-python-file=FileRevisorPyUtilsTests/RunAllWithCoverage.py</CommandLineArguments>
+    <CommandLineArguments>--project=FileRevisorDevOpsPython --run-tests-with-coverage-python-file=FileRevisorDevOpsPythonTests/RunAllWithCoverage.py</CommandLineArguments>
     <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
     <IsWindowsApplication>False</IsWindowsApplication>
     <InterpreterArguments>

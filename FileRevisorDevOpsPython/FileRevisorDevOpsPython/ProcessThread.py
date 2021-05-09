@@ -1,6 +1,6 @@
 import threading
 from typing import List
-from FileRevisorPyUtils import Process
+from FileRevisorDevOpsPython import Process
 
 class ProcessThread(threading.Thread): # pragma nocover
 

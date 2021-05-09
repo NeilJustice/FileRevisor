@@ -1,6 +1,6 @@
 import re
 import unittest
-from FileRevisorPyUtilsTests import UnitTester, Random
+from FileRevisorDevOpsPythonTests import UnitTester, Random
 
 testNames = [
 'test_boolean_RandomsRandomBoolean',

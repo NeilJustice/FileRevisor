@@ -2,8 +2,8 @@ import os
 import platform
 import unittest
 from unittest.mock import patch
-from FileRevisorPyUtils import CMake, Process
-from FileRevisorPyUtilsTests import Random, UnitTester
+from FileRevisorDevOpsPython import CMake, Process
+from FileRevisorDevOpsPythonTests import Random, UnitTester
 
 testNames = [
 'test_generate_CreatesAndCdsToDirectory_RunsCMakeWithGeneratorAndBuildType'
@@ -20,7 +20,7 @@ class CMakeTests(unittest.TestCase):
       @patch('os.makedirs', spec_set=True)
       @patch('os.chdir', spec_set=True)
       @patch('platform.system', spec_set=True)
-      @patch('FileRevisorPyUtils.Process.fail_fast_run', spec_set=True)
+      @patch('FileRevisorDevOpsPython.Process.fail_fast_run', spec_set=True)
       @patch('builtins.print', spec_set=True)
       def testcase(platformSystem, cmakeDefinitions, expectedCMakeCommand, printMock, _2, _3, _4, _5):
          with self.subTest(f'{platformSystem, cmakeDefinitions, expectedCMakeCommand}'):

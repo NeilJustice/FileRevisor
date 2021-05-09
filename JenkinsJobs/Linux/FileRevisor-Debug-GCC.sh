@@ -2,8 +2,8 @@
 set -ev
 
 export CXX=/usr/bin/g++
-export PYTHONPATH=FileRevisorPyUtils
-python -u FileRevisorPyUtils/FileRevisorPyUtils/BuildAndInstallCPlusPlusProgram.py \
+export PYTHONPATH=FileRevisorDevOpsPython
+python -u FileRevisorDevOpsPython/FileRevisorDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
    --solution-name=FileRevisor \
    --cmake-generator=Ninja \
    --cmake-build-type=Debug \

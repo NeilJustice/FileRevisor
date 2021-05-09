@@ -21,7 +21,7 @@
       {
          "label": "Run All Tests",
          "type": "shell",
-         "command": "PYTHONPATH=FileRevisorPyUtils python FileRevisorPyUtilsTests/RunAll.py",
+         "command": "PYTHONPATH=FileRevisorDevOpsPython python FileRevisorDevOpsPythonTests/RunAll.py",
          "options": {
             "cwd": "${workspaceRoot}"
          },

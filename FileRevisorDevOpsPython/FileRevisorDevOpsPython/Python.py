@@ -2,7 +2,7 @@ import glob
 import os
 import platform
 import sys
-from FileRevisorPyUtils import Process
+from FileRevisorDevOpsPython import Process
 
 PylintCommand = 'pylint --rcfile=.pylintrc --score=n --init-hook=\"sys.path.append(\'.\')\" '
 
