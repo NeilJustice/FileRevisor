@@ -6,11 +6,10 @@ jobs:
   build:
     strategy:
       matrix:
-         os: [ubuntu-latest]
          cmake_build_type: [Debug, Release]
          cxx: [clang++, g++-10]
 
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
@@ -95,6 +94,7 @@ jobs:
   sonarcloud:
     name: SonarCloud scan FileRevisorDevOpsPython
     runs-on: ubuntu-latest
+    needs: build
     steps:
       - uses: actions/checkout@v2
         with:
