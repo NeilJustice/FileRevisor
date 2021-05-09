@@ -20,7 +20,7 @@ endif()
 install(TARGETS FileRevisor DESTINATION "bin")
 
 if(UNIX AND NOT APPLE)
-   if(CodeCovMode)
+   if(LCovCodeCoverageMode)
      target_link_libraries(FileRevisor CodeCovLibraryInterface)
    endif()
 endif()

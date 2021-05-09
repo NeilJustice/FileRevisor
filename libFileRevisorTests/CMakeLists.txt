@@ -72,7 +72,7 @@ EnablePrecompiledHeaders()
 IfMSVCAddRunTestsPostBuildStep()
 
 if(UNIX AND NOT APPLE)
-   if(CodeCovMode)
+   if(LCovCodeCoverageMode)
      target_link_libraries(libFileRevisorTests CodeCovLibraryInterface)
    endif()
 endif()

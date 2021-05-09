@@ -43,7 +43,7 @@ add_library(libFileRevisor ${Sources})
 EnablePrecompiledHeaders()
 
 if(UNIX)
-   if(CodeCovMode)
+   if(LCovCodeCoverageMode)
      target_link_libraries(libFileRevisor CodeCovLibraryInterface)
    endif()
 endif()
