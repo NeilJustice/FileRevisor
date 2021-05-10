@@ -2,8 +2,8 @@
 set -ev
 
 export CXX=clang++
-export PYTHONPATH=FileRevisorDevOpsPython
-python -u FileRevisorDevOpsPython/FileRevisorDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
+export PYTHONPATH=.
+python -u FileRevisorDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
    --solution-name=FileRevisor \
    --cmake-generator=Ninja \
    --cmake-build-type=Debug \

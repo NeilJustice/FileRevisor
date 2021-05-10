@@ -2,14 +2,6 @@
    "version": "0.2.0",
    "configurations": [
       {
-         "name": "LLDB Debug libFileRevisorTests",
-         "type": "lldb",
-         "request": "launch",
-         "preLaunchTask": "Ninja Build Debug",
-         "cwd": "${workspaceRoot}",
-         "program": "Debug/libFileRevisorTests/libFileRevisorTests",
-      },
-      {
          "name": "GDB Debug libFileRevisorTests",
          "type": "cppdbg",
          "request": "launch",
@@ -19,6 +11,18 @@
          "linux": {
             "MIMode": "gdb"
          }
-      }
+      },
+      {
+         "name": "Debug Python",
+         "type": "python",
+         "python": "/usr/bin/python",
+         "request": "launch",
+         "program": "${file}",
+         "args": [ "" ],
+         "env": { "PYTHONPATH": ".." },
+         "stopOnEntry": false,
+         "console": "integratedTerminal",
+         "cwd": "${fileDirname}"
+      }     
    ]
 }
