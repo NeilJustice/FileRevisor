@@ -2,7 +2,7 @@
 #include "libFileRevisor/ValueTypes/FileRevisorArgs.h"
 
 const string FileRevisorArgs::CommandLineUsage =
-R"(FileRevisor v0.10.0
+R"(FileRevisor v0.11.0
 Quickly deletes directories in parallel,
 bulk renames files or directories,
 or replaces text in files that matches a regular expression.

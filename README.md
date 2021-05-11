@@ -34,7 +34,7 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
 ## FileRevisor command line usage
 
 ```
-FileRevisor v0.10.0
+FileRevisor v0.11.0
 Quickly deletes directories in parallel,
 bulk renames files or directories,
 or replaces text in files that matches a regular expression.
