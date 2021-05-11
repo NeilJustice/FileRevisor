@@ -22,8 +22,7 @@ int DeleteDirectorySubProgram::Run(const FileRevisorArgs& args) const
    const bool targetDirectoryExists = _protected_fileSystem->FileOrDirectoryExists(args.targetDirectoryPath);
    if (!targetDirectoryExists)
    {
-      const string directoryDoesNotExistMessage =
-         "[FileRevisor] Directory does not exist: " + args.targetDirectoryPath.string();
+      const string directoryDoesNotExistMessage = String::ConcatStrings("[FileRevisor] Directory does not exist: ", args.targetDirectoryPath.string());
       _protected_console->WriteLine(directoryDoesNotExistMessage);
       return 0;
    }
@@ -31,8 +30,8 @@ int DeleteDirectorySubProgram::Run(const FileRevisorArgs& args) const
       _protected_fileSystem->GetStringDirectoryPathsInDirectory(args.targetDirectoryPath, false);
    if (args.parallel)
    {
-      const string deletingInParallelMessage =
-         "[FileRevisor] Deleting in parallel all files in directory: " + args.targetDirectoryPath.string();
+      const string deletingInParallelMessage = String::ConcatStrings(
+         "[FileRevisor] Deleting in parallel all files in directory: ", args.targetDirectoryPath.string());
       _protected_console->WriteLine(deletingInParallelMessage);
       _parallelOneExtraArgMemberForEacher_DeleteDirectory->ParallelOneExtraArgMemberForEach(
          topLevelDirectoryPathsInTargetDirectory, this, &DeleteDirectorySubProgram::DeleteDirectory, args);
@@ -49,8 +48,7 @@ int DeleteDirectorySubProgram::Run(const FileRevisorArgs& args) const
 
 // Private Functions
 
-void DeleteDirectorySubProgram::DeleteDirectory(
-   const string& directoryPath, const FileRevisorArgs& args) const
+void DeleteDirectorySubProgram::DeleteDirectory(const string& directoryPath, const FileRevisorArgs& args) const
 {
    _protected_fileSystem->RecursivelyDeleteAllFilesInDirectory(directoryPath, args);
 }

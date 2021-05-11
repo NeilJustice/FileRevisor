@@ -6,9 +6,9 @@ class Map
 public:
    template<
       template<typename...>
-   typename MapType,
-      typename KeyType, typename ValueType, typename... Types>
-      static const ValueType& At(const MapType<KeyType, ValueType, Types...>& m, const KeyType& key)
+      typename MapType,
+   typename KeyType, typename ValueType, typename... Types>
+   static const ValueType& At(const MapType<KeyType, ValueType, Types...>& m, const KeyType& key)
    {
       try
       {
@@ -38,13 +38,7 @@ public:
    Map() = delete;
 private:
    template<typename KeyType>
-   static
-#if defined __linux__|| defined __APPLE__
-      __attribute__((noreturn))
-#elif _WIN32
-      __declspec(noreturn)
-#endif
-   NOINLINE void ThrowKeyNotFound(const KeyType& key)
+   [[noreturn]] static NOINLINE void ThrowKeyNotFound(const KeyType& key)
    {
       std::ostringstream oss;
       oss << "Error: Key not found in map: [" << key << "]";

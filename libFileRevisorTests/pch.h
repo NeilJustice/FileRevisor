@@ -3,7 +3,7 @@
 
 #if defined _WIN32
 #pragma warning(push)
-#pragma warning(disable:4365) // signed/unsigned mismatch
+#pragma warning(disable: 4365) // signed/unsigned mismatch
 #endif
 #include <execution>
 #if defined _WIN32
