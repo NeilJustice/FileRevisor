@@ -75,7 +75,7 @@ void FileOpenerCloser::CloseFile(FILE* filePointer, const fs::path& filePath) co
    if (fcloseReturnValue != 0)
    {
       const pair<int, string> errnoWithDescription = _errorCodeTranslator->GetErrnoWithDescription();
-      const string exceptionMessage = String::Concat("fclose(FILE*) unexpectedly returned ", fcloseReturnValue,
+      const string exceptionMessage = String::ConcatValues("fclose(FILE*) unexpectedly returned ", fcloseReturnValue,
          ". filePath=\"", filePath.string(), "\", errno=", errnoWithDescription.first, " (", errnoWithDescription.second, ")");
       throw runtime_error(exceptionMessage);
    }
@@ -110,7 +110,7 @@ void FileOpenerCloser::ThrowFileOpenExceptionIfFileOpenFailed(FILE* filePointer,
       if (throwIfFileNotOpenable)
       {
          const pair<int, string> errnoWithDescription = _errorCodeTranslator->GetErrnoWithDescription();
-         const string exceptionMessage = String::Concat("fopen() returned nullptr. filePath=\"",
+         const string exceptionMessage = String::ConcatValues("fopen() returned nullptr. filePath=\"",
             filePath.string(), "\". errno=", errnoWithDescription.first, " (", errnoWithDescription.second, ")");
          throw runtime_error(exceptionMessage);
       }

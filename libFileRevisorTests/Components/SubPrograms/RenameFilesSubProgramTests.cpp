@@ -91,8 +91,7 @@ TEST2X2(Run_CallsRenameFileOnEachFilePathInArgsDirPath_PrintsNumberOfFilesThatWe
    METALMOCK(_predicateCounterMock->CountWhereMock.CalledOnceWith(
       fileRenameResults, RenameFilesSubProgram::DidRenameFileIsTrue));
    METALMOCK(_pluralizerMock->PotentiallyPluralizeWordMock.CalledOnceWith(numberOfRenamedFiles, "file", "files"));
-   const string expectedRenamedXNumberOfFilesMessage = String::Concat(
-      expectedRenamedFilesMessagePrefix, numberOfRenamedFiles, ' ', fileOrFiles);
+   const string expectedRenamedXNumberOfFilesMessage = String::ConcatValues(expectedRenamedFilesMessagePrefix, numberOfRenamedFiles, ' ', fileOrFiles);
    METALMOCK(_protected_consoleMock->WriteLineMock.CalledOnceWith(expectedRenamedXNumberOfFilesMessage));
    IS_ZERO(exitCode);
 }
@@ -144,7 +143,7 @@ TEST(RenameFileIfFileNameMatchesFromPattern_RegexReplacedFileNameDoesNotEqualSou
    const string originalFileName = filePath.filename().string();
    METALMOCK(_regexerMock->ReplaceMock.CalledOnceWith(originalFileName, args.fromRegexPattern, args.toRegexPattern));
    const fs::path expectedRenamedFilePath = filePath.parent_path() / regexReplacedFileName;
-   const string expectedFileRenamedMessage = String::Concat(
+   const string expectedFileRenamedMessage = String::ConcatStrings(
       "[FileRevisor]  Preview: Would rename file ", filePath.string(), " to ", regexReplacedFileName);
    METALMOCK(_protected_consoleMock->WriteLineMock.CalledOnceWith(expectedFileRenamedMessage));
    const RenameResult expectedRenameResult(true, filePath, expectedRenamedFilePath);
@@ -168,7 +167,7 @@ TEST(RenameFileIfFileNameMatchesFromPattern_RegexReplacedFileNameDoesNotEqualSou
    const string originalFileName = filePath.filename().string();
    METALMOCK(_regexerMock->ReplaceMock.CalledOnceWith(originalFileName, args.fromRegexPattern, args.toRegexPattern));
    METALMOCK(_protected_fileSystemMock->RenameFileMock.CalledOnceWith(filePath, regexReplacedFileName));
-   const string expectedRenamedFileMessage = String::Concat(
+   const string expectedRenamedFileMessage = String::ConcatStrings(
       "[FileRevisor] Renamed file ", filePath.string(), " to ", regexReplacedFileName);
    METALMOCK(_protected_consoleMock->WriteLineMock.CalledOnceWith(expectedRenamedFileMessage));
    const RenameResult expectedRenameResult(true, filePath, renamedFilePath);

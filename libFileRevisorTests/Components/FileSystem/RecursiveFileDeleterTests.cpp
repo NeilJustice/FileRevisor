@@ -83,9 +83,8 @@ TEST(ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissio
    //
    _recursiveFileDeleter.ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissionDenied(filePath, args);
    //
-   const string expectedSkippingFileMessage = String::Concat(
-      "[FileRevisor] Skipped file: \"", filePath,
-      "\" because of error 13 (permission denied) when attempting to delete it");
+   const string expectedSkippingFileMessage = String::ConcatStrings(
+      "[FileRevisor] Skipped file: \"", filePath, "\" because of error 13 (permission denied) when attempting to delete it");
    METALMOCK(_fileSystemExceptionMakerMock->GetErrnoValueMock.CalledOnce());
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedSkippingFileMessage));
 }

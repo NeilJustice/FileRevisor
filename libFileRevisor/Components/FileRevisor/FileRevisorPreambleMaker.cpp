@@ -14,10 +14,10 @@ string FileRevisorPreambleMaker::MakePreambleLines(const FileRevisorArgs& args) 
    const string programModeString = ENUM_TO_STRING(ProgramMode, args.programMode);
    const string verboseOrEmptyString = args.verbose ? " Verbose" : "";
    const string previewOrEmptyString = args.preview ? " Preview" : "";
-   string fileRevisorPreambleLines = String::Concat(
-      "[FileRevisor] Running: ", args.commandLine, '\n',
-      "[FileRevisor] ProgramMode: ", programModeString, verboseOrEmptyString, previewOrEmptyString, '\n',
-      "[FileRevisor] WorkingDirectory: ", currentDirectoryPath.string(), '\n',
+   string fileRevisorPreambleLines = String::ConcatStrings(
+      "[FileRevisor] Running: ", args.commandLine, "\n",
+      "[FileRevisor] ProgramMode: ", programModeString, verboseOrEmptyString, previewOrEmptyString, "\n",
+      "[FileRevisor] WorkingDirectory: ", currentDirectoryPath.string(), "\n",
       "[FileRevisor]  TargetDirectory: ", args.targetDirectoryPath.string());
    return fileRevisorPreambleLines;
 }

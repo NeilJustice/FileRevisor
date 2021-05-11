@@ -36,13 +36,11 @@ int RenameDirectoriesSubProgram::Run(const FileRevisorArgs& args) const
    string numberOfDirectoriesMessage;
    if (args.preview)
    {
-      numberOfDirectoriesMessage = String::Concat(
-         "[FileRevisor] Result: Would rename ", numberOfRenamedDirectories, ' ', directoryOrDirectories);
+      numberOfDirectoriesMessage = String::ConcatValues("[FileRevisor] Result: Would rename ", numberOfRenamedDirectories, ' ', directoryOrDirectories);
    }
    else
    {
-      numberOfDirectoriesMessage = String::Concat(
-         "[FileRevisor] Result: Renamed ", numberOfRenamedDirectories, ' ', directoryOrDirectories);
+      numberOfDirectoriesMessage = String::ConcatValues("[FileRevisor] Result: Renamed ", numberOfRenamedDirectories, ' ', directoryOrDirectories);
    }
    _protected_console->WriteLine(numberOfDirectoriesMessage);
    return 0;
@@ -62,13 +60,13 @@ RenameResult RenameDirectoriesSubProgram::RenameDirectory(const fs::path& direct
    {
       const fs::path parentDirectoryPath = directoryPath.parent_path();
       const fs::path renamedDirectoryPath = parentDirectoryPath / regexReplacedDirectoryName;
-      const string wouldRenameMessage = String::Concat(
+      const string wouldRenameMessage = String::ConcatStrings(
          "[FileRevisor]  Preview: Would rename directory ", directoryPath.string(), " to ", regexReplacedDirectoryName);
       _protected_console->WriteLine(wouldRenameMessage);
       return RenameResult(true, directoryPath, renamedDirectoryPath);
    }
    const fs::path renamedDirectoryPath = _protected_fileSystem->RenameDirectory(directoryPath, regexReplacedDirectoryName);
-   const string renamedDirectoryMessage = String::Concat(
+   const string renamedDirectoryMessage = String::ConcatStrings(
       "[FileRevisor] Renamed directory ", directoryPath.string(), " to ", regexReplacedDirectoryName);
    _protected_console->WriteLine(renamedDirectoryMessage);
    return RenameResult(true, directoryPath, renamedDirectoryPath);

@@ -29,13 +29,11 @@ int RenameFilesSubProgram::Run(const FileRevisorArgs& args) const
    const string fileOrFiles = _protected_pluralizer->PotentiallyPluralizeWord(numberOfRenamedFiles, "file", "files");
    if (args.preview)
    {
-      renamedFilesMessage = String::Concat(
-         "[FileRevisor] Result: Would rename ", numberOfRenamedFiles, ' ', fileOrFiles);
+      renamedFilesMessage = String::ConcatValues("[FileRevisor] Result: Would rename ", numberOfRenamedFiles, ' ', fileOrFiles);
    }
    else
    {
-      renamedFilesMessage = String::Concat(
-         "[FileRevisor] Result: Renamed ", numberOfRenamedFiles, ' ', fileOrFiles);
+      renamedFilesMessage = String::ConcatValues("[FileRevisor] Result: Renamed ", numberOfRenamedFiles, ' ', fileOrFiles);
    }
    _protected_console->WriteLine(renamedFilesMessage);
    return 0;
@@ -59,16 +57,14 @@ RenameFileIfFileNameMatchesFromPattern(const fs::path& filePath, const FileRevis
    }
    if (args.preview)
    {
-      const string wouldRenameMessage = String::Concat(
-         "[FileRevisor]  Preview: Would rename file ", filePath.string(), " to ", regexReplacedFileName);
+      const string wouldRenameMessage = String::ConcatStrings("[FileRevisor]  Preview: Would rename file ", filePath.string(), " to ", regexReplacedFileName);
       _protected_console->WriteLine(wouldRenameMessage);
       const fs::path sourceDirectoryPath = filePath.parent_path();
       const fs::path renamedFilePath = sourceDirectoryPath / regexReplacedFileName;
       return RenameResult(true, filePath, renamedFilePath);
    }
    const fs::path renamedFilePath = _protected_fileSystem->RenameFile(filePath, regexReplacedFileName);
-   const string renamedFileMessage = String::Concat(
-      "[FileRevisor] Renamed file ", filePath.string(), " to ", regexReplacedFileName);
+   const string renamedFileMessage = String::ConcatStrings("[FileRevisor] Renamed file ", filePath.string(), " to ", regexReplacedFileName);
    _protected_console->WriteLine(renamedFileMessage);
    return RenameResult(true, filePath, renamedFilePath);
 }

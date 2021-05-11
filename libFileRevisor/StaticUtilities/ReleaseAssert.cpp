@@ -7,7 +7,7 @@ NOINLINE void ThrowLogicError(
    long lineNumber,
    const char* functionName)
 {
-   const string exceptioMessage = String::Concat(
+   const string exceptioMessage = String::ConcatValues(
       "release_assert(", predicateExpressionText, ") failed in ", functionName, "()\n", filePath, "(", lineNumber, ")");
    throw logic_error(exceptioMessage);
 }

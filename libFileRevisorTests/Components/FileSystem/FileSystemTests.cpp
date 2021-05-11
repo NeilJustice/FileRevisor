@@ -225,7 +225,7 @@ TEST2X2(RenameFile_FilePathExists_DestinationFilePathDoesNotExist_RenamesFile_Th
    const string expectedRenamedFilePathString = expectedRenamedFilePath.string();
    if (expectThrow)
    {
-      const string expectedExceptionMessage = String::Concat(
+      const string expectedExceptionMessage = String::ConcatValues(
          "FileSystem::RenameFile(const fs::path& filePath, string_view newFileName) error: std::rename(\"",
          filePathString, "\", \"", expectedRenamedFilePathString, "\") returned a non-0 value: ", renameReturnValue);
       THROWS_EXCEPTION(const fs::path renamedFilePath = _fileSystem.RenameFile(filePath, newFileName), runtime_error, expectedExceptionMessage);

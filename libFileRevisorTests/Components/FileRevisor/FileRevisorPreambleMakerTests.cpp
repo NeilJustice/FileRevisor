@@ -40,10 +40,10 @@ TEST3X3(MakePreambleLines_ReturnsExpectedPreambleLinesAsAString,
    //
    METALMOCK(_fileSystemMock->CurrentDirectoryPathMock.CalledOnce());
    const string expectedActionString = ENUM_TO_STRING(ProgramMode, args.programMode);
-   const string expectedFileRevisorPreambleLines = String::Concat(
-      "[FileRevisor] Running: ", args.commandLine, '\n',
-      "[FileRevisor] ProgramMode: ", expectedActionString, expectedActionSuffix, '\n',
-      "[FileRevisor] WorkingDirectory: ", currentDirectoryPath.string(), '\n',
+   const string expectedFileRevisorPreambleLines = String::ConcatStrings(
+      "[FileRevisor] Running: ", args.commandLine, "\n",
+      "[FileRevisor] ProgramMode: ", expectedActionString, expectedActionSuffix, "\n",
+      "[FileRevisor] WorkingDirectory: ", currentDirectoryPath.string(), "\n",
       "[FileRevisor]  TargetDirectory: ", args.targetDirectoryPath.string());
    ARE_EQUAL(expectedFileRevisorPreambleLines, fileRevisorPreambleLines);
 }

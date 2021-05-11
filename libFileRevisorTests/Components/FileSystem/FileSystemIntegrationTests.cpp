@@ -190,7 +190,7 @@ TEST(ReadText_FileExists_FileIsNotEmptyAndContainsTrailingBinaryZeros_ReturnsFil
    //
    const string fileText = _fileSystem.ReadText(textFilePath);
    //
-   const string expectedFileText = String::Concat('a', 'b', '\n', 'c');
+   const string expectedFileText = String::ConcatStrings("a", "b", "\n", "c");
    ARE_EQUAL(expectedFileText, fileText);
 }
 

@@ -25,7 +25,7 @@ RecursiveFileDeleter::~RecursiveFileDeleter()
 
 void RecursiveFileDeleter::PrintDeletedFileMessage(const char* filePath) const
 {
-   const string deletedFileMessage = String::Concat("[FileRevisor] Deleted file ", filePath);
+   const string deletedFileMessage = String::ConcatStrings("[FileRevisor] Deleted file ", filePath);
    _console->WriteLine(deletedFileMessage);
 }
 
@@ -161,9 +161,8 @@ void RecursiveFileDeleter::ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsT
       const int errnoValue = _fileSystemExceptionMaker->GetErrnoValue();
       if (errnoValue == ErrnoValue::PermissionDenied)
       {
-         const string skippingFileMessage = String::Concat(
-            "[FileRevisor] Skipped file: \"", filePath,
-            "\" because of error 13 (permission denied) when attempting to delete it");
+         const string skippingFileMessage = String::ConcatStrings(
+            "[FileRevisor] Skipped file: \"", filePath, "\" because of error 13 (permission denied) when attempting to delete it");
          _console->WriteLine(skippingFileMessage);
          return;
       }

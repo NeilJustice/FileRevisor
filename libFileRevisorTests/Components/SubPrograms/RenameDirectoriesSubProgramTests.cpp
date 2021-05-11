@@ -91,7 +91,7 @@ TEST2X2(Run_CallsRenameDirectoryOnEachDirectoryPathInArgsDirPath_PrintsNumberOfD
       directoryPathsInDirectory, &_renameDirectoriesSubProgram, &RenameDirectoriesSubProgram::RenameDirectory, args));
    METALMOCK(_predicateCounterMock->CountWhereMock.CalledOnceWith(directoryRenameResults, RenameResult::DidRenameFileOrDirectoryFieldIsTrue));
    METALMOCK(_protected_pluralizerMock->PotentiallyPluralizeWordMock.CalledOnceWith(numberOfRenamedDirectories, "directory", "directories"));
-   const string expectedNumberOfDirectoriesMessage = String::Concat(
+   const string expectedNumberOfDirectoriesMessage = String::ConcatValues(
       expectedNumberOfDirectoriesMessagePrefix, numberOfRenamedDirectories, ' ', directoryOrDirectories);
    METALMOCK(_protected_consoleMock->WriteLineMock.CalledOnceWith(expectedNumberOfDirectoriesMessage));
    IS_ZERO(exitCode);

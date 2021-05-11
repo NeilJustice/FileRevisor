@@ -56,8 +56,7 @@ TEST(GetErrnoWithDescription_ReturnsErrorCodeTranslatorGetErrnoWithDescription)
    const pair<int, string> errnoWithDescription(ZenUnit::Random<int>(), ZenUnit::Random<string>());
    _errorCodeTranslatorMock->GetErrnoWithDescriptionMock.Return(errnoWithDescription);
    //
-   const pair<int, string> returnedErrnoWithDescription =
-      _fileSystemExceptionMaker.GetErrnoWithDescription();
+   const pair<int, string> returnedErrnoWithDescription = _fileSystemExceptionMaker.GetErrnoWithDescription();
    //
    METALMOCK(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce());
    ARE_EQUAL(errnoWithDescription, returnedErrnoWithDescription);
@@ -68,11 +67,11 @@ TEST(MakeFileSystemExceptionForFailedToOpenFileWithFOpen_ReturnsExpectedFileSyst
    const pair<int, string> errnoWithDescription = ZenUnit::RandomPair<int, string>();
    _errorCodeTranslatorMock->GetErrnoWithDescriptionMock.Return(errnoWithDescription);
    //
-   const FileSystemException fileSystemException = _fileSystemExceptionMaker.
-      MakeFileSystemExceptionForFailedToOpenFileWithFOpen(_filePath, _fileOpenMode.c_str());
+   const FileSystemException fileSystemException =
+      _fileSystemExceptionMaker.MakeFileSystemExceptionForFailedToOpenFileWithFOpen(_filePath, _fileOpenMode.c_str());
    //
    METALMOCK(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce());
-   const string expectedExceptionMessage = String::Concat("fopen() returned nullptr for filePath=\"",
+   const string expectedExceptionMessage = String::ConcatValues("fopen() returned nullptr for filePath=\"",
       _filePath.string(), "\" and fileOpenMode=\"", _fileOpenMode, "\". errno=",
       errnoWithDescription.first, " (", errnoWithDescription.second, ")");
    const FileSystemException expectedFileSystemException(
@@ -84,10 +83,9 @@ TEST(MakeFileSystemExceptionForFailedToOpenFileWithFStream_ReturnsExpectedFileSy
 {
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
-   const FileSystemException fileSystemException = _fileSystemExceptionMaker.
-      MakeFileSystemExceptionForFailedToOpenFileWithFStream(filePath);
+   const FileSystemException fileSystemException = _fileSystemExceptionMaker.MakeFileSystemExceptionForFailedToOpenFileWithFStream(filePath);
    //
-   const string expectedExceptionMessage = String::Concat("Failed to open file: \"", filePath.string(), "\"");
+   const string expectedExceptionMessage = String::ConcatStrings("Failed to open file: \"", filePath.string(), "\"");
    const FileSystemException expectedFileSystemException(
       FileExceptionType::FailedToOpenFile, expectedExceptionMessage);
    ARE_EQUAL(expectedFileSystemException.what(), fileSystemException.what());
@@ -97,30 +95,26 @@ TEST(MakeFileSystemExceptionForFailedToCloseFile_ReturnsExpectedFileSystemExcept
 {
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
-   const FileSystemException fileSystemException = _fileSystemExceptionMaker.
-      MakeFileSystemExceptionForFailedToCloseFile(filePath);
+   const FileSystemException fileSystemException = _fileSystemExceptionMaker.MakeFileSystemExceptionForFailedToCloseFile(filePath);
    //
-   const string expectedExceptionMessage = String::Concat("Failed to close file: \"", filePath.string(), "\"");
-   const FileSystemException expectedFileSystemException(
-      FileExceptionType::FailedToCloseFile, expectedExceptionMessage);
+   const string expectedExceptionMessage = String::ConcatStrings("Failed to close file: \"", filePath.string(), "\"");
+   const FileSystemException expectedFileSystemException(FileExceptionType::FailedToCloseFile, expectedExceptionMessage);
    ARE_EQUAL(expectedFileSystemException.what(), fileSystemException.what());
 }
 
 TEST(MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory_ReturnsExpectedFileSystemException)
 {
-   const string systemErrorDescription =
-      _errorCodeTranslatorMock->GetSystemErrorDescriptionMock.ReturnRandom();
+   const string systemErrorDescription = _errorCodeTranslatorMock->GetSystemErrorDescriptionMock.ReturnRandom();
 
    const fs::path fileOrDirectoryPath = ZenUnit::Random<fs::path>();
    const unsigned long long removeAllReturnValue = ZenUnit::Random<unsigned long long>();
    const int errorCodeValue = ZenUnit::Random<int>();
    //
    const FileSystemException fileSystemException =
-      _fileSystemExceptionMaker.MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory(
-         fileOrDirectoryPath, removeAllReturnValue, errorCodeValue);
+      _fileSystemExceptionMaker.MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory(fileOrDirectoryPath, removeAllReturnValue, errorCodeValue);
    //
    METALMOCK(_errorCodeTranslatorMock->GetSystemErrorDescriptionMock.CalledOnceWith(errorCodeValue));
-   const string exceptionMessage = String::Concat(
+   const string exceptionMessage = String::ConcatValues(
       "fs::remove_all(\"", fileOrDirectoryPath.string(), "\", errorCode) returned ",
       removeAllReturnValue, " with errorCode.value()=", errorCodeValue, " (", systemErrorDescription, ")");
    const FileSystemException expectedFileSystemException(
@@ -135,12 +129,11 @@ TEST(MakeFileSystemExceptionForFailedToRenameDirectory_ReturnsExpectedFileSystem
    const error_code renameErrorCode = ZenUnit::Random<error_code>();
    //
    const FileSystemException fileSystemException =
-      _fileSystemExceptionMaker.MakeFileSystemExceptionForFailedToRenameDirectory(
-         directoryPath, renamedDirectoryPath, renameErrorCode);
+      _fileSystemExceptionMaker.MakeFileSystemExceptionForFailedToRenameDirectory(directoryPath, renamedDirectoryPath, renameErrorCode);
    //
    const int renameErrorCodeValue = renameErrorCode.value();
    const string renameErrorCodeMessage = renameErrorCode.message();
-   const string exceptionMessage = String::Concat(
+   const string exceptionMessage = String::ConcatValues(
       "Failed to rename directory ", directoryPath, " to ", renamedDirectoryPath,
       ". renameErrorCode=", renameErrorCodeValue,
       ", renameErrorCodeMessage=\"", renameErrorCodeMessage, "\"");
@@ -155,12 +148,11 @@ TEST(MakeFileSystemExceptionForFailedToDeleteFile_ReturnsExpectedFileSystemExcep
    _errorCodeTranslatorMock->GetErrnoWithDescriptionMock.Return(errnoWithDescription);
    const char* const filePath = ZenUnit::Random<const char*>();
    //
-   const FileSystemException fileSystemException =
-      _fileSystemExceptionMaker.MakeFileSystemExceptionForFailedToDeleteFile(filePath);
+   const FileSystemException fileSystemException = _fileSystemExceptionMaker.MakeFileSystemExceptionForFailedToDeleteFile(filePath);
    //
    METALMOCK(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce());
-   const string expectedExceptionMessage = String::Concat("unlink(\"",
-      filePath, "\") failed with errno = ", errnoWithDescription.first, " (", errnoWithDescription.second, ")");
+   const string expectedExceptionMessage = String::ConcatValues(
+      "unlink(\"", filePath, "\") failed with errno = ", errnoWithDescription.first, " (", errnoWithDescription.second, ")");
    const FileSystemException expectedFileSystemException(
       FileExceptionType::FailedToDeleteFile, expectedExceptionMessage);
    ARE_EQUAL(expectedFileSystemException.what(), fileSystemException.what());
@@ -171,10 +163,10 @@ TEST(MakeFileSystemExceptionForFindFirstFileExHavingReturnedInvalidHandleValue_R
 {
    const char* const directoryPathSearchPatternChars = ZenUnit::Random<const char*>();
    //
-   const FileSystemException fileSystemException = _fileSystemExceptionMaker.
-      MakeFileSystemExceptionForFindFirstFileExHavingReturnedInvalidHandleValue(directoryPathSearchPatternChars);
+   const FileSystemException fileSystemException =
+      _fileSystemExceptionMaker.MakeFileSystemExceptionForFindFirstFileExHavingReturnedInvalidHandleValue(directoryPathSearchPatternChars);
    //
-   const string exceptionMessage = String::Concat(
+   const string exceptionMessage = String::ConcatStrings(
       "FindFirstFileEx(\"", directoryPathSearchPatternChars, "\") returned INVALID_HANDLE_VALUE. Administrator rights are likely required in order to query this folder.");
    const FileSystemException expectedFileSystemException(
       FileExceptionType::WindowsFindFirstFileExReturnedInvalidHandleValue, exceptionMessage);
@@ -188,11 +180,10 @@ TEST(MakeFileSystemExceptionForFailedToSetFileAttribute_ReturnsExpectedFileSyste
    const char* const filePath = ZenUnit::Random<const char*>();
    const DWORD fileAttributes = ZenUnit::Random<DWORD>();
    //
-   const FileSystemException fileSystemException = _fileSystemExceptionMaker.
-      MakeFileSystemExceptionForFailedToSetFileAttribute(filePath, fileAttributes);
+   const FileSystemException fileSystemException = _fileSystemExceptionMaker.MakeFileSystemExceptionForFailedToSetFileAttribute(filePath, fileAttributes);
    //
    METALMOCK(_errorCodeTranslatorMock->GetWindowsLastErrorWithDescriptionMock.CalledOnce());
-   const string expectedExceptionMessage = String::Concat(
+   const string expectedExceptionMessage = String::ConcatValues(
       "SetFileAttributes(\"", filePath, "\", ", fileAttributes, ") failed. GetLastError()=",
       windowsLastErrorWithDescription.first, " (", windowsLastErrorWithDescription.second, ")");
    const FileSystemException expectedFileSystemException(

@@ -189,7 +189,8 @@ fs::path FileSystem::RenameFile(const fs::path& filePath, string_view newFileNam
    const int renameReturnValue = _call_std_rename(filePathStringCCP, renamedFilePathStringCCP);
    if (renameReturnValue != 0)
    {
-      const string exceptionMessage = String::Concat("FileSystem::RenameFile(const fs::path& filePath, string_view newFileName) error: std::rename(\"",
+      const string exceptionMessage = String::ConcatValues(
+         "FileSystem::RenameFile(const fs::path& filePath, string_view newFileName) error: std::rename(\"",
          filePathString, "\", \"", renamedFilePathString, "\") returned a non-0 value: ", renameReturnValue);
       throw runtime_error(exceptionMessage);
    }

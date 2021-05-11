@@ -85,7 +85,7 @@ bool DirectoryIterator::IsFileEmptyOrBinaryOrNonAnsiOrNotOpenable(const fs::path
    FILE* const fileOpenInReadBinaryMode = _fileOpenerCloser->OpenReadModeBinaryFile(filePath, false);
    if (fileOpenInReadBinaryMode == nullptr)
    {
-      const string skippedReadingFileMessage = String::Concat("[FileRevisor]     Note: Unable to open file ", filePath.string());
+      const string skippedReadingFileMessage = String::ConcatStrings("[FileRevisor]     Note: Unable to open file ", filePath.string());
       _console->WriteLine(skippedReadingFileMessage);
       return true;
    }
