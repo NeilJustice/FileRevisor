@@ -66,7 +66,7 @@ FileSystemException FileSystemExceptionMaker::MakeFileSystemExceptionForFailedTo
    const int renameErrorCodeValue = renameErrorCode.value();
    const string renameErrorCodeMessage = renameErrorCode.message();
    const string exceptionMessage = String::ConcatValues(
-      "Failed to rename directory ", directoryPath, " to ", renamedDirectoryPath,
+      "Failed to rename directory ", directoryPath.string(), " to ", renamedDirectoryPath.string(),
       ". renameErrorCode=", renameErrorCodeValue,
       ", renameErrorCodeMessage=\"", renameErrorCodeMessage, "\"");
    FileSystemException fileSystemException(FileExceptionType::FailedToRenameDirectory, exceptionMessage);
