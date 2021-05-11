@@ -8,8 +8,7 @@ namespace ZenUnit
       static void AssertEqual(const FileRevisorArgs& expectedFileRevisorArgs, const FileRevisorArgs& actualFileRevisorArgs);
    };
 
+   FileRevisorArgs TestableRandomFileRevisorArgs(const ZenUnit::RandomGenerator* randomGenerator);
    template<>
    FileRevisorArgs Random();
 }
-
-FileRevisorArgs TestableRandomFileRevisorArgs(const ZenUnit::RandomGenerator* randomGenerator);

@@ -14,8 +14,8 @@ public:
       transformedElements.reserve(elements.size());
       for (const ElementType& element : elements)
       {
-         const TransformedElementType transformedElement = (classInstance->*transformer)(element, extraArg);
-         transformedElements.push_back(transformedElement);
+         TransformedElementType transformedElement = (classInstance->*transformer)(element, extraArg);
+         transformedElements.emplace_back(std::move(transformedElement));
       }
       return transformedElements;
    }

@@ -3,8 +3,8 @@
 
 TESTS(FileRevisorArgsEqualizerAndRandomTests)
 AFACT(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
-AFACT(ZenUnitRandom_ReturnsFileRevisorArgsWithAllNonDefaultValueFields)
 AFACT(TestableRandomFileRevisorArgs_ReturnsFileRevisorArgsWithAllRandomFields)
+AFACT(ZenUnitRandomFileRevisorArgs_CodeCoverage)
 EVIDENCE
 
 TEST(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
@@ -21,22 +21,6 @@ TEST(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, preview, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, minimal, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, verbose, true);
-}
-
-TEST(ZenUnitRandom_ReturnsFileRevisorArgsWithAllNonDefaultValueFields)
-{
-   const FileRevisorArgs randomFileRevisorArgs = ZenUnit::Random<FileRevisorArgs>();
-   IS_NOT_DEFAULT_VALUE(randomFileRevisorArgs.commandLine);
-   // randomFileRevisorArgs.programMode is an enum that ZenUnit::RandomGenerator::Enum() can sometimes set to 0
-   IS_NOT_DEFAULT_VALUE(randomFileRevisorArgs.targetDirectoryPath);
-   IS_NOT_DEFAULT_VALUE(randomFileRevisorArgs.fromRegexPattern);
-   IS_NOT_DEFAULT_VALUE(randomFileRevisorArgs.toRegexPattern);
-   // randomFileRevisorArgs.recurse is a bool that ZenUnit::RandomGenerator::Bool() can sometimes set to false
-   // randomFileRevisorArgs.parallel
-   // randomFileRevisorArgs.skipFilesInUse
-   // randomFileRevisorArgs.preview
-   // randomFileRevisorArgs.minimal
-   // randomFileRevisorArgs.verbose
 }
 
 TEST(TestableRandomFileRevisorArgs_ReturnsFileRevisorArgsWithAllRandomFields)
@@ -82,6 +66,11 @@ TEST(TestableRandomFileRevisorArgs_ReturnsFileRevisorArgsWithAllRandomFields)
    expectedRandomFileRevisorArgs.minimal = minimal;
    expectedRandomFileRevisorArgs.verbose = verbose;
    ARE_EQUAL(expectedRandomFileRevisorArgs, randomFileRevisorArgs);
+}
+
+TEST(ZenUnitRandomFileRevisorArgs_CodeCoverage)
+{
+   ZenUnit::Random<FileRevisorArgs>();
 }
 
 RUN_TESTS(FileRevisorArgsEqualizerAndRandomTests)

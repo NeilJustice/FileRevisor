@@ -34,8 +34,7 @@ int FileRevisorProgram::Main(int argc, char* argv[])
    }
    _stopwatch->Start();
    const vector<string> stringArgs = _call_Utils_Vector_FromArgcArgv(argc, argv);
-   const int exitCode = _tryCatchCaller->TryCatchCall(
-      this, &FileRevisorProgram::Run, stringArgs, &FileRevisorProgram::ExceptionHandler);
+   const int exitCode = _tryCatchCaller->TryCatchCall(this, &FileRevisorProgram::Run, stringArgs, &FileRevisorProgram::ExceptionHandler);
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    const string durationLine = "[FileRevisor] Duration: " + elapsedSeconds + " seconds";
    _console->WriteLine(durationLine);
@@ -48,8 +47,7 @@ int FileRevisorProgram::Run(const vector<string>& stringArgs)
 {
    const FileRevisorArgs args = _argsParser->ParseArgs(stringArgs);
    _argsParser->PrintPreambleLines(args);
-   const shared_ptr<FileRevisorSubProgram> fileRevisorSubProgram =
-      _fileRevisorSubProgramFactory->NewFileRevisorSubProgram(args.programMode);
+   const shared_ptr<FileRevisorSubProgram> fileRevisorSubProgram = _fileRevisorSubProgramFactory->NewFileRevisorSubProgram(args.programMode);
    const int exitCode = fileRevisorSubProgram->Run(args);
    return exitCode;
 }

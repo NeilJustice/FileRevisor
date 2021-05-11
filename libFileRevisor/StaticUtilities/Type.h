@@ -48,15 +48,14 @@ private:
          abi::__cxa_demangle(mangledTypeName, nullptr, nullptr, &demangleStatus),
          std::free);
       release_assert(demangleStatus == 0);
-      const std::string demangledTypeName(demangledTypeNamePointer.get());
+      std::string demangledTypeName(demangledTypeNamePointer.get());
       return demangledTypeName;
    }
 #elif _WIN32
    static std::string Demangle(const char* mangledTypeName)
    {
       static const std::regex classStructPattern("(class |struct )");
-      const std::string typeNameMinusClassAndStruct =
-         std::regex_replace(mangledTypeName, classStructPattern, "");
+      std::string typeNameMinusClassAndStruct = std::regex_replace(mangledTypeName, classStructPattern, "");
       return typeNameMinusClassAndStruct;
    }
 #endif

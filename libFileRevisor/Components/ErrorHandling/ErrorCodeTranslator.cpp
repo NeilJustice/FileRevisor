@@ -61,8 +61,7 @@ string ErrorCodeTranslator::GetWindowsLastErrorDescription(DWORD windowsLastErro
       windowsLastErrorDescriptionChars,
       sizeof(windowsLastErrorDescriptionChars),
       nullptr);
-   windowsLastErrorDescription.assign(
-      windowsLastErrorDescriptionChars, windowsLastErrorDescriptionChars + numberOfMessageCharacters);
+   windowsLastErrorDescription.assign(windowsLastErrorDescriptionChars, windowsLastErrorDescriptionChars + numberOfMessageCharacters);
    return windowsLastErrorDescription;
 }
 #endif
@@ -97,9 +96,9 @@ string ErrorCodeTranslator::GetSystemErrorDescription(int systemErrorValue) cons
 #if _WIN32
    switch (systemErrorValue)
    {
-   case ERROR_SHARING_VIOLATION:
-      return "The process cannot access the file because it is being used by another process.";
+   case ERROR_SHARING_VIOLATION: return "The process cannot access the file because it is being used by another process.";
    }
 #endif
-   return to_string(systemErrorValue);
+   string systemErrorDescription = to_string(systemErrorValue);
+   return systemErrorDescription;
 }

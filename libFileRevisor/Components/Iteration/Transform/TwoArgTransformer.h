@@ -18,7 +18,8 @@ public:
       for (auto iter = sourceElements.begin(); iter != endSourceIter; ++iter)
       {
          const auto& sourceElement = *iter;
-         transformedElements.push_back(transformFunction(index++, sourceElement, arg2));
+         auto transformedElement = transformFunction(index++, sourceElement, arg2);
+         transformedElements.emplace_back(std::move(transformedElement));
       }
       return transformedElements;
    }

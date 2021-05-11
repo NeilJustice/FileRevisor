@@ -47,16 +47,16 @@ STARTUP
 
 TEST(DefaultConstructor_NewsComponents_SetsDetermineProgramModeFunctionPointer)
 {
-   FileRevisorArgsParser argsParser;
+   FileRevisorArgsParser fileRevisorArgsParser;
    // Function Pointers
-   STD_FUNCTION_TARGETS(FileRevisorArgsParser::DetermineProgramMode, argsParser._call_DetermineProgramMode);
+   STD_FUNCTION_TARGETS(FileRevisorArgsParser::DetermineProgramMode, fileRevisorArgsParser._call_DetermineProgramMode);
    // Function Callers
-   DELETE_TO_ASSERT_NEWED(argsParser._caller_ParseDirAndFromAndToArguments);
+   DELETE_TO_ASSERT_NEWED(fileRevisorArgsParser._caller_ParseDirAndFromAndToArguments);
    // Constant Components
-   DELETE_TO_ASSERT_NEWED(argsParser._console);
-   DELETE_TO_ASSERT_NEWED(argsParser._fileSystem);
-   DELETE_TO_ASSERT_NEWED(argsParser._docoptParser);
-   DELETE_TO_ASSERT_NEWED(argsParser._fileRevisorPreambleMaker);
+   DELETE_TO_ASSERT_NEWED(fileRevisorArgsParser._console);
+   DELETE_TO_ASSERT_NEWED(fileRevisorArgsParser._fileSystem);
+   DELETE_TO_ASSERT_NEWED(fileRevisorArgsParser._docoptParser);
+   DELETE_TO_ASSERT_NEWED(fileRevisorArgsParser._fileRevisorPreambleMaker);
 }
 
 TEST(ParseArgs_ParsesEachArgument_ReturnsFileRevisorArgs)

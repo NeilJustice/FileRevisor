@@ -1,13 +1,13 @@
 #include "pch.h"
-#include "libFileRevisorTests/ValueTypes/ZenUnit/RenameResultZenUnitEqualizerAndRandom.h"
+#include "libFileRevisorTests/ValueTypes/ZenUnit/RenameResultEqualizerAndRandom.h"
 
 namespace ZenUnit
 {
    void Equalizer<RenameResult>::AssertEqual(const RenameResult& expectedRenameResult, const RenameResult& actualRenameResult)
    {
-      ARE_EQUAL(expectedRenameResult.didRenameFileOrDirectory, actualRenameResult.didRenameFileOrDirectory);
-      ARE_EQUAL(expectedRenameResult.originalFileOrDirectoryPath, actualRenameResult.originalFileOrDirectoryPath);
-      ARE_EQUAL(expectedRenameResult.renamedFileOrDirectoryPath, actualRenameResult.renamedFileOrDirectoryPath);
+      FIELDS_ARE_EQUAL(expectedRenameResult, actualRenameResult, didRenameFileOrDirectory);
+      FIELDS_ARE_EQUAL(expectedRenameResult, actualRenameResult, originalFileOrDirectoryPath);
+      FIELDS_ARE_EQUAL(expectedRenameResult, actualRenameResult, renamedFileOrDirectoryPath);
    }
 
    RenameResult TestableRenameResultRandom(const ZenUnit::RandomGenerator* randomGenerator)

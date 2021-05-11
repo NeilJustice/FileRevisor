@@ -1,10 +1,10 @@
 #include "pch.h"
-#include "libFileRevisorTests/ValueTypes/ZenUnit/RenameResultZenUnitEqualizerAndRandom.h"
+#include "libFileRevisorTests/ValueTypes/ZenUnit/RenameResultEqualizerAndRandom.h"
 
 TESTS(RenameResultZenUnitEqualizerAndRandomTests)
 AFACT(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
-AFACT(ZenUnitRandom_ReturnsRenameResultWithAllNonDefaultValueFields)
 AFACT(TestableRenameResultRandom_ReturnsRenameResultWithAllRandomFields)
+AFACT(ZenUnitRandomRenameResult_CodeCoverage)
 EVIDENCE
 
 TEST(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
@@ -13,14 +13,6 @@ TEST(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(RenameResult, didRenameFileOrDirectory, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(RenameResult, originalFileOrDirectoryPath, ZenUnit::Random<fs::path>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(RenameResult, renamedFileOrDirectoryPath, ZenUnit::Random<fs::path>());
-}
-
-TEST(ZenUnitRandom_ReturnsRenameResultWithAllNonDefaultValueFields)
-{
-   const RenameResult randomRenameResult = ZenUnit::Random<RenameResult>();
-   // randomRenameResult.didRenameFileOrDirectory is a bool that ZenUnit::RandomGenerator::Bool() can sometimes set to false
-   IS_NOT_DEFAULT_VALUE(randomRenameResult.originalFileOrDirectoryPath);
-   IS_NOT_DEFAULT_VALUE(randomRenameResult.renamedFileOrDirectoryPath);
 }
 
 TEST(TestableRenameResultRandom_ReturnsRenameResultWithAllRandomFields)
@@ -40,6 +32,11 @@ TEST(TestableRenameResultRandom_ReturnsRenameResultWithAllRandomFields)
    expectedRandomRenameResult.originalFileOrDirectoryPath = originalPath;
    expectedRandomRenameResult.renamedFileOrDirectoryPath = renamedFileOrDirectoryPath;
    ARE_EQUAL(expectedRandomRenameResult, randomRenameResult);
+}
+
+TEST(ZenUnitRandomRenameResult_CodeCoverage)
+{
+   ZenUnit::Random<RenameResult>();
 }
 
 RUN_TESTS(RenameResultZenUnitEqualizerAndRandomTests)

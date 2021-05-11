@@ -6,7 +6,7 @@ class NonVoidOneArgMemberFunctionCaller
 public:
    virtual ReturnType ConstCall(const ClassType* classInstance, ReturnType(ClassType::* memberFunction)(ArgType) const, ArgType arg) const
    {
-      const ReturnType returnValue = (classInstance->*memberFunction)(arg);
+      ReturnType returnValue = (classInstance->*memberFunction)(arg);
       return returnValue;
    }
 

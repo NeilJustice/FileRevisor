@@ -47,17 +47,17 @@ STARTUP
 
 TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
 {
-   FileRevisorProgram textChangerProgram;
+   FileRevisorProgram fileRevisorProgram;
    // Function Callers
-   STD_FUNCTION_TARGETS(Vector::FromArgcArgv, textChangerProgram._call_Utils_Vector_FromArgcArgv);
-   STD_FUNCTION_TARGETS(Exception::GetExceptionClassNameAndMessage, textChangerProgram._call_Utils_Exception_GetExceptionClassNameAndMessage);
+   STD_FUNCTION_TARGETS(Vector::FromArgcArgv, fileRevisorProgram._call_Utils_Vector_FromArgcArgv);
+   STD_FUNCTION_TARGETS(Exception::GetExceptionClassNameAndMessage, fileRevisorProgram._call_Utils_Exception_GetExceptionClassNameAndMessage);
    // Components
-   DELETE_TO_ASSERT_NEWED(textChangerProgram._argsParser);
-   DELETE_TO_ASSERT_NEWED(textChangerProgram._console);
-   DELETE_TO_ASSERT_NEWED(textChangerProgram._fileRevisorSubProgramFactory);
-   DELETE_TO_ASSERT_NEWED(textChangerProgram._tryCatchCaller);
+   DELETE_TO_ASSERT_NEWED(fileRevisorProgram._argsParser);
+   DELETE_TO_ASSERT_NEWED(fileRevisorProgram._console);
+   DELETE_TO_ASSERT_NEWED(fileRevisorProgram._fileRevisorSubProgramFactory);
+   DELETE_TO_ASSERT_NEWED(fileRevisorProgram._tryCatchCaller);
    // Mutable Components
-   DELETE_TO_ASSERT_NEWED(textChangerProgram._stopwatch);
+   DELETE_TO_ASSERT_NEWED(fileRevisorProgram._stopwatch);
 }
 
 TEST(Main_ArgcIs1_WritesCommandLineUsage_Returns0)

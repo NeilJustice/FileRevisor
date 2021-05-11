@@ -20,19 +20,11 @@ RenameDirectoriesSubProgram::RenameDirectoriesSubProgram()
 
 int RenameDirectoriesSubProgram::Run(const FileRevisorArgs& args) const
 {
-   const vector<fs::path> directoryPathsInDirectory =
-      _protected_fileSystem->GetDirectoryPathsInDirectory(args.targetDirectoryPath, args.recurse);
-
-   const vector<RenameResult> directoryRenameResults =
-      _directoryPathsTransformer_RenameDirectory->Transform(
-         directoryPathsInDirectory, this, &RenameDirectoriesSubProgram::RenameDirectory, args);
-
-   const size_t numberOfRenamedDirectories =
-      _predicateCounter->CountWhere(directoryRenameResults, RenameResult::DidRenameFileOrDirectoryFieldIsTrue);
-
-   const string directoryOrDirectories =
-      _protected_pluralizer->PotentiallyPluralizeWord(numberOfRenamedDirectories, "directory", "directories");
-
+   const vector<fs::path> directoryPathsInDirectory = _protected_fileSystem->GetDirectoryPathsInDirectory(args.targetDirectoryPath, args.recurse);
+   const vector<RenameResult> directoryRenameResults = _directoryPathsTransformer_RenameDirectory->Transform(
+      directoryPathsInDirectory, this, &RenameDirectoriesSubProgram::RenameDirectory, args);
+   const size_t numberOfRenamedDirectories = _predicateCounter->CountWhere(directoryRenameResults, RenameResult::DidRenameFileOrDirectoryFieldIsTrue);
+   const string directoryOrDirectories = _protected_pluralizer->PotentiallyPluralizeWord(numberOfRenamedDirectories, "directory", "directories");
    string numberOfDirectoriesMessage;
    if (args.preview)
    {
@@ -76,8 +68,7 @@ void RenameDirectoriesSubProgram::PrintDidNotMatchDirectoryMessageIfVerboseMode(
 {
    if (verbose)
    {
-      const string didNotMatchDirectoryMessage =
-         "[FileRevisor] Verbose: Did not match " + directoryPath.string();
+      const string didNotMatchDirectoryMessage = String::ConcatStrings("[FileRevisor] Verbose: Did not match ", directoryPath.string());
       _protected_console->WriteLine(didNotMatchDirectoryMessage);
    }
 }

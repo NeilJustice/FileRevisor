@@ -53,8 +53,7 @@ TEST(TryCatchCall_CallsFunctionWhichDoesNotThrow_ReturnsFunctionReturnValue)
    const ArgumentType argument = ZenUnit::Random<ArgumentType>();
    classInstance.doThrowException = false;
    //
-   const int exitCode = _tryCatchCaller.TryCatchCall(
-      &classInstance, &Class::MemberFunction, argument, &Class::ExceptionHandler);
+   const int exitCode = _tryCatchCaller.TryCatchCall(&classInstance, &Class::MemberFunction, argument, &Class::ExceptionHandler);
    //
    VECTORS_ARE_EQUAL({ argument }, classInstance.calls);
    ARE_EQUAL(classInstance.exitCode, exitCode);
@@ -65,8 +64,7 @@ TEST(TryCatchCall_CallsFunctionWhichThrowsException_CallsExceptionHandler_Return
    const ArgumentType argument = ZenUnit::Random<ArgumentType>();
    classInstance.doThrowException = true;
    //
-   const int exitCode = _tryCatchCaller.TryCatchCall(
-      &classInstance, &Class::MemberFunction, argument, &Class::ExceptionHandler);
+   const int exitCode = _tryCatchCaller.TryCatchCall(&classInstance, &Class::MemberFunction, argument, &Class::ExceptionHandler);
    //
    VECTORS_ARE_EQUAL({ argument }, classInstance.calls);
    ExceptionType ex(classInstance.exceptionWhat.c_str());

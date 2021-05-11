@@ -26,19 +26,16 @@ FileRevisorArgsParser::~FileRevisorArgsParser()
 
 FileRevisorArgs FileRevisorArgsParser::ParseArgs(const vector<string>& stringArgs) const
 {
-   const map<string, docopt::Value> docoptValues =
-      _docoptParser->ParseArgs(FileRevisorArgs::CommandLineUsage, stringArgs);
+   const map<string, docopt::Value> docoptValues = _docoptParser->ParseArgs(FileRevisorArgs::CommandLineUsage, stringArgs);
    const bool isRenameFilesMode = _docoptParser->GetRequiredBool(docoptValues, "rename-files");
    const bool isRenameDirectoriesMode = _docoptParser->GetRequiredBool(docoptValues, "rename-directories");
    const bool isReplaceTextInTextFilesMode = _docoptParser->GetRequiredBool(docoptValues, "replace-text");
    const bool isDeleteDirectoryMode = _docoptParser->GetRequiredBool(docoptValues, "delete-directory");
    FileRevisorArgs args;
    args.commandLine = Vector::Join(stringArgs, ' ');
-   args.programMode = _call_DetermineProgramMode(
-      isRenameFilesMode, isRenameDirectoriesMode, isReplaceTextInTextFilesMode, isDeleteDirectoryMode);
+   args.programMode = _call_DetermineProgramMode(isRenameFilesMode, isRenameDirectoriesMode, isReplaceTextInTextFilesMode, isDeleteDirectoryMode);
    tuple<fs::path, string, string> targetDirectory_fromRegexPattern_toRegexPattern =
-      _caller_ParseDirAndFromAndToArguments->ConstCall(
-         this, &FileRevisorArgsParser::ParseTargetAndFromAndToArguments, docoptValues, isDeleteDirectoryMode);
+      _caller_ParseDirAndFromAndToArguments->ConstCall(this, &FileRevisorArgsParser::ParseTargetAndFromAndToArguments, docoptValues, isDeleteDirectoryMode);
    args.targetDirectoryPath = get<0>(targetDirectory_fromRegexPattern_toRegexPattern);
    args.fromRegexPattern = get<1>(targetDirectory_fromRegexPattern_toRegexPattern);
    args.toRegexPattern = get<2>(targetDirectory_fromRegexPattern_toRegexPattern);
@@ -78,8 +75,7 @@ tuple<fs::path, string, string> FileRevisorArgsParser::ParseTargetAndFromAndToAr
       toRegexPattern = _docoptParser->GetRequiredString(docoptValues, "--to");
    }
    fs::path targetDirectoryPath = _fileSystem->GetAbsolutePath(targetDirectoryPathString);
-   tuple<fs::path, string, string> targetDirectoryPath_fromRegexPattern_toRegexPattern(
-      targetDirectoryPath, fromRegexPattern, toRegexPattern);
+   tuple<fs::path, string, string> targetDirectoryPath_fromRegexPattern_toRegexPattern(targetDirectoryPath, fromRegexPattern, toRegexPattern);
    return targetDirectoryPath_fromRegexPattern_toRegexPattern;
 }
 
