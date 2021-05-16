@@ -34,7 +34,7 @@ x64/
 *.log
 *.opendb
 *.sln
-!FileRevisorDevOpsPython/FileRevisorDevOpsPython.sln
+!FileRevisorDevOpsPython.sln
 *.suo
 *.obj
 *.pch
