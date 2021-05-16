@@ -1,3 +1,5 @@
+coverage:
+  precision: 5
 ignore:
   - "ZenUnit.h"
   - "MetalMock.h"
