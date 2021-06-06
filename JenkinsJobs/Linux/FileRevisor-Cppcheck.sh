@@ -7,7 +7,12 @@ cppcheck \
    --suppressions-list=CppcheckSuppressions.txt \
    -D__linux__ \
    -DTEST \
+   -DTESTS \
    -DTHEN_RUN_TEMPLATE_TESTS \
+   -DMETALMOCK_NONVOID0_FREE \
+   -DMETALMOCK_NONVOID1_FREE \
+   -DMETALMOCK_NONVOID2_STATIC \
+   -DMETALMOCK_NONVOID5_FREE \
    -I /usr/include/c++/v1 \
    -I /usr/local/include/ZenUnitAndMetalMock \
    -I libFileRevisor \
