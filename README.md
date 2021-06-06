@@ -29,7 +29,6 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
 * [Windows Jenkins jobs which build and cppcheck FileRevisor's C++ code and mypy-flake8-pylint-SonarQube FileRevisor's CI/CD Python code](#windows-jenkins-jobs-which-build-and-cppcheck-filerevisors-c-code-and-mypy-flake8-pylint-sonarqube-scan-filerevisors-cicd-python-code)
 * [How to build binary filerevisor on Linux with Clang](#how-to-build-binary-filerevisor-on-linux-with-clang)
 * [How to build executable FileRevisor.exe on Windows with Visual Studio 2019](#how-to-build-executable-filerevisorexe-on-windows-with-visual-studio-2019)
-* [FileRevisor roadmap](#filerevisor-roadmap)
 
 ## FileRevisor command line usage
 
@@ -200,11 +199,3 @@ cmake --build . --config Release --target install
 Resulting executable `C:\bin\FileRevisor.exe`:
 
 ![Windows FileRevisor.exe](Screenshots/WindowsFileRevisorDotExe.png)
-
-## FileRevisor roadmap
-
-|Future FileRevisor feature|Implementation status as of 4/17/2021|
-|--------------------------|-------------------------------------|
-|GitHub Actions build|In progress|
-|SonarCloud Python static analysis badge for FileRevisorDevOpsPython|Awaiting implementation|
-|SonarCloud C++ static analysis badge|Awaiting implementation|
