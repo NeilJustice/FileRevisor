@@ -8,5 +8,5 @@ python -u FileRevisorDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
    --cmake-generator=Ninja \
    --cmake-build-type=Release \
    --tests-project-name=libFileRevisorTests \
-   --cmake-definitions="-DCMAKE_INSTALL_PREFIX=/usr/local" \
+   --cmake-definitions="-DCMAKE_INSTALL_PREFIX=/usr/local -DFastLinuxReleaseBuildMode=ON" \
    --install

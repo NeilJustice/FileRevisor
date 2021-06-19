@@ -9,5 +9,5 @@ python -u FileRevisorDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
    --cmake-generator=Ninja \
    --cmake-build-type=Release \
    --tests-project-name=libFileRevisorTests \
-   --cmake-definitions="-DClangUndefinedBehaviorSanitizerMode=ON" \
+   --cmake-definitions="-DClangUndefinedBehaviorSanitizerMode=ON -DFastLinuxReleaseBuildMode=ON" \
    --no-install
