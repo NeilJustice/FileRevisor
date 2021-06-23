@@ -86,8 +86,8 @@ TEST(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTim
 
    const int argc = ZenUnit::RandomBetween<int>(2, 5);
    const string exePath = ZenUnit::Random<string>();
-   const string textChangerIniPath = ZenUnit::Random<string>();
-   const char* argv[] = { exePath.c_str(), textChangerIniPath.c_str() };
+   const string secondArg = ZenUnit::Random<string>();
+   const char* argv[] = { exePath.c_str(), secondArg.c_str() };
    //
    const int exitCode = _fileRevisorProgram.Main(argc, const_cast<char**>(argv));
    //
