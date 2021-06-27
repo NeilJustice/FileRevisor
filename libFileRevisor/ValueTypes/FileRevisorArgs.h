@@ -18,9 +18,11 @@ struct FileRevisorArgs
 };
 
 #ifdef _WIN32
-   #ifdef _DEBUG
-      static_assert(sizeof(FileRevisorArgs) == 176);
-   #else
-      static_assert(sizeof(FileRevisorArgs) == 144);
-   #endif
+#ifdef _DEBUG
+static_assert(sizeof(FileRevisorArgs) == 176);
+#else
+static_assert(sizeof(FileRevisorArgs) == 144);
+#endif
+#else
+static_assert(sizeof(FileRevisorArgs) == 152);
 #endif
