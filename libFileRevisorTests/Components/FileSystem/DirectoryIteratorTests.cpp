@@ -4,6 +4,9 @@
 
 TESTS(DirectoryIteratorTests)
 AFACT(DefaultConstructor_NewsComponents_SetsFieldsToDefaultValues)
+AFACT(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsEndIterationMarker_ReturnsEmptyVector)
+AFACT(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsNotEndIterationMarker_FileIsSkippableType_DoesNotAddToTextFilePaths_ReturnsEmptyVector)
+AFACT(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsNotEndIterationMarker_FileIsNotSkippableType_AddsToTextFilePaths_ReturnsTextFilePaths)
 FACTS(PathContainsAnySubstringCaseInsensitive_ReturnsTrueIfFilePathCaseInsensitiveContainsAnySubstring)
 AFACT(SetDirectoryIterator_RecurseIsTrue_SetsRecursiveDirectoryIterator_SetsRecursiveModeToTrue)
 AFACT(SetDirectoryIterator_RecurseIsFalse_SetsDirectoryIterator)
@@ -14,6 +17,14 @@ DirectoryIterator _directoryIterator;
 // Constant Components
 ConsoleMock* _consoleMock = nullptr;
 FileOpenerCloserMock* _fileOpenerCloserMock = nullptr;
+
+class DirectoryIteratorSelfMocked : public Metal::Mock<DirectoryIterator>
+{
+public:
+   METALMOCK_NONVOID0(fs::path, NextNonIgnoredFilePath)
+   METALMOCK_NONVOID1_CONST(bool, IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable, const fs::path&)
+};
+DirectoryIteratorSelfMocked _directoryIteratorSelfMocked;
 
 STARTUP
 {
@@ -33,6 +44,35 @@ TEST(DefaultConstructor_NewsComponents_SetsFieldsToDefaultValues)
    ARE_EQUAL(fs::recursive_directory_iterator(), directoryIterator._recursiveDirectoryIterator);
    IS_EMPTY(directoryIterator._fileAndDirectoryPathIgnoreSubstrings);
 	IS_FALSE(directoryIterator._recursiveMode);
+}
+
+TEST(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsEndIterationMarker_ReturnsEmptyVector)
+{
+   const fs::path endIterationMarker;
+   _directoryIteratorSelfMocked.NextNonIgnoredFilePathMock.Return(endIterationMarker);
+   //
+   const vector<fs::path> textFilePaths = _directoryIteratorSelfMocked.GetNonEmptyNonIgnoredTextFilePaths();
+   //
+   METALMOCK(_directoryIteratorSelfMocked.NextNonIgnoredFilePathMock.CalledOnce());
+   IS_EMPTY(textFilePaths);
+}
+
+TEST(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsNotEndIterationMarker_FileIsSkippableType_DoesNotAddToTextFilePaths_ReturnsEmptyVector)
+{
+
+   //
+   //_directoryIteratorSelfMocked.GetNonEmptyNonIgnoredTextFilePaths();
+   //
+
+}
+
+TEST(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsNotEndIterationMarker_FileIsNotSkippableType_AddsToTextFilePaths_ReturnsTextFilePaths)
+{
+
+   //
+   //_directoryIteratorSelfMocked.GetNonEmptyNonIgnoredTextFilePaths();
+   //
+
 }
 
 TEST3X3(PathContainsAnySubstringCaseInsensitive_ReturnsTrueIfFilePathCaseInsensitiveContainsAnySubstring,

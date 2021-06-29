@@ -24,7 +24,7 @@ public:
    virtual void SetDirectoryIterator(const fs::path& directoryPath, bool recurse);
    virtual void SetFileAndDirectoryPathIgnoreSubstrings(const vector<string>& fileAndDirectoryPathIgnoreSubstrings);
 private:
-   virtual bool IsFileEmptyOrBinaryOrNonAnsiOrNotOpenable(const fs::path& filePath) const;
+   virtual bool IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(const fs::path& filePath) const;
    template<typename DirectoryIteratorType>
    fs::path NextNonIgnoredPath(DirectoryIteratorType& iter, fs::file_type requiredFileType);
    static bool PathContainsAnySubstringCaseInsensitive(const fs::path& path, const vector<string>& pathSubstrings);

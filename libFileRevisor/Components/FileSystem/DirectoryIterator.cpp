@@ -22,8 +22,8 @@ vector<fs::path> DirectoryIterator::GetNonEmptyNonIgnoredTextFilePaths()
       {
          break;
       }
-      const bool fileIsEmptyOrBinaryOrNonAnsiOrNotOpenable = IsFileEmptyOrBinaryOrNonAnsiOrNotOpenable(nextNonIgnoredFilePath);
-      if (fileIsEmptyOrBinaryOrNonAnsiOrNotOpenable)
+      const bool fileIsEmptyOrBinaryOrNotAnsiOrNotOpenable = IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(nextNonIgnoredFilePath);
+      if (fileIsEmptyOrBinaryOrNotAnsiOrNotOpenable)
       {
          continue;
       }
@@ -80,7 +80,7 @@ void DirectoryIterator::SetFileAndDirectoryPathIgnoreSubstrings(const vector<str
 
 // Private Functions
 
-bool DirectoryIterator::IsFileEmptyOrBinaryOrNonAnsiOrNotOpenable(const fs::path& filePath) const
+bool DirectoryIterator::IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(const fs::path& filePath) const
 {
    FILE* const fileOpenInReadBinaryMode = _fileOpenerCloser->OpenReadModeBinaryFile(filePath, false);
    if (fileOpenInReadBinaryMode == nullptr)
