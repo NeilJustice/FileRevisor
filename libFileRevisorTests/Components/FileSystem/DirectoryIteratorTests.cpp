@@ -59,20 +59,42 @@ TEST(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsEndIterationMark
 
 TEST(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsNotEndIterationMarker_FileIsSkippableType_DoesNotAddToTextFilePaths_ReturnsEmptyVector)
 {
-
+   const fs::path firstFilePath = ZenUnit::Random<fs::path>();
+   const fs::path endIterationMarker{};
+   _directoryIteratorSelfMocked.NextNonIgnoredFilePathMock.ReturnValues(firstFilePath, endIterationMarker);
+   _directoryIteratorSelfMocked.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenableMock.Return(true);
    //
-   //_directoryIteratorSelfMocked.GetNonEmptyNonIgnoredTextFilePaths();
+   const vector<fs::path> textFilePaths = _directoryIteratorSelfMocked.GetNonEmptyNonIgnoredTextFilePaths();
    //
-
+   METALMOCK(_directoryIteratorSelfMocked.NextNonIgnoredFilePathMock.CalledNTimes(2));
+   METALMOCK(_directoryIteratorSelfMocked.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenableMock.CalledOnceWith(firstFilePath));
+   IS_EMPTY(textFilePaths);
 }
 
 TEST(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsNotEndIterationMarker_FileIsNotSkippableType_AddsToTextFilePaths_ReturnsTextFilePaths)
 {
-
+   const fs::path firstFilePath = ZenUnit::Random<fs::path>();
+   const fs::path secondFilePath = ZenUnit::Random<fs::path>();
+   const fs::path thirdFilePath = ZenUnit::Random<fs::path>();
+   const fs::path endIterationMarker{};
+   _directoryIteratorSelfMocked.NextNonIgnoredFilePathMock.ReturnValues(firstFilePath, secondFilePath, thirdFilePath, endIterationMarker);
+   _directoryIteratorSelfMocked.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenableMock.ReturnValues(false, true, false);
    //
-   //_directoryIteratorSelfMocked.GetNonEmptyNonIgnoredTextFilePaths();
+   const vector<fs::path> textFilePaths = _directoryIteratorSelfMocked.GetNonEmptyNonIgnoredTextFilePaths();
    //
-
+   METALMOCK(_directoryIteratorSelfMocked.NextNonIgnoredFilePathMock.CalledNTimes(4));
+   METALMOCK(_directoryIteratorSelfMocked.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenableMock.CalledAsFollows(
+   {
+      firstFilePath,
+      secondFilePath,
+      thirdFilePath
+   }));
+   const vector<fs::path> expectedTextFilePaths =
+   {
+      firstFilePath,
+      thirdFilePath
+   };
+   VECTORS_ARE_EQUAL(expectedTextFilePaths, textFilePaths);
 }
 
 TEST3X3(PathContainsAnySubstringCaseInsensitive_ReturnsTrueIfFilePathCaseInsensitiveContainsAnySubstring,
