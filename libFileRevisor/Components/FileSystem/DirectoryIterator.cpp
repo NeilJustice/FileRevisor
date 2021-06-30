@@ -5,14 +5,8 @@
 #include "libFileRevisor/UtilityComponents/DataStructures/CharArray64Helper.h"
 
 DirectoryIterator::DirectoryIterator() noexcept
-   // Function Pointers
-#if defined __linux__
-   : _call_fread(fread)
-#elif defined _WIN32
-   : _call_fread_nolock_s(_fread_nolock_s)
-#endif
    // Constant Components
-   , _charArray64Helper(make_unique<CharArray64Helper>())
+   : _charArray64Helper(make_unique<CharArray64Helper>())
    , _console(make_unique<Console>())
    , _fileOpenerCloser(make_unique<FileOpenerCloser>())
    , _fileReader(make_unique<FileReader>())

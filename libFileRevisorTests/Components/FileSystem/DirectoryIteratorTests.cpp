@@ -18,12 +18,6 @@ AFACT(SetFileAndDirectoryPathIgnoreSubstrings_SetsFileAndDirectoryPathIgnoreSubs
 EVIDENCE
 
 DirectoryIterator _directoryIterator;
-// Function Pointers
-#if defined __linux__
-METALMOCK_NONVOID4_FREE(size_t, _call_fread, void*, size_t, size_t, FILE*)
-#elif defined _WIN32
-METALMOCK_NONVOID5_FREE(size_t, _call_fread_nolock_s, void*, size_t, size_t, size_t, FILE*)
-#endif
 // Constant Components
 CharArray64HelperMock* _charArray64HelperMock = nullptr;
 ConsoleMock* _consoleMock = nullptr;
@@ -40,12 +34,6 @@ DirectoryIteratorSelfMocked _directoryIteratorSelfMocked;
 
 STARTUP
 {
-   // Function Pointers
-#if defined __linux__
-   _directoryIterator._call_fread = BIND_4ARG_METALMOCK_OBJECT(_call_freadMock);
-#elif defined _WIN32
-   _directoryIterator._call_fread_nolock_s = BIND_5ARG_METALMOCK_OBJECT(_call_fread_nolock_sMock);
-#endif
    // Constant Components
    _directoryIterator._charArray64Helper.reset(_charArray64HelperMock = new CharArray64HelperMock);
    _directoryIterator._console.reset(_consoleMock = new ConsoleMock);
@@ -56,12 +44,6 @@ STARTUP
 TEST(DefaultConstructor_NewsComponents_SetsFieldsToDefaultValues)
 {
    DirectoryIterator directoryIterator;
-   // Function Pointers
-#if defined __linux__
-   STD_FUNCTION_TARGETS(fread, _directoryIterator._call_fread);
-#elif defined _WIN32
-   STD_FUNCTION_TARGETS(_fread_nolock_s, directoryIterator._call_fread_nolock_s);
-#endif
    // Constant Components
    DELETE_TO_ASSERT_NEWED(directoryIterator._charArray64Helper);
    DELETE_TO_ASSERT_NEWED(directoryIterator._console);

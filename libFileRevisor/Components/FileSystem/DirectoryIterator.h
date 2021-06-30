@@ -9,12 +9,6 @@ class DirectoryIterator
 {
    friend class DirectoryIteratorTests;
 private:
-   // Function Pointers
-#if defined __linux__
-   function<size_t(void*, size_t, size_t, FILE*)> _call_fread;
-#elif defined _WIN32
-   function<size_t(void*, size_t, size_t, size_t, FILE*)> _call_fread_nolock_s;
-#endif
    // Constant Components
    unique_ptr<const CharArray64Helper> _charArray64Helper;
    unique_ptr<const Console> _console;
