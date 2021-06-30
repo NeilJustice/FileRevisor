@@ -3,7 +3,7 @@
 #include "libFileRevisor/Components/Exceptions/FileSystemExceptionMaker.h"
 #include "libFileRevisor/Components/FileSystem/RecursiveFileDeleter.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
-#if defined __linux__|| defined __APPLE____linux__
+#if defined __linux__|| defined __APPLE__
 #include <sys/stat.h>
 #endif
 
@@ -58,7 +58,7 @@ STARTUP
 
 CLEANUP
 {
-#if defined __linux__|| defined __APPLE____linux__
+#if defined __linux__|| defined __APPLE__
    Chmod777Directory(_root_subdirectory5);
 #endif
    _fileSystem.RemoveAll(_rootDirectoryPath);
@@ -120,7 +120,7 @@ TEST(RecursivelyDeleteAllFilesInDirectory_MinimalIsFalse_RecursivelyDeletesAllFi
    AssertExpectedEndingStateOfFileSystem();
 }
 
-#if defined __linux__|| defined __APPLE____linux__
+#if defined __linux__|| defined __APPLE__
 // chmod 555 = "dr-xr-xr-x"
 static void Chmod555Directory(const fs::path& directoryPath)
 {
@@ -150,7 +150,7 @@ void AddReadonlyFlagToFile(const fs::path& filePath)
 TEST(RecursivelyDeleteAllFilesInDirectory_MinimalIsTrue_OneOfTheFilesIsNonDeletable_ThrowsFileSystemException)
 {
    AssertExpectedStartingStateOfFileSystem();
-#if defined __linux__|| defined __APPLE____linux__
+#if defined __linux__|| defined __APPLE__
    Chmod555Directory(_root_subdirectory5);
 #elif _WIN32
    AddReadonlyFlagToFile(_root_subdirectory5_file1);

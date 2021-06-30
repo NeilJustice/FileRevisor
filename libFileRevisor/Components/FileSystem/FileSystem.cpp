@@ -1,6 +1,7 @@
 #include "pch.h"
-#include "libFileRevisor/Components/Exceptions/FileSystemExceptionMaker.h"
 #include "libFileRevisor/Components/FileSystem/DirectoryIterator.h"
+#include "libFileRevisor/Components/FileSystem/FCloseDeleter.h"
+#include "libFileRevisor/Components/Exceptions/FileSystemExceptionMaker.h"
 #include "libFileRevisor/Components/FileSystem/FileOpenerCloser.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Components/FileSystem/RecursiveFileDeleter.h"
@@ -218,7 +219,7 @@ fs::path FileSystem::RenameDirectory(const fs::path& directoryPath, string_view 
 
 void FileSystem::RemoveFile(const char* filePath) const
 {
-#if defined __linux__|| defined __APPLE__
+#if defined __linux__ || defined __APPLE__
    const int unlinkReturnValue = unlink(filePath);
 #elif _WIN32
    const int unlinkReturnValue = _unlink(filePath);
@@ -256,30 +257,31 @@ unsigned long long FileSystem::RemoveAll(const fs::path& directoryPath) const
    return numberOfFilesAndDirectoriesRemoved;
 }
 
-FILE* FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) const
+shared_ptr<FILE> FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) const
 {
-   FILE* const filePointer = _call_fopen(filePath.string().c_str(), fileOpenMode);
-   if (filePointer == nullptr)
+   FILE* const rawFilePointer = _call_fopen(filePath.string().c_str(), fileOpenMode);
+   if (rawFilePointer == nullptr)
    {
       const FileSystemException fileSystemException =
          _fileSystemExceptionMaker->MakeFileSystemExceptionForFailedToOpenFileWithFOpen(filePath, fileOpenMode);
       throw fileSystemException;
    }
-   return filePointer;
+   shared_ptr<FILE> autoClosingFilePointer(rawFilePointer, FCloseDeleter());
+   return autoClosingFilePointer;
 }
 
 void FileSystem::CreateBinaryOrTextFile(const fs::path& filePath, bool trueBinaryFalseText, const char* bytes, size_t bytesLength) const
 {
    const fs::path parentDirectoryPath = filePath.parent_path();
    fs::create_directories(parentDirectoryPath);
-   FILE* const binaryOrTextFileOpenInWriteMode = OpenFile(filePath, trueBinaryFalseText ? "wb" : "w");
-#ifdef _WIN32
-   const size_t numberOfBytesWritten = _fwrite_nolock(bytes, 1, bytesLength, binaryOrTextFileOpenInWriteMode);
-#else
-   const size_t numberOfBytesWritten = fwrite(bytes, 1, bytesLength, binaryOrTextFileOpenInWriteMode);
+   const shared_ptr<FILE> binaryOrTextFileOpenInWriteMode = OpenFile(filePath, trueBinaryFalseText ? "wb" : "w");
+#if defined __linux__ || defined __APPLE__
+   const size_t numberOfBytesWritten = fwrite(bytes, 1, bytesLength, binaryOrTextFileOpenInWriteMode.get());
+#elif defined _WIN32
+   const size_t numberOfBytesWritten = _fwrite_nolock(bytes, 1, bytesLength, binaryOrTextFileOpenInWriteMode.get());
 #endif
    release_assert(numberOfBytesWritten == bytesLength);
-   _fileOpenerCloser->CloseFile(binaryOrTextFileOpenInWriteMode, filePath);
+   _fileOpenerCloser->CloseFile(binaryOrTextFileOpenInWriteMode.get(), filePath);
 }
 
 void FileSystem::EraseTrailingBinaryZeros(string& outStr) const

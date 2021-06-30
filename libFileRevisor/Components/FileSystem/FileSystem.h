@@ -74,7 +74,7 @@ public:
    virtual void RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows(const fs::path& directoryPath) const;
 
    // Open And Close Files
-   virtual FILE* OpenFile(const fs::path& filePath, const char* fileOpenMode) const;
+   virtual shared_ptr<FILE> OpenFile(const fs::path& filePath, const char* fileOpenMode) const;
 private:
    virtual size_t GetFileSize(std::ifstream& file) const;
    virtual void CreateBinaryOrTextFile(

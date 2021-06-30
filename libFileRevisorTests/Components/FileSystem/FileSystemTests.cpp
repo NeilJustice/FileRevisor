@@ -11,7 +11,7 @@
 
 TESTS(FileSystemTests)
 AFACT(DefaultConstructor_NewsComponents_SetsFunctionPointers)
-#if defined __linux__|| defined __APPLE____linux__
+#if defined __linux__|| defined __APPLE__
 AFACT(GetAbsolutePath_ReturnsNonEmptyPath)
 #elif _WIN32
 AFACT(GetAbsolutePath_ReturnsResultOfCallingStdFilesystemAbsolute)
@@ -28,7 +28,7 @@ AFACT(RenameDirectory_RenamesDirectory_FilesystemRenameReturns0_ReturnsRenamedDi
 FACTS(RenameDirectory_RenamesDirectory_FilesystemRenameReturnsNot0_ThrowsFileSystemException)
 AFACT(OpenFile_FOpenReturnsNullFILEPointer_ThrowsFileSystemException)
 AFACT(OpenFile_FOpenReturnsNonNullFILEPointer_ReturnsFilePointer)
-#if defined __linux__|| defined __APPLE____linux__
+#if defined __linux__|| defined __APPLE__
 AFACT(RemoveReadOnlyFlagsFromTopLevelFilesInDirectoryIfWindows_OnLinuxDoesNothing)
 #elif _WIN32
 AFACT(RemoveReadOnlyFlagsFromTopLevelFilesInDirectoryIfWindows_CallsRemoveReadonlyFlagOnAllTopLevelFilesInDirectory)
@@ -111,7 +111,7 @@ TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
    DELETE_TO_ASSERT_NEWED(fileSystem._recursiveFileDeleter);
 }
 
-#if defined __linux__|| defined __APPLE____linux__
+#if defined __linux__|| defined __APPLE__
 TEST(GetAbsolutePath_ReturnsNonEmptyPath)
 {
    const fs::path relativeFileOrDirectoryPath = ZenUnit::Random<fs::path>();
@@ -387,11 +387,10 @@ FILE* fopen_CallInstead(const char* filePath, const char* fileOpenMode)
 TEST(OpenFile_FOpenReturnsNullFILEPointer_ThrowsFileSystemException)
 {
    _fopen_ReturnValue = nullptr;
-   fopenMock.CallInstead(std::bind(
-      &FileSystemTests::fopen_CallInstead, this, placeholders::_1, placeholders::_2));
+   fopenMock.CallInstead(std::bind(&FileSystemTests::fopen_CallInstead, this, placeholders::_1, placeholders::_2));
 
-   const FileSystemException fileSystemException = _fileSystemExceptionMakerMock->
-      MakeFileSystemExceptionForFailedToOpenFileWithFOpenMock.ReturnRandom();
+   const FileSystemException fileSystemException =
+      _fileSystemExceptionMakerMock->MakeFileSystemExceptionForFailedToOpenFileWithFOpenMock.ReturnRandom();
 
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const string fileOpenMode = ZenUnit::Random<string>();
@@ -409,20 +408,19 @@ TEST(OpenFile_FOpenReturnsNonNullFILEPointer_ReturnsFilePointer)
 {
    FILE nonNullFOpenReturnValue{};
    _fopen_ReturnValue = &nonNullFOpenReturnValue;
-   fopenMock.CallInstead(std::bind(
-      &FileSystemTests::fopen_CallInstead, this, placeholders::_1, placeholders::_2));
+   fopenMock.CallInstead(std::bind(&FileSystemTests::fopen_CallInstead, this, placeholders::_1, placeholders::_2));
 
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const string fileOpenMode = ZenUnit::Random<string>();
    //
-   FILE* const filePointer = _fileSystem.OpenFile(filePath, fileOpenMode.c_str());
+   shared_ptr<FILE> filePointer = _fileSystem.OpenFile(filePath, fileOpenMode.c_str());
    //
    const vector<pair<string, string>> expected_fopen_Arguments = { { filePath.string(), fileOpenMode } };
    ARE_EQUAL(expected_fopen_Arguments, _fopen_Arguments);
-   ARE_EQUAL(&nonNullFOpenReturnValue, filePointer);
+   ARE_EQUAL(&nonNullFOpenReturnValue, filePointer.get());
 }
 
-#if defined __linux__|| defined __APPLE____linux__
+#if defined __linux__|| defined __APPLE__
 
 TEST(RemoveReadOnlyFlagsFromTopLevelFilesInDirectoryIfWindows_OnLinuxDoesNothing)
 {

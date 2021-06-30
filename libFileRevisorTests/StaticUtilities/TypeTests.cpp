@@ -95,7 +95,7 @@ TEST(GetNameT_ClassType_ReturnsTypeNameMinusClassSpace)
    ARE_EQUAL("TypeTests::TemplateClass<TypeTests::C>", *Type::GetName<TemplateClass<C>>());
    ARE_EQUAL("TypeTests::TemplateClass<TypeTests::S>", *Type::GetName<TemplateClass<S>>());
    ARE_EQUAL("TypeTests::C", *Type::GetName<C>());
-#if defined __linux__|| defined __APPLE____linux__
+#if defined __linux__|| defined __APPLE__
    ARE_EQUAL("std::ostream", *Type::GetName<decltype(cout)>());
 #elif _WIN32
    ARE_EQUAL("std::basic_string<char,std::char_traits<char>,std::allocator<char> >", *Type::GetName<string>());

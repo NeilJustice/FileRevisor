@@ -18,7 +18,7 @@ public:
    FileOpenerCloser();
    virtual ~FileOpenerCloser();
    virtual shared_ptr<FILE> OpenReadModeBinaryFile(const fs::path& filePath, bool throwIfFileNotOpenable) const;
-   virtual void CloseFile(FILE* filePointer, const fs::path& filePath) const;
+   virtual void CloseFile(FILE* rawFilePointer, const fs::path& filePath) const;
 private:
 #if defined __linux__ || defined __APPLE__
    shared_ptr<FILE> OpenFileOnLinux(const fs::path& filePath, const char* fileOpenMode, bool throwIfFileNotOpenable) const;

@@ -27,4 +27,7 @@ public:
 
    // Readonly Flags
    METALMOCK_VOID1_CONST(RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows, const fs::path&)
+
+   // Open And Close Files
+   METALMOCK_NONVOID2_CONST(shared_ptr<FILE>, OpenFile, const fs::path&, const char*)
 };

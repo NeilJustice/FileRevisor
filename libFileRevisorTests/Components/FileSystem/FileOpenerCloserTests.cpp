@@ -72,12 +72,12 @@ TEST(OpenReadModeBinaryFile_ReturnsFilePointerOpenedInBinaryReadMode)
 TEST(CloseFile_CallsFCloseOnFilePointerWhichReturns0_Returns)
 {
    fcloseMock.Return(0);
-   FILE FilePointer{};
+   FILE rawFilePointer{};
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
-   _fileOpenerCloser.CloseFile(&FilePointer, filePath);
+   _fileOpenerCloser.CloseFile(&rawFilePointer, filePath);
    //
-   METALMOCK(fcloseMock.CalledOnceWith(&FilePointer));
+   METALMOCK(fcloseMock.CalledOnceWith(&rawFilePointer));
 }
 
 TEST(CloseFile_CallsFCloseOnFilePointerWhichReturnsNon0_ThrowsRuntimeError)
@@ -87,16 +87,16 @@ TEST(CloseFile_CallsFCloseOnFilePointerWhichReturnsNon0_ThrowsRuntimeError)
 
    const pair<int, string> errnoWithDescription = _errorCodeTranslatorMock->GetErrnoWithDescriptionMock.ReturnRandom();
 
-   FILE FilePointer{};
+   FILE rawFilePointer{};
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
    const string expectedExceptionMessage = String::ConcatValues("fclose(FILE*) unexpectedly returned ", non0FCloseReturnValue,
       ". filePath=\"", filePath.string(), "\", errno=", errnoWithDescription.first, " (", errnoWithDescription.second, ")");
-   THROWS_EXCEPTION(_fileOpenerCloser.CloseFile(&FilePointer, filePath),
+   THROWS_EXCEPTION(_fileOpenerCloser.CloseFile(&rawFilePointer, filePath),
       runtime_error, expectedExceptionMessage);
    //
    METALMOCK(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce());
-   METALMOCK(fcloseMock.CalledOnceWith(&FilePointer));
+   METALMOCK(fcloseMock.CalledOnceWith(&rawFilePointer));
 }
 
 // Private Functions

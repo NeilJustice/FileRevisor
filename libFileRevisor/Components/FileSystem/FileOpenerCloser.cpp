@@ -30,9 +30,9 @@ shared_ptr<FILE> FileOpenerCloser::OpenReadModeBinaryFile(const fs::path& filePa
    return readModeBinaryFilePointer;
 }
 
-void FileOpenerCloser::CloseFile(FILE* filePointer, const fs::path& filePath) const
+void FileOpenerCloser::CloseFile(FILE* rawFilePointer, const fs::path& filePath) const
 {
-   const int fcloseReturnValue = _call_fclose(filePointer);
+   const int fcloseReturnValue = _call_fclose(rawFilePointer);
    if (fcloseReturnValue != 0)
    {
       const pair<int, string> errnoWithDescription = _errorCodeTranslator->GetErrnoWithDescription();
