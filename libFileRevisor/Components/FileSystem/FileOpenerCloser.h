@@ -17,11 +17,7 @@ private:
 public:
    FileOpenerCloser();
    virtual ~FileOpenerCloser();
-   virtual FILE* CreateWriteModeBinaryFile(const fs::path& filePath) const;
-   virtual FILE* CreateWriteModeTextFile(const fs::path& filePath) const;
    virtual FILE* OpenReadModeBinaryFile(const fs::path& filePath, bool throwIfFileNotOpenable) const;
-   virtual FILE* OpenReadModeTextFile(const fs::path& filePath) const;
-   virtual FILE* OpenAppendModeTextFile(const fs::path& filePath) const;
    virtual void CloseFile(FILE* filePointer, const fs::path& filePath) const;
 private:
 #if defined __linux__ || defined __APPLE__

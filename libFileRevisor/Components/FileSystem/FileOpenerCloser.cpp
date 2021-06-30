@@ -19,26 +19,6 @@ FileOpenerCloser::~FileOpenerCloser()
 {
 }
 
-FILE* FileOpenerCloser::CreateWriteModeBinaryFile(const fs::path& filePath) const
-{
-#if defined __linux__ || defined __APPLE__
-   FILE* const writeModeBinaryFilePointer = OpenFileOnLinux(filePath, "wb", true);
-#elif _WIN32
-   FILE* const writeModeBinaryFilePointer = OpenFileOnWindows(filePath, L"wb", true);
-#endif
-   return writeModeBinaryFilePointer;
-}
-
-FILE* FileOpenerCloser::CreateWriteModeTextFile(const fs::path& filePath) const
-{
-#if defined __linux__ || defined __APPLE__
-   FILE* const writeModeTextFilePointer = OpenFileOnLinux(filePath, "w", true);
-#elif _WIN32
-   FILE* const writeModeTextFilePointer = OpenFileOnWindows(filePath, L"w", true);
-#endif
-   return writeModeTextFilePointer;
-}
-
 FILE* FileOpenerCloser::OpenReadModeBinaryFile(const fs::path& filePath, bool throwIfFileNotOpenable) const
 {
 #if defined __linux__ || defined __APPLE__
@@ -47,26 +27,6 @@ FILE* FileOpenerCloser::OpenReadModeBinaryFile(const fs::path& filePath, bool th
    FILE* const readModeBinaryFilePointer = OpenFileOnWindows(filePath, L"rb", throwIfFileNotOpenable);
 #endif
    return readModeBinaryFilePointer;
-}
-
-FILE* FileOpenerCloser::OpenReadModeTextFile(const fs::path& filePath) const
-{
-#if defined __linux__ || defined __APPLE__
-   FILE* const readModeTextFilePointer = OpenFileOnLinux(filePath, "r", true);
-#elif _WIN32
-   FILE* const readModeTextFilePointer = OpenFileOnWindows(filePath, L"r", true);
-#endif
-   return readModeTextFilePointer;
-}
-
-FILE* FileOpenerCloser::OpenAppendModeTextFile(const fs::path& filePath) const
-{
-#if defined __linux__ || defined __APPLE__
-   FILE* const appendModeTextFilePointer = OpenFileOnLinux(filePath, "a", true);
-#elif _WIN32
-   FILE* const appendModeTextFilePointer = OpenFileOnWindows(filePath, L"a", true);
-#endif
-   return appendModeTextFilePointer;
 }
 
 void FileOpenerCloser::CloseFile(FILE* filePointer, const fs::path& filePath) const

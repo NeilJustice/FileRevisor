@@ -12,8 +12,6 @@ AFACT(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNot
 AFACT(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotNullptr_ReadsFirst1KBOfFile_ReadsNot0Bytes_First1KBBytesContains0_ReturnsTrue)
 AFACT(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotNullptr_ReadsFirst1KBOfFile_ReadsNot0Bytes_First1KBBytesDoesNotContain0_ReturnsFalse)
 FACTS(PathContainsAnySubstringCaseInsensitive_ReturnsTrueIfFilePathCaseInsensitiveContainsAnySubstring)
-AFACT(SetDirectoryIterator_RecurseIsTrue_SetsRecursiveDirectoryIterator_SetsRecursiveModeToTrue)
-AFACT(SetDirectoryIterator_RecurseIsFalse_SetsDirectoryIterator)
 AFACT(SetFileAndDirectoryPathIgnoreSubstrings_SetsFileAndDirectoryPathIgnoreSubstringsVector)
 EVIDENCE
 
@@ -168,24 +166,6 @@ TEST3X3(PathContainsAnySubstringCaseInsensitive_ReturnsTrueIfFilePathCaseInsensi
 {
    bool pathContainsAnySubstringCaseInsensitive = DirectoryIterator::PathContainsAnySubstringCaseInsensitive(path, substrings);
    ARE_EQUAL(expectedReturnValue, pathContainsAnySubstringCaseInsensitive);
-}
-
-TEST(SetDirectoryIterator_RecurseIsTrue_SetsRecursiveDirectoryIterator_SetsRecursiveModeToTrue)
-{
-   //const fs::path directoryPath = ZenUnit::Random<fs::path>();
-   ////
-   //_directoryIterator.SetDirectoryIterator(directoryPath, true);
-   ////
-   //IS_TRUE(_directoryIterator._recursiveMode);
-}
-
-TEST(SetDirectoryIterator_RecurseIsFalse_SetsDirectoryIterator)
-{
-   //const fs::path directoryPath = ZenUnit::Random<fs::path>();
-   ////
-   //_directoryIterator.SetDirectoryIterator(directoryPath, false);
-   ////
-   //IS_TRUE(_directoryIterator._recursiveMode);
 }
 
 TEST(SetFileAndDirectoryPathIgnoreSubstrings_SetsFileAndDirectoryPathIgnoreSubstringsVector)

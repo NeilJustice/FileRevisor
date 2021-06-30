@@ -4,11 +4,7 @@
 
 TESTS(FileOpenerCloserTests)
 AFACT(DefaultConstructor_SetsFunctionPointers)
-AFACT(CreateWriteModeBinaryFile_ReturnsFilePointerOpenedInBinaryWriteMode)
-AFACT(CreateWriteModeTextFile_ReturnsFilePointerOpenedInTextWriteMode)
 AFACT(OpenReadModeBinaryFile_ReturnsFilePointerOpenedInBinaryReadMode)
-AFACT(OpenReadModeTextFile_ReturnsFilePointerOpenedInTextReadMode)
-AFACT(OpenAppendModeTextFile_ReturnsFilePointerOpenedInTextAppendMode)
 AFACT(CloseFile_CallsFCloseOnFilePointerWhichReturns0_Returns)
 AFACT(CloseFile_CallsFCloseOnFilePointerWhichReturnsNon0_ThrowsRuntimeError)
 // Private Functions
@@ -52,46 +48,6 @@ TEST(DefaultConstructor_SetsFunctionPointers)
 #endif
 }
 
-TEST(CreateWriteModeBinaryFile_ReturnsFilePointerOpenedInBinaryWriteMode)
-{
-   FILE writeModeBinaryFilePointer{};
-#if defined __linux__ || defined __APPLE__
-   fopenMock.Return(&writeModeBinaryFilePointer);
-#elif _WIN32
-   _wfsopenMock.Return(&writeModeBinaryFilePointer);
-#endif
-   const fs::path filePath = ZenUnit::Random<fs::path>();
-   //
-   FILE* const returnedWriteModeBinaryFilePointer = _fileOpenerCloser.CreateWriteModeBinaryFile(filePath);
-   //
-#if defined __linux__ || defined __APPLE__
-   METALMOCK(fopenMock.CalledOnceWith(filePath.c_str(), "wb"));
-#elif _WIN32
-   METALMOCK(_wfsopenMock.CalledOnceWith(filePath.c_str(), L"wb", _SH_DENYWR));
-#endif
-   ARE_EQUAL(&writeModeBinaryFilePointer, returnedWriteModeBinaryFilePointer);
-}
-
-TEST(CreateWriteModeTextFile_ReturnsFilePointerOpenedInTextWriteMode)
-{
-   FILE writeModeTextFilePointer{};
-#if defined __linux__ || defined __APPLE__
-   fopenMock.Return(&writeModeTextFilePointer);
-#elif _WIN32
-   _wfsopenMock.Return(&writeModeTextFilePointer);
-#endif
-   const fs::path filePath = ZenUnit::Random<fs::path>();
-   //
-   FILE* const returnedWriteModeTextFilePointer = _fileOpenerCloser.CreateWriteModeTextFile(filePath);
-   //
-#if defined __linux__ || defined __APPLE__
-   METALMOCK(fopenMock.CalledOnceWith(filePath.c_str(), "w"));
-#elif _WIN32
-   METALMOCK(_wfsopenMock.CalledOnceWith(filePath.c_str(), L"w", _SH_DENYWR));
-#endif
-   ARE_EQUAL(&writeModeTextFilePointer, returnedWriteModeTextFilePointer);
-}
-
 TEST(OpenReadModeBinaryFile_ReturnsFilePointerOpenedInBinaryReadMode)
 {
    FILE readModeBinaryFilePointer{};
@@ -111,46 +67,6 @@ TEST(OpenReadModeBinaryFile_ReturnsFilePointerOpenedInBinaryReadMode)
    METALMOCK(_wfsopenMock.CalledOnceWith(filePath.c_str(), L"rb", _SH_DENYWR));
 #endif
    ARE_EQUAL(&readModeBinaryFilePointer, returnedReadModeBinaryFilePointer);
-}
-
-TEST(OpenReadModeTextFile_ReturnsFilePointerOpenedInTextReadMode)
-{
-   FILE readModeTextFilePointer{};
-#if defined __linux__ || defined __APPLE__
-   fopenMock.Return(&readModeTextFilePointer);
-#elif _WIN32
-   _wfsopenMock.Return(&readModeTextFilePointer);
-#endif
-   const fs::path filePath = ZenUnit::Random<fs::path>();
-   //
-   FILE* const returnedReadModeTextFilePointer = _fileOpenerCloser.OpenReadModeTextFile(filePath);
-   //
-#if defined __linux__ || defined __APPLE__
-   METALMOCK(fopenMock.CalledOnceWith(filePath.c_str(), "r"));
-#elif _WIN32
-   METALMOCK(_wfsopenMock.CalledOnceWith(filePath.c_str(), L"r", _SH_DENYWR));
-#endif
-   ARE_EQUAL(&readModeTextFilePointer, returnedReadModeTextFilePointer);
-}
-
-TEST(OpenAppendModeTextFile_ReturnsFilePointerOpenedInTextAppendMode)
-{
-   FILE appendModeTextFilePointer{};
-#if defined __linux__ || defined __APPLE__
-   fopenMock.Return(&appendModeTextFilePointer);
-#elif _WIN32
-   _wfsopenMock.Return(&appendModeTextFilePointer);
-#endif
-   const fs::path filePath = ZenUnit::Random<fs::path>();
-   //
-   FILE* const returnedAppendModeTextFilePointer = _fileOpenerCloser.OpenAppendModeTextFile(filePath);
-   //
-#if defined __linux__ || defined __APPLE__
-   METALMOCK(fopenMock.CalledOnceWith(filePath.c_str(), "a"));
-#elif _WIN32
-   METALMOCK(_wfsopenMock.CalledOnceWith(filePath.c_str(), L"a", _SH_DENYWR));
-#endif
-   ARE_EQUAL(&appendModeTextFilePointer, returnedAppendModeTextFilePointer);
 }
 
 TEST(CloseFile_CallsFCloseOnFilePointerWhichReturns0_Returns)
