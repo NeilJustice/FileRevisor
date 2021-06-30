@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libFileRevisor/Components/SubPrograms/ReplaceTextInTextFilesSubProgram.h"
-#include "libFileRevisor/UtilityComponents/DataStructures/ArrayHelper.h"
+#include "libFileRevisor/UtilityComponents/DataStructures/CharArray64Helper.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/DirectoryIteratorMock.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileOpenerCloserMock.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileReaderMock.h"
