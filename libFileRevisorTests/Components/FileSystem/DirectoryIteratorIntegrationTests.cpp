@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "libFileRevisor/Components/FileSystem/DirectoryIterator.h"
+#include "libFileRevisor/UtilityComponents/DataStructures/CharArray64Helper.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileOpenerCloserMock.h"
+#include "libFileRevisorTests/Components/FileSystem/MetalMock/FileReaderMock.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 
 TESTS(DirectoryIteratorIntegrationTests)

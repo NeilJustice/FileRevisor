@@ -413,7 +413,7 @@ TEST(OpenFile_FOpenReturnsNonNullFILEPointer_ReturnsFilePointer)
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const string fileOpenMode = ZenUnit::Random<string>();
    //
-   shared_ptr<FILE> filePointer = _fileSystem.OpenFile(filePath, fileOpenMode.c_str());
+   const shared_ptr<FILE> filePointer = _fileSystem.OpenFile(filePath, fileOpenMode.c_str());
    //
    const vector<pair<string, string>> expected_fopen_Arguments = { { filePath.string(), fileOpenMode } };
    ARE_EQUAL(expected_fopen_Arguments, _fopen_Arguments);

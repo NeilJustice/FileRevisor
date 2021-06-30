@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "libFileRevisor/Components/FileSystem/DirectoryIterator.h"
+#include "libFileRevisorTests/UtilityComponents/DataStructures/MetalMock/CharArray64HelperMock.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileOpenerCloserMock.h"
+#include "libFileRevisorTests/Components/FileSystem/MetalMock/FileReaderMock.h"
 
 TESTS(DirectoryIteratorTests)
 AFACT(DefaultConstructor_NewsComponents_SetsFieldsToDefaultValues)
@@ -8,9 +10,9 @@ AFACT(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsEndIterationMar
 AFACT(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsNotEndIterationMarker_FileIsSkippableType_DoesNotAddToTextFilePaths_ReturnsEmptyVector)
 AFACT(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsNotEndIterationMarker_FileIsNotSkippableType_AddsToTextFilePaths_ReturnsTextFilePaths)
 AFACT(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNullptr_WritesErrorMessage_ReturnsTrue)
-AFACT(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotNullptr_ReadsFirst1KBOfFile_Reads0Bytes_ReturnsTrue)
-AFACT(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotNullptr_ReadsFirst1KBOfFile_ReadsNot0Bytes_First1KBBytesContains0_ReturnsTrue)
-AFACT(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotNullptr_ReadsFirst1KBOfFile_ReadsNot0Bytes_First1KBBytesDoesNotContain0_ReturnsFalse)
+AFACT(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotNullptr_ReadsFirst64BytesOfFile_FileLengthIs0_ReturnsTrue)
+AFACT(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotNullptr_ReadsFirst64BytesOfFile_FileLengthIsNot0_First64BytesContains0_ReturnsTrue)
+AFACT(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotNullptr_ReadsFirst64BytesOfFile_FileLengthIsNot0_First64BytesDoesNotContain0_ReturnsFalse)
 FACTS(PathContainsAnySubstringCaseInsensitive_ReturnsTrueIfFilePathCaseInsensitiveContainsAnySubstring)
 AFACT(SetFileAndDirectoryPathIgnoreSubstrings_SetsFileAndDirectoryPathIgnoreSubstringsVector)
 EVIDENCE
@@ -23,8 +25,10 @@ METALMOCK_NONVOID4_FREE(size_t, _call_fread, void*, size_t, size_t, FILE*)
 METALMOCK_NONVOID5_FREE(size_t, _call_fread_nolock_s, void*, size_t, size_t, size_t, FILE*)
 #endif
 // Constant Components
+CharArray64HelperMock* _charArray64HelperMock = nullptr;
 ConsoleMock* _consoleMock = nullptr;
 FileOpenerCloserMock* _fileOpenerCloserMock = nullptr;
+FileReaderMock* _fileReaderMock = nullptr;
 
 class DirectoryIteratorSelfMocked : public Metal::Mock<DirectoryIterator>
 {
@@ -43,8 +47,10 @@ STARTUP
    _directoryIterator._call_fread_nolock_s = BIND_5ARG_METALMOCK_OBJECT(_call_fread_nolock_sMock);
 #endif
    // Constant Components
+   _directoryIterator._charArray64Helper.reset(_charArray64HelperMock = new CharArray64HelperMock);
    _directoryIterator._console.reset(_consoleMock = new ConsoleMock);
    _directoryIterator._fileOpenerCloser.reset(_fileOpenerCloserMock = new FileOpenerCloserMock);
+   _directoryIterator._fileReader.reset(_fileReaderMock = new FileReaderMock);
 }
 
 TEST(DefaultConstructor_NewsComponents_SetsFieldsToDefaultValues)
@@ -57,8 +63,10 @@ TEST(DefaultConstructor_NewsComponents_SetsFieldsToDefaultValues)
    STD_FUNCTION_TARGETS(_fread_nolock_s, directoryIterator._call_fread_nolock_s);
 #endif
    // Constant Components
+   DELETE_TO_ASSERT_NEWED(directoryIterator._charArray64Helper);
    DELETE_TO_ASSERT_NEWED(directoryIterator._console);
    DELETE_TO_ASSERT_NEWED(directoryIterator._fileOpenerCloser);
+   DELETE_TO_ASSERT_NEWED(directoryIterator._fileReader);
    // Mutable Fields
 	ARE_EQUAL(fs::directory_iterator(), directoryIterator._directoryIterator);
    ARE_EQUAL(fs::recursive_directory_iterator(), directoryIterator._recursiveDirectoryIterator);
@@ -131,27 +139,63 @@ TEST(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNull
    IS_TRUE(isFileEmptyOrBinaryOrNotAnsiOrNotOpenable);
 }
 
-TEST(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotNullptr_ReadsFirst1KBOfFile_Reads0Bytes_ReturnsTrue)
+TEST(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotNullptr_ReadsFirst64BytesOfFile_FileLengthIs0_ReturnsTrue)
 {
-   //FILE fileOpenInReadBinaryMode{};
-   //_fileOpenerCloserMock->OpenReadModeBinaryFileMock.Return(&fileOpenInReadBinaryMode);
-   //_fileOpenerCloserMock->CloseFileMock.Expect();
-   //const fs::path filePath = ZenUnit::Random<fs::path>();
-   ////
-   //_directoryIterator.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(filePath);
-   ////
-   //METALMOCK(_fileOpenerCloserMock->OpenReadModeBinaryFileMock.CalledOnceWith(filePath, false));
-   //METALMOCK(_fileOpenerCloserMock->CloseFileMock.CalledOnceWith(&fileOpenInReadBinaryMode, filePath));
+   const shared_ptr<FILE> fileOpenInBinaryReadMode = make_shared<FILE>();
+   _fileOpenerCloserMock->OpenReadModeBinaryFileMock.Return(fileOpenInBinaryReadMode);
+
+   const pair<size_t, array<char, 64>> fileIsEmptyAndFirst64Bytes = { 0, {} };
+   _fileReaderMock->ReadFirst64BytesMock.Return(fileIsEmptyAndFirst64Bytes);
+
+   const fs::path filePath = ZenUnit::Random<fs::path>();
+   //
+   const bool isFileEmptyOrBinaryOrNotAnsiOrNotOpenable = _directoryIterator.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(filePath);
+   //
+   METALMOCK(_fileOpenerCloserMock->OpenReadModeBinaryFileMock.CalledOnceWith(filePath, false));
+   METALMOCK(_fileReaderMock->ReadFirst64BytesMock.CalledOnceWith(fileOpenInBinaryReadMode.get()));
+   IS_TRUE(isFileEmptyOrBinaryOrNotAnsiOrNotOpenable);
 }
 
-TEST(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotNullptr_ReadsFirst1KBOfFile_ReadsNot0Bytes_First1KBBytesContains0_ReturnsTrue)
+TEST(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotNullptr_ReadsFirst64BytesOfFile_FileLengthIsNot0_First64BytesContains0_ReturnsTrue)
 {
+   const shared_ptr<FILE> fileOpenInBinaryReadMode = make_shared<FILE>();
+   _fileOpenerCloserMock->OpenReadModeBinaryFileMock.Return(fileOpenInBinaryReadMode);
 
+   const size_t numberOfBytesRead = ZenUnit::RandomNon0<size_t>();
+   const pair<size_t, array<char, 64>> fileIsEmptyAndFirst64Bytes = { numberOfBytesRead, {} };
+   _fileReaderMock->ReadFirst64BytesMock.Return(fileIsEmptyAndFirst64Bytes);
+
+   _charArray64HelperMock->ArrayContainsMock.Return(true);
+
+   const fs::path filePath = ZenUnit::Random<fs::path>();
+   //
+   const bool isFileEmptyOrBinaryOrNotAnsiOrNotOpenable = _directoryIterator.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(filePath);
+   //
+   METALMOCK(_fileOpenerCloserMock->OpenReadModeBinaryFileMock.CalledOnceWith(filePath, false));
+   METALMOCK(_fileReaderMock->ReadFirst64BytesMock.CalledOnceWith(fileOpenInBinaryReadMode.get()));
+   METALMOCK(_charArray64HelperMock->ArrayContainsMock.CalledOnceWith(fileIsEmptyAndFirst64Bytes.second, 0, numberOfBytesRead));
+   IS_TRUE(isFileEmptyOrBinaryOrNotAnsiOrNotOpenable);
 }
 
-TEST(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotNullptr_ReadsFirst1KBOfFile_ReadsNot0Bytes_First1KBBytesDoesNotContain0_ReturnsFalse)
+TEST(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotNullptr_ReadsFirst64BytesOfFile_FileLengthIsNot0_First64BytesDoesNotContain0_ReturnsFalse)
 {
+   const shared_ptr<FILE> fileOpenInBinaryReadMode = make_shared<FILE>();
+   _fileOpenerCloserMock->OpenReadModeBinaryFileMock.Return(fileOpenInBinaryReadMode);
 
+   const size_t numberOfBytesRead = ZenUnit::RandomNon0<size_t>();
+   const pair<size_t, array<char, 64>> fileIsEmptyAndFirst64Bytes = { numberOfBytesRead, {} };
+   _fileReaderMock->ReadFirst64BytesMock.Return(fileIsEmptyAndFirst64Bytes);
+
+   _charArray64HelperMock->ArrayContainsMock.Return(false);
+
+   const fs::path filePath = ZenUnit::Random<fs::path>();
+   //
+   const bool isFileEmptyOrBinaryOrNotAnsiOrNotOpenable = _directoryIterator.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(filePath);
+   //
+   METALMOCK(_fileOpenerCloserMock->OpenReadModeBinaryFileMock.CalledOnceWith(filePath, false));
+   METALMOCK(_fileReaderMock->ReadFirst64BytesMock.CalledOnceWith(fileOpenInBinaryReadMode.get()));
+   METALMOCK(_charArray64HelperMock->ArrayContainsMock.CalledOnceWith(fileIsEmptyAndFirst64Bytes.second, 0, numberOfBytesRead));
+   IS_FALSE(isFileEmptyOrBinaryOrNotAnsiOrNotOpenable);
 }
 
 TEST3X3(PathContainsAnySubstringCaseInsensitive_ReturnsTrueIfFilePathCaseInsensitiveContainsAnySubstring,

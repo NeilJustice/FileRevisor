@@ -1,5 +1,7 @@
 #pragma once
+class CharArray64Helper;
 class FileOpenerCloser;
+class FileReader;
 template<typename ReturnType, typename ClassType, typename Arg1Type, typename Arg2Type>
 class NonVoidTwoArgMemberFunctionCaller;
 
@@ -14,8 +16,10 @@ private:
    function<size_t(void*, size_t, size_t, size_t, FILE*)> _call_fread_nolock_s;
 #endif
    // Constant Components
+   unique_ptr<const CharArray64Helper> _charArray64Helper;
    unique_ptr<const Console> _console;
    unique_ptr<const FileOpenerCloser> _fileOpenerCloser;
+   unique_ptr<const FileReader> _fileReader;
    // Mutable Fields
    fs::directory_iterator _directoryIterator;
    fs::recursive_directory_iterator _recursiveDirectoryIterator;

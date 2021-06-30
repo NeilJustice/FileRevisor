@@ -1,6 +1,8 @@
 #include "pch.h"
 #include "libFileRevisor/Components/FileSystem/DirectoryIterator.h"
 #include "libFileRevisor/Components/FileSystem/FileOpenerCloser.h"
+#include "libFileRevisor/Components/FileSystem/FileReader.h"
+#include "libFileRevisor/UtilityComponents/DataStructures/CharArray64Helper.h"
 
 DirectoryIterator::DirectoryIterator() noexcept
    // Function Pointers
@@ -10,8 +12,10 @@ DirectoryIterator::DirectoryIterator() noexcept
    : _call_fread_nolock_s(_fread_nolock_s)
 #endif
    // Constant Components
+   , _charArray64Helper(make_unique<CharArray64Helper>())
    , _console(make_unique<Console>())
    , _fileOpenerCloser(make_unique<FileOpenerCloser>())
+   , _fileReader(make_unique<FileReader>())
    // Mutable Fields
 	, _recursiveMode(false)
 {
@@ -88,34 +92,24 @@ void DirectoryIterator::SetFileAndDirectoryPathIgnoreSubstrings(const vector<str
 
 bool DirectoryIterator::IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(const fs::path& filePath) const
 {
-   shared_ptr<FILE> fileOpenInReadBinaryMode = _fileOpenerCloser->OpenReadModeBinaryFile(filePath, false);
-   if (fileOpenInReadBinaryMode == nullptr)
+   const shared_ptr<FILE> fileOpenInBinaryReadMode = _fileOpenerCloser->OpenReadModeBinaryFile(filePath, false);
+   if (fileOpenInBinaryReadMode == nullptr)
    {
       const string unableToOpenFileMessage = String::ConcatStrings("[FileRevisor]     Note: Unable to open file ", filePath.string());
       _console->WriteLine(unableToOpenFileMessage);
       return true;
    }
-//   array<char, 1024> first1KBytesInFile{};
-//#if defined __linux__|| defined __APPLE__
-//   const size_t numberOfBytesRead = _call_fread(
-//      first1KBytesInFile.data(), 1, first1KBytesInFile.size(), fileOpenInReadBinaryMode);
-//#else
-//   const size_t numberOfBytesRead = _call_fread_nolock_s(
-//      first1KBytesInFile.data(), first1KBytesInFile.size(), 1, first1KBytesInFile.size(), fileOpenInReadBinaryMode);
-//#endif
-//   _fileOpenerCloser->CloseFile(fileOpenInReadBinaryMode, filePath);
-//   if (numberOfBytesRead == 0)
-//   {
-//      return true;
-//   }
-//   for (size_t i = 0; i < numberOfBytesRead; ++i)
-//   {
-//      const char ithFileByte = first1KBytesInFile[i];
-//      if (ithFileByte == 0)
-//      {
-//         return true;
-//      }
-//   }
+   const pair<size_t, array<char, 64>> fileIsEmptyAndFirst64Bytes = _fileReader->ReadFirst64Bytes(fileOpenInBinaryReadMode.get());
+   const size_t numberOfBytesRead = fileIsEmptyAndFirst64Bytes.first;
+   if (numberOfBytesRead == 0)
+   {
+      return true;
+   }
+   const bool first64BytesContains0 = _charArray64Helper->ArrayContains(fileIsEmptyAndFirst64Bytes.second, 0, numberOfBytesRead);
+   if (first64BytesContains0)
+   {
+      return true;
+   }
    return false;
 }
 
