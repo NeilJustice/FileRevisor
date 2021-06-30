@@ -1,11 +1,10 @@
+*:*docopt.h
 *:*ZenUnit.h
 *:*MetalMock.h
 allocaCalled:*
 syntaxError:*
 unmatchedSuppression:*
-noExplicitConstructor:libFileRevisor/Components/Docopt/docopt.h:56
 unusedFunction:libFileRevisorTests/ValueTypes/ZenUnit/RenameResultZenUnitEqualizerAndRandom.cpp:23
 
-# Linux
+# Fedora 34
 preprocessorErrorDirective:/usr/include/c++/v1/__config:104
-

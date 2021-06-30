@@ -1,4 +1,5 @@
 #pragma once
+#include "libFileRevisor/StaticUtilities/STRING_ENUM_MAP.h"
 
 enum class FileExceptionType : unsigned char
 {

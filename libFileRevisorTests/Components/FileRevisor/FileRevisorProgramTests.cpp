@@ -3,13 +3,13 @@
 #include "libFileRevisor/Components/FileRevisor/FileRevisorProgram.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/StaticUtilities/Exception.h"
-#include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
 #include "libFileRevisorTests/Components/Exceptions/MetalMock/TryCatchCallerMock.h"
 #include "libFileRevisorTests/Components/FileRevisor/MetalMock/FileRevisorArgsParserMock.h"
-#include "libFileRevisorTests/Components/Strings/MetalMock/PluralizerMock.h"
 #include "libFileRevisorTests/Components/SubPrograms/MetalMock/FileRevisorSubProgramFactoryMock.h"
 #include "libFileRevisorTests/Components/SubPrograms/MetalMock/FileRevisorSubProgramMock.h"
-#include "libFileRevisorTests/Components/Time/MetalMock/StopwatchMock.h"
+#include "libFileRevisorTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
+#include "libFileRevisorTests/UtilityComponents/Strings/MetalMock/PluralizerMock.h"
+#include "libFileRevisorTests/UtilityComponents/Time/MetalMock/StopwatchMock.h"
 
 TESTS(FileRevisorProgramTests)
 AFACT(DefaultConstructor_SetsFunctionPointers_NewsComponents)

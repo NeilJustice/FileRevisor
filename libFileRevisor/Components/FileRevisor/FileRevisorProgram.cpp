@@ -1,11 +1,11 @@
 #include "pch.h"
-#include "libFileRevisor/Components/Exceptions/TryCatchCaller.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorArgsParser.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorProgram.h"
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgram.h"
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgramFactory.h"
-#include "libFileRevisor/Components/Time/Stopwatch.h"
 #include "libFileRevisor/StaticUtilities/Exception.h"
+#include "libFileRevisor/UtilityComponents/FunctionCallers/TryCatchCallers/TryCatchCaller.h"
+#include "libFileRevisor/UtilityComponents/Time/Stopwatch.h"
 
 FileRevisorProgram::FileRevisorProgram()
    // Function Pointers

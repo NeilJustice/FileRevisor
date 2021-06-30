@@ -1,11 +1,11 @@
 #include "pch.h"
-#include "libFileRevisor/Components/Docopt/docopt.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorArgsParser.h"
-#include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
-#include "libFileRevisorTests/Components/Docopt/MetalMock/DocoptParserMock.h"
+#include "libFileRevisor/UtilityComponents/Docopt/docopt.h"
 #include "libFileRevisorTests/Components/FileRevisor/MetalMock/FileRevisorPreambleMakerMock.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
-#include "libFileRevisorTests/Components/FunctionCallers/Member/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
+#include "libFileRevisorTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
+#include "libFileRevisorTests/UtilityComponents/Docopt/MetalMock/DocoptParserMock.h"
+#include "libFileRevisorTests/UtilityComponents/FunctionCallers/Member/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
 
 TESTS(FileRevisorArgsParserTests)
 AFACT(DefaultConstructor_NewsComponents_SetsDetermineProgramModeFunctionPointer)

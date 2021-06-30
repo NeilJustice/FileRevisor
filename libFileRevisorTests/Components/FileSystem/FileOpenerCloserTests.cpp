@@ -59,14 +59,14 @@ TEST(OpenReadModeBinaryFile_ReturnsFilePointerOpenedInBinaryReadMode)
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const bool skipFilesInUse = ZenUnit::Random<bool>();
    //
-   FILE* const returnedReadModeBinaryFilePointer = _fileOpenerCloser.OpenReadModeBinaryFile(filePath, skipFilesInUse);
+   const shared_ptr<FILE> returnedReadModeBinaryFilePointer = _fileOpenerCloser.OpenReadModeBinaryFile(filePath, skipFilesInUse);
    //
 #if defined __linux__ || defined __APPLE__
    METALMOCK(fopenMock.CalledOnceWith(filePath.c_str(), "rb"));
 #elif _WIN32
    METALMOCK(_wfsopenMock.CalledOnceWith(filePath.c_str(), L"rb", _SH_DENYWR));
 #endif
-   ARE_EQUAL(&readModeBinaryFilePointer, returnedReadModeBinaryFilePointer);
+   ARE_EQUAL(&readModeBinaryFilePointer, returnedReadModeBinaryFilePointer.get());
 }
 
 TEST(CloseFile_CallsFCloseOnFilePointerWhichReturns0_Returns)

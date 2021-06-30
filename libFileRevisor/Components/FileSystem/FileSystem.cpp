@@ -4,10 +4,10 @@
 #include "libFileRevisor/Components/FileSystem/FileOpenerCloser.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Components/FileSystem/RecursiveFileDeleter.h"
-#include "libFileRevisor/Components/FunctionCallers/Member/NonVoidOneArgMemberFunctionCaller.h"
-#include "libFileRevisor/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
-#include "libFileRevisor/Components/Strings/ConstCharPointerGetter.h"
 #include "libFileRevisor/Exceptions/FileSystemException.h"
+#include "libFileRevisor/UtilityComponents/FunctionCallers/Member/NonVoidOneArgMemberFunctionCaller.h"
+#include "libFileRevisor/UtilityComponents/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
+#include "libFileRevisor/UtilityComponents/Strings/ConstCharPointerGetter.h"
 
 FileSystem::FileSystem()
    // Function Pointers

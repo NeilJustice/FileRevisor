@@ -5,9 +5,9 @@
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/DirectoryIteratorMock.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileOpenerCloserMock.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/RecursiveFileDeleterMock.h"
-#include "libFileRevisorTests/Components/FunctionCallers/Member/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
-#include "libFileRevisorTests/Components/Strings/MetalMock/ConstCharPointerGetterMock.h"
 #include "libFileRevisorTests/Exceptions/ZenUnit/FileSystemExceptionRandom.h"
+#include "libFileRevisorTests/UtilityComponents/FunctionCallers/Member/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
+#include "libFileRevisorTests/UtilityComponents/Strings/MetalMock/ConstCharPointerGetterMock.h"
 
 TESTS(FileSystemTests)
 AFACT(DefaultConstructor_NewsComponents_SetsFunctionPointers)

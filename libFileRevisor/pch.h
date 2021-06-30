@@ -28,23 +28,22 @@ using namespace std;
    #include "Windows.h"
 #endif
 
-// libFileRevisor Components
-#include "libFileRevisor/Components/Console/Console.h"
-
-// libFileRevisor StaticUtilities
-#include "libFileRevisor/StaticUtilities/ReleaseAssert.h"
-#include "libFileRevisor/StaticUtilities/StringUtil.h"
-#include "libFileRevisor/StaticUtilities/Map.h"
-#include "libFileRevisor/StaticUtilities/STRING_ENUM_MAP.h"
-#include "libFileRevisor/StaticUtilities/Vector.h"
-#include "libFileRevisor/StaticUtilities/Type.h"
-
 // libFileRevisor Constants
 #include "libFileRevisor/Constants/ErrnoValue.h"
 
 // libFileRevisor Enums
 #include "libFileRevisor/Enums/FileExceptionType.h"
 #include "libFileRevisor/Enums/ProgramMode.h"
+
+// libFileRevisor StaticUtilities
+#include "libFileRevisor/StaticUtilities/ReleaseAssert.h"
+#include "libFileRevisor/StaticUtilities/StringUtil.h"
+#include "libFileRevisor/StaticUtilities/STRING_ENUM_MAP.h"
+#include "libFileRevisor/StaticUtilities/Vector.h"
+#include "libFileRevisor/StaticUtilities/Type.h"
+
+// libFileRevisor UtilityComponents
+#include "libFileRevisor/UtilityComponents/Console/Console.h"
 
 // libFileRevisor ValueTypes
 #include "libFileRevisor/ValueTypes/FileRevisorArgs.h"

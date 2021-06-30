@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
-#include "libFileRevisor/Components/Strings/Pluralizer.h"
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgram.h"
+#include "libFileRevisor/UtilityComponents/Strings/Pluralizer.h"
 
 FileRevisorSubProgram::FileRevisorSubProgram()
    // Base Class Constant Components

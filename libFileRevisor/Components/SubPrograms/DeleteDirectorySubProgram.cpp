@@ -1,10 +1,10 @@
 #include "pch.h"
-#include "libFileRevisor/Components/Exceptions/TryCatchCaller.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
-#include "libFileRevisor/Components/Iteration/ForEach/OneExtraArgMemberForEacher.h"
-#include "libFileRevisor/Components/Iteration/ForEach/ParallelOneExtraArgMemberForEacher.h"
-#include "libFileRevisor/Components/Strings/Pluralizer.h"
 #include "libFileRevisor/Components/SubPrograms/DeleteDirectorySubProgram.h"
+#include "libFileRevisor/UtilityComponents/FunctionCallers/TryCatchCallers/TryCatchCaller.h"
+#include "libFileRevisor/UtilityComponents/Iteration/ForEach/OneExtraArgMemberForEacher.h"
+#include "libFileRevisor/UtilityComponents/Iteration/ForEach/ParallelOneExtraArgMemberForEacher.h"
+#include "libFileRevisor/UtilityComponents/Strings/Pluralizer.h"
 
 DeleteDirectorySubProgram::DeleteDirectorySubProgram()
    // Function Callers

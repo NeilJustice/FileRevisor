@@ -88,34 +88,34 @@ void DirectoryIterator::SetFileAndDirectoryPathIgnoreSubstrings(const vector<str
 
 bool DirectoryIterator::IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(const fs::path& filePath) const
 {
-   FILE* const fileOpenInReadBinaryMode = _fileOpenerCloser->OpenReadModeBinaryFile(filePath, false);
+   shared_ptr<FILE> fileOpenInReadBinaryMode = _fileOpenerCloser->OpenReadModeBinaryFile(filePath, false);
    if (fileOpenInReadBinaryMode == nullptr)
    {
       const string unableToOpenFileMessage = String::ConcatStrings("[FileRevisor]     Note: Unable to open file ", filePath.string());
       _console->WriteLine(unableToOpenFileMessage);
       return true;
    }
-   array<char, 1024> first1KBytesInFile{};
-#if defined __linux__|| defined __APPLE__
-   const size_t numberOfBytesRead = _call_fread(
-      first1KBytesInFile.data(), 1, first1KBytesInFile.size(), fileOpenInReadBinaryMode);
-#else
-   const size_t numberOfBytesRead = _call_fread_nolock_s(
-      first1KBytesInFile.data(), first1KBytesInFile.size(), 1, first1KBytesInFile.size(), fileOpenInReadBinaryMode);
-#endif
-   _fileOpenerCloser->CloseFile(fileOpenInReadBinaryMode, filePath);
-   if (numberOfBytesRead == 0)
-   {
-      return true;
-   }
-   for (size_t i = 0; i < numberOfBytesRead; ++i)
-   {
-      const char ithFileByte = first1KBytesInFile[i];
-      if (ithFileByte == 0)
-      {
-         return true;
-      }
-   }
+//   array<char, 1024> first1KBytesInFile{};
+//#if defined __linux__|| defined __APPLE__
+//   const size_t numberOfBytesRead = _call_fread(
+//      first1KBytesInFile.data(), 1, first1KBytesInFile.size(), fileOpenInReadBinaryMode);
+//#else
+//   const size_t numberOfBytesRead = _call_fread_nolock_s(
+//      first1KBytesInFile.data(), first1KBytesInFile.size(), 1, first1KBytesInFile.size(), fileOpenInReadBinaryMode);
+//#endif
+//   _fileOpenerCloser->CloseFile(fileOpenInReadBinaryMode, filePath);
+//   if (numberOfBytesRead == 0)
+//   {
+//      return true;
+//   }
+//   for (size_t i = 0; i < numberOfBytesRead; ++i)
+//   {
+//      const char ithFileByte = first1KBytesInFile[i];
+//      if (ithFileByte == 0)
+//      {
+//         return true;
+//      }
+//   }
    return false;
 }
 
