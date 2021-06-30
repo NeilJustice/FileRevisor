@@ -51,7 +51,7 @@ shared_ptr<FILE> FileOpenerCloser::OpenFileOnLinux(const fs::path& filePath, con
    FILE* const rawFilePointer = _call_fopen(filePath.c_str(), fileOpenMode);
    ThrowFileOpenExceptionIfFileOpenFailed(rawFilePointer, filePath, throwIfFileNotOpenable);
    shared_ptr<FILE> autoClosingFilePointer(rawFilePointer, FCloseDeleter());
-   return filePointer;
+   return autoClosingFilePointer;
 }
 
 #elif _WIN32
