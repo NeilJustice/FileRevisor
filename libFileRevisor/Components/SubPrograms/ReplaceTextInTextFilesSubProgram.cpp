@@ -20,6 +20,10 @@ ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFilesSubProgram()
 {
 }
 
+ReplaceTextInTextFilesSubProgram::~ReplaceTextInTextFilesSubProgram()
+{
+}
+
 int ReplaceTextInTextFilesSubProgram::Run(const FileRevisorArgs& args) const
 {
    _directoryIterator->SetDirectoryIterator(args.targetDirectoryPath, args.recurse);

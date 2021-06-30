@@ -21,7 +21,7 @@ private:
    bool _recursiveMode;
 public:
    DirectoryIterator() noexcept;
-   virtual ~DirectoryIterator() = default;
+   virtual ~DirectoryIterator();
    virtual vector<fs::path> GetNonEmptyNonIgnoredTextFilePaths();
    virtual fs::path NextNonIgnoredDirectoryPath();
    virtual fs::path NextNonIgnoredFilePath();

@@ -18,6 +18,10 @@ RenameFilesSubProgram::RenameFilesSubProgram()
 {
 }
 
+RenameFilesSubProgram::~RenameFilesSubProgram()
+{
+}
+
 int RenameFilesSubProgram::Run(const FileRevisorArgs& args) const
 {
    const vector<fs::path> filePathsInAndPossiblyBelowDirectory =

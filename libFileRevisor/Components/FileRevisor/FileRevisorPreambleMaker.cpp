@@ -8,6 +8,10 @@ FileRevisorPreambleMaker::FileRevisorPreambleMaker()
 {
 }
 
+FileRevisorPreambleMaker::~FileRevisorPreambleMaker()
+{
+}
+
 string FileRevisorPreambleMaker::MakePreambleLines(const FileRevisorArgs& args) const
 {
    const fs::path currentDirectoryPath = _fileSystem->CurrentDirectoryPath();

@@ -3,6 +3,10 @@
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgram.h"
 #include "libFileRevisor/UtilityComponents/Strings/Pluralizer.h"
 
+FileRevisorSubProgram::~FileRevisorSubProgram()
+{
+}
+
 FileRevisorSubProgram::FileRevisorSubProgram()
    // Base Class Constant Components
    : _protected_console(make_unique<Console>())

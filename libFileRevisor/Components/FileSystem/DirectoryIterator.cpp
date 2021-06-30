@@ -1,8 +1,8 @@
 #include "pch.h"
+#include "libFileRevisor/UtilityComponents/DataStructures/CharArray64Helper.h"
 #include "libFileRevisor/Components/FileSystem/DirectoryIterator.h"
 #include "libFileRevisor/Components/FileSystem/FileOpenerCloser.h"
 #include "libFileRevisor/Components/FileSystem/FileReader.h"
-#include "libFileRevisor/UtilityComponents/DataStructures/CharArray64Helper.h"
 
 DirectoryIterator::DirectoryIterator() noexcept
    // Constant Components
@@ -12,6 +12,10 @@ DirectoryIterator::DirectoryIterator() noexcept
    , _fileReader(make_unique<FileReader>())
    // Mutable Fields
 	, _recursiveMode(false)
+{
+}
+
+DirectoryIterator::~DirectoryIterator()
 {
 }
 

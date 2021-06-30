@@ -9,6 +9,6 @@ private:
    unique_ptr<const FileSystem> _fileSystem;
 public:
    FileRevisorPreambleMaker();
-   virtual ~FileRevisorPreambleMaker() = default;
+   virtual ~FileRevisorPreambleMaker();
    virtual string MakePreambleLines(const FileRevisorArgs& args) const;
 };

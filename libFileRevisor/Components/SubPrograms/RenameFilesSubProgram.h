@@ -23,7 +23,7 @@ private:
    unique_ptr<const Regexer> _regexer;
 public:
    RenameFilesSubProgram();
-   virtual ~RenameFilesSubProgram() = default;
+   virtual ~RenameFilesSubProgram();
    int Run(const FileRevisorArgs& args) const override;
 private:
    static bool DidRenameFileIsTrue(const RenameResult& fileRenameResult);

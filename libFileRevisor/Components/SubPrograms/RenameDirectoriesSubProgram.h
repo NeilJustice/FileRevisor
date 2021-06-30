@@ -24,7 +24,7 @@ private:
    unique_ptr<const Regexer> _regexer;
 public:
    RenameDirectoriesSubProgram();
-   virtual ~RenameDirectoriesSubProgram() = default;
+   virtual ~RenameDirectoriesSubProgram();
    int Run(const FileRevisorArgs& args) const override;
 private:
    RenameResult RenameDirectory(const fs::path& directoryPath, const FileRevisorArgs& args) const;

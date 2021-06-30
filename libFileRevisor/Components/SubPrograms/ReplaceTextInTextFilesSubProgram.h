@@ -32,7 +32,7 @@ private:
    unique_ptr<DirectoryIterator> _directoryIterator;
 public:
    ReplaceTextInTextFilesSubProgram();
-   virtual ~ReplaceTextInTextFilesSubProgram() = default;
+   virtual ~ReplaceTextInTextFilesSubProgram();
    int Run(const FileRevisorArgs& args) const override;
 private:
    void PrintReadingFileMessageIfVerboseIsTrue(bool verbose, const fs::path& textFilePath) const;
