@@ -157,8 +157,7 @@ TEST(RecursivelyDeleteAllFilesInDirectory_MinimalIsTrue_OneOfTheFilesIsNonDeleta
 #endif
    //
    const string expectedExceptionMessage =
-      "FailedToDeleteFile: unlink(\"RecursiveFileDeleterIntegrationTests\\subdirectory5\\file1.ext\")"
-      " failed with errno = 13 (Permission denied)";
+      "FailedToDeleteFile: unlink(\"RecursiveFileDeleterIntegrationTests\\subdirectory5\\file1.ext\") failed with errno = 13 (Permission denied)";
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    args.minimal = false;
    THROWS_EXCEPTION(_recursiveFileDeleter.RecursivelyDeleteAllFilesInDirectory(

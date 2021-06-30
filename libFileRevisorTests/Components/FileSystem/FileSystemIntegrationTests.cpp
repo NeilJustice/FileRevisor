@@ -210,8 +210,8 @@ TEST(RemoveFile_FileDoesNotExist_ThrowsFileSystemException)
    const string filePathThatDoesNotExist = ZenUnit::Random<string>();
    IS_FALSE(_fileSystem.FileOrDirectoryExists(filePathThatDoesNotExist));
    //
-   const string expectedExceptionMessage = "FailedToDeleteFile: unlink(\"" + filePathThatDoesNotExist +
-      "\") failed with errno = 2 (No such file or directory)";
+   const string expectedExceptionMessage = String::ConcatStrings(
+      "FailedToDeleteFile: unlink(\"", filePathThatDoesNotExist, "\") failed with errno = 2 (No such file or directory)");
    THROWS_EXCEPTION(_fileSystem.RemoveFile(filePathThatDoesNotExist.c_str()),
       FileSystemException, expectedExceptionMessage);
 }

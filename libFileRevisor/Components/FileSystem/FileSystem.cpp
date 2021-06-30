@@ -130,8 +130,7 @@ string FileSystem::ReadText(const fs::path& textFilePath) const
    ifstream textFileStream(textFilePath.c_str());
    if (!textFileStream.is_open())
    {
-      const FileSystemException fileSystemException = _fileSystemExceptionMaker->
-         MakeFileSystemExceptionForFailedToOpenFileWithFStream(textFilePath);
+      const FileSystemException fileSystemException = _fileSystemExceptionMaker->MakeFileSystemExceptionForFailedToOpenFileWithFStream(textFilePath);
       throw fileSystemException;
    }
    const size_t fileSize = GetFileSize(textFileStream);
@@ -170,22 +169,23 @@ fs::path FileSystem::RenameFile(const fs::path& filePath, string_view newFileNam
    const bool filePathExists = _caller_Exists->ConstCall(this, &FileSystem::FileOrDirectoryExists, filePath);
    if (!filePathExists)
    {
-      const string exceptionMessage = "FileSystem::RenameFile(const fs::path& filePath, string_view newFileName) error: filePath does not exist: " + filePath.string();
+      const string exceptionMessage = String::ConcatStrings(
+         "FileSystem::RenameFile(const fs::path& filePath, string_view newFileName) error: filePath does not exist: ", filePath.string());
       throw runtime_error(exceptionMessage);
    }
    const fs::path sourceDirectoryPath = filePath.parent_path();
    fs::path renamedFilePath = sourceDirectoryPath / newFileName;
-   const bool destinationFilePathExists = _caller_Exists->ConstCall(
-      this, &FileSystem::FileOrDirectoryExists, renamedFilePath);
+   const bool destinationFilePathExists = _caller_Exists->ConstCall(this, &FileSystem::FileOrDirectoryExists, renamedFilePath);
    if (destinationFilePathExists)
    {
-      throw runtime_error("FileSystem::RenameFile(const fs::path& filePath, string_view newFileName) error: renamedFilePath already exists: " + renamedFilePath.string());
+      const string exceptionMessage = String::ConcatStrings(
+         "FileSystem::RenameFile(const fs::path& filePath, string_view newFileName) error: renamedFilePath already exists: ", renamedFilePath.string());
+      throw runtime_error(exceptionMessage);
    }
    const string filePathString = filePath.string();
    const char* const filePathStringCCP = _constCharPointerGetter->GetStringConstCharPointer(filePathString);
    const string renamedFilePathString = renamedFilePath.string();
-   const char* const renamedFilePathStringCCP =
-      _constCharPointerGetter->GetStringConstCharPointer(renamedFilePathString);
+   const char* const renamedFilePathStringCCP = _constCharPointerGetter->GetStringConstCharPointer(renamedFilePathString);
    const int renameReturnValue = _call_std_rename(filePathStringCCP, renamedFilePathStringCCP);
    if (renameReturnValue != 0)
    {
@@ -210,8 +210,7 @@ fs::path FileSystem::RenameDirectory(const fs::path& directoryPath, string_view 
    if (renameErrorCodeValue != 0)
    {
       const FileSystemException fileSystemException =
-         _fileSystemExceptionMaker->MakeFileSystemExceptionForFailedToRenameDirectory(
-            directoryPath, renamedDirectoryPath, renameErrorCode);
+         _fileSystemExceptionMaker->MakeFileSystemExceptionForFailedToRenameDirectory(directoryPath, renamedDirectoryPath, renameErrorCode);
       throw fileSystemException;
    }
    return renamedDirectoryPath;
@@ -226,8 +225,7 @@ void FileSystem::RemoveFile(const char* filePath) const
 #endif
    if (unlinkReturnValue != 0)
    {
-      const FileSystemException fileSystemException =
-         _fileSystemExceptionMaker->MakeFileSystemExceptionForFailedToDeleteFile(filePath);
+      const FileSystemException fileSystemException = _fileSystemExceptionMaker->MakeFileSystemExceptionForFailedToDeleteFile(filePath);
       throw fileSystemException;
    }
 }
@@ -263,15 +261,14 @@ FILE* FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) c
    FILE* const filePointer = _call_fopen(filePath.string().c_str(), fileOpenMode);
    if (filePointer == nullptr)
    {
-      const FileSystemException fileSystemException = _fileSystemExceptionMaker->
-         MakeFileSystemExceptionForFailedToOpenFileWithFOpen(filePath, fileOpenMode);
+      const FileSystemException fileSystemException =
+         _fileSystemExceptionMaker->MakeFileSystemExceptionForFailedToOpenFileWithFOpen(filePath, fileOpenMode);
       throw fileSystemException;
    }
    return filePointer;
 }
 
-void FileSystem::CreateBinaryOrTextFile(
-   const fs::path& filePath, bool trueBinaryFalseText, const char* bytes, size_t bytesLength) const
+void FileSystem::CreateBinaryOrTextFile(const fs::path& filePath, bool trueBinaryFalseText, const char* bytes, size_t bytesLength) const
 {
    const fs::path parentDirectoryPath = filePath.parent_path();
    fs::create_directories(parentDirectoryPath);

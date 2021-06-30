@@ -3,8 +3,14 @@
 #include "libFileRevisor/Components/FileSystem/FileOpenerCloser.h"
 
 DirectoryIterator::DirectoryIterator() noexcept
+   // Function Pointers
+#if defined __linux__
+   : _call_fread(fread)
+#elif defined _WIN32
+   : _call_fread_nolock_s(_fread_nolock_s)
+#endif
    // Constant Components
-   : _console(make_unique<Console>())
+   , _console(make_unique<Console>())
    , _fileOpenerCloser(make_unique<FileOpenerCloser>())
    // Mutable Fields
 	, _recursiveMode(false)
@@ -85,16 +91,16 @@ bool DirectoryIterator::IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(const fs::path
    FILE* const fileOpenInReadBinaryMode = _fileOpenerCloser->OpenReadModeBinaryFile(filePath, false);
    if (fileOpenInReadBinaryMode == nullptr)
    {
-      const string skippedReadingFileMessage = String::ConcatStrings("[FileRevisor]     Note: Unable to open file ", filePath.string());
-      _console->WriteLine(skippedReadingFileMessage);
+      const string unableToOpenFileMessage = String::ConcatStrings("[FileRevisor]     Note: Unable to open file ", filePath.string());
+      _console->WriteLine(unableToOpenFileMessage);
       return true;
    }
    array<char, 1024> first1KBytesInFile{};
 #if defined __linux__|| defined __APPLE__
-   const size_t numberOfBytesRead = fread(
+   const size_t numberOfBytesRead = _call_fread(
       first1KBytesInFile.data(), 1, first1KBytesInFile.size(), fileOpenInReadBinaryMode);
 #else
-   const size_t numberOfBytesRead = _fread_nolock_s(
+   const size_t numberOfBytesRead = _call_fread_nolock_s(
       first1KBytesInFile.data(), first1KBytesInFile.size(), 1, first1KBytesInFile.size(), fileOpenInReadBinaryMode);
 #endif
    _fileOpenerCloser->CloseFile(fileOpenInReadBinaryMode, filePath);
