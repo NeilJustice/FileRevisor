@@ -7,12 +7,12 @@ FCloseDeleter::FCloseDeleter()
 {
 }
 
-void FCloseDeleter::operator()(FILE* rawFlePointer) const
+void FCloseDeleter::operator()(FILE* rawFilePointer) const
 {
-   const int fcloseReturnValue = _call_fclose(rawFlePointer);
+   const int fcloseReturnValue = _call_fclose(rawFilePointer);
    if (fcloseReturnValue != 0)
    {
-      const string exceptionMessage = String::ConcatValues("fclose(rawFlePointer) returned ", fcloseReturnValue);
+      const string exceptionMessage = String::ConcatValues("fclose(rawFilePointer) returned ", fcloseReturnValue);
       throw runtime_error(exceptionMessage);
    }
 }
