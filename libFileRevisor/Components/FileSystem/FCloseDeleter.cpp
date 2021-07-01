@@ -7,23 +7,23 @@ FCloseDeleter::FCloseDeleter()
 {
 }
 
-void FCloseDeleter::operator()(FILE* filePointer) const
+void FCloseDeleter::operator()(FILE* rawFlePointer) const
 {
 #if defined __linux__ || defined __APPLE__
-   if (filePointer->_fileno == 0)
+   if (rawFlePointer->_fileno == 0)
    {
       return;
    }
 #elif defined _WIN32
-   if (filePointer->_Placeholder == nullptr)
+   if (rawFlePointer->_Placeholder == nullptr)
    {
       return;
    }
 #endif
-   const int fcloseReturnValue = _call_fclose(filePointer);
+   const int fcloseReturnValue = _call_fclose(rawFlePointer);
    if (fcloseReturnValue != 0)
    {
-      const string exceptionMessage = String::ConcatValues("fclose(filePointer) returned ", fcloseReturnValue);
+      const string exceptionMessage = String::ConcatValues("fclose(rawFlePointer) returned ", fcloseReturnValue);
       throw runtime_error(exceptionMessage);
    }
 }

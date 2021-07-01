@@ -35,55 +35,70 @@ TEST(DefaultConstructor_SetsFCloseFunctionPointer)
 
 TEST(CallOperator_FILEFilenoFieldIs0_DoesNothing)
 {
-   FILE filePointer{};
-   IS_ZERO(filePointer._fileno);
+   FILE rawFlePointer{};
+   IS_ZERO(rawFlePointer._fileno);
    //
-   _fcloseDeleter(&filePointer);
+   _fcloseDeleter(&rawFlePointer);
 }
 
 TEST(CallOperator_FILEFilenoFieldIsNot0_CallsFCloseOnFilePointerWhichReturns0_DoesNotThrowRuntimeError)
 {
-
+   _call_fcloseMock.Return(0);
+   FILE rawFlePointer{};
+   rawFlePointer._fileno = ZenUnit::RandomNotEqualToValue<int>(0);
+   //
+   _fcloseDeleter(&rawFlePointer);
+   //
+   METALMOCK(_call_fcloseMock.CalledOnceWith(&rawFlePointer));
 }
 
 TEST(CallOperator_FILEFilenoFieldIsNot0_CallsFCloseOnFilePointerWhichReturnsNon0_ThrowsRuntimeError)
 {
-
+   const int fcloseReturnValue = ZenUnit::RandomNon0<int>();
+   _call_fcloseMock.Return(fcloseReturnValue);
+   FILE rawFlePointer{};
+   rawFlePointer._fileno = ZenUnit::RandomNotEqualToValue<int>(0);
+   //
+   const string expectedExceptionMessage = String::ConcatValues("fclose(rawFlePointer) returned ", fcloseReturnValue);
+   THROWS_EXCEPTION(_fcloseDeleter(&rawFlePointer),
+      runtime_error, expectedExceptionMessage);
+   //
+   METALMOCK(_call_fcloseMock.CalledOnceWith(&rawFlePointer));
 }
 
 #elif defined _WIN32
 
 TEST(CallOperator_FILEPlaceholderFieldIsNull_DoesNothing)
 {
-   FILE filePointer{};
-   IS_NULLPTR(filePointer._Placeholder);
+   FILE rawFlePointer{};
+   IS_NULLPTR(rawFlePointer._Placeholder);
    //
-   _fcloseDeleter(&filePointer);
+   _fcloseDeleter(&rawFlePointer);
 }
 
 TEST(CallOperator_FILEPlaceholderFieldIsNotNull_CallsFCloseOnFilePointerWhichReturns0_DoesNotThrowRuntimeError)
 {
    _call_fcloseMock.Return(0);
-   FILE filePointer{};
-   filePointer._Placeholder = reinterpret_cast<void*>(0x123);
+   FILE rawFlePointer{};
+   rawFlePointer._Placeholder = reinterpret_cast<void*>(0x123);
    //
-   _fcloseDeleter(&filePointer);
+   _fcloseDeleter(&rawFlePointer);
    //
-   METALMOCK(_call_fcloseMock.CalledOnceWith(&filePointer));
+   METALMOCK(_call_fcloseMock.CalledOnceWith(&rawFlePointer));
 }
 
 TEST(CallOperator_FILEPlaceholderFieldIsNotNull_CallsFCloseOnFilePointerWhichReturnsNon0_ThrowsRuntimeError)
 {
    const int fcloseReturnValue = ZenUnit::RandomNon0<int>();
    _call_fcloseMock.Return(fcloseReturnValue);
-   FILE filePointer{};
-   filePointer._Placeholder = reinterpret_cast<void*>(0x123);
+   FILE rawFlePointer{};
+   rawFlePointer._Placeholder = reinterpret_cast<void*>(0x456);
    //
-   const string expectedExceptionMessage = String::ConcatValues("fclose(filePointer) returned ", fcloseReturnValue);
-   THROWS_EXCEPTION(_fcloseDeleter(&filePointer),
+   const string expectedExceptionMessage = String::ConcatValues("fclose(rawFlePointer) returned ", fcloseReturnValue);
+   THROWS_EXCEPTION(_fcloseDeleter(&rawFlePointer),
       runtime_error, expectedExceptionMessage);
    //
-   METALMOCK(_call_fcloseMock.CalledOnceWith(&filePointer));
+   METALMOCK(_call_fcloseMock.CalledOnceWith(&rawFlePointer));
 }
 
 #endif

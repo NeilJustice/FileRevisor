@@ -9,5 +9,5 @@ private:
    function<int(FILE*)> _call_fclose;
 public:
    FCloseDeleter();
-   void operator()(FILE* filePointer) const;
+   void operator()(FILE* rawFlePointer) const;
 };
