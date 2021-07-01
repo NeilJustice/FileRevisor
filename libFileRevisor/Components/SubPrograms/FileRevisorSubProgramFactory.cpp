@@ -1,5 +1,5 @@
 #include "pch.h"
-#if defined __linux__
+#if defined __linux__ || defined __APPLE__
 #include "libFileRevisor/Components/FileSystem/DirectoryIterator.h"
 #include "libFileRevisor/Components/FileSystem/FileOpenerCloser.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"

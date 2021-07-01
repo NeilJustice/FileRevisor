@@ -3,30 +3,57 @@
 
 TESTS(FCloseDeleterTests)
 AFACT(DefaultConstructor_SetsFCloseFunctionPointer)
-#if defined _WIN32
-AFACT(CallOperator_PlaceholderFieldIsNull_DoesNothing)
-AFACT(CallOperator_PlaceholderFieldIsNotNull_CallsFCloseOnFilePointerWhichReturns0_Returns)
-AFACT(CallOperator_PlaceholderFieldIsNotNull_CallsFCloseOnFilePointerWhichReturnsNon0_ThrowsRuntimeError)
+#if defined __linux__ || defined __APPLE__
+AFACT(CallOperator_FILEFilenoFieldIs0_DoesNothing)
+AFACT(CallOperator_FILEFilenoFieldIsNot0_CallsFCloseOnFilePointerWhichReturns0_DoesNotThrowRuntimeError)
+AFACT(CallOperator_FILEFilenoFieldIsNot0_CallsFCloseOnFilePointerWhichReturnsNon0_ThrowsRuntimeError)
+#elif defined _WIN32
+AFACT(CallOperator_FILEPlaceholderFieldIsNull_DoesNothing)
+AFACT(CallOperator_FILEPlaceholderFieldIsNotNull_CallsFCloseOnFilePointerWhichReturns0_DoesNotThrowRuntimeError)
+AFACT(CallOperator_FILEPlaceholderFieldIsNotNull_CallsFCloseOnFilePointerWhichReturnsNon0_ThrowsRuntimeError)
 #endif
 EVIDENCE
 
 FCloseDeleter _fcloseDeleter;
+// Function Pointers
 METALMOCK_NONVOID1_FREE(int, _call_fclose, FILE*)
 
 STARTUP
 {
+   // Function Pointers
    _fcloseDeleter._call_fclose = BIND_1ARG_METALMOCK_OBJECT(_call_fcloseMock);
 }
 
 TEST(DefaultConstructor_SetsFCloseFunctionPointer)
 {
    FCloseDeleter fcloseDeleter;
+   // Function Pointers
    STD_FUNCTION_TARGETS(fclose, fcloseDeleter._call_fclose);
 }
 
-#if defined _WIN32
+#if defined __linux__ || defined __APPLE__
 
-TEST(CallOperator_PlaceholderFieldIsNull_DoesNothing)
+TEST(CallOperator_FILEFilenoFieldIs0_DoesNothing)
+{
+   FILE filePointer{};
+   IS_ZERO(filePointer._fileno);
+   //
+   _fcloseDeleter(&filePointer);
+}
+
+TEST(CallOperator_FILEFilenoFieldIsNot0_CallsFCloseOnFilePointerWhichReturns0_DoesNotThrowRuntimeError)
+{
+
+}
+
+TEST(CallOperator_FILEFilenoFieldIsNot0_CallsFCloseOnFilePointerWhichReturnsNon0_ThrowsRuntimeError)
+{
+
+}
+
+#elif defined _WIN32
+
+TEST(CallOperator_FILEPlaceholderFieldIsNull_DoesNothing)
 {
    FILE filePointer{};
    IS_NULLPTR(filePointer._Placeholder);
@@ -34,7 +61,7 @@ TEST(CallOperator_PlaceholderFieldIsNull_DoesNothing)
    _fcloseDeleter(&filePointer);
 }
 
-TEST(CallOperator_PlaceholderFieldIsNotNull_CallsFCloseOnFilePointerWhichReturns0_Returns)
+TEST(CallOperator_FILEPlaceholderFieldIsNotNull_CallsFCloseOnFilePointerWhichReturns0_DoesNotThrowRuntimeError)
 {
    _call_fcloseMock.Return(0);
    FILE filePointer{};
@@ -45,7 +72,7 @@ TEST(CallOperator_PlaceholderFieldIsNotNull_CallsFCloseOnFilePointerWhichReturns
    METALMOCK(_call_fcloseMock.CalledOnceWith(&filePointer));
 }
 
-TEST(CallOperator_PlaceholderFieldIsNotNull_CallsFCloseOnFilePointerWhichReturnsNon0_ThrowsRuntimeError)
+TEST(CallOperator_FILEPlaceholderFieldIsNotNull_CallsFCloseOnFilePointerWhichReturnsNon0_ThrowsRuntimeError)
 {
    const int fcloseReturnValue = ZenUnit::RandomNon0<int>();
    _call_fcloseMock.Return(fcloseReturnValue);

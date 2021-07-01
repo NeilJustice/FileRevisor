@@ -3,7 +3,7 @@
 
 FileReader::FileReader()
    // Function Pointers
-#if defined __linux__
+#if defined __linux__ || defined __APPLE__
    : _call_fread(fread)
 #elif defined _WIN32
    : _call_fread_nolock_s(_fread_nolock_s)

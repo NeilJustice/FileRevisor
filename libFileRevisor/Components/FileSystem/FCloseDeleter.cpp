@@ -2,13 +2,14 @@
 #include "libFileRevisor/Components/FileSystem/FCloseDeleter.h"
 
 FCloseDeleter::FCloseDeleter()
+   // Function Pointers
    : _call_fclose(fclose)
 {
 }
 
 void FCloseDeleter::operator()(FILE* filePointer) const
 {
-#if defined __linux__
+#if defined __linux__ || defined __APPLE__
    if (filePointer->_fileno == 0)
    {
       return;
