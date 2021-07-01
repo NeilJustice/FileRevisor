@@ -129,8 +129,7 @@ TEST(GetDirectoryPathsInDirectory_RecurseIsTrue_ReturnsDirectoryPathsInAndBelowD
 
 TEST(GetStringDirectoryPathsInDirectory_RecurseIsFalse_ReturnsTopLevelDirectoryPaths)
 {
-   const vector<string> topLevelDirectoryPathsInDirectory =
-      _fileSystem.GetStringDirectoryPathsInDirectory(_rootDirectoryPath, false);
+   const vector<string> topLevelDirectoryPathsInDirectory = _fileSystem.GetStringDirectoryPathsInDirectory(_rootDirectoryPath, false);
    //
    const vector<string> expectedTopLevelDirectoryPathsInDirectory =
    {
@@ -144,8 +143,7 @@ TEST(GetStringDirectoryPathsInDirectory_RecurseIsFalse_ReturnsTopLevelDirectoryP
 
 TEST(GetStringDirectoryPathsInDirectory_RecurseIsTrue_ReturnsDirectoryPathsInAndBelowDirectoryPath)
 {
-   const vector<string> directoryPathsInAndBelowDirectory =
-      _fileSystem.GetStringDirectoryPathsInDirectory(_rootDirectoryPath, true);
+   const vector<string> directoryPathsInAndBelowDirectory = _fileSystem.GetStringDirectoryPathsInDirectory(_rootDirectoryPath, true);
    //
    const vector<string> expectedDirectoryPathsInAndBelowDirectory =
    {
@@ -163,10 +161,9 @@ TEST(GetStringDirectoryPathsInDirectory_RecurseIsTrue_ReturnsDirectoryPathsInAnd
 TEST(ReadText_FileDoesNotExist_ThrowsFileSystemException)
 {
    const fs::path textFilePathThatDoesNotExist = ZenUnit::Random<fs::path>();
-
    FileSystemExceptionMaker fileSystemExceptionThrower;
-   const FileSystemException expectedFileSystemException = fileSystemExceptionThrower.
-      MakeFileSystemExceptionForFailedToOpenFileWithFStream(textFilePathThatDoesNotExist);
+   const FileSystemException expectedFileSystemException =
+      fileSystemExceptionThrower.MakeFileSystemExceptionForFailedToOpenFileWithFStream(textFilePathThatDoesNotExist);
    //
    THROWS_EXCEPTION(const string fileText = _fileSystem.ReadText(textFilePathThatDoesNotExist),
       FileSystemException, expectedFileSystemException.what());
