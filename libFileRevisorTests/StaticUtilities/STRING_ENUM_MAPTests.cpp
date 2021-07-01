@@ -25,13 +25,24 @@ ostream& operator<<(ostream& os, TestingEnum testingEnum)
 }
 
 TESTS(STRING_ENUM_MAPTests)
-AFACT(Test)
+AFACT(STRING_TO_ENUM_And_ENUM_TO_STRING_ReturnExpectedValues)
+AFACT(OStreamInsertionOperator_WritesENUM_TO_STRINGToOStream)
 EVIDENCE
 
-TEST(Test)
+TEST(STRING_TO_ENUM_And_ENUM_TO_STRING_ReturnExpectedValues)
 {
    ARE_EQUAL(TestingEnum::A, STRING_TO_ENUM(TestingEnum, "A"));
    ARE_EQUAL("A", ENUM_TO_STRING(TestingEnum, TestingEnum::A));
+}
+
+TEST(OStreamInsertionOperator_WritesENUM_TO_STRINGToOStream)
+{
+   ostringstream oss;
+   //
+   oss << TestingEnum::A << ' ' << TestingEnum::B;
+   //
+   const string expectedString = String::ConcatStrings("A B");
+   ARE_EQUAL(expectedString, oss.str());
 }
 
 RUN_TESTS(STRING_ENUM_MAPTests)
