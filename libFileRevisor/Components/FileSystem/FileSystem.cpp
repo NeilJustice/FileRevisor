@@ -283,7 +283,6 @@ void FileSystem::CreateBinaryOrTextFile(const fs::path& filePath, bool trueBinar
    const size_t numberOfBytesWritten = _fwrite_nolock(bytes, 1, bytesLength, binaryOrTextFileOpenInWriteMode.get());
 #endif
    release_assert(numberOfBytesWritten == bytesLength);
-   _fileOpenerCloser->CloseFile(binaryOrTextFileOpenInWriteMode.get(), filePath);
 }
 
 void FileSystem::EraseTrailingBinaryZeros(string& outStr) const
