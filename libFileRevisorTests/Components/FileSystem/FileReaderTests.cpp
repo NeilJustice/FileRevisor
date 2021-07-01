@@ -82,11 +82,11 @@ TEST(ReadFirst64Bytes_ReadsFirst64Bytes_ReturnsPairOfNumberOfBytesReadAnd64ByteC
 
    _call_freadMock.CallInstead(std::bind(
       &FileReaderTests::fread_CallInstead, this, placeholders::_1, placeholders::_2, placeholders::_3, placeholders::_4));
-   FILE rawFilePointer{};
+   FILE* const rawFilePointer = tmpfile();
    //
-   const pair<size_t, array<char, 64>> numberOfBytesReadAndFirst64FileBytes = _fileReader.ReadFirst64Bytes(&rawFilePointer);
+   const pair<size_t, array<char, 64>> numberOfBytesReadAndFirst64FileBytes = _fileReader.ReadFirst64Bytes(rawFilePointer);
    //
-   fread_AssertCalledOnceWith(64, 1, &rawFilePointer);
+   fread_AssertCalledOnceWith(64, 1, rawFilePointer);
    const pair<size_t, array<char, 64>> expectedNumberOfBytesReadAndFirst64FileBytes = { numberOfBytesRead, bufferReturnValue };
    PAIRS_ARE_EQUAL(expectedNumberOfBytesReadAndFirst64FileBytes, numberOfBytesReadAndFirst64FileBytes);
 }
@@ -141,11 +141,11 @@ TEST(ReadFirst64Bytes_ReadsFirst64Bytes_ReturnsPairOfNumberOfBytesReadAnd64ByteC
 
    _call_fread_nolock_sMock.CallInstead(std::bind(
       &FileReaderTests::_fread_nolock_s_CallInstead, this, placeholders::_1, placeholders::_2, placeholders::_3, placeholders::_4, placeholders::_5));
-   FILE rawFilePointer{};
+   FILE* const rawFilePointer = tmpfile();
    //
-   const pair<size_t, array<char, 64>> numberOfBytesReadAndFirst64FileBytes = _fileReader.ReadFirst64Bytes(&rawFilePointer);
+   const pair<size_t, array<char, 64>> numberOfBytesReadAndFirst64FileBytes = _fileReader.ReadFirst64Bytes(rawFilePointer);
    //
-   _fread_nolock_s_AssertCalledOnceWith(64, 64, 1, &rawFilePointer);
+   _fread_nolock_s_AssertCalledOnceWith(64, 64, 1, rawFilePointer);
    const pair<size_t, array<char, 64>> expectedNumberOfBytesReadAndFirst64FileBytes = { numberOfBytesRead, bufferReturnValue };
    PAIRS_ARE_EQUAL(expectedNumberOfBytesReadAndFirst64FileBytes, numberOfBytesReadAndFirst64FileBytes);
 }

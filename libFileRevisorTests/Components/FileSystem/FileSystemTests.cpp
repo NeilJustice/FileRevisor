@@ -406,8 +406,8 @@ TEST(OpenFile_FOpenReturnsNullFILEPointer_ThrowsFileSystemException)
 
 TEST(OpenFile_FOpenReturnsNonNullFILEPointer_ReturnsFilePointer)
 {
-   FILE nonNullFOpenReturnValue{};
-   _fopen_ReturnValue = &nonNullFOpenReturnValue;
+   FILE* const rawFilePointer = tmpfile();
+   _fopen_ReturnValue = rawFilePointer;
    fopenMock.CallInstead(std::bind(&FileSystemTests::fopen_CallInstead, this, placeholders::_1, placeholders::_2));
 
    const fs::path filePath = ZenUnit::Random<fs::path>();
@@ -417,7 +417,7 @@ TEST(OpenFile_FOpenReturnsNonNullFILEPointer_ReturnsFilePointer)
    //
    const vector<pair<string, string>> expected_fopen_Arguments = { { filePath.string(), fileOpenMode } };
    ARE_EQUAL(expected_fopen_Arguments, _fopen_Arguments);
-   ARE_EQUAL(&nonNullFOpenReturnValue, filePointer.get());
+   ARE_EQUAL(rawFilePointer, filePointer.get());
 }
 
 #if defined __linux__|| defined __APPLE__

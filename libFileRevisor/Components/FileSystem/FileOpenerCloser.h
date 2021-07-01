@@ -25,5 +25,5 @@ private:
 #elif _WIN32
    shared_ptr<FILE> OpenFileOnWindows(const fs::path& filePath, const wchar_t* fileOpenMode, bool throwIfFileNotOpenable) const;
 #endif
-   void ThrowFileOpenExceptionIfFileOpenFailed(FILE* filePointer, const fs::path& filePath, bool throwIfFileNotOpenable) const;
+   void ThrowFileOpenExceptionIfFileOpenFailed(FILE* rawFilePointer, const fs::path& filePath, bool throwIfFileNotOpenable) const;
 };
