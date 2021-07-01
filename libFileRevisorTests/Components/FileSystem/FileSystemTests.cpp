@@ -321,8 +321,7 @@ TEST1X1(RemoveAll_FsRemoveAllReturnsNon0ErrorCode_ThrowsFileSystemException,
 TEST(RenameDirectory_RenamesDirectory_FilesystemRenameReturns0_ReturnsRenamedDirectoryPath)
 {
    _stdFileSystemRenameErrorCodeValue = 0;
-   _call_std_filesystem_rename_with_error_codeMock.CallInstead(std::bind(
-      &FileSystemTests::StdFileSystemRenameWithSettableErrorCode,
+   _call_std_filesystem_rename_with_error_codeMock.CallInstead(std::bind(&FileSystemTests::StdFileSystemRenameWithSettableErrorCode,
       this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
    const fs::path directoryPath = ZenUnit::Random<fs::path>();
    const string newDirectoryName = ZenUnit::Random<string>();
@@ -348,8 +347,7 @@ TEST1X1(RenameDirectory_RenamesDirectory_FilesystemRenameReturnsNot0_ThrowsFileS
 {
    _stdFileSystemRenameErrorCodeValue = stdFileSystemRenameErrorCodeValue;
 
-   _call_std_filesystem_rename_with_error_codeMock.CallInstead(std::bind(
-      &FileSystemTests::StdFileSystemRenameWithSettableErrorCode,
+   _call_std_filesystem_rename_with_error_codeMock.CallInstead(std::bind(&FileSystemTests::StdFileSystemRenameWithSettableErrorCode,
       this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3));
 
    const FileSystemException fileSystemException =
