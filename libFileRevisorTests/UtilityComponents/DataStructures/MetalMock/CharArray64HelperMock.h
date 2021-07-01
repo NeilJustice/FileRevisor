@@ -5,5 +5,5 @@ class CharArray64HelperMock : public Metal::Mock<CharArray64Helper>
 {
 public:
    using CharArray64Type = array<char, 64>;
-   METALMOCK_NONVOID3_CONST(bool, ArrayContains, const CharArray64Type&, char, size_t)
+   METALMOCK_NONVOID2_CONST(bool, ArrayContains0, const CharArray64Type&, size_t)
 };

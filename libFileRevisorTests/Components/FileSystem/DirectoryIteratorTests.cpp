@@ -147,7 +147,7 @@ TEST(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotN
    const pair<size_t, array<char, 64>> fileIsEmptyAndFirst64Bytes = { numberOfBytesRead, {} };
    _fileReaderMock->ReadFirst64BytesMock.Return(fileIsEmptyAndFirst64Bytes);
 
-   _charArray64HelperMock->ArrayContainsMock.Return(true);
+   _charArray64HelperMock->ArrayContains0Mock.Return(true);
 
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
@@ -155,7 +155,7 @@ TEST(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotN
    //
    METALMOCK(_fileOpenerCloserMock->OpenReadModeBinaryFileMock.CalledOnceWith(filePath, false));
    METALMOCK(_fileReaderMock->ReadFirst64BytesMock.CalledOnceWith(fileOpenInBinaryReadMode.get()));
-   METALMOCK(_charArray64HelperMock->ArrayContainsMock.CalledOnceWith(fileIsEmptyAndFirst64Bytes.second, 0, numberOfBytesRead));
+   METALMOCK(_charArray64HelperMock->ArrayContains0Mock.CalledOnceWith(fileIsEmptyAndFirst64Bytes.second, numberOfBytesRead));
    IS_TRUE(isFileEmptyOrBinaryOrNotAnsiOrNotOpenable);
 }
 
@@ -168,7 +168,7 @@ TEST(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotN
    const pair<size_t, array<char, 64>> fileIsEmptyAndFirst64Bytes = { numberOfBytesRead, {} };
    _fileReaderMock->ReadFirst64BytesMock.Return(fileIsEmptyAndFirst64Bytes);
 
-   _charArray64HelperMock->ArrayContainsMock.Return(false);
+   _charArray64HelperMock->ArrayContains0Mock.Return(false);
 
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
@@ -176,7 +176,7 @@ TEST(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotN
    //
    METALMOCK(_fileOpenerCloserMock->OpenReadModeBinaryFileMock.CalledOnceWith(filePath, false));
    METALMOCK(_fileReaderMock->ReadFirst64BytesMock.CalledOnceWith(fileOpenInBinaryReadMode.get()));
-   METALMOCK(_charArray64HelperMock->ArrayContainsMock.CalledOnceWith(fileIsEmptyAndFirst64Bytes.second, 0, numberOfBytesRead));
+   METALMOCK(_charArray64HelperMock->ArrayContains0Mock.CalledOnceWith(fileIsEmptyAndFirst64Bytes.second, numberOfBytesRead));
    IS_FALSE(isFileEmptyOrBinaryOrNotAnsiOrNotOpenable);
 }
 
