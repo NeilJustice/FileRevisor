@@ -52,7 +52,7 @@ TEST(OpenReadModeBinaryFile_ReturnsFilePointerOpenedInBinaryReadMode)
 {
    FILE* const readModeBinaryRawFilePointer = tmpfile();
 #if defined __linux__ || defined __APPLE__
-   fopenMock.Return(readModeBinaryFilePointer);
+   fopenMock.Return(readModeBinaryRawFilePointer);
 #elif _WIN32
    _wfsopenMock.Return(readModeBinaryRawFilePointer);
 #endif
