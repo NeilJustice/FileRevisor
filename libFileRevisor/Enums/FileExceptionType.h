@@ -1,5 +1,5 @@
 #pragma once
-#include "libFileRevisor/StaticUtilities/STRING_ENUM_MAP.h"
+#include "libFileRevisor/StaticUtilities/ENUM_STRING_ARRAY.h"
 
 enum class FileExceptionType : unsigned char
 {
@@ -15,17 +15,15 @@ enum class FileExceptionType : unsigned char
    MaxValue
 };
 
-ostream& operator<<(ostream& os, FileExceptionType fileExceptionType);
-
-BEGIN_STRING_ENUM_MAP(FileExceptionType)
-STRING_ENUM_MAP(FileExceptionType, Unset)
-STRING_ENUM_MAP(FileExceptionType, FailedToOpenFile)
-STRING_ENUM_MAP(FileExceptionType, FailedToCloseFile)
-STRING_ENUM_MAP(FileExceptionType, FileIsMalformed)
-STRING_ENUM_MAP(FileExceptionType, FailedToDeleteFile)
-STRING_ENUM_MAP(FileExceptionType, FailedToRenameDirectory)
-STRING_ENUM_MAP(FileExceptionType, FailedToDeleteDirectory)
-STRING_ENUM_MAP(FileExceptionType, WindowsFailedToSetFileAttribute)
-STRING_ENUM_MAP(FileExceptionType, WindowsFindFirstFileExReturnedInvalidHandleValue)
-STRING_ENUM_MAP(FileExceptionType, MaxValue)
-END_STRING_ENUM_MAP
+BEGIN_ENUM_STRING_ARRAY(FileExceptionType)
+ENUM_STRING_ARRAY_ELEMENT(Unset)
+ENUM_STRING_ARRAY_ELEMENT(FailedToOpenFile)
+ENUM_STRING_ARRAY_ELEMENT(FailedToCloseFile)
+ENUM_STRING_ARRAY_ELEMENT(FileIsMalformed)
+ENUM_STRING_ARRAY_ELEMENT(FailedToDeleteFile)
+ENUM_STRING_ARRAY_ELEMENT(FailedToRenameDirectory)
+ENUM_STRING_ARRAY_ELEMENT(FailedToDeleteDirectory)
+ENUM_STRING_ARRAY_ELEMENT(WindowsFailedToSetFileAttribute)
+ENUM_STRING_ARRAY_ELEMENT(WindowsFindFirstFileExReturnedInvalidHandleValue)
+ENUM_STRING_ARRAY_ELEMENT(MaxValue)
+END_ENUM_STRING_ARRAY

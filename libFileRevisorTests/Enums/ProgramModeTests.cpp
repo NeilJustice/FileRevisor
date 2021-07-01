@@ -2,34 +2,17 @@
 #include "libFileRevisor/Enums/ProgramMode.h"
 
 TESTS(ProgramModeTests)
-AFACT(OStreamLeftShiftOperator_ProgramModeIsOutsideOfValidEnumValues_WritesProgramModeAsInt)
-AFACT(OStreamLeftShiftOperator_ProgramModeIsWithinValidEnumValues_WritesProgramModeAsString)
+AFACT(EnumStringArray_ENUM_AS_STRING_ReturnsExpectedStringForEachEnumValue)
 EVIDENCE
 
-TEST(OStreamLeftShiftOperator_ProgramModeIsOutsideOfValidEnumValues_WritesProgramModeAsInt)
+TEST(EnumStringArray_ENUM_AS_STRING_ReturnsExpectedStringForEachEnumValue)
 {
-   ostringstream oss;
-   const ProgramMode firstProgramModeValue = static_cast<ProgramMode>(ZenUnit::RandomBetween<int>(10, 20));
-   const ProgramMode secondProgramModeValue = static_cast<ProgramMode>(ZenUnit::RandomBetween<int>(10, 20));
-   //
-   oss << firstProgramModeValue << secondProgramModeValue;
-   //
-   const string ossString = oss.str();
-   const string expectedOssString = to_string(static_cast<int>(firstProgramModeValue)) + to_string(static_cast<int>(secondProgramModeValue));
-   ARE_EQUAL(expectedOssString, ossString);
-}
-
-TEST(OStreamLeftShiftOperator_ProgramModeIsWithinValidEnumValues_WritesProgramModeAsString)
-{
-   ostringstream oss;
-   const ProgramMode firstProgramModeValue = ZenUnit::RandomEnum<ProgramMode>(ProgramMode::MaxValue);
-   const ProgramMode secondProgramModeValue = ZenUnit::RandomEnum<ProgramMode>(ProgramMode::MaxValue);
-   //
-   oss << firstProgramModeValue << secondProgramModeValue;
-   //
-   const string ossString = oss.str();
-   const string expectedOssString = ENUM_TO_STRING(ProgramMode, firstProgramModeValue) + ENUM_TO_STRING(ProgramMode, secondProgramModeValue);
-   ARE_EQUAL(expectedOssString, ossString);
+   ARE_EQUAL("Unset", ENUM_AS_STRING(ProgramMode, ProgramMode::Unset));
+   ARE_EQUAL("RenameFiles", ENUM_AS_STRING(ProgramMode, ProgramMode::RenameFiles));
+   ARE_EQUAL("RenameDirectories", ENUM_AS_STRING(ProgramMode, ProgramMode::RenameDirectories));
+   ARE_EQUAL("ReplaceTextInTextFiles", ENUM_AS_STRING(ProgramMode, ProgramMode::ReplaceTextInTextFiles));
+   ARE_EQUAL("DeleteDirectory", ENUM_AS_STRING(ProgramMode, ProgramMode::DeleteDirectory));
+   ARE_EQUAL("MaxValue", ENUM_AS_STRING(ProgramMode, ProgramMode::MaxValue));
 }
 
 RUN_TESTS(ProgramModeTests)

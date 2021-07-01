@@ -14,7 +14,7 @@ TEST(TwoArgConstructor_MakesWhatReturnExpectedExceptionMessage)
    const FileSystemException fileException(fileExceptionType, exceptionMessage);
    const char* const fullExceptionMessage = fileException.what();
    //
-   const string expectedFullExceptionMessage = ENUM_TO_STRING(FileExceptionType, fileExceptionType) + ": " + string(exceptionMessage);
+   const string expectedFullExceptionMessage = ENUM_AS_STRING(FileExceptionType, fileExceptionType) + ": "s + string(exceptionMessage);
    ARE_EQUAL(expectedFullExceptionMessage, fullExceptionMessage);
 }
 

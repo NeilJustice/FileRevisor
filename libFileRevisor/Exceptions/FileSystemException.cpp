@@ -4,7 +4,7 @@
 
 FileSystemException::FileSystemException(FileExceptionType fileExceptionType, string_view exceptionMessage)
    // Constant Fields
-   : _exceptionMessage(ENUM_TO_STRING(FileExceptionType, fileExceptionType) + ": " + string(exceptionMessage))
+   : _exceptionMessage(ENUM_AS_STRING(FileExceptionType, fileExceptionType) + ": "s + string(exceptionMessage))
 {
 }
 

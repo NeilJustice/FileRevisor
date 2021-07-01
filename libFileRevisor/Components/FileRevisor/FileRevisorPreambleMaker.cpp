@@ -15,7 +15,7 @@ FileRevisorPreambleMaker::~FileRevisorPreambleMaker()
 string FileRevisorPreambleMaker::MakePreambleLines(const FileRevisorArgs& args) const
 {
    const fs::path currentDirectoryPath = _fileSystem->CurrentDirectoryPath();
-   const string programModeString = ENUM_TO_STRING(ProgramMode, args.programMode);
+   const string programModeString = ENUM_AS_STRING(ProgramMode, args.programMode);
    const string verboseOrEmptyString = args.verbose ? " Verbose" : "";
    const string previewOrEmptyString = args.preview ? " Preview" : "";
    string fileRevisorPreambleLines = String::ConcatStrings(

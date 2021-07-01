@@ -32,10 +32,10 @@ using namespace std;
 #include "libFileRevisor/Enums/ProgramMode.h"
 
 // libFileRevisor StaticUtilities
+#include "libFileRevisor/StaticUtilities/ENUM_STRING_ARRAY.h"
 #include "libFileRevisor/StaticUtilities/Map.h"
 #include "libFileRevisor/StaticUtilities/ReleaseAssert.h"
 #include "libFileRevisor/StaticUtilities/StringUtil.h"
-#include "libFileRevisor/StaticUtilities/STRING_ENUM_MAP.h"
 #include "libFileRevisor/StaticUtilities/Vector.h"
 
 // libFileRevisorTests UtilityComponents Console MetalMock

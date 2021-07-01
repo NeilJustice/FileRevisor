@@ -1,5 +1,5 @@
 #pragma once
-#include "libFileRevisor/StaticUtilities/STRING_ENUM_MAP.h"
+#include "libFileRevisor/StaticUtilities/ENUM_STRING_ARRAY.h"
 
 enum class ProgramMode : unsigned char
 {
@@ -11,13 +11,11 @@ enum class ProgramMode : unsigned char
    MaxValue
 };
 
-ostream& operator<<(ostream& os, ProgramMode programMode);
-
-BEGIN_STRING_ENUM_MAP(ProgramMode)
-STRING_ENUM_MAP(ProgramMode, Unset)
-STRING_ENUM_MAP(ProgramMode, RenameFiles)
-STRING_ENUM_MAP(ProgramMode, RenameDirectories)
-STRING_ENUM_MAP(ProgramMode, ReplaceTextInTextFiles)
-STRING_ENUM_MAP(ProgramMode, DeleteDirectory)
-STRING_ENUM_MAP(ProgramMode, MaxValue)
-END_STRING_ENUM_MAP
+BEGIN_ENUM_STRING_ARRAY(ProgramMode)
+ENUM_STRING_ARRAY_ELEMENT(Unset)
+ENUM_STRING_ARRAY_ELEMENT(RenameFiles)
+ENUM_STRING_ARRAY_ELEMENT(RenameDirectories)
+ENUM_STRING_ARRAY_ELEMENT(ReplaceTextInTextFiles)
+ENUM_STRING_ARRAY_ELEMENT(DeleteDirectory)
+ENUM_STRING_ARRAY_ELEMENT(MaxValue)
+END_ENUM_STRING_ARRAY

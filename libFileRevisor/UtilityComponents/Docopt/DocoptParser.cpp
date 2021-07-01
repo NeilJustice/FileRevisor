@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "libFileRevisor/StaticUtilities/Map.h"
 #include "libFileRevisor/UtilityComponents/Docopt/DocoptParser.h"
 #include "libFileRevisor/UtilityComponents/Docopt/docopt.h"
 
