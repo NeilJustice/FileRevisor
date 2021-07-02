@@ -132,7 +132,7 @@ void RecursiveFileDeleter::ThrowFileSystemExceptionIfFindFirstFileExReturnedInva
 
 #endif
 
-void RecursiveFileDeleter::ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissionDenied(
+void RecursiveFileDeleter::ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDenied(
    const char* filePath, const FileRevisorArgs& args) const
 {
    if (args.skipFilesInUse)
@@ -146,8 +146,7 @@ void RecursiveFileDeleter::ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsT
          return;
       }
    }
-   const FileSystemException fileSystemException =
-      _fileSystemExceptionMaker->MakeFileSystemExceptionForFailedToDeleteFile(filePath);
+   const FileSystemException fileSystemException = _fileSystemExceptionMaker->MakeFileSystemExceptionForFailedToDeleteFile(filePath);
    throw fileSystemException;
 }
 
@@ -188,6 +187,6 @@ void RecursiveFileDeleter::PrintDeletedFileMessageIfDeleteSucceededOtherwiseThro
    }
    else
    {
-      ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissionDenied(filePath, args);
+      ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDenied(filePath, args);
    }
 }

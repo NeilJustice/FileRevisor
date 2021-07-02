@@ -25,7 +25,7 @@ public:
 #endif
 private:
    void PrintDeletedFileMessage(const char* filePath) const;
-   void ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissionDenied(
+   virtual void ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDenied(
       const char* filePath, const FileRevisorArgs& args) const;
 #ifdef _WIN32
    void ThrowFileSystemExceptionIfFindFirstFileExReturnedInvalidHandleValue(
