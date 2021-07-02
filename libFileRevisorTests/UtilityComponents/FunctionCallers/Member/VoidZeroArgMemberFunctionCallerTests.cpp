@@ -29,7 +29,7 @@ struct NonConstClass
 TEST(ConstCall_CallsConstMemberFunction)
 {
    ConstClass c;
-   VoidZeroArgMemberFunctionCaller<ConstClass> voidZeroArgMemberFunctionCaller{}; // LCOV_EXCL_LINE
+   VoidZeroArgMemberFunctionCaller<ConstClass> voidZeroArgMemberFunctionCaller{};
    ARE_EQUAL(0, c.numberOfCalls);
    //
    voidZeroArgMemberFunctionCaller.ConstCall(&c, &ConstClass::ConstMemberVoidFunction);
@@ -44,7 +44,7 @@ TEST(ConstCall_CallsConstMemberFunction)
 TEST(NonConstCall_CallsNonConstMemberFunction)
 {
    NonConstClass c;
-   VoidZeroArgMemberFunctionCaller<NonConstClass> voidZeroArgMemberFunctionCaller{}; // LCOV_EXCL_LINE
+   VoidZeroArgMemberFunctionCaller<NonConstClass> voidZeroArgMemberFunctionCaller{};
    ARE_EQUAL(0, c.numberOfCalls);
    //
    voidZeroArgMemberFunctionCaller.NonConstCall(&c, &NonConstClass::NonConstMemberVoidFunction);
