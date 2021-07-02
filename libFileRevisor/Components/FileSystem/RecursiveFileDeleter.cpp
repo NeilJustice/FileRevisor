@@ -57,17 +57,7 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* dire
          {
             const char* const filePath = filePathOrSubdirectoryPathChars;
             const int unlinkReturnValue = unlink(filePath);
-            if (unlinkReturnValue == 0)
-            {
-               if (!args.minimal)
-               {
-                  PrintDeletedFileMessage(filePath);
-               }
-            }
-            else
-            {
-               ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissionDenied(filePathOrSubdirectoryPathChars, args);
-            }
+            PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException(filePath, unlinkReturnValue, args);
          }
       }
    }
@@ -87,10 +77,9 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* dire
    directoryPathSearchPatternChars[directoryPathLength + 2] = 0;
 
    WIN32_FIND_DATA win32FindData{};
-   const HANDLE findFirstFilePointer = FindFirstFileEx(
-      directoryPathSearchPatternChars, FindExInfoBasic, &win32FindData, FindExSearchNameMatch, NULL, NULL);
-   ThrowFileSystemExceptionIfFindFirstFileExReturnedInvalidHandleValue(
-      findFirstFilePointer, directoryPathSearchPatternChars);
+   const HANDLE findFirstFilePointer =
+      FindFirstFileEx(directoryPathSearchPatternChars, FindExInfoBasic, &win32FindData, FindExSearchNameMatch, NULL, NULL);
+   ThrowFileSystemExceptionIfFindFirstFileExReturnedInvalidHandleValue(findFirstFilePointer, directoryPathSearchPatternChars);
 
    do
    {
@@ -119,17 +108,7 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* dire
             const char* const filePath = filePathOrSubdirectoryPathChars;
             RemoveReadonlyFlagFromConstCharPointerFilePath(filePath);
             const int unlinkReturnValue = _unlink(filePath);
-            if (unlinkReturnValue == 0)
-            {
-               if (!args.minimal)
-               {
-                  PrintDeletedFileMessage(filePath);
-               }
-            }
-            else
-            {
-               ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissionDenied(filePathOrSubdirectoryPathChars, args);
-            }
+            PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException(filePath, unlinkReturnValue, args);
          }
       }
    } while (FindNextFile(findFirstFilePointer, &win32FindData) != FALSE);
@@ -196,3 +175,19 @@ void RecursiveFileDeleter::RemoveReadonlyFlagFromFileSystemFilePath(const fs::pa
 }
 
 #endif
+
+void RecursiveFileDeleter::PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException(
+   const char* filePath, int unlinkReturnValue, const FileRevisorArgs& args) const
+{
+   if (unlinkReturnValue == 0)
+   {
+      if (!args.minimal)
+      {
+         PrintDeletedFileMessage(filePath);
+      }
+   }
+   else
+   {
+      ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissionDenied(filePath, args);
+   }
+}

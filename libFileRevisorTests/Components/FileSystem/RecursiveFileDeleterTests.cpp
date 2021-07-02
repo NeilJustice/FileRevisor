@@ -181,9 +181,8 @@ TEST1X1(RemoveReadonlyFlagFromConstCharPointerFilePath_GetsFileAttributesWhichIn
    const DWORD expectedFileAttributesMinusReadonlyAttribute = fileAttributes & ~FILE_ATTRIBUTE_READONLY;
    METALMOCK(GetFileAttributesAMock.CalledOnceWith(filePath));
    METALMOCK(SetFileAttributesAMock.CalledOnceWith(filePath, expectedFileAttributesMinusReadonlyAttribute));
-   METALMOCK(_fileSystemExceptionMakerMock->
-      MakeFileSystemExceptionForFailedToSetFileAttributeMock.CalledOnceWith(
-         filePath, expectedFileAttributesMinusReadonlyAttribute));
+   METALMOCK(_fileSystemExceptionMakerMock->MakeFileSystemExceptionForFailedToSetFileAttributeMock.CalledOnceWith(
+      filePath, expectedFileAttributesMinusReadonlyAttribute));
 }
 #endif
 

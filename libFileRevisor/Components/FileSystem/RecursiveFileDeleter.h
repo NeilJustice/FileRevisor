@@ -25,10 +25,12 @@ public:
 #endif
 private:
    void PrintDeletedFileMessage(const char* filePath) const;
-   virtual void ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissionDenied(
+   void ThrowFileSystemExceptionExceptIfSkipFilesInUseModeIsTrueAndErrnoIsPermissionDenied(
       const char* filePath, const FileRevisorArgs& args) const;
 #ifdef _WIN32
    void ThrowFileSystemExceptionIfFindFirstFileExReturnedInvalidHandleValue(
       HANDLE findFirstFileExHandle, const char* directoryPathSearchPatternChars) const;
 #endif
+   void PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException(
+      const char* filePath, int unlinkReturnValue, const FileRevisorArgs& args) const;
 };
