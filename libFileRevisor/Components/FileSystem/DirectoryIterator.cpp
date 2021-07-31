@@ -11,7 +11,7 @@ DirectoryIterator::DirectoryIterator() noexcept
    , _fileOpenerCloser(make_unique<FileOpenerCloser>())
    , _fileReader(make_unique<FileReader>())
    // Mutable Fields
-	, _recursiveMode(false)
+   , _recursiveMode(false)
 {
 }
 

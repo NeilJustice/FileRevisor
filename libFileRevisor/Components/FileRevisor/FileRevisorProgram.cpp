@@ -17,7 +17,7 @@ FileRevisorProgram::FileRevisorProgram()
    , _fileRevisorSubProgramFactory(make_unique<FileRevisorSubProgramFactory>())
    , _tryCatchCaller(make_unique<TryCatchCaller<FileRevisorProgram, const vector<string>&>>())
    // Mutable Components
-	, _stopwatch(make_unique<Stopwatch>())
+   , _stopwatch(make_unique<Stopwatch>())
 {
 }
 

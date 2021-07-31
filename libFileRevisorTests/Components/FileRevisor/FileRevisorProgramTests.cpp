@@ -42,7 +42,7 @@ STARTUP
    _fileRevisorProgram._argsParser.reset(_argsParserMock = new FileRevisorArgsParserMock);
    _fileRevisorProgram._fileRevisorSubProgramFactory.reset(_fileRevisorSubProgramFactoryMock = new FileRevisorSubProgramFactoryMock);
    // Mutable Components
-	_fileRevisorProgram._stopwatch.reset(_stopwatchMock = new StopwatchMock);
+   _fileRevisorProgram._stopwatch.reset(_stopwatchMock = new StopwatchMock);
 }
 
 TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)

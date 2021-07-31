@@ -40,7 +40,7 @@ STARTUP
    // Function Callers
    _renameDirectoriesSubProgram._directoryPathsTransformer_RenameDirectory.reset(_directoryPathsTransformer_RenameDirectoryMock = new OneExtraArgMemberFunctionTransformerMockType);
    // Base Class Constant Components
-	_renameDirectoriesSubProgram._protected_console.reset(_protected_consoleMock = new ConsoleMock);
+   _renameDirectoriesSubProgram._protected_console.reset(_protected_consoleMock = new ConsoleMock);
    _renameDirectoriesSubProgram._protected_fileSystem.reset(_protected_fileSystemMock = new FileSystemMock);
    _renameDirectoriesSubProgram._protected_pluralizer.reset(_protected_pluralizerMock = new PluralizerMock);
    // Constant Components

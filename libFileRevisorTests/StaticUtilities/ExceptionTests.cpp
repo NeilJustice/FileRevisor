@@ -18,7 +18,7 @@ TEST(GetExceptionClassNameAndMessage_ReturnsExceptionClassNameColonSpaceWhatText
    //
    const string exceptionClassNameAndMessage = Exception::GetExceptionClassNameAndMessage(&ex2);
    const string expectedExceptionClassNameAndMessage = "std::runtime_error: " + exceptionMessage;
-	ARE_EQUAL(expectedExceptionClassNameAndMessage, exceptionClassNameAndMessage);
+   ARE_EQUAL(expectedExceptionClassNameAndMessage, exceptionClassNameAndMessage);
 }
 
 RUN_TESTS(ExceptionTests)

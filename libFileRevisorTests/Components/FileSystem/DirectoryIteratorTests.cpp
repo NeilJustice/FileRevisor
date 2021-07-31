@@ -50,10 +50,10 @@ TEST(DefaultConstructor_NewsComponents_SetsFieldsToDefaultValues)
    DELETE_TO_ASSERT_NEWED(directoryIterator._fileOpenerCloser);
    DELETE_TO_ASSERT_NEWED(directoryIterator._fileReader);
    // Mutable Fields
-	ARE_EQUAL(fs::directory_iterator(), directoryIterator._directoryIterator);
+   ARE_EQUAL(fs::directory_iterator(), directoryIterator._directoryIterator);
    ARE_EQUAL(fs::recursive_directory_iterator(), directoryIterator._recursiveDirectoryIterator);
    IS_EMPTY(directoryIterator._fileAndDirectoryPathIgnoreSubstrings);
-	IS_FALSE(directoryIterator._recursiveMode);
+   IS_FALSE(directoryIterator._recursiveMode);
 }
 
 TEST(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsEndIterationMarker_ReturnsEmptyVector)

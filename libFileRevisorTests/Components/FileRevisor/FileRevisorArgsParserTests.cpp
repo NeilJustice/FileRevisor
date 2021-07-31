@@ -223,11 +223,11 @@ TEST5X5(DetermineProgramMode_OneOfTheFourProgramModeBoolsTrue_ReturnsExpectedPro
 
 TEST(DetermineProgramMode_AllFourProgramModeBoolsAreFalse_ThrowsInvalidArgument)
 {
-	const bool isRenameFilesMode = false;
-	const bool isRenameDirectoriesMode = false;
-	const bool isReplaceTextInTextFilesMode = false;
+   const bool isRenameFilesMode = false;
+   const bool isRenameDirectoriesMode = false;
+   const bool isReplaceTextInTextFilesMode = false;
    const bool isDeleteDirectoryMode = false;
-	THROWS_EXCEPTION(FileRevisorArgsParser::DetermineProgramMode(
+   THROWS_EXCEPTION(FileRevisorArgsParser::DetermineProgramMode(
       isRenameFilesMode, isRenameDirectoriesMode, isReplaceTextInTextFilesMode, isDeleteDirectoryMode),
       invalid_argument, "All four program mode bools (isRenameFilesMode, isRenameDirectoriesMode, isReplaceTextInTextFilesMode, and isDeleteDirectoryMode) are unexpectedly false");
 }
