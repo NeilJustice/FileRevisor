@@ -2,20 +2,21 @@
 #include "libFileRevisor/Components/ErrorHandling/ErrorCodeTranslator.h"
 #include "libFileRevisor/Components/Exceptions/FileSystemExceptionMaker.h"
 #include "libFileRevisor/Components/FileSystem/RecursiveFileDeleter.h"
+#include "libFileRevisor/UtilityComponents/Threading/ThreadIdGetter.h"
 
 RecursiveFileDeleter::RecursiveFileDeleter()
-#ifdef __linux__
+#if defined __linux__
    // Constant Components
    : _console(make_unique<Console>())
-   , _fileSystemExceptionMaker(make_unique<FileSystemExceptionMaker>())
-#elif _WIN32
+#elif defined _WIN32
    // Function Pointers
    : _call_GetFileAttributesA(::GetFileAttributesA)
    , _call_SetFileAttributesA(::SetFileAttributesA)
    // Constant Components
    , _console(make_unique<Console>())
-   , _fileSystemExceptionMaker(make_unique<FileSystemExceptionMaker>())
 #endif
+   , _fileSystemExceptionMaker(make_unique<FileSystemExceptionMaker>())
+   , _threadIdGetter(make_unique<ThreadIdGetter>())
 {
 }
 
@@ -25,7 +26,8 @@ RecursiveFileDeleter::~RecursiveFileDeleter()
 
 void RecursiveFileDeleter::PrintDeletedFileMessage(const char* filePath) const
 {
-   const string deletedFileMessage = String::ConcatStrings("[FileRevisor] Deleted file ", filePath);
+   const thread::id threadId = _threadIdGetter->GetThreadId();
+   const string deletedFileMessage = String::ConcatValues("[FileRevisor Thread ", threadId, "] Deleted file ", filePath);
    _console->WriteLine(deletedFileMessage);
 }
 

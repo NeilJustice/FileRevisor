@@ -35,6 +35,7 @@ folder_source_group_subsubfolder(UtilityComponents Iteration ForEach)
 folder_source_group_subsubfolder(UtilityComponents Iteration Math)
 folder_source_group_subsubfolder(UtilityComponents Iteration Transform)
 folder_source_group_subfolder(UtilityComponents Strings)
+folder_source_group_subfolder(UtilityComponents Threading)
 folder_source_group_subfolder(UtilityComponents Time)
 folder_source_group(ValueTypes)
 

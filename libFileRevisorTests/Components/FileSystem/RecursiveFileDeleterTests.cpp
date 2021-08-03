@@ -3,6 +3,7 @@
 #include "libFileRevisorTests/Components/ErrorHandling/MetalMock/ErrorCodeTranslatorMock.h"
 #include "libFileRevisorTests/Components/Exceptions/MetalMock/FileSystemExceptionMakerMock.h"
 #include "libFileRevisorTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
+#include "libFileRevisorTests/UtilityComponents/Threading/MetalMock/ThreadIdGetterMock.h"
 
 TESTS(RecursiveFileDeleterTests)
 AFACT(Constructor_NewsComponents_SetsFunctionCallers)
@@ -31,18 +32,20 @@ METALMOCK_NONVOID2_FREE(BOOL, SetFileAttributesA, const char*, DWORD)
 ConsoleMock* _consoleMock = nullptr;
 FileSystemExceptionMakerMock* _fileSystemExceptionMakerMock = nullptr;
 
-class RecursiveFileDeleter_ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDeniedMocked : public Metal::Mock<RecursiveFileDeleter>
+class RecursiveFileDeleter_SelfMocked : public Metal::Mock<RecursiveFileDeleter>
 {
 public:
    ConsoleMock* _consoleMock = nullptr;
+   ThreadIdGetterMock* _threadIdGetterMock = nullptr;
 
-   RecursiveFileDeleter_ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDeniedMocked()
+   RecursiveFileDeleter_SelfMocked()
    {
       _console.reset(_consoleMock = new ConsoleMock);
+      _threadIdGetter.reset(_threadIdGetterMock = new ThreadIdGetterMock);
    }
 
    METALMOCK_VOID2_CONST(ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDenied, const char*, const FileRevisorArgs&)
-} _recursiveFileDeleter_ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDeniedMocked;
+} _recursiveFileDeleter_SelfMocked;
 
 STARTUP
 {
@@ -67,6 +70,7 @@ TEST(Constructor_NewsComponents_SetsFunctionCallers)
    // Constant Components
    DELETE_TO_ASSERT_NEWED(recursiveFileDeleter._console);
    DELETE_TO_ASSERT_NEWED(recursiveFileDeleter._fileSystemExceptionMaker);
+   DELETE_TO_ASSERT_NEWED(recursiveFileDeleter._threadIdGetter);
 }
 
 TEST(ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDenied_SkipFilesInUseIsFalse_ThrowsFileSystemException)
@@ -209,40 +213,38 @@ TEST(PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException_U
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    args.minimal = true;
    //
-   _recursiveFileDeleter_ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDeniedMocked.
-      PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException(filePath, unlinkReturnValue, args);
+   _recursiveFileDeleter_SelfMocked.PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException(filePath, unlinkReturnValue, args);
 }
 
 TEST(PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException_UnlinkReturnValueIs0_MinimalIsFalse_PrintsDeletedFileMessage)
 {
-   _recursiveFileDeleter_ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDeniedMocked._consoleMock->WriteLineMock.Expect();
+   _recursiveFileDeleter_SelfMocked._consoleMock->WriteLineMock.Expect();
+
+   const thread::id thisThreadId = _recursiveFileDeleter_SelfMocked._threadIdGetterMock->GetThreadIdMock.ReturnRandom();
+
    const char* const filePath = ZenUnit::Random<const char*>();
    const int unlinkReturnValue = 0;
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    args.minimal = false;
    //
-   _recursiveFileDeleter_ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDeniedMocked.
-      PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException(filePath, unlinkReturnValue, args);
+   _recursiveFileDeleter_SelfMocked.PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException(filePath, unlinkReturnValue, args);
    //
-   const string expectedDeletedFileMessage = String::ConcatStrings("[FileRevisor] Deleted file ", filePath);
-   METALMOCK(_recursiveFileDeleter_ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDeniedMocked.
-      _consoleMock->WriteLineMock.CalledOnceWith(expectedDeletedFileMessage));
+   const string expectedDeletedFileMessage = String::ConcatValues("[FileRevisor Thread ", thisThreadId, "] Deleted file ", filePath);
+   METALMOCK(_recursiveFileDeleter_SelfMocked._consoleMock->WriteLineMock.CalledOnceWith(expectedDeletedFileMessage));
+   METALMOCK(_recursiveFileDeleter_SelfMocked._threadIdGetterMock->GetThreadIdMock.CalledOnce());
 }
 
 TEST(PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException_UnlinkReturnValueIsNot0_CallsThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDenied)
 {
-   _recursiveFileDeleter_ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDeniedMocked.
-      ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDeniedMock.Expect();
+   _recursiveFileDeleter_SelfMocked.ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDeniedMock.Expect();
    const char* const filePath = ZenUnit::Random<const char*>();
    const int unlinkReturnValue = ZenUnit::RandomNon0<int>();
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    args.minimal = false;
    //
-   _recursiveFileDeleter_ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDeniedMocked.
-      PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException(filePath, unlinkReturnValue, args);
+   _recursiveFileDeleter_SelfMocked.PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException(filePath, unlinkReturnValue, args);
    //
-   METALMOCK(_recursiveFileDeleter_ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDeniedMocked.
-      ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDeniedMock.CalledOnceWith(filePath, args));
+   METALMOCK(_recursiveFileDeleter_SelfMocked.ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDeniedMock.CalledOnceWith(filePath, args));
 }
 
 RUN_TESTS(RecursiveFileDeleterTests)

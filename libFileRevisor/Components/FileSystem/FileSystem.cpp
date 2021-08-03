@@ -67,8 +67,7 @@ fs::path FileSystem::CurrentDirectoryPath() const
    return currentDirectoryPath;
 }
 
-void FileSystem::RecursivelyDeleteAllFilesInDirectory(
-   const string& directoryPath, const FileRevisorArgs& args) const
+void FileSystem::RecursivelyDeleteAllFilesInDirectory(const string& directoryPath, const FileRevisorArgs& args) const
 {
    _recursiveFileDeleter->RecursivelyDeleteAllFilesInDirectory(directoryPath.c_str(), args);
 }

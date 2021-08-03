@@ -2,6 +2,7 @@
 #include "libFileRevisor/Compiler/CompilerHints.h"
 class Console;
 class FileSystemExceptionMaker;
+class ThreadIdGetter;
 
 class RecursiveFileDeleter
 {
@@ -15,6 +16,7 @@ private:
    // Constant Components
    unique_ptr<const Console> _console;
    unique_ptr<const FileSystemExceptionMaker> _fileSystemExceptionMaker;
+   unique_ptr<const ThreadIdGetter> _threadIdGetter;
 public:
    RecursiveFileDeleter();
    virtual ~RecursiveFileDeleter();
