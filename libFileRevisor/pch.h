@@ -16,6 +16,7 @@
    #include <memory>
    #include <mutex>
    #include <string.h>
+   #include <thread>
    #include <unistd.h>
 #endif
 namespace fs = std::filesystem;
