@@ -43,6 +43,15 @@ file(GLOB_RECURSE Sources *.h *.cpp *.ui)
 source_group("" FILES ${Sources})
 
 add_library(libFileRevisor ${Sources})
+if(UNIX)
+   set_target_properties(libFileRevisor PROPERTIES DEBUG_OUTPUT_NAME "FileRevisorDebug")
+   set_target_properties(libFileRevisor PROPERTIES RELEASE_OUTPUT_NAME "FileRevisorRelease")
+   set_target_properties(libFileRevisor PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "FileRevisorRelWithDebInfo")
+elseif(MSVC)
+   set_target_properties(libFileRevisor PROPERTIES DEBUG_OUTPUT_NAME "libFileRevisorDebug")
+   set_target_properties(libFileRevisor PROPERTIES RELEASE_OUTPUT_NAME "libFileRevisorRelease")
+   set_target_properties(libFileRevisor PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "libFileRevisorRelWithDebInfo")
+endif()
 
 EnablePrecompiledHeaders()
 
