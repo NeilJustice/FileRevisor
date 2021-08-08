@@ -77,7 +77,7 @@ if(UNIX AND NOT APPLE)
    target_link_libraries(libFileRevisorTests stdc++fs)
 endif()
 
-EnablePrecompiledHeaders()
+IfMSVCEnablePrecompiledHeaders()
 IfMSVCAddRunTestsPostBuildStep()
 
 if(UNIX AND NOT APPLE)

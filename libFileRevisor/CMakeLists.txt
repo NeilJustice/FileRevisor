@@ -53,7 +53,7 @@ elseif(MSVC)
    set_target_properties(libFileRevisor PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "libFileRevisorRelWithDebInfo")
 endif()
 
-EnablePrecompiledHeaders()
+IfMSVCEnablePrecompiledHeaders()
 
 if(UNIX)
    if(LCovCodeCoverageMode)
