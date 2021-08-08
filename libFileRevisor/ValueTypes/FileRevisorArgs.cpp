@@ -3,10 +3,7 @@
 
 const string FileRevisorArgs::CommandLineUsage =
 R"(FileRevisor v0.11.0
-Quickly deletes directories in parallel,
-bulk renames files or directories,
-or replaces text in files that matches a regular expression.
-https://github.com/NeilJustice/FileRevisor
+Quickly deletes directories, renames files or directories, or replaces text in files
 
 Usage:
    filerevisor delete-directory --target=<TargetDirectoryPath> [--parallel] [--skip-files-in-use] [--minimal]

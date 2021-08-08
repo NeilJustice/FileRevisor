@@ -2,9 +2,9 @@
 
 [![Standard](https://img.shields.io/badge/c%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B20) ![GitHub](https://img.shields.io/github/license/NeilJustice/FileRevisor) ![GitHub last commit](https://img.shields.io/github/last-commit/NeilJustice/FileRevisor)
 
-FileRevisor is a cross-platform C++ command line program for quickly deleting large directories in parallel, bulk renaming files and directories, and replacing text in files that matches a given regular expression.
+FileRevisor is a cross-platform C++ command line program for quickly deleting large directories in parallel, quickly renaming files or directories, or quickly replacing text in files.
 
-FileRevisor's key feature is its extreme performance when deleting large folders in parallel on Windows. On Linux, file deletions are quite a bit faster than on Windows, and so the parallel file deletion peformance boost which FileRevisor provides is more modest on Linux relative to Windows.
+FileRevisor's signature feature is its extreme performance when deleting large folders in parallel on Windows. On Linux, directory deletions are quite a bit faster than on Windows, and so the parallel directory deletion peformance boost which FileRevisor provides is more modest on Linux relative to Windows. See below for Linux vs. Windows performance graphs.
 
 |Build Type|Build Status|
 |----------|------------|
@@ -34,10 +34,7 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
 
 ```
 FileRevisor v0.11.0
-Quickly deletes directories in parallel,
-bulk renames files or directories,
-or replaces text in files that matches a regular expression.
-https://github.com/NeilJustice/FileRevisor
+Quickly deletes directories, renames files or directories, or replaces text in files
 
 Usage:
    filerevisor delete-directory
@@ -150,7 +147,7 @@ As you can see from the above two graphs, the implementation of Linux file delet
 
 The CPU and storage hardware which generated the above performance numbers is a 32-core 64-thread AMD Threadripper 2990WX with a 512 GB Samsung 970 PRO NVMe drive.
 
-### FileRevisor Code Structure As It Appears In Visual Studio Code On Linux
+### FileRevisor code structure as it appears in Visual Studio Code on Linux
 
 Shown in this screenshot is function `FileRevisorArgsParser::ParseArgs` which uses the excellent single-header command line arguments parsing library [docopt.cpp](https://github.com/docopt/docopt.cpp) to parse FileRevisor's command line arguments:
 
@@ -164,13 +161,9 @@ Shown in this screenshot is function `DeleteDirectorySubProgram::Run` with the k
 
 ### Linux Jenkins jobs which build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor's C++ code and Mypy-Flake8-Pylint-SonarQube scan FileRevisor's CI/CD Python code
 
-A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Fedora 34 with Clang 12.0.0 and GCC 11.1.1 to statically analyze and unit test FileRevisor:
-
 ![Linux FileRevisor Jenkins Jobs](Screenshots/Linux/LinuxJenkinsJobs.png)
 
 ### Windows Jenkins jobs which build and Cppcheck FileRevisor's C++ code and Mypy-Flake8-Pylint-SonarQube scan FileRevisor's CI/CD Python code
-
-A Jenkins Blue Ocean build pipeline builds the following FileRevisor Jenkins jobs on Windows 10 with Visual Studio 2019 to statically analyze and unit test FileRevisor:
 
 ![Windows Jenkins Jobs](Screenshots/Windows/WindowsJenkinsJobs.png)
 
