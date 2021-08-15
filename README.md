@@ -27,12 +27,12 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
 * [FileRevisor code structure as it appears in Visual Studio 2019 on Windows](#filerevisor-code-structure-as-it-appears-in-visual-studio-2019-on-windows)
 * [Linux Jenkins jobs which build, cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor's C++ code and mypy-flake8-pylint-SonarQube FileRevisor's CI/CD Python code](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filerevisors-c-code-and-mypy-flake8-pylint-sonarqube-scan-filerevisors-cicd-python-code)
 * [Windows Jenkins jobs which build and cppcheck FileRevisor's C++ code and mypy-flake8-pylint-SonarQube FileRevisor's CI/CD Python code](#windows-jenkins-jobs-which-build-and-cppcheck-filerevisors-c-code-and-mypy-flake8-pylint-sonarqube-scan-filerevisors-cicd-python-code)
-* [How to build binary filerevisor on Linux with Clang](#how-to-build-binary-filerevisor-on-linux-with-clang)
-* [How to build executable FileRevisor.exe on Windows with Visual Studio 2019](#how-to-build-executable-filerevisorexe-on-windows-with-visual-studio-2019)
+* [4 steps to build binary filerevisor from source on Linux with Clang](#4-steps-to-build-binary-filerevisor-from-source-on-linux-with-clang)
+* [4 steps to build executable FileRevisor.exe from source on Windows with Visual Studio 2019](#4-steps-to-build-executable-filerevisorexe-from-source-on-windows-with-visual-studio-2019)
 
 ## FileRevisor command line usage
 
-```
+```prolog
 FileRevisor v0.11.0
 Quickly deletes directories, renames files or directories, or replaces text in files
 
@@ -68,7 +68,7 @@ Usage:
 
 ### delete-directory
 
-```
+```prolog
 filerevisor delete-directory
       --target=<TargetDirectoryPath>
       [--parallel]
@@ -83,7 +83,7 @@ Shown in this screenshot is `filerevisor delete-directory` deleting `directory1`
 
 ### rename-files
 
-```
+```prolog
 filerevisor rename-files
       --target=<TargetDirectoryPath>
       --from=<FileNameRegex>
@@ -101,7 +101,7 @@ Shown in this screenshot is `filerevisor rename-files` renaming files with name 
 
 ### rename-directories
 
-```
+```prolog
 filerevisor rename-directories
       --target=<TargetDirectoryPath>
       --from=<DirectoryNameRegex>
@@ -119,7 +119,7 @@ Shown in this screenshot is `filerevisor rename-directories` renaming directorie
 
 ### replace-text
 
-```
+```prolog
 filerevisor replace-text
       --target=<TargetDirectoryPath>
       --from=<FileTextRegexPattern>
@@ -167,7 +167,7 @@ Shown in this screenshot is function `DeleteDirectorySubProgram::Run` with the k
 
 ![Windows Jenkins Jobs](Screenshots/Windows/WindowsJenkinsJobs.png)
 
-## How to build binary filerevisor on Linux with Clang
+## 4 steps to build binary filerevisor from source on Linux with Clang
 
 ```bash
 git clone https://github.com/NeilJustice/FileRevisor
@@ -180,7 +180,7 @@ Result binary `/usr/local/bin/filerevisor`:
 
 ![Linux filerevisor binary in /usr/local/bin](Screenshots/LinuxFileRevisorBinaryInUsrLocalBin.png)
 
-## How to build executable FileRevisor.exe on Windows with Visual Studio 2019
+## 4 steps to build executable FileRevisor.exe from source on Windows with Visual Studio 2019
 
 ```powershell
 git clone https://github.com/NeilJustice/FileRevisor
