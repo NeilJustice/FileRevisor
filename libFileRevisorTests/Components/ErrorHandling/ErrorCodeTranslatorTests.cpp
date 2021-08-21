@@ -19,9 +19,9 @@ AFACT(GetErrnoDescription_ReturnsTheResultOfCallingStrErrorOnTheErrnoValue)
 #if defined __linux__|| defined __APPLE__
 AFACT(GetSystemErrorDescriptionOnLinux_SystemErrorIs32_ReturnsIntAsString)
 #elif _WIN32
-AFACT(GetSystemErrorDescriptionOnWindows_SystemErrorIs32_ReturnsProcessCannotAccessTheFileMessage)
+FACTS(GetSystemErrorDescriptionOnWindows_SystemErrorIs5Or32_ReturnsWindowsErrorMessageText)
 #endif
-AFACT(GetSystemErrorDescription_SystemErrorIsNot32_ReturnsIntAsString)
+FACTS(GetSystemErrorDescription_SystemErrorIsNot5Or32_ReturnsIntAsString)
 EVIDENCE
 
 ErrorCodeTranslator _errorCodeTranslator;
@@ -277,18 +277,24 @@ TEST(GetSystemErrorDescriptionOnLinux_SystemErrorIs32_ReturnsIntAsString)
 
 #elif _WIN32
 
-TEST(GetSystemErrorDescriptionOnWindows_SystemErrorIs32_ReturnsProcessCannotAccessTheFileMessage)
+TEST2X2(GetSystemErrorDescriptionOnWindows_SystemErrorIs5Or32_ReturnsWindowsErrorMessageText,
+   int systemErrorValue, const string& expectedReturnValue,
+   ERROR_ACCESS_DENIED, "Access is denied.",
+   ERROR_SHARING_VIOLATION, "The process cannot access the file because it is being used by another process.")
 {
-   const string systemErrorDescription = _errorCodeTranslator.GetSystemErrorDescription(ERROR_SHARING_VIOLATION);
-   ARE_EQUAL("The process cannot access the file because it is being used by another process.", systemErrorDescription);
+   const string systemErrorDescription = _errorCodeTranslator.GetSystemErrorDescription(systemErrorValue);
+   ARE_EQUAL(expectedReturnValue, systemErrorDescription);
 }
 
 #endif
 
-TEST(GetSystemErrorDescription_SystemErrorIsNot32_ReturnsIntAsString)
+TEST1X1(GetSystemErrorDescription_SystemErrorIsNot5Or32_ReturnsIntAsString,
+   int systemErrorValue,
+   4,
+   6,
+   31,
+   33)
 {
-   const int systemErrorValue = ZenUnit::RandomBetween<int>(0, 31);
-   //
    const string systemErrorDescription = _errorCodeTranslator.GetSystemErrorDescription(systemErrorValue);
    //
    const string expectedSystemErrorDescription = to_string(systemErrorValue);
