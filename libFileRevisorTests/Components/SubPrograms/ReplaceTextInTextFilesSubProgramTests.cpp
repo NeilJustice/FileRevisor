@@ -76,7 +76,7 @@ TEST(DefaultConstructor_NewsFileSystem)
 
 TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsRegexReplaceFileTextOnEachTextFilePath_Returns0,
    bool dryRun, const string& expectedMessagePrefix,
-   true,  "[FileRevisor] DryRun: Would replace text in ",
+   true,  "[FileRevisor]  DryRun: Would replace text in ",
    false, "[FileRevisor] Result: Replaced text in ")
 {
    _directoryIteratorMock->SetDirectoryIteratorMock.Expect();
@@ -207,7 +207,7 @@ TEST(PrintReadingFileMessageIfVerboseIsTrue_VerboseIsTrue_PrintsReadingFileMessa
    //
    _replaceTextInTextFilesSubProgram.PrintReadingFileMessageIfVerboseIsTrue(true, textFilePath);
    //
-   const string expectedReadingFileMessage = "[FileRevisor]  Verbose: Reading file " + textFilePath.string();
+   const string expectedReadingFileMessage = "[FileRevisor] Verbose: Reading file " + textFilePath.string();
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedReadingFileMessage));
 }
 

@@ -79,7 +79,7 @@ PrintDidNotMatchFileMessageIfVerboseMode(bool verbose, const fs::path& filePath)
 {
    if (verbose)
    {
-      const string didNotMatchFileMessage = "[FileRevisor]  Verbose: Did not match " + filePath.string();
+      const string didNotMatchFileMessage = "[FileRevisor] Verbose: Did not match " + filePath.string();
       _console->WriteLine(didNotMatchFileMessage);
    }
 }

@@ -40,7 +40,7 @@ int ReplaceTextInTextFilesSubProgram::Run(const FileRevisorArgs& args) const
    if (args.dryrun)
    {
       const string message = String::ConcatValues(
-         "[FileRevisor] DryRun: Would replace text in ", numberOfFilesThatWereOrWouldBeModified, " ", fileOrFiles);
+         "[FileRevisor]  DryRun: Would replace text in ", numberOfFilesThatWereOrWouldBeModified, " ", fileOrFiles);
       _console->WriteLine(message);
    }
    else
@@ -78,7 +78,7 @@ void ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue(bo
 {
    if (verbose)
    {
-      const string readingFileMessage = "[FileRevisor]  Verbose: Reading file " + textFilePath.string();
+      const string readingFileMessage = "[FileRevisor] Verbose: Reading file " + textFilePath.string();
       _console->WriteLine(readingFileMessage);
    }
 }

@@ -185,7 +185,7 @@ TEST(PrintDidNotMatchFileMessageIfVerboseMode_VerboseIsTrue_WritesDidNotMatchFil
    //
    _renameFilesSubProgram.PrintDidNotMatchFileMessageIfVerboseMode(true, filePath);
    //
-   const string expectedDidNotMatchFileMessage = "[FileRevisor]  Verbose: Did not match " + filePath.string();
+   const string expectedDidNotMatchFileMessage = "[FileRevisor] Verbose: Did not match " + filePath.string();
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedDidNotMatchFileMessage));
 }
 
