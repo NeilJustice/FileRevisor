@@ -279,8 +279,8 @@ TEST(GetSystemErrorDescriptionOnLinux_SystemErrorIs32_ReturnsIntAsString)
 
 TEST2X2(GetSystemErrorDescriptionOnWindows_SystemErrorIs5Or32_ReturnsWindowsErrorMessageText,
    int systemErrorValue, const string& expectedReturnValue,
-   ERROR_ACCESS_DENIED, "Access is denied.",
-   ERROR_SHARING_VIOLATION, "The process cannot access the file because it is being used by another process.")
+   ERROR_ACCESS_DENIED, "Access is denied",
+   ERROR_SHARING_VIOLATION, "The process cannot access the file because it is being used by another process")
 {
    const string systemErrorDescription = _errorCodeTranslator.GetSystemErrorDescription(systemErrorValue);
    ARE_EQUAL(expectedReturnValue, systemErrorDescription);

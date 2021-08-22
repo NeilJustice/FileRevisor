@@ -251,8 +251,7 @@ unsigned long long FileSystem::RemoveAll(const fs::path& directoryPath) const
    if (errorCodeValue != 0)
    {
       const FileSystemException fileSystemException =
-         _fileSystemExceptionMaker->MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory(
-            directoryPath, numberOfFilesAndDirectoriesRemoved, errorCodeValue);
+         _fileSystemExceptionMaker->MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory(directoryPath, errorCodeValue);
       throw fileSystemException;
    }
    return numberOfFilesAndDirectoriesRemoved;

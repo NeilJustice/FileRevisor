@@ -313,9 +313,7 @@ TEST1X1(RemoveAll_FsRemoveAllReturnsNon0ErrorCode_ThrowsFileSystemException,
    ARE_EQUAL(directoryPath, _remove_all_CallHistory.directoryPathArg);
    ARE_EQUAL(error_code(), _remove_all_CallHistory.outErrorCodeArg);
 
-   METALMOCK(_fileSystemExceptionMakerMock->
-      MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectoryMock.CalledOnceWith(
-      directoryPath, _remove_all_CallHistory.returnValue, errorCodeValue));
+   METALMOCK(_fileSystemExceptionMakerMock->MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectoryMock.CalledOnceWith(directoryPath, errorCodeValue));
 }
 
 TEST(RenameDirectory_RenamesDirectory_FilesystemRenameReturns0_ReturnsRenamedDirectoryPath)

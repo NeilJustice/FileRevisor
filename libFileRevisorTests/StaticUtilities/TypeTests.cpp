@@ -5,6 +5,7 @@ class TypeTestsBase {};
 class TypeTestsDerived : public TypeTestsBase {};
 
 TESTS(TypeTests)
+AFACT(GetExceptionClassNameAndMessage_ReturnsExceptionClassNameColonSpaceMessage)
 AFACT(GetName_NonClassNonStructType_ReturnsTypeName)
 AFACT(GetName_ClassType_ReturnsTypeNameMinusClassSpace)
 AFACT(GetName_StructType_ReturnsTypeNameMinusStructSpace)
@@ -20,6 +21,20 @@ class C {};
 struct S {};
 template<typename T>
 class TemplateClass {};
+
+TEST(GetExceptionClassNameAndMessage_ReturnsExceptionClassNameColonSpaceMessage)
+{
+   const exception ex;
+#ifdef __linux__
+   ARE_EQUAL("std::exception: std::exception", Type::GetExceptionClassNameAndMessage(&ex));
+#elif _WIN32
+   ARE_EQUAL("std::exception: Unknown exception", Type::GetExceptionClassNameAndMessage(&ex));
+#endif
+   const string exceptionMessage = ZenUnit::Random<string>();
+   const runtime_error ex2(exceptionMessage);
+   const string expectedClassNameAndMessage = "std::runtime_error: " + exceptionMessage;
+   ARE_EQUAL(expectedClassNameAndMessage, Type::GetExceptionClassNameAndMessage(&ex2));
+}
 
 TEST(GetName_NonClassNonStructType_ReturnsTypeName)
 {

@@ -50,12 +50,11 @@ FileSystemException FileSystemExceptionMaker::MakeFileSystemExceptionForFailedTo
 }
 
 FileSystemException FileSystemExceptionMaker::MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory(
-   const fs::path& fileOrDirectoryPath, unsigned long long removeAllReturnValue, int errorCodeValue) const
+   const fs::path& fileOrDirectoryPath, int errorCodeValue) const
 {
    const string systemErrorDescription = _errorCodeTranslator->GetSystemErrorDescription(errorCodeValue);
    const string exceptionMessage = String::ConcatValues(
-      "fs::remove_all(\"", fileOrDirectoryPath.string(), "\", errorCode) returned ",
-      removeAllReturnValue, " with errorCode.value()=", errorCodeValue, " (", systemErrorDescription, ")");
+      "fs::remove_all(\"", fileOrDirectoryPath.string(), "\", errorCode) failed with error code ", errorCodeValue, " (", systemErrorDescription, ")");
    FileSystemException fileSystemException(FileExceptionType::FailedToDeleteDirectory, exceptionMessage);
    return fileSystemException;
 }
@@ -77,7 +76,7 @@ FileSystemException FileSystemExceptionMaker::MakeFileSystemExceptionForFailedTo
 {
    const pair<int, string> errnoWithDescription = _errorCodeTranslator->GetErrnoWithDescription();
    const string exceptionMessage = String::ConcatValues("unlink(\"", filePath,
-      "\") failed with errno = ", errnoWithDescription.first, " (", errnoWithDescription.second, ")");
+      "\") failed with errno ", errnoWithDescription.first, " (", errnoWithDescription.second, ")");
    FileSystemException fileSystemException(FileExceptionType::FailedToDeleteFile, exceptionMessage);
    return fileSystemException;
 }

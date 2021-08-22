@@ -107,16 +107,14 @@ TEST(MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory_ReturnsExpectedF
    const string systemErrorDescription = _errorCodeTranslatorMock->GetSystemErrorDescriptionMock.ReturnRandom();
 
    const fs::path fileOrDirectoryPath = ZenUnit::Random<fs::path>();
-   const unsigned long long removeAllReturnValue = ZenUnit::Random<unsigned long long>();
    const int errorCodeValue = ZenUnit::Random<int>();
    //
    const FileSystemException fileSystemException =
-      _fileSystemExceptionMaker.MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory(fileOrDirectoryPath, removeAllReturnValue, errorCodeValue);
+      _fileSystemExceptionMaker.MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory(fileOrDirectoryPath, errorCodeValue);
    //
    METALMOCK(_errorCodeTranslatorMock->GetSystemErrorDescriptionMock.CalledOnceWith(errorCodeValue));
    const string exceptionMessage = String::ConcatValues(
-      "fs::remove_all(\"", fileOrDirectoryPath.string(), "\", errorCode) returned ",
-      removeAllReturnValue, " with errorCode.value()=", errorCodeValue, " (", systemErrorDescription, ")");
+      "fs::remove_all(\"", fileOrDirectoryPath.string(), "\", errorCode) failed with error code ", errorCodeValue, " (", systemErrorDescription, ")");
    const FileSystemException expectedFileSystemException(
       FileExceptionType::FailedToDeleteDirectory, exceptionMessage);
    ARE_EQUAL(expectedFileSystemException.what(), fileSystemException.what());
@@ -152,7 +150,7 @@ TEST(MakeFileSystemExceptionForFailedToDeleteFile_ReturnsExpectedFileSystemExcep
    //
    METALMOCK(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce());
    const string expectedExceptionMessage = String::ConcatValues(
-      "unlink(\"", filePath, "\") failed with errno = ", errnoWithDescription.first, " (", errnoWithDescription.second, ")");
+      "unlink(\"", filePath, "\") failed with errno ", errnoWithDescription.first, " (", errnoWithDescription.second, ")");
    const FileSystemException expectedFileSystemException(
       FileExceptionType::FailedToDeleteFile, expectedExceptionMessage);
    ARE_EQUAL(expectedFileSystemException.what(), fileSystemException.what());

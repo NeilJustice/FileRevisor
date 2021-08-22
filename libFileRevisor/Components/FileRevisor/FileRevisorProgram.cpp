@@ -3,19 +3,18 @@
 #include "libFileRevisor/Components/FileRevisor/FileRevisorProgram.h"
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgram.h"
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgramFactory.h"
-#include "libFileRevisor/StaticUtilities/Exception.h"
-#include "libFileRevisor/UtilityComponents/FunctionCallers/TryCatchCallers/TryCatchCaller.h"
+#include "libFileRevisor/UtilityComponents/FunctionCallers/TryCatchCallers/NonVoidOneArgTryCatchCaller.h"
 #include "libFileRevisor/UtilityComponents/Time/Stopwatch.h"
 
 FileRevisorProgram::FileRevisorProgram()
    // Function Pointers
-   : _call_Utils_Exception_GetExceptionClassNameAndMessage(Exception::GetExceptionClassNameAndMessage)
-   , _call_Utils_Vector_FromArgcArgv(Vector::FromArgcArgv)
+   : _call_Type_GetExceptionClassNameAndMessage(Type::GetExceptionClassNameAndMessage)
+   , _call_Vector_FromArgcArgv(Vector::FromArgcArgv)
    // Constant Components
    , _argsParser(make_unique<FileRevisorArgsParser>())
    , _console(make_unique<Console>())
    , _fileRevisorSubProgramFactory(make_unique<FileRevisorSubProgramFactory>())
-   , _tryCatchCaller(make_unique<TryCatchCaller<FileRevisorProgram, const vector<string>&>>())
+   , _nonVoidOneArgTryCatchCaller(make_unique<NonVoidOneArgTryCatchCaller<int, FileRevisorProgram, const vector<string>&>>())
    // Mutable Components
    , _stopwatch(make_unique<Stopwatch>())
 {
@@ -33,8 +32,9 @@ int FileRevisorProgram::Main(int argc, char* argv[])
       return 0;
    }
    _stopwatch->Start();
-   const vector<string> stringArgs = _call_Utils_Vector_FromArgcArgv(argc, argv);
-   const int exitCode = _tryCatchCaller->TryCatchCall(this, &FileRevisorProgram::Run, stringArgs, &FileRevisorProgram::ExceptionHandler);
+   const vector<string> stringArgs = _call_Vector_FromArgcArgv(argc, argv);
+   const int exitCode = _nonVoidOneArgTryCatchCaller->TryCatchCallConstMemberFunction(
+      this, &FileRevisorProgram::Run, stringArgs, &FileRevisorProgram::ExceptionHandler);
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    const string durationLine = "[FileRevisor] Duration: " + elapsedSeconds + " seconds";
    _console->WriteLine(durationLine);
@@ -43,7 +43,7 @@ int FileRevisorProgram::Main(int argc, char* argv[])
    return exitCode;
 }
 
-int FileRevisorProgram::Run(const vector<string>& stringArgs)
+int FileRevisorProgram::Run(const vector<string>& stringArgs) const
 {
    const FileRevisorArgs args = _argsParser->ParseArgs(stringArgs);
    _argsParser->PrintPreambleLines(args);
@@ -52,10 +52,10 @@ int FileRevisorProgram::Run(const vector<string>& stringArgs)
    return exitCode;
 }
 
-int FileRevisorProgram::ExceptionHandler(const exception& ex, const vector<string>& /*stringArgs*/) const
+int FileRevisorProgram::ExceptionHandler(const exception& ex) const
 {
-   const string exceptionClassNameAndMessage = _call_Utils_Exception_GetExceptionClassNameAndMessage(&ex);
-   const string exceptionMessage = "[FileRevisor] Error: Exception thrown: " + exceptionClassNameAndMessage;
+   const string exceptionClassNameAndMessage = _call_Type_GetExceptionClassNameAndMessage(&ex);
+   const string exceptionMessage = "Error: " + exceptionClassNameAndMessage;
    _console->ThreadIdWriteLineColor(exceptionMessage, Color::Red);
    return 1;
 }

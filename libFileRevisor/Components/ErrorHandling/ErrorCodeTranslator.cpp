@@ -96,8 +96,8 @@ string ErrorCodeTranslator::GetSystemErrorDescription(int systemErrorValue) cons
 #if _WIN32
    switch (systemErrorValue)
    {
-   case ERROR_ACCESS_DENIED: return "Access is denied.";
-   case ERROR_SHARING_VIOLATION: return "The process cannot access the file because it is being used by another process.";
+   case ERROR_ACCESS_DENIED: return "Access is denied";
+   case ERROR_SHARING_VIOLATION: return "The process cannot access the file because it is being used by another process";
    }
 #endif
    string systemErrorDescription = to_string(systemErrorValue);

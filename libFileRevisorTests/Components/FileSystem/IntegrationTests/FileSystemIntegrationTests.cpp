@@ -208,7 +208,7 @@ TEST(RemoveFile_FileDoesNotExist_ThrowsFileSystemException)
   IS_FALSE(_fileSystem.FileOrDirectoryExists(filePathThatDoesNotExist));
   //
   const string expectedExceptionMessage = String::ConcatStrings(
-     "FailedToDeleteFile: unlink(\"", filePathThatDoesNotExist, "\") failed with errno = 2 (No such file or directory)");
+     "FailedToDeleteFile: unlink(\"", filePathThatDoesNotExist, "\") failed with errno 2 (No such file or directory)");
   THROWS_EXCEPTION(_fileSystem.RemoveFile(filePathThatDoesNotExist.c_str()),
      FileSystemException, expectedExceptionMessage);
 }

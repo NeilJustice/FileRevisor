@@ -39,6 +39,7 @@ using namespace std;
 #include "libFileRevisor/StaticUtilities/Map.h"
 #include "libFileRevisor/StaticUtilities/ReleaseAssert.h"
 #include "libFileRevisor/StaticUtilities/StringUtil.h"
+#include "libFileRevisor/StaticUtilities/Type.h"
 #include "libFileRevisor/StaticUtilities/Vector.h"
 
 // libFileRevisorTests UtilityComponents Console MetalMock
