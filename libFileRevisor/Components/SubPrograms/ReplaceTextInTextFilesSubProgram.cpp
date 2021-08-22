@@ -35,8 +35,7 @@ int ReplaceTextInTextFilesSubProgram::Run(const FileRevisorArgs& args) const
    _directoryIterator->SetFileAndDirectoryPathIgnoreSubstrings(fileAndDirectoryPathIgnoreSubstrings);
    const vector<fs::path> nonEmptyNonIgnoredTextFilePathsInTargetDirectory = _directoryIterator->GetNonEmptyNonIgnoredTextFilePaths();
    const size_t numberOfFilesThatWereOrWouldBeModified = _memberFunctionAccumulator_RegexReplaceTextInTextFile->SumElementsWithFunction(
-      this, nonEmptyNonIgnoredTextFilePathsInTargetDirectory,
-      &ReplaceTextInTextFilesSubProgram::RegexReplaceTextInTextFile, args);
+      this, nonEmptyNonIgnoredTextFilePathsInTargetDirectory, &ReplaceTextInTextFilesSubProgram::RegexReplaceTextInTextFile, args);
    const string fileOrFiles = _pluralizer->PotentiallyPluralizeWord(numberOfFilesThatWereOrWouldBeModified, "file", "files");
    if (args.dryrun)
    {

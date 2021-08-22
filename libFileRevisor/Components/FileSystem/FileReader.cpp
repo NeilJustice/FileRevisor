@@ -21,15 +21,15 @@ pair<size_t, array<char, 64>> FileReader::ReadFirst64Bytes(FILE* rawFilePointer)
 #if defined __linux__|| defined __APPLE__
    numberOfBytesReadAndFirst64FileBytes.first = _call_fread(
       numberOfBytesReadAndFirst64FileBytes.second.data(),
-      numberOfBytesReadAndFirst64FileBytes.second.size(),
       1,
+      numberOfBytesReadAndFirst64FileBytes.second.size(),
       rawFilePointer);
 #else
    numberOfBytesReadAndFirst64FileBytes.first = _call_fread_nolock_s(
       numberOfBytesReadAndFirst64FileBytes.second.data(),
       numberOfBytesReadAndFirst64FileBytes.second.size(),
-      numberOfBytesReadAndFirst64FileBytes.second.size(),
       1,
+      numberOfBytesReadAndFirst64FileBytes.second.size(),
       rawFilePointer);
 #endif
    return numberOfBytesReadAndFirst64FileBytes;

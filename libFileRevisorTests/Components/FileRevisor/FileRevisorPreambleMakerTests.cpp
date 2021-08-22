@@ -25,11 +25,11 @@ TEST(DefaultConstructor_NewsComponents)
 }
 
 TEST3X3(MakePreambleLines_ReturnsExpectedPreambleLinesAsAString,
-   bool verbose, bool dryrun, string_view expectedActionSuffix,
+   bool dryrun, bool verbose, string_view expectedActionSuffix,
    false, false, "",
-   true, false, " Verbose",
-   false, true, " DryRun",
-   true, true, " Verbose DryRun")
+   true, false, " DryRun",
+   false, true, " Verbose",
+   true, true, " DryRun Verbose")
 {
    const fs::path currentDirectoryPath = _fileSystemMock->CurrentDirectoryPathMock.ReturnRandom();
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();

@@ -86,7 +86,7 @@ TEST(ReadFirst64Bytes_ReadsFirst64Bytes_ReturnsPairOfNumberOfBytesReadAnd64ByteC
    //
    const pair<size_t, array<char, 64>> numberOfBytesReadAndFirst64FileBytes = _fileReader.ReadFirst64Bytes(rawFilePointer);
    //
-   fread_AssertCalledOnceWith(64, 1, rawFilePointer);
+   fread_AssertCalledOnceWith(1, 64, rawFilePointer);
    const pair<size_t, array<char, 64>> expectedNumberOfBytesReadAndFirst64FileBytes = { numberOfBytesRead, bufferReturnValue };
    PAIRS_ARE_EQUAL(expectedNumberOfBytesReadAndFirst64FileBytes, numberOfBytesReadAndFirst64FileBytes);
 }
@@ -145,7 +145,7 @@ TEST(ReadFirst64Bytes_ReadsFirst64Bytes_ReturnsPairOfNumberOfBytesReadAnd64ByteC
    //
    const pair<size_t, array<char, 64>> numberOfBytesReadAndFirst64FileBytes = _fileReader.ReadFirst64Bytes(rawFilePointer);
    //
-   _fread_nolock_s_AssertCalledOnceWith(64, 64, 1, rawFilePointer);
+   _fread_nolock_s_AssertCalledOnceWith(64, 1, 64, rawFilePointer);
    const pair<size_t, array<char, 64>> expectedNumberOfBytesReadAndFirst64FileBytes = { numberOfBytesRead, bufferReturnValue };
    PAIRS_ARE_EQUAL(expectedNumberOfBytesReadAndFirst64FileBytes, numberOfBytesReadAndFirst64FileBytes);
 }

@@ -101,6 +101,7 @@ bool DirectoryIterator::IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(const fs::path
    const size_t numberOfBytesRead = fileIsEmptyAndFirst64Bytes.first;
    if (numberOfBytesRead == 0)
    {
+      release_assert(fileIsEmptyAndFirst64Bytes.second[0] == 0);
       return true;
    }
    const bool first64BytesContains0 = _charArray64Helper->ArrayContains0(fileIsEmptyAndFirst64Bytes.second, numberOfBytesRead);
