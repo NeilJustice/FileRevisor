@@ -43,7 +43,7 @@ FileRevisorArgs FileRevisorArgsParser::ParseArgs(const vector<string>& stringArg
    args.parallel = _docoptParser->GetOptionalBool(docoptValues, "--parallel");
    args.skipFilesInUse = _docoptParser->GetOptionalBool(docoptValues, "--skip-files-in-use");
    args.dryrun = _docoptParser->GetOptionalBool(docoptValues, "--dryrun");
-   args.minimal = _docoptParser->GetOptionalBool(docoptValues, "--minimal");
+   args.quiet = _docoptParser->GetOptionalBool(docoptValues, "--quiet");
    args.verbose = _docoptParser->GetOptionalBool(docoptValues, "--verbose");
    return args;
 }

@@ -8,9 +8,8 @@
 #endif
 
 TESTS(RecursiveFileDeleterIntegrationTests)
-AFACT(RecursivelyDeleteAllFilesInDirectory_MinimalIsTrue_RecursivelyDeletesAllFilesInDirectoryWithoutPrintingAnyDeletedFileMessages)
-AFACT(RecursivelyDeleteAllFilesInDirectory_MinimalIsFalse_RecursivelyDeletesAllFilesInDirectoryWhilePrintingDeletedFileMessages)
-//AFACT(RecursivelyDeleteAllFilesInDirectory_MinimalIsTrue_OneOfTheFilesIsNonDeletable_ThrowsFileSystemException)
+AFACT(RecursivelyDeleteAllFilesInDirectory_QuietIsTrue_RecursivelyDeletesAllFilesInDirectoryWithoutPrintingAnyDeletedFileMessages)
+AFACT(RecursivelyDeleteAllFilesInDirectory_QuietIsFalse_RecursivelyDeletesAllFilesInDirectoryWhilePrintingDeletedFileMessages)
 EVIDENCE
 
 RecursiveFileDeleter _recursiveFileDeleter;
@@ -98,22 +97,22 @@ void AssertExpectedEndingStateOfFileSystem() const
   IS_FALSE(_fileSystem.FileOrDirectoryExists(_root_subdirectory5_file1));
 }
 
-TEST(RecursivelyDeleteAllFilesInDirectory_MinimalIsTrue_RecursivelyDeletesAllFilesInDirectoryWithoutPrintingAnyDeletedFileMessages)
+TEST(RecursivelyDeleteAllFilesInDirectory_QuietIsTrue_RecursivelyDeletesAllFilesInDirectoryWithoutPrintingAnyDeletedFileMessages)
 {
   AssertExpectedStartingStateOfFileSystem();
   FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
-  args.minimal = true;
+  args.quiet = true;
   //
   _recursiveFileDeleter.RecursivelyDeleteAllFilesInDirectory(_rootDirectoryPathString.c_str(), args);
   //
   AssertExpectedEndingStateOfFileSystem();
 }
 
-TEST(RecursivelyDeleteAllFilesInDirectory_MinimalIsFalse_RecursivelyDeletesAllFilesInDirectoryWhilePrintingDeletedFileMessages)
+TEST(RecursivelyDeleteAllFilesInDirectory_QuietIsFalse_RecursivelyDeletesAllFilesInDirectoryWhilePrintingDeletedFileMessages)
 {
   AssertExpectedStartingStateOfFileSystem();
   FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
-  args.minimal = false;
+  args.quiet = false;
   //
   _recursiveFileDeleter.RecursivelyDeleteAllFilesInDirectory(_rootDirectoryPathString.c_str(), args);
   //
@@ -146,32 +145,5 @@ void AddReadonlyFlagToFile(const fs::path& filePath)
   release_assert(setFileAttributesReturnValue == TRUE);
 }
 #endif
-
-TEST(RecursivelyDeleteAllFilesInDirectory_MinimalIsTrue_OneOfTheFilesIsNonDeletable_ThrowsFileSystemException)
-{
-  AssertExpectedStartingStateOfFileSystem();
-#if defined __linux__|| defined __APPLE__
-  Chmod555Directory(_root_subdirectory5);
-#elif _WIN32
-  AddReadonlyFlagToFile(_root_subdirectory5_file1);
-#endif
-  //
-  const string expectedExceptionMessage =
-     "FailedToDeleteFile: unlink(\"RecursiveFileDeleterIntegrationTests\\subdirectory5\\file1.ext\") failed with errno 13 (Permission denied)";
-  FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
-  args.minimal = false;
-  THROWS_EXCEPTION(_recursiveFileDeleter.RecursivelyDeleteAllFilesInDirectory(
-     _rootDirectoryPathString.c_str(), args),
-     FileSystemException, expectedExceptionMessage);
-  //
-#if defined __linux__|| defined __APPLE__
-  Chmod777Directory(_root_subdirectory5);
-#elif _WIN32
-  RecursiveFileDeleter recursiveFileDeleter;
-  recursiveFileDeleter.RemoveReadonlyFlagFromFileSystemFilePath(_root_subdirectory5_file1);
-#endif
-  const bool didDeletePreviouslyReadonlyFile = fs::remove(_root_subdirectory5_file1);
-  IS_TRUE(didDeletePreviouslyReadonlyFile);
-}
 
 RUN_TESTS(RecursiveFileDeleterIntegrationTests)

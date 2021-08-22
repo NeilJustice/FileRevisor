@@ -182,7 +182,7 @@ void RecursiveFileDeleter::PrintDeletedFileMessageIfDeleteSucceededOtherwiseThro
 {
    if (unlinkReturnValue == 0)
    {
-      if (!args.minimal)
+      if (!args.quiet)
       {
          PrintDeletedFileMessage(filePath);
       }

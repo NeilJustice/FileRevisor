@@ -33,7 +33,7 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
 ## FileRevisor command line usage
 
 ```prolog
-FileRevisor v0.13.0
+FileRevisor v0.14.0
 Quickly deletes directories, renames files, renames directories, or replaces text in files.
 
 Usage:

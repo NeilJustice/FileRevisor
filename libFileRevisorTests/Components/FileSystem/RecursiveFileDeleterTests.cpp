@@ -17,8 +17,8 @@ AFACT(RemoveReadonlyFlagFromConstCharPointerFilePath_GetsFileAttributesWhichDoes
 FACTS(RemoveReadonlyFlagFromConstCharPointerFilePath_GetsFileAttributesWhichIncludeReadonlyAttribute_RemovesReadonlyAttributeWhichSuceeds_Returns)
 FACTS(RemoveReadonlyFlagFromConstCharPointerFilePath_GetsFileAttributesWhichIncludeReadonlyAttribute_RemovesReadonlyAttributeWhichFails_ThrowsFileSystemException)
 #endif
-AFACT(PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException_UnlinkReturnValueIs0_MinimalIsTrue_DoesNothing)
-AFACT(PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException_UnlinkReturnValueIs0_MinimalIsFalse_PrintsDeletedFileMessage)
+AFACT(PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException_UnlinkReturnValueIs0_QuietIsTrue_DoesNothing)
+AFACT(PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException_UnlinkReturnValueIs0_QuietIsFalse_PrintsDeletedFileMessage)
 AFACT(PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException_UnlinkReturnValueIsNot0_CallsThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDenied)
 EVIDENCE
 
@@ -206,17 +206,17 @@ TEST1X1(RemoveReadonlyFlagFromConstCharPointerFilePath_GetsFileAttributesWhichIn
 }
 #endif
 
-TEST(PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException_UnlinkReturnValueIs0_MinimalIsTrue_DoesNothing)
+TEST(PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException_UnlinkReturnValueIs0_QuietIsTrue_DoesNothing)
 {
    const char* const filePath = ZenUnit::Random<const char*>();
    const int unlinkReturnValue = 0;
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
-   args.minimal = true;
+   args.quiet = true;
    //
    _recursiveFileDeleter_SelfMocked.PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException(filePath, unlinkReturnValue, args);
 }
 
-TEST(PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException_UnlinkReturnValueIs0_MinimalIsFalse_PrintsDeletedFileMessage)
+TEST(PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException_UnlinkReturnValueIs0_QuietIsFalse_PrintsDeletedFileMessage)
 {
    _recursiveFileDeleter_SelfMocked._consoleMock->WriteLineMock.Expect();
 
@@ -225,7 +225,7 @@ TEST(PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException_U
    const char* const filePath = ZenUnit::Random<const char*>();
    const int unlinkReturnValue = 0;
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
-   args.minimal = false;
+   args.quiet = false;
    //
    _recursiveFileDeleter_SelfMocked.PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException(filePath, unlinkReturnValue, args);
    //
@@ -240,7 +240,7 @@ TEST(PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException_U
    const char* const filePath = ZenUnit::Random<const char*>();
    const int unlinkReturnValue = ZenUnit::RandomNon0<int>();
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
-   args.minimal = false;
+   args.quiet = false;
    //
    _recursiveFileDeleter_SelfMocked.PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException(filePath, unlinkReturnValue, args);
    //
