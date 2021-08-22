@@ -3,8 +3,7 @@
 
 FileSystemException TestableRandomFileSystemException(const ZenUnit::RandomGenerator* randomGenerator)
 {
-   const FileExceptionType fileExceptionType = static_cast<FileExceptionType>(
-      randomGenerator->Enum(static_cast<int>(FileExceptionType::MaxValue)));
+   const FileExceptionType fileExceptionType = static_cast<FileExceptionType>(randomGenerator->Enum(static_cast<int>(FileExceptionType::MaxValue)));
    const string exceptionMessage = randomGenerator->String();
    const FileSystemException randomFileSystemException(fileExceptionType, exceptionMessage);
    return randomFileSystemException;

@@ -17,29 +17,25 @@ FileRevisorSubProgramFactory _fileRevisorSubProgramFactory;
 
 TEST(NewFileRevisorSubProgram_ProgramModeIsRenameFiles_ReturnsRenameFilesSubProgram)
 {
-   const shared_ptr<FileRevisorSubProgram> renameFilesSubProgram =
-      _fileRevisorSubProgramFactory.NewFileRevisorSubProgram(ProgramMode::RenameFiles);
+   const shared_ptr<FileRevisorSubProgram> renameFilesSubProgram = _fileRevisorSubProgramFactory.NewFileRevisorSubProgram(ProgramMode::RenameFiles);
    POINTEE_IS_EXACT_TYPE(RenameFilesSubProgram, renameFilesSubProgram);
 }
 
 TEST(NewFileRevisorSubProgram_ProgramModeIsRenameDirectories_ReturnsRenameDirectoriesSubProgram)
 {
-   const shared_ptr<FileRevisorSubProgram> renameDirectoriesSubProgram =
-      _fileRevisorSubProgramFactory.NewFileRevisorSubProgram(ProgramMode::RenameDirectories);
+   const shared_ptr<FileRevisorSubProgram> renameDirectoriesSubProgram = _fileRevisorSubProgramFactory.NewFileRevisorSubProgram(ProgramMode::RenameDirectories);
    POINTEE_IS_EXACT_TYPE(RenameDirectoriesSubProgram, renameDirectoriesSubProgram);
 }
 
 TEST(NewFileRevisorSubProgram_ProgramModeIsReplaceFileText_ReturnsReplaceFileTextSubProgram)
 {
-   const shared_ptr<FileRevisorSubProgram> replaceTextInFilesSubProgram =
-      _fileRevisorSubProgramFactory.NewFileRevisorSubProgram(ProgramMode::ReplaceTextInTextFiles);
+   const shared_ptr<FileRevisorSubProgram> replaceTextInFilesSubProgram = _fileRevisorSubProgramFactory.NewFileRevisorSubProgram(ProgramMode::ReplaceTextInTextFiles);
    POINTEE_IS_EXACT_TYPE(ReplaceTextInTextFilesSubProgram, replaceTextInFilesSubProgram);
 }
 
 TEST(NewFileRevisorSubProgram_ProgramModeIsDeleteDirectory_ReturnsDeleteDirectorySubProgram)
 {
-   const shared_ptr<FileRevisorSubProgram> deleteDirectorySubProgram =
-      _fileRevisorSubProgramFactory.NewFileRevisorSubProgram(ProgramMode::DeleteDirectory);
+   const shared_ptr<FileRevisorSubProgram> deleteDirectorySubProgram = _fileRevisorSubProgramFactory.NewFileRevisorSubProgram(ProgramMode::DeleteDirectory);
    POINTEE_IS_EXACT_TYPE(DeleteDirectorySubProgram, deleteDirectorySubProgram);
 }
 

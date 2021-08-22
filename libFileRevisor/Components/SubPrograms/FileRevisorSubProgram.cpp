@@ -9,9 +9,9 @@ FileRevisorSubProgram::~FileRevisorSubProgram()
 
 FileRevisorSubProgram::FileRevisorSubProgram()
    // Base Class Constant Components
-   : _protected_console(make_unique<Console>())
-   , _protected_fileSystem(make_unique<FileSystem>())
-   , _protected_pluralizer(make_unique<Pluralizer>())
+   : _console(make_unique<Console>())
+   , _fileSystem(make_unique<FileSystem>())
+   , _pluralizer(make_unique<Pluralizer>())
 {
 }
 

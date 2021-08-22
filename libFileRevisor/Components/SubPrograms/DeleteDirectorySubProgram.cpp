@@ -19,20 +19,19 @@ DeleteDirectorySubProgram::~DeleteDirectorySubProgram()
 
 int DeleteDirectorySubProgram::Run(const FileRevisorArgs& args) const
 {
-   const bool targetDirectoryExists = _protected_fileSystem->FileOrDirectoryExists(args.targetDirectoryPath);
+   const bool targetDirectoryExists = _fileSystem->FileOrDirectoryExists(args.targetDirectoryPath);
    if (!targetDirectoryExists)
    {
       const string directoryDoesNotExistMessage = String::ConcatStrings("[FileRevisor] Directory does not exist: ", args.targetDirectoryPath.string());
-      _protected_console->WriteLine(directoryDoesNotExistMessage);
+      _console->WriteLine(directoryDoesNotExistMessage);
       return 0;
    }
-   const vector<string> topLevelDirectoryPathsInTargetDirectory =
-      _protected_fileSystem->GetStringDirectoryPathsInDirectory(args.targetDirectoryPath, false);
+   const vector<string> topLevelDirectoryPathsInTargetDirectory = _fileSystem->GetStringDirectoryPathsInDirectory(args.targetDirectoryPath, false);
    if (args.parallel)
    {
       const string deletingInParallelMessage = String::ConcatStrings(
          "[FileRevisor] Deleting in parallel all files in directory: ", args.targetDirectoryPath.string());
-      _protected_console->WriteLine(deletingInParallelMessage);
+      _console->WriteLine(deletingInParallelMessage);
       _parallelOneExtraArgMemberForEacher_DeleteDirectory->ParallelOneExtraArgMemberForEach(
          topLevelDirectoryPathsInTargetDirectory, this, &DeleteDirectorySubProgram::DeleteDirectory, args);
    }
@@ -41,8 +40,8 @@ int DeleteDirectorySubProgram::Run(const FileRevisorArgs& args) const
       _oneExtraArgMemberForEacher_DeleteDirectory->OneExtraArgMemberForEach(
          topLevelDirectoryPathsInTargetDirectory, this, &DeleteDirectorySubProgram::DeleteDirectory, args);
    }
-   _protected_fileSystem->RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows(args.targetDirectoryPath);
-   _protected_fileSystem->RemoveAll(args.targetDirectoryPath);
+   _fileSystem->RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows(args.targetDirectoryPath);
+   _fileSystem->RemoveAll(args.targetDirectoryPath);
    return 0;
 }
 
@@ -50,5 +49,5 @@ int DeleteDirectorySubProgram::Run(const FileRevisorArgs& args) const
 
 void DeleteDirectorySubProgram::DeleteDirectory(const string& directoryPath, const FileRevisorArgs& args) const
 {
-   _protected_fileSystem->RecursivelyDeleteAllFilesInDirectory(directoryPath, args);
+   _fileSystem->RecursivelyDeleteAllFilesInDirectory(directoryPath, args);
 }

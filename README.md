@@ -34,7 +34,7 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
 
 ```prolog
 FileRevisor v0.11.0
-Quickly deletes directories, renames files or directories, or replaces text in files
+Quickly deletes directories, renames files, renames directories, or replaces text in files.
 
 Usage:
    filerevisor delete-directory
