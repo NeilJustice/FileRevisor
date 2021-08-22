@@ -13,8 +13,8 @@ TESTS(RenameDirectoriesSubProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
 FACTS(Run_CallsRenameDirectoryOnEachDirectoryPathInArgsDirPath_PrintsNumberOfDirectoriesRenamedOrWouldBeRenamed_Returns0)
 AFACT(RenameDirectory_RegexReplacedDirectoryNameEqualsSourceDirectoryName_PrintsDidNotMatchDirectoryIfVerboseMode_ReturnsFalseRenameResult)
-AFACT(RenameDirectory_RegexReplacedDirectoryNameDoesNotEqualSourceDirectoryName_PreviewIsTrue_PrintsWouldRenameDirectory_ReturnsTrueRenameResult)
-AFACT(RenameDirectory_RegexReplacedDirectoryNameDoesNotEqualSourceDirectoryName_PreviewIsFalse_RenamesDirectory_PrintsRenamedDirectory_ReturnsTrueRenameResult)
+AFACT(RenameDirectory_RegexReplacedDirectoryNameDoesNotEqualSourceDirectoryName_DryRunIsTrue_PrintsWouldRenameDirectory_ReturnsTrueRenameResult)
+AFACT(RenameDirectory_RegexReplacedDirectoryNameDoesNotEqualSourceDirectoryName_DryRunIsFalse_RenamesDirectory_PrintsRenamedDirectory_ReturnsTrueRenameResult)
 AFACT(PrintDidNotMatchDirectoryMessageIfVerboseMode_VerboseIsFalse_DoesNothing)
 AFACT(PrintDidNotMatchDirectoryMessageIfVerboseMode_VerboseIsTrue_PrintsDidNotMatchDirectoryMessage)
 EVIDENCE
@@ -65,15 +65,13 @@ TEST(DefaultConstructor_NewsComponents)
 }
 
 TEST2X2(Run_CallsRenameDirectoryOnEachDirectoryPathInArgsDirPath_PrintsNumberOfDirectoriesRenamedOrWouldBeRenamed_Returns0,
-   bool preview, string_view expectedNumberOfDirectoriesMessagePrefix,
+   bool dryrun, string_view expectedNumberOfDirectoriesMessagePrefix,
    true, "[FileRevisor] Result: Would rename ",
    false, "[FileRevisor] Result: Renamed ")
 {
-   const vector<fs::path> directoryPathsInDirectory =
-      _fileSystemMock->GetDirectoryPathsInDirectoryMock.ReturnRandom();
+   const vector<fs::path> directoryPathsInDirectory = _fileSystemMock->GetDirectoryPathsInDirectoryMock.ReturnRandom();
 
-   const vector<RenameResult> directoryRenameResults =
-      _directoryPathsTransformer_RenameDirectoryMock->TransformMock.ReturnRandom();
+   const vector<RenameResult> directoryRenameResults = _directoryPathsTransformer_RenameDirectoryMock->TransformMock.ReturnRandom();
 
    const size_t numberOfRenamedDirectories = _predicateCounterMock->CountWhereMock.ReturnRandom();
 
@@ -82,7 +80,7 @@ TEST2X2(Run_CallsRenameDirectoryOnEachDirectoryPathInArgsDirPath_PrintsNumberOfD
    _consoleMock->WriteLineMock.Expect();
 
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
-   args.preview = preview;
+   args.dryrun = dryrun;
    //
    const int exitCode = _renameDirectoriesSubProgram.Run(args);
    //
@@ -118,7 +116,7 @@ TEST(RenameDirectory_RegexReplacedDirectoryNameEqualsSourceDirectoryName_PrintsD
    ARE_EQUAL(expectedRenameResult, renameResult);
 }
 
-TEST(RenameDirectory_RegexReplacedDirectoryNameDoesNotEqualSourceDirectoryName_PreviewIsTrue_PrintsWouldRenameDirectory_ReturnsTrueRenameResult)
+TEST(RenameDirectory_RegexReplacedDirectoryNameDoesNotEqualSourceDirectoryName_DryRunIsTrue_PrintsWouldRenameDirectory_ReturnsTrueRenameResult)
 {
    const string regexReplacedDirectoryName = _regexerMock->ReplaceMock.ReturnRandom();
 
@@ -126,7 +124,7 @@ TEST(RenameDirectory_RegexReplacedDirectoryNameDoesNotEqualSourceDirectoryName_P
 
    const fs::path directoryPath = ZenUnit::RandomNotEqualToValue<string>(regexReplacedDirectoryName);
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
-   args.preview = true;
+   args.dryrun = true;
    //
    const RenameResult renameResult = _renameDirectoriesSubProgram.RenameDirectory(directoryPath, args);
    //
@@ -134,13 +132,13 @@ TEST(RenameDirectory_RegexReplacedDirectoryNameDoesNotEqualSourceDirectoryName_P
    METALMOCK(_regexerMock->ReplaceMock.CalledOnceWith(originalDirectoryName, args.fromRegexPattern, args.toRegexPattern));
    const fs::path expectedRenamedDirectoryPath = directoryPath.parent_path() / regexReplacedDirectoryName;
    const string expectedFileRenamedMessage =
-      "[FileRevisor]  Preview: Would rename directory " + directoryPath.string() + " to " + regexReplacedDirectoryName;
+      "[FileRevisor]  DryRun: Would rename directory " + directoryPath.string() + " to " + regexReplacedDirectoryName;
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedFileRenamedMessage));
    const RenameResult expectedRenameResult(true, directoryPath, expectedRenamedDirectoryPath);
    ARE_EQUAL(expectedRenameResult, renameResult);
 }
 
-TEST(RenameDirectory_RegexReplacedDirectoryNameDoesNotEqualSourceDirectoryName_PreviewIsFalse_RenamesDirectory_PrintsRenamedDirectory_ReturnsTrueRenameResult)
+TEST(RenameDirectory_RegexReplacedDirectoryNameDoesNotEqualSourceDirectoryName_DryRunIsFalse_RenamesDirectory_PrintsRenamedDirectory_ReturnsTrueRenameResult)
 {
    const string regexReplacedDirectoryName = _regexerMock->ReplaceMock.ReturnRandom();
 
@@ -150,7 +148,7 @@ TEST(RenameDirectory_RegexReplacedDirectoryNameDoesNotEqualSourceDirectoryName_P
 
    const fs::path directoryPath = ZenUnit::RandomNotEqualToValue<string>(regexReplacedDirectoryName);
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
-   args.preview = false;
+   args.dryrun = false;
    //
    const RenameResult renameResult = _renameDirectoriesSubProgram.RenameDirectory(directoryPath, args);
    //

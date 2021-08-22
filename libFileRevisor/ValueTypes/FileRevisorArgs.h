@@ -12,7 +12,7 @@ struct FileRevisorArgs
    bool recurse = false;
    bool parallel = false;
    bool skipFilesInUse = false;
-   bool preview = false;
+   bool dryrun = false;
    bool minimal = false;
    bool verbose = false;
 };

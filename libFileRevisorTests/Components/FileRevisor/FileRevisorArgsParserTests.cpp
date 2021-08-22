@@ -78,11 +78,11 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
    const bool recurse = ZenUnit::Random<bool>();
    const bool parallel = ZenUnit::Random<bool>();
    const bool skipFilesInUse = ZenUnit::Random<bool>();
-   const bool preview = ZenUnit::Random<bool>();
+   const bool dryrun = ZenUnit::Random<bool>();
    const bool minimal = ZenUnit::Random<bool>();
    const bool verbose = ZenUnit::Random<bool>();
    _docoptParserMock->GetOptionalBoolMock.ReturnValues(
-      recurse, parallel, skipFilesInUse, preview, minimal, verbose);
+      recurse, parallel, skipFilesInUse, dryrun, minimal, verbose);
 
    const ProgramMode programMode = ZenUnit::RandomEnum<ProgramMode>(ProgramMode::MaxValue);
    DetermineProgramModeMock.Return(programMode);
@@ -113,7 +113,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
       { docoptValues, "--recurse" },
       { docoptValues, "--parallel" },
       { docoptValues, "--skip-files-in-use" },
-      { docoptValues, "--preview" },
+      { docoptValues, "--dryrun" },
       { docoptValues, "--minimal" },
       { docoptValues, "--verbose" }
    }));
@@ -126,7 +126,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
    expectedArgs.recurse = recurse;
    expectedArgs.parallel = parallel;
    expectedArgs.skipFilesInUse = skipFilesInUse;
-   expectedArgs.preview = preview;
+   expectedArgs.dryrun = dryrun;
    expectedArgs.minimal = minimal;
    expectedArgs.verbose = verbose;
    ARE_EQUAL(expectedArgs, args);

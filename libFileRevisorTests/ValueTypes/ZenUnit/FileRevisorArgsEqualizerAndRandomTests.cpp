@@ -18,7 +18,7 @@ TEST(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, recurse, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, parallel, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, skipFilesInUse, true);
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, preview, true);
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, dryrun, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, minimal, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, verbose, true);
 }
@@ -41,11 +41,10 @@ TEST(TestableRandomFileRevisorArgs_ReturnsFileRevisorArgsWithAllRandomFields)
    const bool recurse = ZenUnit::Random<bool>();
    const bool parallel = ZenUnit::Random<bool>();
    const bool skipFilesInUse = ZenUnit::Random<bool>();
-   const bool preview = ZenUnit::Random<bool>();
+   const bool dryrun = ZenUnit::Random<bool>();
    const bool minimal = ZenUnit::Random<bool>();
    const bool verbose = ZenUnit::Random<bool>();
-   randomGeneratorMock.BoolMock.ReturnValues(
-      recurse, parallel, skipFilesInUse, preview, minimal, verbose);
+   randomGeneratorMock.BoolMock.ReturnValues(recurse, parallel, skipFilesInUse, dryrun, minimal, verbose);
    //
    const FileRevisorArgs randomFileRevisorArgs = TestableRandomFileRevisorArgs(&randomGeneratorMock);
    //
@@ -62,7 +61,7 @@ TEST(TestableRandomFileRevisorArgs_ReturnsFileRevisorArgsWithAllRandomFields)
    expectedRandomFileRevisorArgs.recurse = recurse;
    expectedRandomFileRevisorArgs.parallel = parallel;
    expectedRandomFileRevisorArgs.skipFilesInUse = skipFilesInUse;
-   expectedRandomFileRevisorArgs.preview = preview;
+   expectedRandomFileRevisorArgs.dryrun = dryrun;
    expectedRandomFileRevisorArgs.minimal = minimal;
    expectedRandomFileRevisorArgs.verbose = verbose;
    ARE_EQUAL(expectedRandomFileRevisorArgs, randomFileRevisorArgs);

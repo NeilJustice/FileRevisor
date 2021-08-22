@@ -30,7 +30,7 @@ int RenameDirectoriesSubProgram::Run(const FileRevisorArgs& args) const
    const size_t numberOfRenamedDirectories = _predicateCounter->CountWhere(directoryRenameResults, RenameResult::DidRenameFileOrDirectoryFieldIsTrue);
    const string directoryOrDirectories = _pluralizer->PotentiallyPluralizeWord(numberOfRenamedDirectories, "directory", "directories");
    string numberOfDirectoriesMessage;
-   if (args.preview)
+   if (args.dryrun)
    {
       numberOfDirectoriesMessage = String::ConcatValues("[FileRevisor] Result: Would rename ", numberOfRenamedDirectories, ' ', directoryOrDirectories);
    }
@@ -52,12 +52,12 @@ RenameResult RenameDirectoriesSubProgram::RenameDirectory(const fs::path& direct
          this, &RenameDirectoriesSubProgram::PrintDidNotMatchDirectoryMessageIfVerboseMode, args.verbose, directoryPath);
       return RenameResult(false, directoryPath, directoryPath);
    }
-   if (args.preview)
+   if (args.dryrun)
    {
       const fs::path parentDirectoryPath = directoryPath.parent_path();
       const fs::path renamedDirectoryPath = parentDirectoryPath / regexReplacedDirectoryName;
       const string wouldRenameMessage = String::ConcatStrings(
-         "[FileRevisor]  Preview: Would rename directory ", directoryPath.string(), " to ", regexReplacedDirectoryName);
+         "[FileRevisor]  DryRun: Would rename directory ", directoryPath.string(), " to ", regexReplacedDirectoryName);
       _console->WriteLine(wouldRenameMessage);
       return RenameResult(true, directoryPath, renamedDirectoryPath);
    }

@@ -10,11 +10,11 @@
 
 TESTS(RenameFilesSubProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
-FACTS(Run_CallsRenameFileOnEachFilePathInArgsDirPath_PrintsNumberOfFilesThatWereRenamedOrWouldBeRenamedDependingOnPreviewTrueOrFalse_Returns0)
+FACTS(Run_CallsRenameFileOnEachFilePathInArgsDirPath_PrintsNumberOfFilesThatWereRenamedOrWouldBeRenamedDependingOnDryRunTrueOrFalse_Returns0)
 FACTS(DidRenameFileIsTrue_ReturnsTrueIfDidRenameFileIsTrue)
 AFACT(RenameFileIfFileNameMatchesFromPattern_RegexReplacedFileNameEqualsSourceFileName_PrintsDidNotMatchFileMessageIfVerboseMode_ReturnsFalseRenameResult)
-AFACT(RenameFileIfFileNameMatchesFromPattern_RegexReplacedFileNameDoesNotEqualSourceFileName_PreviewIsTrue_PrintsWouldRenameMessage_ReturnsTrueRenameResult)
-AFACT(RenameFileIfFileNameMatchesFromPattern_RegexReplacedFileNameDoesNotEqualSourceFileName_PreviewIsFalse_RenamesTheFile_ReturnsTrueRenameResult)
+AFACT(RenameFileIfFileNameMatchesFromPattern_RegexReplacedFileNameDoesNotEqualSourceFileName_DryRunIsTrue_PrintsWouldRenameMessage_ReturnsTrueRenameResult)
+AFACT(RenameFileIfFileNameMatchesFromPattern_RegexReplacedFileNameDoesNotEqualSourceFileName_DryRunIsFalse_RenamesTheFile_ReturnsTrueRenameResult)
 AFACT(PrintDidNotMatchFileMessageIfVerboseMode_VerboseIsFalse_DoesNothing)
 AFACT(PrintDidNotMatchFileMessageIfVerboseMode_VerboseIsTrue_WritesDidNotMatchFileMessage)
 EVIDENCE
@@ -61,8 +61,8 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(renameFilesSubProgram._regexer);
 }
 
-TEST2X2(Run_CallsRenameFileOnEachFilePathInArgsDirPath_PrintsNumberOfFilesThatWereRenamedOrWouldBeRenamedDependingOnPreviewTrueOrFalse_Returns0,
-   bool preview, string_view expectedRenamedFilesMessagePrefix,
+TEST2X2(Run_CallsRenameFileOnEachFilePathInArgsDirPath_PrintsNumberOfFilesThatWereRenamedOrWouldBeRenamedDependingOnDryRunTrueOrFalse_Returns0,
+   bool dryrun, string_view expectedRenamedFilesMessagePrefix,
    false, "[FileRevisor] Result: Renamed ",
    true, "[FileRevisor] Result: Would rename ")
 {
@@ -79,7 +79,7 @@ TEST2X2(Run_CallsRenameFileOnEachFilePathInArgsDirPath_PrintsNumberOfFilesThatWe
    _consoleMock->WriteLineMock.Expect();
 
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
-   args.preview = preview;
+   args.dryrun = dryrun;
    //
    const int exitCode = _renameFilesSubProgram.Run(args);
    //
@@ -126,7 +126,7 @@ TEST(RenameFileIfFileNameMatchesFromPattern_RegexReplacedFileNameEqualsSourceFil
    ARE_EQUAL(expectedRenameResult, fileRenameResult);
 }
 
-TEST(RenameFileIfFileNameMatchesFromPattern_RegexReplacedFileNameDoesNotEqualSourceFileName_PreviewIsTrue_PrintsWouldRenameMessage_ReturnsTrueRenameResult)
+TEST(RenameFileIfFileNameMatchesFromPattern_RegexReplacedFileNameDoesNotEqualSourceFileName_DryRunIsTrue_PrintsWouldRenameMessage_ReturnsTrueRenameResult)
 {
    const string regexReplacedFileName = _regexerMock->ReplaceMock.ReturnRandom();
 
@@ -134,7 +134,7 @@ TEST(RenameFileIfFileNameMatchesFromPattern_RegexReplacedFileNameDoesNotEqualSou
 
    const fs::path filePath = ZenUnit::RandomNotEqualToValue<string>(regexReplacedFileName);
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
-   args.preview = true;
+   args.dryrun = true;
    //
    const RenameResult fileRenameResult = _renameFilesSubProgram.RenameFileIfFileNameMatchesFromPattern(filePath, args);
    //
@@ -142,13 +142,13 @@ TEST(RenameFileIfFileNameMatchesFromPattern_RegexReplacedFileNameDoesNotEqualSou
    METALMOCK(_regexerMock->ReplaceMock.CalledOnceWith(originalFileName, args.fromRegexPattern, args.toRegexPattern));
    const fs::path expectedRenamedFilePath = filePath.parent_path() / regexReplacedFileName;
    const string expectedFileRenamedMessage = String::ConcatStrings(
-      "[FileRevisor]  Preview: Would rename file ", filePath.string(), " to ", regexReplacedFileName);
+      "[FileRevisor]  DryRun: Would rename file ", filePath.string(), " to ", regexReplacedFileName);
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedFileRenamedMessage));
    const RenameResult expectedRenameResult(true, filePath, expectedRenamedFilePath);
    ARE_EQUAL(expectedRenameResult, fileRenameResult);
 }
 
-TEST(RenameFileIfFileNameMatchesFromPattern_RegexReplacedFileNameDoesNotEqualSourceFileName_PreviewIsFalse_RenamesTheFile_ReturnsTrueRenameResult)
+TEST(RenameFileIfFileNameMatchesFromPattern_RegexReplacedFileNameDoesNotEqualSourceFileName_DryRunIsFalse_RenamesTheFile_ReturnsTrueRenameResult)
 {
    const string regexReplacedFileName = _regexerMock->ReplaceMock.ReturnRandom();
 
@@ -158,7 +158,7 @@ TEST(RenameFileIfFileNameMatchesFromPattern_RegexReplacedFileNameDoesNotEqualSou
 
    const fs::path filePath = ZenUnit::RandomNotEqualToValue<string>(regexReplacedFileName);
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
-   args.preview = false;
+   args.dryrun = false;
    //
    const RenameResult fileRenameResult = _renameFilesSubProgram.RenameFileIfFileNameMatchesFromPattern(filePath, args);
    //

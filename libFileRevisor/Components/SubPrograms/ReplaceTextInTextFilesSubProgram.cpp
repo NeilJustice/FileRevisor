@@ -38,10 +38,10 @@ int ReplaceTextInTextFilesSubProgram::Run(const FileRevisorArgs& args) const
       this, nonEmptyNonIgnoredTextFilePathsInTargetDirectory,
       &ReplaceTextInTextFilesSubProgram::RegexReplaceTextInTextFile, args);
    const string fileOrFiles = _pluralizer->PotentiallyPluralizeWord(numberOfFilesThatWereOrWouldBeModified, "file", "files");
-   if (args.preview)
+   if (args.dryrun)
    {
       const string message = String::ConcatValues(
-         "[FileRevisor] PreviewResult: Would replace text in ", numberOfFilesThatWereOrWouldBeModified, " ", fileOrFiles);
+         "[FileRevisor] DryRun: Would replace text in ", numberOfFilesThatWereOrWouldBeModified, " ", fileOrFiles);
       _console->WriteLine(message);
    }
    else
@@ -61,9 +61,9 @@ size_t ReplaceTextInTextFilesSubProgram::RegexReplaceTextInTextFile(const fs::pa
    const string regexReplacedTextFileText = _regexer->Replace(textFileText, args.fromRegexPattern, args.toRegexPattern);
    if (regexReplacedTextFileText != textFileText)
    {
-      if (args.preview)
+      if (args.dryrun)
       {
-         const string wouldReplaceTextInFileMessage = "[FileRevisor]  Preview: Would replace text in file " + textFilePath.string();
+         const string wouldReplaceTextInFileMessage = "[FileRevisor]  DryRun: Would replace text in file " + textFilePath.string();
          _console->WriteLine(wouldReplaceTextInFileMessage);
          return 1;
       }

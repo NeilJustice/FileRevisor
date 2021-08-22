@@ -31,7 +31,7 @@ int RenameFilesSubProgram::Run(const FileRevisorArgs& args) const
    const size_t numberOfRenamedFiles = _predicateCounter->CountWhere(fileRenameResults, DidRenameFileIsTrue);
    string renamedFilesMessage;
    const string fileOrFiles = _pluralizer->PotentiallyPluralizeWord(numberOfRenamedFiles, "file", "files");
-   if (args.preview)
+   if (args.dryrun)
    {
       renamedFilesMessage = String::ConcatValues("[FileRevisor] Result: Would rename ", numberOfRenamedFiles, ' ', fileOrFiles);
    }
@@ -59,10 +59,10 @@ RenameFileIfFileNameMatchesFromPattern(const fs::path& filePath, const FileRevis
          this, &RenameFilesSubProgram::PrintDidNotMatchFileMessageIfVerboseMode, args.verbose, filePath);
       return RenameResult(false, filePath, filePath);
    }
-   if (args.preview)
+   if (args.dryrun)
    {
       const string wouldRenameMessage = String::ConcatStrings(
-         "[FileRevisor]  Preview: Would rename file ", filePath.string(), " to ", regexReplacedFileName);
+         "[FileRevisor]  DryRun: Would rename file ", filePath.string(), " to ", regexReplacedFileName);
       _console->WriteLine(wouldRenameMessage);
       const fs::path sourceDirectoryPath = filePath.parent_path();
       const fs::path renamedFilePath = sourceDirectoryPath / regexReplacedFileName;

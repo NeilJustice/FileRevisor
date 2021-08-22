@@ -46,21 +46,21 @@ Usage:
       --from=<FileNameRegex>
       --to=<FileNameRegex>
       [--recurse]
-      [--preview]
+      [--dryrun]
       [--verbose]
    filerevisor rename-directories
       --target=<TargetDirectoryPath>
       --from=<DirectoryNameRegex>
       --to=<DirectoryNameRegex>
       [--recurse]
-      [--preview]
+      [--dryrun]
       [--verbose]
    filerevisor replace-text
       --target=<TargetDirectoryPath>
       --from=<FileTextRegexPattern>
       --to=<ReplacementFileTextRegexPattern>
       [--recurse]
-      [--preview]
+      [--dryrun]
       [--verbose]
 ```
 
@@ -89,7 +89,7 @@ filerevisor rename-files
       --from=<FileNameRegex>
       --to=<FileNameRegex>
       [--recurse]
-      [--preview]
+      [--dryrun]
       [--verbose]
 ```
 
@@ -107,7 +107,7 @@ filerevisor rename-directories
       --from=<DirectoryNameRegex>
       --to=<DirectoryNameRegex>
       [--recurse]
-      [--preview]
+      [--dryrun]
       [--verbose]
 ```
 
@@ -125,7 +125,7 @@ filerevisor replace-text
       --from=<FileTextRegexPattern>
       --to=<ReplacementFileTextRegexPattern>
       [--recurse]
-      [--preview]
+      [--dryrun]
       [--verbose]
 ```
 

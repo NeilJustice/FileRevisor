@@ -14,7 +14,7 @@ namespace ZenUnit
       FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, recurse);
       FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, parallel);
       FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, skipFilesInUse);
-      FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, preview);
+      FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, dryrun);
       FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, minimal);
       FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, verbose);
    }
@@ -30,7 +30,7 @@ namespace ZenUnit
       randomFileRevisorArgs.recurse = randomGenerator->Bool();
       randomFileRevisorArgs.parallel = randomGenerator->Bool();
       randomFileRevisorArgs.skipFilesInUse = randomGenerator->Bool();
-      randomFileRevisorArgs.preview = randomGenerator->Bool();
+      randomFileRevisorArgs.dryrun = randomGenerator->Bool();
       randomFileRevisorArgs.minimal = randomGenerator->Bool();
       randomFileRevisorArgs.verbose = randomGenerator->Bool();
       return randomFileRevisorArgs;
