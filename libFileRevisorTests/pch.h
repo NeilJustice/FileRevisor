@@ -29,8 +29,10 @@ using namespace std;
 #include "libFileRevisor/Constants/ErrnoValue.h"
 
 // libFileRevisor Enums
+#include "libFileRevisor/Enums/Color.h"
 #include "libFileRevisor/Enums/FileExceptionType.h"
 #include "libFileRevisor/Enums/ProgramMode.h"
+#include "libFileRevisor/Enums/WindowsColor.h"
 
 // libFileRevisor StaticUtilities
 #include "libFileRevisor/StaticUtilities/ENUM_STRING_ARRAY.h"

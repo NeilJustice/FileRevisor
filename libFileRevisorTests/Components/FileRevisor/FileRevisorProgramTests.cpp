@@ -132,7 +132,7 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndWhat_Returns1)
    const string exceptionTypeNameAndMessage = ZenUnit::Random<string>();
    ClassNameAndWhatMock.Return(exceptionTypeNameAndMessage);
 
-   _consoleMock->WriteLineMock.Expect();
+   _consoleMock->ThreadIdWriteLineColorMock.Expect();
 
    const exception ex;
    const vector<string> args = ZenUnit::RandomVector<string>();
@@ -141,7 +141,7 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndWhat_Returns1)
    //
    METALMOCK(ClassNameAndWhatMock.CalledOnceWith(&ex));
    const string expectedExceptionMessage = "[FileRevisor] Error: Exception thrown: " + exceptionTypeNameAndMessage;
-   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedExceptionMessage));
+   METALMOCK(_consoleMock->ThreadIdWriteLineColorMock.CalledOnceWith(expectedExceptionMessage, Color::Red));
    ARE_EQUAL(1, exitCode);
 }
 
