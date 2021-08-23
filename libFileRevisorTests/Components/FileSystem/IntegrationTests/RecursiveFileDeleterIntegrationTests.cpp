@@ -8,9 +8,8 @@
 #endif
 
 TESTS(RecursiveFileDeleterIntegrationTests)
-AFACT(RecursivelyDeleteAllFilesInDirectory_DryRunIsTrue_QuietIsTrueOrFalse_RecursivelyPrintsWouldDeleteFile)
-AFACT(RecursivelyDeleteAllFilesInDirectory_DryRunIsFalse_QuietIsTrue_RecursivelyDeletesAllFilesInDirectoryWithoutPrintingAnyDeletedFileMessages)
-AFACT(RecursivelyDeleteAllFilesInDirectory_DryRunIsFalse_QuietIsFalse_RecursivelyDeletesAllFilesInDirectoryWhilePrintingDeletedFileMessages)
+AFACT(RecursivelyDeleteAllFilesInDirectory_DryRunIsTrue_RecursivelyPrintsWouldDeleteFile)
+AFACT(RecursivelyDeleteAllFilesInDirectory_DryRunIsFalse_RecursivelyPrintsWouldDeleteFile)
 EVIDENCE
 
 RecursiveFileDeleter _recursiveFileDeleter;
@@ -98,19 +97,7 @@ void AssertExpectedEndingStateOfFileSystem() const
   IS_FALSE(_fileSystem.FileOrDirectoryExists(_root_subdirectory5_file1));
 }
 
-TEST(RecursivelyDeleteAllFilesInDirectory_DryRunIsTrue_QuietIsTrueOrFalse_RecursivelyPrintsWouldDeleteFile)
-{
-  AssertExpectedStartingStateOfFileSystem();
-  FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
-  args.dryrun = false;
-  args.quiet = true;
-  //
-  _recursiveFileDeleter.RecursivelyDeleteAllFilesInDirectory(_rootDirectoryPathString.c_str(), args);
-  //
-  AssertExpectedEndingStateOfFileSystem();
-}
-
-TEST(RecursivelyDeleteAllFilesInDirectory_DryRunIsFalse_QuietIsTrue_RecursivelyDeletesAllFilesInDirectoryWithoutPrintingAnyDeletedFileMessages)
+TEST(RecursivelyDeleteAllFilesInDirectory_DryRunIsTrue_RecursivelyPrintsWouldDeleteFile)
 {
   AssertExpectedStartingStateOfFileSystem();
   FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
@@ -121,12 +108,11 @@ TEST(RecursivelyDeleteAllFilesInDirectory_DryRunIsFalse_QuietIsTrue_RecursivelyD
   AssertExpectedStartingStateOfFileSystem();
 }
 
-TEST(RecursivelyDeleteAllFilesInDirectory_DryRunIsFalse_QuietIsFalse_RecursivelyDeletesAllFilesInDirectoryWhilePrintingDeletedFileMessages)
+TEST(RecursivelyDeleteAllFilesInDirectory_DryRunIsFalse_RecursivelyPrintsWouldDeleteFile)
 {
   AssertExpectedStartingStateOfFileSystem();
   FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
   args.dryrun = false;
-  args.quiet = false;
   //
   _recursiveFileDeleter.RecursivelyDeleteAllFilesInDirectory(_rootDirectoryPathString.c_str(), args);
   //
