@@ -7,6 +7,7 @@
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/RecursiveFileDeleterMock.h"
 #include "libFileRevisorTests/Exceptions/ZenUnit/FileSystemExceptionRandom.h"
 #include "libFileRevisorTests/UtilityComponents/FunctionCallers/Member/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
+#include "libFileRevisorTests/UtilityComponents/FunctionCallers/Member/MetalMock/VoidOneArgMemberFunctionCallerMock.h"
 #include "libFileRevisorTests/UtilityComponents/Strings/MetalMock/ConstCharPointerGetterMock.h"
 
 TESTS(FileSystemTests)
@@ -17,12 +18,14 @@ AFACT(GetAbsolutePath_ReturnsNonEmptyPath)
 AFACT(GetAbsolutePath_ReturnsResultOfCallingStdFilesystemAbsolute)
 #endif
 AFACT(CurrentDirectoryPath_ReturnsResultOfCallingFilesystemCurrentPath)
+AFACT(DeleteDirectoryIfNotDryRun_DryRunIsTrue_DoesNothing)
+AFACT(DeleteDirectoryIfNotDryRun_DryRunIsFalse_RemovesReadOnlyFoldersIfWindowsThenDeletesDirectory)
 AFACT(RecursivelyDeleteAllFilesInDirectory_CallsFileDeleterRecursivelyDeleteAllFilesInDirectory)
 AFACT(FileOrDirectoryExists_ReturnsResultOfCallingStdFilesystemExists)
 AFACT(RenameFile_FilePathDoesNotExist_ThrowsRuntimeError)
 AFACT(RenameFile_FilePathExists_DestinationFilePathAlreadyExists_ThrowsRuntimeError)
 FACTS(RenameFile_FilePathExists_DestinationFilePathDoesNotExist_RenamesFile_ThrowsIfRenameReturnsNon0_OtherwiseReturns)
-AFACT(RemoveAll_FsRemoveAllReturns0ErrorCode_ReturnsNumberOfFilesAndDirectoriesRemoved)
+AFACT(RemoveAll_FsRemoveAllReturns0ErrorCode)
 FACTS(RemoveAll_FsRemoveAllReturnsNon0ErrorCode_ThrowsFileSystemException)
 AFACT(RenameDirectory_RenamesDirectory_FilesystemRenameReturns0_ReturnsRenamedDirectoryPath)
 FACTS(RenameDirectory_RenamesDirectory_FilesystemRenameReturnsNot0_ThrowsFileSystemException)
@@ -49,6 +52,7 @@ METALMOCK_NONVOID1_FREE(int, fclose, FILE*)
 METALMOCK_NONVOID2_FREE(uintmax_t, _call_fs_remove_all, const fs::path&, error_code&)
 // Function Callers
 NonVoidOneArgMemberFunctionCallerMock<bool, FileSystem, const fs::path&>* _caller_ExistsMock = nullptr;
+VoidOneArgMemberFunctionCallerMock<FileSystem, const fs::path&>* _caller_FolderPathFunctionMock = nullptr;
 // Constant Components
 ConstCharPointerGetterMock* _constCharPointerGetterMock = nullptr;
 FileOpenerCloserMock* _fileOpenerCloserMock = nullptr;
@@ -70,6 +74,7 @@ STARTUP
    _fileSystem._call_std_filesystem_exists = BIND_1ARG_METALMOCK_OBJECT(existsMock);
    // Function Callers
    _fileSystem._caller_Exists.reset(_caller_ExistsMock = new NonVoidOneArgMemberFunctionCallerMock<bool, FileSystem, const fs::path&>);
+   _fileSystem._caller_FolderPathFunction.reset(_caller_FolderPathFunctionMock = new VoidOneArgMemberFunctionCallerMock<FileSystem, const fs::path&>);
    // Constant Components
    _fileSystem._constCharPointerGetter.reset(_constCharPointerGetterMock = new ConstCharPointerGetterMock);
    _fileSystem._fileOpenerCloser.reset(_fileOpenerCloserMock = new FileOpenerCloserMock);
@@ -87,23 +92,20 @@ TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
    STD_FUNCTION_TARGETS(std::rename, fileSystem._call_std_rename);
 #ifdef _WIN32
    using fs_remove_all_FunctionType = uintmax_t(*)(const fs::path&, error_code&);
-   STD_FUNCTION_TARGETS_OVERLOAD(
-      fs_remove_all_FunctionType, fs::remove_all, fileSystem._call_fs_remove_all);
+   STD_FUNCTION_TARGETS_OVERLOAD(fs_remove_all_FunctionType, fs::remove_all, fileSystem._call_fs_remove_all);
 
    using StdFilesystemAbsoluteFunctionType = fs::path(*)(const fs::path&);
-   STD_FUNCTION_TARGETS_OVERLOAD(StdFilesystemAbsoluteFunctionType,
-      fs::absolute, fileSystem._call_std_filesystem_absolute);
+   STD_FUNCTION_TARGETS_OVERLOAD(StdFilesystemAbsoluteFunctionType, fs::absolute, fileSystem._call_std_filesystem_absolute);
 
    using StdFilesystemCurrentPathFunctionType = fs::path(*)();
-   STD_FUNCTION_TARGETS_OVERLOAD(StdFilesystemCurrentPathFunctionType,
-      fs::current_path, fileSystem._call_std_filesystem_current_path);
+   STD_FUNCTION_TARGETS_OVERLOAD(StdFilesystemCurrentPathFunctionType, fs::current_path, fileSystem._call_std_filesystem_current_path);
 
    using StdFilesystemExistsFunctionType = bool(*)(const fs::path&);
-   STD_FUNCTION_TARGETS_OVERLOAD(StdFilesystemExistsFunctionType,
-      fs::exists, fileSystem._call_std_filesystem_exists);
+   STD_FUNCTION_TARGETS_OVERLOAD(StdFilesystemExistsFunctionType, fs::exists, fileSystem._call_std_filesystem_exists);
 #endif
    // Function Callers
    DELETE_TO_ASSERT_NEWED(fileSystem._caller_Exists);
+   DELETE_TO_ASSERT_NEWED(fileSystem._caller_FolderPathFunction);
    // Constant Components
    DELETE_TO_ASSERT_NEWED(fileSystem._constCharPointerGetter);
    DELETE_TO_ASSERT_NEWED(fileSystem._fileOpenerCloser);
@@ -139,6 +141,27 @@ TEST(CurrentDirectoryPath_ReturnsResultOfCallingFilesystemCurrentPath)
    //
    METALMOCK(_call_std_filesystem_current_pathMock.CalledOnce());
    ARE_EQUAL(currentPathReturnValue, currentDirectoryPath);
+}
+
+TEST(DeleteDirectoryIfNotDryRun_DryRunIsTrue_DoesNothing)
+{
+   const fs::path directoryPath = ZenUnit::Random<fs::path>();
+   //
+   _fileSystem.DeleteDirectoryIfNotDryRun(directoryPath, true);
+}
+
+TEST(DeleteDirectoryIfNotDryRun_DryRunIsFalse_RemovesReadOnlyFoldersIfWindowsThenDeletesDirectory)
+{
+   _caller_FolderPathFunctionMock->ConstCallMock.Expect();
+   const fs::path directoryPath = ZenUnit::Random<fs::path>();
+   //
+   _fileSystem.DeleteDirectoryIfNotDryRun(directoryPath, false);
+   //
+   METALMOCK(_caller_FolderPathFunctionMock->ConstCallMock.CalledAsFollows(
+   {
+      { &_fileSystem, &FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows, directoryPath },
+      { &_fileSystem, &FileSystem::RemoveAll, directoryPath }
+   }));
 }
 
 TEST(RecursivelyDeleteAllFilesInDirectory_CallsFileDeleterRecursivelyDeleteAllFilesInDirectory)
@@ -275,20 +298,17 @@ unsigned long long remove_all_CallInstead(const fs::path& directoryPath, error_c
    return _remove_all_CallHistory.returnValue;
 }
 
-TEST(RemoveAll_FsRemoveAllReturns0ErrorCode_ReturnsNumberOfFilesAndDirectoriesRemoved)
+TEST(RemoveAll_FsRemoveAllReturns0ErrorCode)
 {
-   _call_fs_remove_allMock.CallInstead(std::bind(&FileSystemTests::remove_all_CallInstead,
-      this, std::placeholders::_1, std::placeholders::_2));
-   _remove_all_CallHistory.returnValue = ZenUnit::Random<unsigned long long>();
+   _call_fs_remove_allMock.CallInstead(std::bind(&FileSystemTests::remove_all_CallInstead, this, placeholders::_1, placeholders::_2));
    _remove_all_CallHistory.outErrorCodeReturnValue = error_code(0, std::generic_category());
    const fs::path directoryPath = ZenUnit::Random<fs::path>();
    //
-   const unsigned long long numberOfFilesAndDirectoriesRemoved = _fileSystem.RemoveAll(directoryPath);
+   _fileSystem.RemoveAll(directoryPath);
    //
    ARE_EQUAL(1, _remove_all_CallHistory.numberOfCalls);
    ARE_EQUAL(directoryPath, _remove_all_CallHistory.directoryPathArg);
    ARE_EQUAL(error_code(), _remove_all_CallHistory.outErrorCodeArg);
-   ARE_EQUAL(_remove_all_CallHistory.returnValue, numberOfFilesAndDirectoriesRemoved);
 }
 
 TEST1X1(RemoveAll_FsRemoveAllReturnsNon0ErrorCode_ThrowsFileSystemException,

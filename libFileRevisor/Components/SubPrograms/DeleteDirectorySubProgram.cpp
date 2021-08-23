@@ -42,8 +42,7 @@ int DeleteDirectorySubProgram::Run(const FileRevisorArgs& args) const
       _oneExtraArgMemberForEacher_DeleteDirectory->OneExtraArgMemberForEach(
          topLevelDirectoryPathsInTargetDirectory, this, &DeleteDirectorySubProgram::DeleteDirectory, args);
    }
-   _fileSystem->RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows(args.targetDirectoryPath);
-   _fileSystem->RemoveAll(args.targetDirectoryPath);
+   _fileSystem->DeleteDirectoryIfNotDryRun(args.targetDirectoryPath, args.dryrun);
    return 0;
 }
 

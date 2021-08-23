@@ -21,8 +21,9 @@ public:
    METALMOCK_NONVOID2_CONST(fs::path, RenameDirectory, const fs::path&, string_view)
 
    // Deletes
+   METALMOCK_VOID2_CONST(DeleteDirectoryIfNotDryRun, const fs::path&, bool)
    METALMOCK_VOID1_CONST(RemoveFile, const char*)
-   METALMOCK_NONVOID1_CONST(unsigned long long, RemoveAll, const fs::path&)
+   METALMOCK_VOID1_CONST(RemoveAll, const fs::path&)
    METALMOCK_VOID2_CONST(RecursivelyDeleteAllFilesInDirectory, const string&, const FileRevisorArgs&)
 
    // Readonly Flags

@@ -85,13 +85,9 @@ TEST(Run_TargetDirectoryExists_ParallelIsFalse_WritesDeletingSequentiallyMessage
 
    _oneExtraArgMemberForEacher_DeleteDirectoryMock->OneExtraArgMemberForEachMock.Expect();
 
-   const vector<string> topLevelDirectoryPathsInDirectory =
-      _fileSystemMock->GetStringDirectoryPathsInDirectoryMock.ReturnRandom();
+   const vector<string> topLevelDirectoryPathsInDirectory = _fileSystemMock->GetStringDirectoryPathsInDirectoryMock.ReturnRandom();
 
-   _fileSystemMock->RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindowsMock.Expect();
-
-   unsigned long long numberOfFilesAndDirectoriesRemoved = _fileSystemMock->RemoveAllMock.ReturnRandom();
-   ++numberOfFilesAndDirectoriesRemoved; // Varible usage to supress unused variable warning
+   _fileSystemMock->DeleteDirectoryIfNotDryRunMock.Expect();
 
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    args.parallel = false;
@@ -102,9 +98,7 @@ TEST(Run_TargetDirectoryExists_ParallelIsFalse_WritesDeletingSequentiallyMessage
    METALMOCK(_fileSystemMock->GetStringDirectoryPathsInDirectoryMock.CalledOnceWith(args.targetDirectoryPath, false));
    METALMOCK(_oneExtraArgMemberForEacher_DeleteDirectoryMock->OneExtraArgMemberForEachMock.CalledOnceWith(
       topLevelDirectoryPathsInDirectory, &_deleteDirectorySubProgram, &DeleteDirectorySubProgram::DeleteDirectory, args));
-   METALMOCK(_fileSystemMock->
-      RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindowsMock.CalledOnceWith(args.targetDirectoryPath));
-   METALMOCK(_fileSystemMock->RemoveAllMock.CalledOnceWith(args.targetDirectoryPath));
+   METALMOCK(_fileSystemMock->DeleteDirectoryIfNotDryRunMock.CalledOnceWith(args.targetDirectoryPath, args.dryrun));
    IS_ZERO(exitCode);
 }
 
@@ -117,10 +111,7 @@ TEST(Run_TargetDirectoryExists_ParallelIsTrue_WritesDeletingInParallelMessage_Re
    const vector<string> topLevelDirectoryPathsInDirectory =
       _fileSystemMock->GetStringDirectoryPathsInDirectoryMock.ReturnRandom();
 
-   _fileSystemMock->RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindowsMock.Expect();
-
-   unsigned long long numberOfFilesAndDirectoriesRemoved = _fileSystemMock->RemoveAllMock.ReturnRandom();
-   ++numberOfFilesAndDirectoriesRemoved; // Varible usage to supress unused variable warning
+   _fileSystemMock->DeleteDirectoryIfNotDryRunMock.Expect();
 
    _consoleMock->WriteLineMock.Expect();
 
@@ -133,8 +124,7 @@ TEST(Run_TargetDirectoryExists_ParallelIsTrue_WritesDeletingInParallelMessage_Re
    METALMOCK(_fileSystemMock->GetStringDirectoryPathsInDirectoryMock.CalledOnceWith(args.targetDirectoryPath, false));
    METALMOCK(_parallelOneExtraArgMemberForEacher_DeleteDirectoryMock->ParallelOneExtraArgMemberForEachMock.CalledOnceWith(
       topLevelDirectoryPathsInDirectory, &_deleteDirectorySubProgram, &DeleteDirectorySubProgram::TryCatchCallDeleteDirectory, args));
-   METALMOCK(_fileSystemMock->RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindowsMock.CalledOnceWith(args.targetDirectoryPath));
-   METALMOCK(_fileSystemMock->RemoveAllMock.CalledOnceWith(args.targetDirectoryPath));
+   METALMOCK(_fileSystemMock->DeleteDirectoryIfNotDryRunMock.CalledOnceWith(args.targetDirectoryPath, args.dryrun));
    const string expectedDeletingInParallelMessage = "[FileRevisor] Deleting in parallel all files in directory: " + args.targetDirectoryPath.string();
    const string expectedDeletedDirectoryMessage = "[FileRevisor] Deleted directory " + args.targetDirectoryPath.string();
    METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedDeletingInParallelMessage));

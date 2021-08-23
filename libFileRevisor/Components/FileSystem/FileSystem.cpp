@@ -9,6 +9,7 @@
 #include "libFileRevisor/Exceptions/FileSystemException.h"
 #include "libFileRevisor/UtilityComponents/DataStructures/CharArray64Helper.h"
 #include "libFileRevisor/UtilityComponents/FunctionCallers/Member/NonVoidOneArgMemberFunctionCaller.h"
+#include "libFileRevisor/UtilityComponents/FunctionCallers/Member/VoidOneArgMemberFunctionCaller.h"
 #include "libFileRevisor/UtilityComponents/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
 #include "libFileRevisor/UtilityComponents/Strings/ConstCharPointerGetter.h"
 
@@ -26,6 +27,7 @@ FileSystem::FileSystem()
    , _call_std_filesystem_rename_with_error_code_as_assignable_function_pointer(fs::rename)
    // Function Callers
    , _caller_Exists(make_unique<NonVoidOneArgMemberFunctionCaller<bool, FileSystem, const fs::path&>>())
+   , _caller_FolderPathFunction(make_unique<VoidOneArgMemberFunctionCaller<FileSystem, const fs::path&>>())
    // Constant Components
    , _constCharPointerGetter(make_unique<ConstCharPointerGetter>())
    , _fileOpenerCloser(make_unique<FileOpenerCloser>())
@@ -65,6 +67,15 @@ fs::path FileSystem::CurrentDirectoryPath() const
 {
    fs::path currentDirectoryPath = _call_std_filesystem_current_path();
    return currentDirectoryPath;
+}
+
+void FileSystem::DeleteDirectoryIfNotDryRun(const fs::path& directoryPath, bool dryRun) const
+{
+   if (!dryRun)
+   {
+      _caller_FolderPathFunction->ConstCall(this, &FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows, directoryPath);
+      _caller_FolderPathFunction->ConstCall(this, &FileSystem::RemoveAll, directoryPath);
+   }
 }
 
 void FileSystem::RecursivelyDeleteAllFilesInDirectory(const string& directoryPath, const FileRevisorArgs& args) const
@@ -243,10 +254,10 @@ void FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows([[mayb
 #endif
 }
 
-unsigned long long FileSystem::RemoveAll(const fs::path& directoryPath) const
+void FileSystem::RemoveAll(const fs::path& directoryPath) const
 {
    error_code errorCode;
-   unsigned long long numberOfFilesAndDirectoriesRemoved = _call_fs_remove_all(directoryPath, errorCode);
+   _call_fs_remove_all(directoryPath, errorCode);
    const int errorCodeValue = errorCode.value();
    if (errorCodeValue != 0)
    {
@@ -254,7 +265,6 @@ unsigned long long FileSystem::RemoveAll(const fs::path& directoryPath) const
          _fileSystemExceptionMaker->MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory(directoryPath, errorCodeValue);
       throw fileSystemException;
    }
-   return numberOfFilesAndDirectoriesRemoved;
 }
 
 shared_ptr<FILE> FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) const

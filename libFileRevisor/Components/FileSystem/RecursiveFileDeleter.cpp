@@ -79,8 +79,7 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* dire
    directoryPathSearchPatternChars[directoryPathLength + 2] = 0;
 
    WIN32_FIND_DATA win32FindData{};
-   const HANDLE findFirstFilePointer =
-      FindFirstFileEx(directoryPathSearchPatternChars, FindExInfoBasic, &win32FindData, FindExSearchNameMatch, NULL, NULL);
+   const HANDLE findFirstFilePointer = FindFirstFileEx(directoryPathSearchPatternChars, FindExInfoBasic, &win32FindData, FindExSearchNameMatch, NULL, NULL);
    ThrowFileSystemExceptionIfFindFirstFileExReturnedInvalidHandleValue(findFirstFilePointer, directoryPathSearchPatternChars);
 
    do
@@ -96,8 +95,7 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* dire
          filePathOrSubdirectoryPathChars[directoryPathLength] = '\\';
 
          const size_t fileNameOrSubdirectoryNameLength = strlen(win32FindData.cFileName);
-         memcpy(filePathOrSubdirectoryPathChars + directoryPathLength + 1,
-            win32FindData.cFileName, fileNameOrSubdirectoryNameLength);
+         memcpy(filePathOrSubdirectoryPathChars + directoryPathLength + 1, win32FindData.cFileName, fileNameOrSubdirectoryNameLength);
          filePathOrSubdirectoryPathChars[directoryPathLength + 1 + fileNameOrSubdirectoryNameLength] = 0;
 
          if (win32FindData.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY)
@@ -108,9 +106,17 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* dire
          else
          {
             const char* const filePath = filePathOrSubdirectoryPathChars;
-            RemoveReadonlyFlagFromConstCharPointerFilePath(filePath);
-            const int unlinkReturnValue = _unlink(filePath);
-            PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException(filePath, unlinkReturnValue, args);
+            if (args.dryrun)
+            {
+               const string wouldDeleteFileMessage = String::ConcatStrings("[FileRevisor] DryRun: Would delete file ", filePath);
+               _console->ThreadIdWriteLine(wouldDeleteFileMessage);
+            }
+            else
+            {
+               RemoveReadonlyFlagFromConstCharPointerFilePath(filePath);
+               const int unlinkReturnValue = _unlink(filePath);
+               PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException(filePath, unlinkReturnValue, args);
+            }
          }
       }
    } while (FindNextFile(findFirstFilePointer, &win32FindData) != FALSE);

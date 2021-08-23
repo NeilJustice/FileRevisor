@@ -1,9 +1,15 @@
 #pragma once
 class FileSystemTests;
+
 template<typename ReturnType, typename ClassType, typename ArgumentType>
 class NonVoidOneArgMemberFunctionCaller;
+
+template<typename ClassType, typename Arg1Type>
+class VoidOneArgMemberFunctionCaller;
+
 template<typename ClassType, typename Arg1Type, typename Arg2Type>
 class VoidTwoArgMemberFunctionCaller;
+
 class ConstCharPointerGetter;
 class DirectoryIterator;
 class FileOpenerCloser;
@@ -36,6 +42,7 @@ private:
 
    // Function Callers
    unique_ptr<const NonVoidOneArgMemberFunctionCaller<bool, FileSystem, const fs::path&>> _caller_Exists;
+   unique_ptr<const VoidOneArgMemberFunctionCaller<FileSystem, const fs::path&>> _caller_FolderPathFunction;
 
    // Constant Components
    unique_ptr<const ConstCharPointerGetter> _constCharPointerGetter;
@@ -49,8 +56,7 @@ public:
    // Queries
    virtual fs::path GetAbsolutePath(const fs::path& fileOrDirectoryPath) const;
    virtual fs::path CurrentDirectoryPath() const;
-   virtual void RecursivelyDeleteAllFilesInDirectory(
-      const string& directoryPath, const FileRevisorArgs& args) const;
+   virtual void RecursivelyDeleteAllFilesInDirectory(const string& directoryPath, const FileRevisorArgs& args) const;
    virtual vector<fs::path> GetFilePathsInDirectory(const fs::path& directoryPath, bool recurse) const;
    virtual vector<fs::path> GetDirectoryPathsInDirectory(const fs::path& directoryPath, bool recurse) const;
    virtual vector<string> GetStringDirectoryPathsInDirectory(const fs::path& directoryPath, bool recurse) const;
@@ -67,8 +73,9 @@ public:
    virtual fs::path RenameDirectory(const fs::path& directoryPath, string_view newDirectoryName) const;
 
    // Deletes
+   virtual void DeleteDirectoryIfNotDryRun(const fs::path& directoryPath, bool dryRun) const;
    virtual void RemoveFile(const char* filePath) const;
-   virtual unsigned long long RemoveAll(const fs::path& directoryPath) const;
+   virtual void RemoveAll(const fs::path& directoryPath) const;
 
    // Readonly Flags
    virtual void RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows(const fs::path& directoryPath) const;

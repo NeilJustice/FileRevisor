@@ -2,7 +2,7 @@
 #include "libFileRevisor/Components/FileRevisor/FileRevisorProgram.h"
 
 // Example FileRevisor command line arguments:
-// delete-directory --target=C:\FileRevisorTesting --parallel
+// delete-directory --target=C:\FileRevisorTesting --parallel --dryrun --quiet
 // rename-files --target=C:\FileRevisorTesting\Folder --from=from --to=to --recurse --dryrun --verbose
 // rename-directories --target=C:\FileRevisorTesting --from=Folder1 --to=Folder2 --dryrun --verbose
 // replace-text --target=C:\FileRevisorTesting --from=from --to=to --recurse --dryrun --verbose
