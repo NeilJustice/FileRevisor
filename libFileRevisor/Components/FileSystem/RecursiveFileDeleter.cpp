@@ -58,8 +58,16 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* dire
          else
          {
             const char* const filePath = filePathOrSubdirectoryPathChars;
-            const int unlinkReturnValue = unlink(filePath);
-            PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException(filePath, unlinkReturnValue, args);
+            if (args.dryrun)
+            {
+               const string wouldDeleteFileMessage = String::ConcatStrings("[FileRevisor] DryRun: Would delete file ", filePath);
+               _console->ThreadIdWriteLine(wouldDeleteFileMessage);
+            }
+            else
+            {
+               const int unlinkReturnValue = unlink(filePath);
+               PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException(filePath, unlinkReturnValue, args);
+            }
          }
       }
    }
