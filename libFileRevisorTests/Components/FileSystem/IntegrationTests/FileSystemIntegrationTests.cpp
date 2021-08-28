@@ -15,11 +15,9 @@ AFACT(GetStringDirectoryPathsInDirectory_RecurseIsTrue_ReturnsDirectoryPathsInAn
 AFACT(ReadText_FileDoesNotExist_ThrowsFileSystemException)
 AFACT(ReadText_FileExists_FileIsEmpty_ReturnsEmptyString)
 AFACT(ReadText_FileExists_FileIsNotEmptyAndContainsTrailingBinaryZeros_ReturnsFileTextMinusTrailingBinaryZeros)
-AFACT(RemoveFile_FileExistsAndIsDeletable_DeletesTheFile)
-AFACT(RemoveFile_FileDoesNotExist_ThrowsFileSystemException)
-AFACT(RemoveAll_DirectoryPathIsEmpty_DoesNothing)
-AFACT(RemoveAll_DirectoryPathIsNonEmptyAndDoesNotExist_DoesNothing)
-AFACT(RemoveAll_DirectoryExistsAndIsDeletable_DeletesTheDirectory)
+AFACT(RemoveFile_FileExistsAndIsDeletable_IgnoreFileDeleteErrorIsEitherTrueOrFalse_DeletesTheFile)
+AFACT(RemoveFile_FileDoesNotExist_IgnoreFileDeleteErrorIsFalse_ThrowsFileSystemException)
+AFACT(RemoveFile_FileDoesNotExist_IgnoreFileDeleteErrorIsTrue_DoesNotThrowException)
 EVIDENCE
 
 FileSystem _fileSystem;
@@ -191,55 +189,35 @@ TEST(ReadText_FileExists_FileIsNotEmptyAndContainsTrailingBinaryZeros_ReturnsFil
   ARE_EQUAL(expectedFileText, fileText);
 }
 
-TEST(RemoveFile_FileExistsAndIsDeletable_DeletesTheFile)
+TEST(RemoveFile_FileExistsAndIsDeletable_IgnoreFileDeleteErrorIsEitherTrueOrFalse_DeletesTheFile)
 {
-  const string filePathThatExists = (_rootDirectoryPath / "RemoveFileTest.txt").string();
+  const string filePathThatExists = (_rootDirectoryPath / "DeleteFileTest.txt").string();
   _fileSystem.CreateTextFile(filePathThatExists, ZenUnit::Random<string>());
   IS_TRUE(_fileSystem.FileOrDirectoryExists(filePathThatExists));
+  const bool skipFilesInUse = ZenUnit::Random<bool>();
   //
-  _fileSystem.RemoveFile(filePathThatExists.c_str());
+  _fileSystem.RemoveFile(filePathThatExists.c_str(), skipFilesInUse);
   //
   IS_FALSE(_fileSystem.FileOrDirectoryExists(filePathThatExists));
 }
 
-TEST(RemoveFile_FileDoesNotExist_ThrowsFileSystemException)
+TEST(RemoveFile_FileDoesNotExist_IgnoreFileDeleteErrorIsFalse_ThrowsFileSystemException)
 {
   const string filePathThatDoesNotExist = ZenUnit::Random<string>();
   IS_FALSE(_fileSystem.FileOrDirectoryExists(filePathThatDoesNotExist));
   //
   const string expectedExceptionMessage = String::ConcatStrings(
      "FailedToDeleteFile: unlink(\"", filePathThatDoesNotExist, "\") failed with errno 2 (No such file or directory)");
-  THROWS_EXCEPTION(_fileSystem.RemoveFile(filePathThatDoesNotExist.c_str()),
+  THROWS_EXCEPTION(_fileSystem.RemoveFile(filePathThatDoesNotExist.c_str(), false),
      FileSystemException, expectedExceptionMessage);
 }
 
-TEST(RemoveAll_DirectoryPathIsEmpty_DoesNothing)
+TEST(RemoveFile_FileDoesNotExist_IgnoreFileDeleteErrorIsTrue_DoesNotThrowException)
 {
-  const fs::path emptyDirectoryPath;
-  IS_FALSE(_fileSystem.FileOrDirectoryExists(emptyDirectoryPath));
+  const string filePathThatDoesNotExist = ZenUnit::Random<string>();
+  IS_FALSE(_fileSystem.FileOrDirectoryExists(filePathThatDoesNotExist));
   //
-  _fileSystem.RemoveAll(emptyDirectoryPath);
-  //
-  IS_FALSE(_fileSystem.FileOrDirectoryExists(emptyDirectoryPath));
-}
-
-TEST(RemoveAll_DirectoryPathIsNonEmptyAndDoesNotExist_DoesNothing)
-{
-  const fs::path directoryPathThatDoesNotExist(_rootDirectoryPath / ZenUnit::Random<fs::path>());
-  IS_FALSE(_fileSystem.FileOrDirectoryExists(directoryPathThatDoesNotExist));
-  //
-  _fileSystem.RemoveAll(directoryPathThatDoesNotExist);
-  //
-  IS_FALSE(_fileSystem.FileOrDirectoryExists(directoryPathThatDoesNotExist));
-}
-
-TEST(RemoveAll_DirectoryExistsAndIsDeletable_DeletesTheDirectory)
-{
-  IS_TRUE(_fileSystem.FileOrDirectoryExists(_rootDirectoryPath));
-  //
-  _fileSystem.RemoveAll(_rootDirectoryPath);
-  //
-  IS_FALSE(_fileSystem.FileOrDirectoryExists(_rootDirectoryPath));
+  _fileSystem.RemoveFile(filePathThatDoesNotExist.c_str(), true);
 }
 
 RUN_TESTS(FileSystemIntegrationTests)

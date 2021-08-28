@@ -48,7 +48,7 @@ RenameResult RenameDirectoriesSubProgram::RenameDirectory(const fs::path& direct
    const string regexReplacedDirectoryName = _regexer->Replace(directoryName, args.fromRegexPattern, args.toRegexPattern);
    if (regexReplacedDirectoryName == directoryName)
    {
-      _call_PrintDidNotMatchDirectoryMessageIfVerboseMode->ConstCall(
+      _call_PrintDidNotMatchDirectoryMessageIfVerboseMode->CallConstMemberFunction(
          this, &RenameDirectoriesSubProgram::PrintDidNotMatchDirectoryMessageIfVerboseMode, args.verbose, directoryPath);
       return RenameResult(false, directoryPath, directoryPath);
    }

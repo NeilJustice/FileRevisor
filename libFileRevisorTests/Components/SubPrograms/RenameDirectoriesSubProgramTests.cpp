@@ -4,7 +4,7 @@
 #include "libFileRevisorTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
 #include "libFileRevisorTests/UtilityComponents/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
 #include "libFileRevisorTests/UtilityComponents/Iteration/Counter/MetalMock/PredicateCounterMock.h"
-#include "libFileRevisorTests/UtilityComponents/Iteration/ForEach/MetalMock/OneExtraArgMemberForEacherMock.h"
+#include "libFileRevisorTests/UtilityComponents/Iteration/ForEach/MetalMock/TwoArgMemberForEacherMock.h"
 #include "libFileRevisorTests/UtilityComponents/Iteration/Transform/MetalMock/OneExtraArgMemberFunctionTransformerMock.h"
 #include "libFileRevisorTests/UtilityComponents/Strings/MetalMock/PluralizerMock.h"
 #include "libFileRevisorTests/UtilityComponents/Strings/MetalMock/RegexerMock.h"
@@ -101,14 +101,14 @@ TEST(RenameDirectory_RegexReplacedDirectoryNameEqualsSourceDirectoryName_PrintsD
    const string directoryName = directoryPath.filename().string();
    _regexerMock->ReplaceMock.Return(directoryName);
 
-   _call_PrintDidNotMatchDirectoryMessageIfVerboseModeMock->ConstCallMock.Expect();
+   _call_PrintDidNotMatchDirectoryMessageIfVerboseModeMock->CallConstMemberFunctionMock.Expect();
 
    const FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    //
    const RenameResult renameResult = _renameDirectoriesSubProgram.RenameDirectory(directoryPath, args);
    //
    METALMOCK(_regexerMock->ReplaceMock.CalledOnceWith(directoryName, args.fromRegexPattern, args.toRegexPattern));
-   METALMOCK(_call_PrintDidNotMatchDirectoryMessageIfVerboseModeMock->ConstCallMock.CalledOnceWith(
+   METALMOCK(_call_PrintDidNotMatchDirectoryMessageIfVerboseModeMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_renameDirectoriesSubProgram,
       &RenameDirectoriesSubProgram::PrintDidNotMatchDirectoryMessageIfVerboseMode,
       args.verbose, directoryPath));

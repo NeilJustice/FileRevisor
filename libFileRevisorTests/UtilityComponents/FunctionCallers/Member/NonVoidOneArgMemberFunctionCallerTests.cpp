@@ -3,7 +3,7 @@
 
 template<typename ReturnType, typename ArgType>
 TEMPLATE_TESTS(NonVoidOneArgMemberFunctionCallerTests, ReturnType, ArgType)
-AFACT(ConstCall_CallsNonVoidMemberFunctionOnce_ReturnsReturnValue)
+AFACT(CallConstMemberFunction_CallsNonVoidMemberFunctionOnce_ReturnsReturnValue)
 EVIDENCE
 
 class Widget
@@ -20,13 +20,13 @@ public:
    }
 };
 
-TEST(ConstCall_CallsNonVoidMemberFunctionOnce_ReturnsReturnValue)
+TEST(CallConstMemberFunction_CallsNonVoidMemberFunctionOnce_ReturnsReturnValue)
 {
    NonVoidOneArgMemberFunctionCaller<ReturnType, Widget, ArgType> nonVoidOneArgMemberFunctionCaller;
    const Widget widget{};
    const ArgType arg = ZenUnit::Random<ArgType>();
    //
-   const ReturnType returnValue = nonVoidOneArgMemberFunctionCaller.ConstCall(&widget, &Widget::NonVoidFunction, arg);
+   const ReturnType returnValue = nonVoidOneArgMemberFunctionCaller.CallConstMemberFunction(&widget, &Widget::NonVoidFunction, arg);
    //
    VECTORS_ARE_EQUAL(vector<ArgType>{arg}, widget.args);
    ARE_EQUAL(widget.returnValue, returnValue);

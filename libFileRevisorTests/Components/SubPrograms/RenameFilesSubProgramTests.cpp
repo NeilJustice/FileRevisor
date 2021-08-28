@@ -113,14 +113,14 @@ TEST(RenameFileIfFileNameMatchesFromPattern_RegexReplacedFileNameEqualsSourceFil
    const string fileName = filePath.filename().string();
    _regexerMock->ReplaceMock.Return(fileName);
 
-   _caller_PrintDidNotMatchFileMessageIfVerboseModeMock->ConstCallMock.Expect();
+   _caller_PrintDidNotMatchFileMessageIfVerboseModeMock->CallConstMemberFunctionMock.Expect();
 
    const FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    //
    const RenameResult fileRenameResult = _renameFilesSubProgram.RenameFileIfFileNameMatchesFromPattern(filePath, args);
    //
    METALMOCK(_regexerMock->ReplaceMock.CalledOnceWith(fileName, args.fromRegexPattern, args.toRegexPattern));
-   METALMOCK(_caller_PrintDidNotMatchFileMessageIfVerboseModeMock->ConstCallMock.CalledOnceWith(
+   METALMOCK(_caller_PrintDidNotMatchFileMessageIfVerboseModeMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_renameFilesSubProgram, &RenameFilesSubProgram::PrintDidNotMatchFileMessageIfVerboseMode, args.verbose, filePath));
    const RenameResult expectedRenameResult(false, filePath, filePath);
    ARE_EQUAL(expectedRenameResult, fileRenameResult);

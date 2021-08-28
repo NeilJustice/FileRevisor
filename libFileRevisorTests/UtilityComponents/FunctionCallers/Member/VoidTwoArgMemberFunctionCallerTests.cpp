@@ -3,8 +3,8 @@
 
 template<typename Arg1Type, typename Arg2Type>
 TEMPLATE_TESTS(VoidTwoArgMemberFunctionCallerTests, Arg1Type, Arg2Type)
-AFACT(ConstCall_CallsConstMemberFunctionOnce)
-AFACT(NonConstCall_CallsNonConstMemberFunctionOnce)
+AFACT(CallConstMemberFunction_CallsConstMemberFunctionOnce)
+AFACT(CallNonConstMemberFunction_CallsNonConstMemberFunctionOnce)
 EVIDENCE
 
 class Class
@@ -23,37 +23,37 @@ public:
    }
 };
 
-TEST(ConstCall_CallsConstMemberFunctionOnce)
+TEST(CallConstMemberFunction_CallsConstMemberFunctionOnce)
 {
    Class classInstance{};
    VoidTwoArgMemberFunctionCaller<Class, Arg1Type, Arg2Type> voidTwoArgMemberFunctionCaller;
    IS_EMPTY(classInstance.calls);
    //
-   voidTwoArgMemberFunctionCaller.ConstCall(&classInstance, &Class::ConstMemberFunction, Arg1Type{ 1 }, Arg2Type{ 2 });
+   voidTwoArgMemberFunctionCaller.CallConstMemberFunction(&classInstance, &Class::ConstMemberFunction, Arg1Type{ 1 }, Arg2Type{ 2 });
    //
    vector<pair<Arg1Type, Arg2Type>> expectedCalls = { { Arg1Type{ 1 }, Arg2Type{ 2 } } };
    VECTORS_ARE_EQUAL(expectedCalls, classInstance.calls);
 
 
-   voidTwoArgMemberFunctionCaller.ConstCall(&classInstance, &Class::ConstMemberFunction, Arg1Type{ 3 }, Arg2Type{ 4 });
+   voidTwoArgMemberFunctionCaller.CallConstMemberFunction(&classInstance, &Class::ConstMemberFunction, Arg1Type{ 3 }, Arg2Type{ 4 });
    //
    expectedCalls.emplace_back(Arg1Type{ 3 }, Arg2Type{ 4 });
    VECTORS_ARE_EQUAL(expectedCalls, classInstance.calls);
 }
 
-TEST(NonConstCall_CallsNonConstMemberFunctionOnce)
+TEST(CallNonConstMemberFunction_CallsNonConstMemberFunctionOnce)
 {
    Class classInstance{};
    VoidTwoArgMemberFunctionCaller<Class, Arg1Type, Arg2Type> voidTwoArgMemberFunctionCaller;
    IS_EMPTY(classInstance.calls);
    //
-   voidTwoArgMemberFunctionCaller.NonConstCall(&classInstance, &Class::NonConstMemberFunction, Arg1Type{ 1 }, Arg2Type{ 2 });
+   voidTwoArgMemberFunctionCaller.CallNonConstMemberFunction(&classInstance, &Class::NonConstMemberFunction, Arg1Type{ 1 }, Arg2Type{ 2 });
    //
    vector<pair<Arg1Type, Arg2Type>> expectedCalls = { { Arg1Type{ 1 }, Arg2Type{ 2 } } };
    VECTORS_ARE_EQUAL(expectedCalls, classInstance.calls);
 
 
-   voidTwoArgMemberFunctionCaller.NonConstCall(&classInstance, &Class::NonConstMemberFunction, Arg1Type{ 3 }, Arg2Type{ 4 });
+   voidTwoArgMemberFunctionCaller.CallNonConstMemberFunction(&classInstance, &Class::NonConstMemberFunction, Arg1Type{ 3 }, Arg2Type{ 4 });
    //
    expectedCalls.emplace_back(Arg1Type{ 3 }, Arg2Type{ 4 });
    VECTORS_ARE_EQUAL(expectedCalls, classInstance.calls);

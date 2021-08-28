@@ -117,7 +117,7 @@ TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsRegexReplaceFileTextOnEachText
 
 TEST(RegexReplaceTextInTextFile_DryRunIsTrueOrFalse_ReplacedFileTextEqualsOriginalFileText_DoesNothing_Returns0)
 {
-   _call_PrintReadingFileMessageIfVerboseModeMock->ConstCallMock.Expect();
+   _call_PrintReadingFileMessageIfVerboseModeMock->CallConstMemberFunctionMock.Expect();
 
    const string textFileText = _fileSystemMock->ReadTextMock.ReturnRandom();
 
@@ -128,7 +128,7 @@ TEST(RegexReplaceTextInTextFile_DryRunIsTrueOrFalse_ReplacedFileTextEqualsOrigin
    //
    const size_t numberOfFilesThatWereOrWouldBeModified = _replaceTextInTextFilesSubProgram.RegexReplaceTextInTextFile(textFilePath, args);
    //
-   METALMOCK(_call_PrintReadingFileMessageIfVerboseModeMock->ConstCallMock.CalledOnceWith(
+   METALMOCK(_call_PrintReadingFileMessageIfVerboseModeMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_replaceTextInTextFilesSubProgram,
       &ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue,
       args.verbose, textFilePath));
@@ -139,7 +139,7 @@ TEST(RegexReplaceTextInTextFile_DryRunIsTrueOrFalse_ReplacedFileTextEqualsOrigin
 
 TEST(RegexReplaceTextInTextFile_DryRunIsTrue_ReplacedFileTextDiffersFromOriginalFileText_DoesNotModifyFile_PrintsWouldReplaceTextInFileMessage_Returns1)
 {
-   _call_PrintReadingFileMessageIfVerboseModeMock->ConstCallMock.Expect();
+   _call_PrintReadingFileMessageIfVerboseModeMock->CallConstMemberFunctionMock.Expect();
 
    const string textFileText = _fileSystemMock->ReadTextMock.ReturnRandom();
 
@@ -154,7 +154,7 @@ TEST(RegexReplaceTextInTextFile_DryRunIsTrue_ReplacedFileTextDiffersFromOriginal
    //
    const size_t numberOfFilesThatWereOrWouldBeModified = _replaceTextInTextFilesSubProgram.RegexReplaceTextInTextFile(textFilePath, args);
    //
-   METALMOCK(_call_PrintReadingFileMessageIfVerboseModeMock->ConstCallMock.CalledOnceWith(
+   METALMOCK(_call_PrintReadingFileMessageIfVerboseModeMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_replaceTextInTextFilesSubProgram,
       &ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue,
       args.verbose, textFilePath));
@@ -167,7 +167,7 @@ TEST(RegexReplaceTextInTextFile_DryRunIsTrue_ReplacedFileTextDiffersFromOriginal
 
 TEST(RegexReplaceTextInTextFile_DryRunIsFalse_ReplacedFileTextDiffersFromOriginalFileText_WritesRegexReplacedTextToFile_PrintsReplacedTextInFileMessage_Returns1)
 {
-   _call_PrintReadingFileMessageIfVerboseModeMock->ConstCallMock.Expect();
+   _call_PrintReadingFileMessageIfVerboseModeMock->CallConstMemberFunctionMock.Expect();
 
    const string textFileText = _fileSystemMock->ReadTextMock.ReturnRandom();
 
@@ -184,7 +184,7 @@ TEST(RegexReplaceTextInTextFile_DryRunIsFalse_ReplacedFileTextDiffersFromOrigina
    //
    const size_t numberOfFilesThatWereOrWouldBeModified = _replaceTextInTextFilesSubProgram.RegexReplaceTextInTextFile(textFilePath, args);
    //
-   METALMOCK(_call_PrintReadingFileMessageIfVerboseModeMock->ConstCallMock.CalledOnceWith(
+   METALMOCK(_call_PrintReadingFileMessageIfVerboseModeMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_replaceTextInTextFilesSubProgram, &ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue, args.verbose, textFilePath));
    METALMOCK(_fileSystemMock->ReadTextMock.CalledOnceWith(textFilePath));
    METALMOCK(_regexerMock->ReplaceMock.CalledOnceWith(textFileText, args.fromRegexPattern, args.toRegexPattern));

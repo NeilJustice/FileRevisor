@@ -55,7 +55,7 @@ RenameFileIfFileNameMatchesFromPattern(const fs::path& filePath, const FileRevis
    const string regexReplacedFileName = _regexer->Replace(fileName, args.fromRegexPattern, args.toRegexPattern);
    if (regexReplacedFileName == fileName)
    {
-      _caller_PrintDidNotMatchFileMessageIfVerboseMode->ConstCall(
+      _caller_PrintDidNotMatchFileMessageIfVerboseMode->CallConstMemberFunction(
          this, &RenameFilesSubProgram::PrintDidNotMatchFileMessageIfVerboseMode, args.verbose, filePath);
       return RenameResult(false, filePath, filePath);
    }

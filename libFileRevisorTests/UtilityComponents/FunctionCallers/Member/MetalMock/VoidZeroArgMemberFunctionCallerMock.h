@@ -6,8 +6,8 @@ class VoidZeroArgMemberFunctionCallerMock : public Metal::Mock<VoidZeroArgMember
 {
 public:
    using ConstMemberFunctionType = void (ClassType::*)() const;
-   METALMOCK_VOID2_CONST(ConstCall, const ClassType*, ConstMemberFunctionType)
+   METALMOCK_VOID2_CONST(CallConstMemberFunction, const ClassType*, ConstMemberFunctionType)
 
    using NonConstMemberFunctionType = void (ClassType::*)();
-   METALMOCK_VOID2_CONST(NonConstCall, ClassType*, NonConstMemberFunctionType)
+   METALMOCK_VOID2_CONST(CallNonConstMemberFunction, ClassType*, NonConstMemberFunctionType)
 };

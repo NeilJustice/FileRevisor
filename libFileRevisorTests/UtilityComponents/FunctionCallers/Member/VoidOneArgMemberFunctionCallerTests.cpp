@@ -3,8 +3,8 @@
 
 template<typename Arg1Type>
 TEMPLATE_TESTS(VoidOneArgMemberFunctionCallerTests, Arg1Type)
-AFACT(ConstCall_CallsConstMemberFunctionOnce)
-AFACT(NonConstCall_CallsNonConstMemberFunctionOnce)
+AFACT(CallConstMemberFunction_CallsConstMemberFunctionOnce)
+AFACT(CallNonConstMemberFunction_CallsNonConstMemberFunctionOnce)
 EVIDENCE
 
 class Class
@@ -23,37 +23,37 @@ public:
    }
 };
 
-TEST(ConstCall_CallsConstMemberFunctionOnce)
+TEST(CallConstMemberFunction_CallsConstMemberFunctionOnce)
 {
    Class classInstance{};
    VoidOneArgMemberFunctionCaller<Class, Arg1Type> voidOneArgMemberFunctionCaller;
    IS_EMPTY(classInstance.calls);
    //
-   voidOneArgMemberFunctionCaller.ConstCall(&classInstance, &Class::ConstMemberFunction, Arg1Type{ 1 });
+   voidOneArgMemberFunctionCaller.CallConstMemberFunction(&classInstance, &Class::ConstMemberFunction, Arg1Type{ 1 });
    //
    vector<Arg1Type> expectedCalls = { { Arg1Type{ 1 } } };
    VECTORS_ARE_EQUAL(expectedCalls, classInstance.calls);
 
 
-   voidOneArgMemberFunctionCaller.ConstCall(&classInstance, &Class::ConstMemberFunction, Arg1Type{ 3 });
+   voidOneArgMemberFunctionCaller.CallConstMemberFunction(&classInstance, &Class::ConstMemberFunction, Arg1Type{ 3 });
    //
    expectedCalls.push_back(Arg1Type{ 3 });
    VECTORS_ARE_EQUAL(expectedCalls, classInstance.calls);
 }
 
-TEST(NonConstCall_CallsNonConstMemberFunctionOnce)
+TEST(CallNonConstMemberFunction_CallsNonConstMemberFunctionOnce)
 {
    Class classInstance{};
    VoidOneArgMemberFunctionCaller<Class, Arg1Type> voidOneArgMemberFunctionCallerTests;
    IS_EMPTY(classInstance.calls);
    //
-   voidOneArgMemberFunctionCallerTests.NonConstCall(&classInstance, &Class::NonConstMemberFunction, Arg1Type{ 1 });
+   voidOneArgMemberFunctionCallerTests.CallNonConstMemberFunction(&classInstance, &Class::NonConstMemberFunction, Arg1Type{ 1 });
    //
    vector<Arg1Type> expectedCalls = { { Arg1Type{ 1 } } };
    VECTORS_ARE_EQUAL(expectedCalls, classInstance.calls);
 
 
-   voidOneArgMemberFunctionCallerTests.NonConstCall(&classInstance, &Class::NonConstMemberFunction, Arg1Type{ 3 });
+   voidOneArgMemberFunctionCallerTests.CallNonConstMemberFunction(&classInstance, &Class::NonConstMemberFunction, Arg1Type{ 3 });
    //
    expectedCalls.push_back(Arg1Type{ 3 });
    VECTORS_ARE_EQUAL(expectedCalls, classInstance.calls);

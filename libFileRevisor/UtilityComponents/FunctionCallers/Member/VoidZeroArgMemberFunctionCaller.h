@@ -6,12 +6,12 @@ class VoidZeroArgMemberFunctionCaller
 public:
    VoidZeroArgMemberFunctionCaller() {}
 
-   virtual void ConstCall(const ClassType* classInstance, void (ClassType::* constMemberFunction)() const) const
+   virtual void CallConstMemberFunction(const ClassType* classInstance, void (ClassType::* constMemberFunction)() const) const
    {
       (classInstance->*constMemberFunction)();
    }
 
-   virtual void NonConstCall(ClassType* classInstance, void (ClassType::* nonConstMemberFunction)()) const
+   virtual void CallNonConstMemberFunction(ClassType* classInstance, void (ClassType::* nonConstMemberFunction)()) const
    {
       (classInstance->*nonConstMemberFunction)();
    }

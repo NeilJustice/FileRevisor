@@ -38,13 +38,13 @@ TEST(Join_1ElementIntVector_ReturnsFirstElementRegardlessOfSeparator)
 }
 
 TEST3X3(Join_2ElementIntVector_ReturnsElementsJoinedBySeparator,
-   string_view expectedJoinedVector, const vector<int>& vec, char separator,
+   string_view expectedJoinedVector, const vector<int>& elements, char separator,
    "1 2", vector<int>{ 1, 2 }, ' ',
    "1,2", vector<int>{ 1, 2 }, ',',
    "1 2 3", vector<int>{ 1, 2, 3 }, ' ',
    "1,2,3", vector<int>{ 1, 2, 3 }, ',')
 {
-   const string joinedVector = Vector::Join(vec, separator);
+   const string joinedVector = Vector::Join(elements, separator);
    ARE_EQUAL(expectedJoinedVector, joinedVector);
 }
 

@@ -4,6 +4,15 @@
 class FileSystemMock : public Metal::Mock<FileSystem>
 {
 public:
+   // Deletes
+   METALMOCK_VOID3_CONST(DeleteTopLevelFilesAndEmptyDirectoriesInDirectory, const fs::path&, bool, bool)
+   METALMOCK_VOID2_CONST(RecursivelyDeleteAllFilesInDirectory, const string&, const FileRevisorArgs&)
+   METALMOCK_VOID2_CONST(RemoveFile, const char*, bool)
+   METALMOCK_VOID3_CONST(RemoveFileSystemFileOrDirectory, const fs::path&, bool, bool)
+
+   // Open File
+   METALMOCK_NONVOID2_CONST(shared_ptr<FILE>, OpenFile, const fs::path&, const char*)
+
    // Queries
    METALMOCK_NONVOID1_CONST(fs::path, GetAbsolutePath, const fs::path&)
    METALMOCK_NONVOID0_CONST(fs::path, CurrentDirectoryPath)
@@ -15,20 +24,11 @@ public:
    // Reads
    METALMOCK_NONVOID1_CONST(std::string, ReadText, const fs::path&)
 
+   // Readonly Flags
+   METALMOCK_VOID2_CONST(RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows, const fs::path&, bool)
+
    // Writes
    METALMOCK_VOID2_CONST(CreateTextFile, const fs::path&, string_view)
    METALMOCK_NONVOID2_CONST(fs::path, RenameFile, const fs::path&, string_view)
    METALMOCK_NONVOID2_CONST(fs::path, RenameDirectory, const fs::path&, string_view)
-
-   // Deletes
-   METALMOCK_VOID2_CONST(DeleteDirectoryIfNotDryRun, const fs::path&, bool)
-   METALMOCK_VOID1_CONST(RemoveFile, const char*)
-   METALMOCK_VOID1_CONST(RemoveAll, const fs::path&)
-   METALMOCK_VOID2_CONST(RecursivelyDeleteAllFilesInDirectory, const string&, const FileRevisorArgs&)
-
-   // Readonly Flags
-   METALMOCK_VOID1_CONST(RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows, const fs::path&)
-
-   // Open And Close Files
-   METALMOCK_NONVOID2_CONST(shared_ptr<FILE>, OpenFile, const fs::path&, const char*)
 };

@@ -35,7 +35,7 @@ STARTUP
   _rootDirectoryPathString = "RecursiveFileDeleterIntegrationTests";
   _rootDirectoryPath = _rootDirectoryPathString;
 
-  _fileSystem.RemoveAll(_rootDirectoryPath);
+  fs::remove_all(_rootDirectoryPath);
 
   _fileSystem.CreateTextFile(_root_file1 = _rootDirectoryPath / "file1.ext", ZenUnit::Random<string>());
   _fileSystem.CreateTextFile(_root_file2 = _rootDirectoryPath / ".gitignore", ZenUnit::Random<string>());
@@ -60,7 +60,7 @@ CLEANUP
 #if defined __linux__|| defined __APPLE__
   Chmod777Directory(_root_subdirectory5);
 #endif
-  _fileSystem.RemoveAll(_rootDirectoryPath);
+   fs::remove_all(_rootDirectoryPath);
 }
 
 void AssertExpectedStartingStateOfFileSystem() const

@@ -54,7 +54,7 @@ int ReplaceTextInTextFilesSubProgram::Run(const FileRevisorArgs& args) const
 
 size_t ReplaceTextInTextFilesSubProgram::RegexReplaceTextInTextFile(const fs::path& textFilePath, const FileRevisorArgs& args) const
 {
-   _call_PrintReadingFileMessageIfVerboseMode->ConstCall(
+   _call_PrintReadingFileMessageIfVerboseMode->CallConstMemberFunction(
       this, &ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue, args.verbose, textFilePath);
    const string textFileText = _fileSystem->ReadText(textFilePath);
    const string regexReplacedTextFileText = _regexer->Replace(textFileText, args.fromRegexPattern, args.toRegexPattern);

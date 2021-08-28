@@ -4,7 +4,7 @@ template<typename ClassType, typename Arg1Type>
 class VoidOneArgMemberFunctionCaller
 {
 public:
-   virtual void ConstCall(
+   virtual void CallConstMemberFunction(
       const ClassType* classInstance,
       void (ClassType::* constMemberFunction)(Arg1Type) const,
       Arg1Type arg1) const
@@ -12,7 +12,7 @@ public:
       (classInstance->*constMemberFunction)(arg1);
    }
 
-   virtual void NonConstCall(
+   virtual void CallNonConstMemberFunction(
       ClassType* classInstance,
       void (ClassType::* nonConstMemberFunction)(Arg1Type),
       Arg1Type arg1) const

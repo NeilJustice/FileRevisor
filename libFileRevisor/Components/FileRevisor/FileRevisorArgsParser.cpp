@@ -35,7 +35,7 @@ FileRevisorArgs FileRevisorArgsParser::ParseArgs(const vector<string>& stringArg
    args.commandLine = Vector::Join(stringArgs, ' ');
    args.programMode = _call_DetermineProgramMode(isRenameFilesMode, isRenameDirectoriesMode, isReplaceTextInTextFilesMode, isDeleteDirectoryMode);
    tuple<fs::path, string, string> targetDirectory_fromRegexPattern_toRegexPattern =
-      _caller_ParseDirAndFromAndToArguments->ConstCall(this, &FileRevisorArgsParser::ParseTargetAndFromAndToArguments, docoptValues, isDeleteDirectoryMode);
+      _caller_ParseDirAndFromAndToArguments->CallConstMemberFunction(this, &FileRevisorArgsParser::ParseTargetAndFromAndToArguments, docoptValues, isDeleteDirectoryMode);
    args.targetDirectoryPath = get<0>(targetDirectory_fromRegexPattern_toRegexPattern);
    args.fromRegexPattern = get<1>(targetDirectory_fromRegexPattern_toRegexPattern);
    args.toRegexPattern = get<2>(targetDirectory_fromRegexPattern_toRegexPattern);

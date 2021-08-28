@@ -2,15 +2,15 @@
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Components/SubPrograms/DeleteDirectorySubProgram.h"
 #include "libFileRevisor/UtilityComponents/FunctionCallers/TryCatchCallers/NonVoidOneArgTryCatchCaller.h"
-#include "libFileRevisor/UtilityComponents/Iteration/ForEach/OneExtraArgMemberForEacher.h"
-#include "libFileRevisor/UtilityComponents/Iteration/ForEach/ParallelOneExtraArgMemberForEacher.h"
+#include "libFileRevisor/UtilityComponents/Iteration/ForEach/TwoArgMemberForEacher.h"
+#include "libFileRevisor/UtilityComponents/Iteration/ForEach/ParallelTwoArgMemberForEacher.h"
 #include "libFileRevisor/UtilityComponents/Strings/Pluralizer.h"
 #include "libFileRevisor/UtilityComponents/FunctionCallers/TryCatchCallers/VoidTwoArgTryCatchCaller.h"
 
 DeleteDirectorySubProgram::DeleteDirectorySubProgram()
    // Function Callers
-   : _oneExtraArgMemberForEacher_DeleteDirectory(make_unique<OneExtraArgMemberForEacherType>())
-   , _parallelOneExtraArgMemberForEacher_DeleteDirectory(make_unique<ParallelOneExtraArgMemberForEacherType>())
+   : _oneExtraArgMemberForEacher_DeleteDirectory(make_unique<TwoArgMemberForEacherType>())
+   , _parallelTwoArgMemberForEacher_DeleteDirectory(make_unique<ParallelTwoArgMemberForEacherType>())
    , _voidTwoArgTryCatchCaller(make_unique<_voidTwoArgTryCatchCallerType>())
 {
 }
@@ -34,15 +34,15 @@ int DeleteDirectorySubProgram::Run(const FileRevisorArgs& args) const
       const string deletingInParallelMessage = String::ConcatStrings(
          "[FileRevisor] Deleting in parallel all files in directory: ", args.targetDirectoryPath.string());
       _console->WriteLine(deletingInParallelMessage);
-      _parallelOneExtraArgMemberForEacher_DeleteDirectory->ParallelOneExtraArgMemberForEach(
+      _parallelTwoArgMemberForEacher_DeleteDirectory->ParallelCallConstMemberFunctionWithEachElement(
          topLevelDirectoryPathsInTargetDirectory, this, &DeleteDirectorySubProgram::TryCatchCallDeleteDirectory, args);
    }
    else
    {
-      _oneExtraArgMemberForEacher_DeleteDirectory->OneExtraArgMemberForEach(
+      _oneExtraArgMemberForEacher_DeleteDirectory->CallConstMemberFunctionWithEachElement(
          topLevelDirectoryPathsInTargetDirectory, this, &DeleteDirectorySubProgram::DeleteDirectory, args);
    }
-   _fileSystem->DeleteDirectoryIfNotDryRun(args.targetDirectoryPath, args.dryrun);
+   _fileSystem->DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(args.targetDirectoryPath, args.skipFilesInUse, args.dryrun);
    return 0;
 }
 

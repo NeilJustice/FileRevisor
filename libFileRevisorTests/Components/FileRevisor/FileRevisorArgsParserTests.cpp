@@ -89,7 +89,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
 
    const tuple<fs::path, string, string> targetDirectory_fromRegexPattern_toRegexPattern(
       ZenUnit::Random<string>(), ZenUnit::Random<string>(), ZenUnit::Random<string>());
-   _caller_ParseDirAndFromAndToArgumentsMock->ConstCallMock.Return(targetDirectory_fromRegexPattern_toRegexPattern);
+   _caller_ParseDirAndFromAndToArgumentsMock->CallConstMemberFunctionMock.Return(targetDirectory_fromRegexPattern_toRegexPattern);
 
    const vector<string> stringArgs = ZenUnit::RandomVector<string>();
    //
@@ -105,7 +105,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
    }));
    METALMOCK(DetermineProgramModeMock.CalledOnceWith(
       isRenameFilesMode, isRenameDirectoriesMode, isReplaceTextInTextFilesMode, isDeleteDirectoryMode));
-   METALMOCK(_caller_ParseDirAndFromAndToArgumentsMock->ConstCallMock.CalledOnceWith(
+   METALMOCK(_caller_ParseDirAndFromAndToArgumentsMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_fileRevisorArgsParser, &FileRevisorArgsParser::ParseTargetAndFromAndToArguments,
       docoptValues, isDeleteDirectoryMode));
    METALMOCK(_docoptParserMock->GetOptionalBoolMock.CalledAsFollows(

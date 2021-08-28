@@ -6,5 +6,5 @@ class NonVoidOneArgMemberFunctionCallerMock : public Metal::Mock<NonVoidOneArgMe
 {
 public:
    using MemberFunctionType = ReturnType(ClassType::*)(ArgType) const;
-   METALMOCK_NONVOID3_CONST(ReturnType, ConstCall, const ClassType*, MemberFunctionType, ArgType)
+   METALMOCK_NONVOID3_CONST(ReturnType, CallConstMemberFunction, const ClassType*, MemberFunctionType, ArgType)
 };
