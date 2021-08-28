@@ -4,5 +4,5 @@
 class FileRevisorPreambleMakerMock : public Metal::Mock<FileRevisorPreambleMaker>
 {
 public:
-   METALMOCK_NONVOID1_CONST(string, MakePreambleLines, const FileRevisorArgs&)
+   METALMOCK_VOID1_CONST(PrintPreambleLines, const FileRevisorArgs&)
 };

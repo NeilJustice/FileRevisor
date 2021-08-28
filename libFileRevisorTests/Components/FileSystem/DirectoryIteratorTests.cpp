@@ -9,7 +9,7 @@ AFACT(DefaultConstructor_NewsComponents_SetsFieldsToDefaultValues)
 AFACT(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsEndIterationMarker_ReturnsEmptyVector)
 AFACT(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsNotEndIterationMarker_FileIsSkippableType_DoesNotAddToTextFilePaths_ReturnsEmptyVector)
 AFACT(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsNotEndIterationMarker_FileIsNotSkippableType_AddsToTextFilePaths_ReturnsTextFilePaths)
-AFACT(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNullptr_WritesErrorMessage_ReturnsTrue)
+AFACT(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNullptr_WritesYellowNoteMessage_ReturnsTrue)
 AFACT(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotNullptr_ReadsFirst64BytesOfFile_FileLengthIs0_ReturnsTrue)
 AFACT(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotNullptr_ReadsFirst64BytesOfFile_FileLengthIsNot0_First64BytesContains0_ReturnsTrue)
 AFACT(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotNullptr_ReadsFirst64BytesOfFile_FileLengthIsNot0_First64BytesDoesNotContain0_ReturnsFalse)
@@ -107,17 +107,17 @@ TEST(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsNotEndIterationM
    VECTORS_ARE_EQUAL(expectedTextFilePaths, textFilePaths);
 }
 
-TEST(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNullptr_WritesErrorMessage_ReturnsTrue)
+TEST(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNullptr_WritesYellowNoteMessage_ReturnsTrue)
 {
    _fileOpenerCloserMock->OpenReadModeBinaryFileMock.Return(nullptr);
-   _consoleMock->WriteLineMock.Expect();
+   _consoleMock->ThreadIdWriteLineColorMock.Expect();
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
    const bool isFileEmptyOrBinaryOrNotAnsiOrNotOpenable = _directoryIterator.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(filePath);
    //
    METALMOCK(_fileOpenerCloserMock->OpenReadModeBinaryFileMock.CalledOnceWith(filePath, false));
-   const string expectedUnableToOpenFileMessage = String::ConcatStrings("[FileRevisor]     Note: Unable to open file ", filePath.string());
-   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedUnableToOpenFileMessage));
+   const string expectedUnableToOpenFileMessage = String::ConcatStrings("Note: Unable to open file ", filePath.string());
+   METALMOCK(_consoleMock->ThreadIdWriteLineColorMock.CalledOnceWith(expectedUnableToOpenFileMessage, Color::Yellow));
    IS_TRUE(isFileEmptyOrBinaryOrNotAnsiOrNotOpenable);
 }
 

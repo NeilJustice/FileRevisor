@@ -24,16 +24,15 @@ int DeleteDirectorySubProgram::Run(const FileRevisorArgs& args) const
    const bool targetDirectoryExists = _fileSystem->FileOrDirectoryExists(args.targetDirectoryPath);
    if (!targetDirectoryExists)
    {
-      const string directoryDoesNotExistMessage = String::ConcatStrings("[FileRevisor] Directory does not exist: ", args.targetDirectoryPath.string());
-      _console->WriteLine(directoryDoesNotExistMessage);
+      const string directoryDoesNotExistMessage = String::ConcatStrings("Directory does not exist: ", args.targetDirectoryPath.string());
+      _console->ThreadIdWriteLine(directoryDoesNotExistMessage);
       return 0;
    }
    const vector<string> topLevelDirectoryPathsInTargetDirectory = _fileSystem->GetStringDirectoryPathsInDirectory(args.targetDirectoryPath, false);
    if (args.parallel)
    {
-      const string deletingInParallelMessage = String::ConcatStrings(
-         "[FileRevisor] Deleting in parallel all files in directory: ", args.targetDirectoryPath.string());
-      _console->WriteLine(deletingInParallelMessage);
+      const string deletingInParallelMessage = String::ConcatStrings("Deleting in parallel all files in directory: ", args.targetDirectoryPath.string());
+      _console->ThreadIdWriteLine(deletingInParallelMessage);
       _parallelTwoArgMemberForEacher_DeleteDirectory->ParallelCallConstMemberFunctionWithEachElement(
          topLevelDirectoryPathsInTargetDirectory, this, &DeleteDirectorySubProgram::TryCatchCallDeleteDirectory, args);
    }

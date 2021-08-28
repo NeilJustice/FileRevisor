@@ -136,14 +136,4 @@ static void Chmod777Directory(const fs::path& directoryPath)
 }
 #endif
 
-#if _WIN32
-void AddReadonlyFlagToFile(const fs::path& filePath)
-{
-  const DWORD fileAttributes = GetFileAttributesW(filePath.c_str());
-  const DWORD fileAttributesPlusReadonly = fileAttributes | FILE_ATTRIBUTE_READONLY;
-  const BOOL setFileAttributesReturnValue = SetFileAttributesW(filePath.c_str(), fileAttributesPlusReadonly);
-  release_assert(setFileAttributesReturnValue == TRUE);
-}
-#endif
-
 RUN_TESTS(RecursiveFileDeleterIntegrationTests)

@@ -50,8 +50,7 @@ FileRevisorArgs FileRevisorArgsParser::ParseArgs(const vector<string>& stringArg
 
 void FileRevisorArgsParser::PrintPreambleLines(const FileRevisorArgs& args) const
 {
-   const string preambleLines = _fileRevisorPreambleMaker->MakePreambleLines(args);
-   _console->WriteLine(preambleLines);
+   _fileRevisorPreambleMaker->PrintPreambleLines(args);
 }
 
 tuple<fs::path, string, string> FileRevisorArgsParser::ParseTargetAndFromAndToArguments(

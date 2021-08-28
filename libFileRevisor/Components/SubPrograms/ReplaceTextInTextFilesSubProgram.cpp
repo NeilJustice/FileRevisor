@@ -40,14 +40,14 @@ int ReplaceTextInTextFilesSubProgram::Run(const FileRevisorArgs& args) const
    if (args.dryrun)
    {
       const string message = String::ConcatValues(
-         "[FileRevisor]  DryRun: Would replace text in ", numberOfFilesThatWereOrWouldBeModified, " ", fileOrFiles);
-      _console->WriteLine(message);
+         "DryRun: Would replace text in ", numberOfFilesThatWereOrWouldBeModified, " ", fileOrFiles);
+      _console->ThreadIdWriteLine(message);
    }
    else
    {
       const string message = String::ConcatValues(
-         "[FileRevisor] Result: Replaced text in ", numberOfFilesThatWereOrWouldBeModified, " ", fileOrFiles);
-      _console->WriteLine(message);
+         "Result: Replaced text in ", numberOfFilesThatWereOrWouldBeModified, " ", fileOrFiles);
+      _console->ThreadIdWriteLine(message);
    }
    return 0;
 }
@@ -62,13 +62,13 @@ size_t ReplaceTextInTextFilesSubProgram::RegexReplaceTextInTextFile(const fs::pa
    {
       if (args.dryrun)
       {
-         const string wouldReplaceTextInFileMessage = "[FileRevisor]  DryRun: Would replace text in file " + textFilePath.string();
-         _console->WriteLine(wouldReplaceTextInFileMessage);
+         const string wouldReplaceTextInFileMessage = "DryRun: Would replace text in file " + textFilePath.string();
+         _console->ThreadIdWriteLine(wouldReplaceTextInFileMessage);
          return 1;
       }
       _fileSystem->CreateTextFile(textFilePath, regexReplacedTextFileText);
-      const string replacedTextInFileMessage = "[FileRevisor] Replaced: Text in file " + textFilePath.string();
-      _console->WriteLine(replacedTextInFileMessage);
+      const string replacedTextInFileMessage = "Replaced: Text in file " + textFilePath.string();
+      _console->ThreadIdWriteLine(replacedTextInFileMessage);
       return 1;
    }
    return 0;
@@ -78,7 +78,7 @@ void ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue(bo
 {
    if (verbose)
    {
-      const string readingFileMessage = "[FileRevisor] Verbose: Reading file " + textFilePath.string();
-      _console->WriteLine(readingFileMessage);
+      const string readingFileMessage = "Verbose: Reading file " + textFilePath.string();
+      _console->ThreadIdWriteLine(readingFileMessage);
    }
 }

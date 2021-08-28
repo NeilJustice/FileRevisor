@@ -219,7 +219,7 @@ TEST(RemoveFileSystemFileOrDirectory_IgnoreFileDeleteErrorIsTrue_DryRunIsFalse_D
    //
    METALMOCK(_call_fs_removeMock.CalledOnceWith(filePath));
    const string expectedExceptionClassNameAndMessage = "std::runtime_error: " + exceptionMessage;
-   const string expectedIgnoringExceptionMessage = "[FileRevisor] Ignoring exception because --skip-files-in-use: " + expectedExceptionClassNameAndMessage;
+   const string expectedIgnoringExceptionMessage = "Ignoring exception because --skip-files-in-use: " + expectedExceptionClassNameAndMessage;
    METALMOCK(_consoleMock->ThreadIdWriteLineColorMock.CalledOnceWith(expectedIgnoringExceptionMessage, Color::Yellow));
 }
 

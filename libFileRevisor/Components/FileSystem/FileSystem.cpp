@@ -278,7 +278,7 @@ void FileSystem::RemoveFileSystemFileOrDirectory(const fs::path& filePath, bool 
          if (ignoreFileDeleteError)
          {
             const string exceptionClassNameAndMessage = Type::GetExceptionClassNameAndMessage(&ex);
-            const string message = "[FileRevisor] Ignoring exception because --skip-files-in-use: " + exceptionClassNameAndMessage;
+            const string message = "Ignoring exception because --skip-files-in-use: " + exceptionClassNameAndMessage;
             _console->ThreadIdWriteLineColor(message, Color::Yellow);
          }
          else

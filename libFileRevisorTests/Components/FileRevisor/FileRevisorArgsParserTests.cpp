@@ -134,14 +134,12 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
 
 TEST(PrintPreambleLines_WritesPreambleLinesToConsole)
 {
-   const string preambleLines = _fileRevisorPreambleMakerMock->MakePreambleLinesMock.ReturnRandom();
-   _consoleMock->WriteLineMock.Expect();
+   _fileRevisorPreambleMakerMock->PrintPreambleLinesMock.Expect();
    const FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    //
    _fileRevisorArgsParser.PrintPreambleLines(args);
    //
-   METALMOCK(_fileRevisorPreambleMakerMock->MakePreambleLinesMock.CalledOnceWith(args));
-   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(preambleLines));
+   METALMOCK(_fileRevisorPreambleMakerMock->PrintPreambleLinesMock.CalledOnceWith(args));
 }
 
 TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsTrue_ParsesDirArgumentAsRequired_ReturnsDirAndFromAndToArgumentValues)

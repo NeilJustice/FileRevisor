@@ -93,8 +93,8 @@ bool DirectoryIterator::IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(const fs::path
    const shared_ptr<FILE> fileOpenInBinaryReadMode = _fileOpenerCloser->OpenReadModeBinaryFile(filePath, false);
    if (fileOpenInBinaryReadMode == nullptr)
    {
-      const string unableToOpenFileMessage = String::ConcatStrings("[FileRevisor]     Note: Unable to open file ", filePath.string());
-      _console->WriteLine(unableToOpenFileMessage);
+      const string unableToOpenFileMessage = String::ConcatStrings("Note: Unable to open file ", filePath.string());
+      _console->ThreadIdWriteLineColor(unableToOpenFileMessage, Color::Yellow);
       return true;
    }
    const pair<size_t, array<char, 64>> fileIsEmptyAndFirst64Bytes = _fileReader->ReadFirst64Bytes(fileOpenInBinaryReadMode.get());

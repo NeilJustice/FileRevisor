@@ -36,10 +36,10 @@ int FileRevisorProgram::Main(int argc, char* argv[])
    const int exitCode = _nonVoidOneArgTryCatchCaller->TryCatchCallConstMemberFunction(
       this, &FileRevisorProgram::Run, stringArgs, &FileRevisorProgram::ExceptionHandler);
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
-   const string durationLine = "[FileRevisor] Duration: " + elapsedSeconds + " seconds";
-   _console->WriteLine(durationLine);
-   const string exitCodeLine = "[FileRevisor] ExitCode: " + to_string(exitCode);
-   _console->WriteLine(exitCodeLine);
+   const string durationLine = "Duration: " + elapsedSeconds + " seconds";
+   _console->ThreadIdWriteLine(durationLine);
+   const string exitCodeLine = "ExitCode: " + to_string(exitCode);
+   _console->ThreadIdWriteLine(exitCodeLine);
    return exitCode;
 }
 

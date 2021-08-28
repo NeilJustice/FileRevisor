@@ -76,8 +76,8 @@ TEST(DefaultConstructor_NewsFileSystem)
 
 TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsRegexReplaceFileTextOnEachTextFilePath_Returns0,
    bool dryRun, const string& expectedMessagePrefix,
-   true,  "[FileRevisor]  DryRun: Would replace text in ",
-   false, "[FileRevisor] Result: Replaced text in ")
+   true,  "DryRun: Would replace text in ",
+   false, "Result: Replaced text in ")
 {
    _directoryIteratorMock->SetDirectoryIteratorMock.Expect();
 
@@ -91,7 +91,7 @@ TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsRegexReplaceFileTextOnEachText
 
    const string fileOrFiles = _pluralizerMock->PotentiallyPluralizeWordMock.ReturnRandom();
 
-   _consoleMock->WriteLineMock.Expect();
+   _consoleMock->ThreadIdWriteLineMock.Expect();
 
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    args.dryrun = dryRun;
@@ -111,7 +111,7 @@ TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsRegexReplaceFileTextOnEachText
       &ReplaceTextInTextFilesSubProgram::RegexReplaceTextInTextFile, args));
    METALMOCK(_pluralizerMock->PotentiallyPluralizeWordMock.CalledOnceWith(numberOfFilesThatWereOrWouldBeModified, "file", "files"));
    const string expectedMessage = expectedMessagePrefix + to_string(numberOfFilesThatWereOrWouldBeModified) + " " + fileOrFiles;
-   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedMessage));
+   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedMessage));
    IS_ZERO(exitCode);
 }
 
@@ -146,7 +146,7 @@ TEST(RegexReplaceTextInTextFile_DryRunIsTrue_ReplacedFileTextDiffersFromOriginal
    const string replacedTextFileText = ZenUnit::Random<string>() + ZenUnit::Random<string>();
    _regexerMock->ReplaceMock.Return(replacedTextFileText);
 
-   _consoleMock->WriteLineMock.Expect();
+   _consoleMock->ThreadIdWriteLineMock.Expect();
 
    const fs::path textFilePath = ZenUnit::Random<string>();
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
@@ -160,8 +160,8 @@ TEST(RegexReplaceTextInTextFile_DryRunIsTrue_ReplacedFileTextDiffersFromOriginal
       args.verbose, textFilePath));
    METALMOCK(_fileSystemMock->ReadTextMock.CalledOnceWith(textFilePath));
    METALMOCK(_regexerMock->ReplaceMock.CalledOnceWith(textFileText, args.fromRegexPattern, args.toRegexPattern));
-   const string expectedReplacedTextMessage = "[FileRevisor]  DryRun: Would replace text in file " + textFilePath.string();;
-   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedReplacedTextMessage));
+   const string expectedReplacedTextMessage = "DryRun: Would replace text in file " + textFilePath.string();;
+   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedReplacedTextMessage));
    ARE_EQUAL(1, numberOfFilesThatWereOrWouldBeModified);
 }
 
@@ -176,7 +176,7 @@ TEST(RegexReplaceTextInTextFile_DryRunIsFalse_ReplacedFileTextDiffersFromOrigina
 
    _fileSystemMock->CreateTextFileMock.Expect();
 
-   _consoleMock->WriteLineMock.Expect();
+   _consoleMock->ThreadIdWriteLineMock.Expect();
 
    const fs::path textFilePath = ZenUnit::Random<string>();
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
@@ -189,8 +189,8 @@ TEST(RegexReplaceTextInTextFile_DryRunIsFalse_ReplacedFileTextDiffersFromOrigina
    METALMOCK(_fileSystemMock->ReadTextMock.CalledOnceWith(textFilePath));
    METALMOCK(_regexerMock->ReplaceMock.CalledOnceWith(textFileText, args.fromRegexPattern, args.toRegexPattern));
    METALMOCK(_fileSystemMock->CreateTextFileMock.CalledOnceWith(textFilePath, replacedTextFileText));
-   const string expectedReplacedTextMessage = "[FileRevisor] Replaced: Text in file " + textFilePath.string();;
-   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedReplacedTextMessage));
+   const string expectedReplacedTextMessage = "Replaced: Text in file " + textFilePath.string();;
+   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedReplacedTextMessage));
    ARE_EQUAL(1, numberOfFilesThatWereOrWouldBeModified);
 }
 
@@ -202,13 +202,13 @@ TEST(PrintReadingFileMessageIfVerboseIsTrue_VerboseIsFalse_DoesNothing)
 
 TEST(PrintReadingFileMessageIfVerboseIsTrue_VerboseIsTrue_PrintsReadingFileMessage)
 {
-   _consoleMock->WriteLineMock.Expect();
+   _consoleMock->ThreadIdWriteLineMock.Expect();
    const fs::path textFilePath = ZenUnit::Random<fs::path>();
    //
    _replaceTextInTextFilesSubProgram.PrintReadingFileMessageIfVerboseIsTrue(true, textFilePath);
    //
-   const string expectedReadingFileMessage = "[FileRevisor] Verbose: Reading file " + textFilePath.string();
-   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedReadingFileMessage));
+   const string expectedReadingFileMessage = "Verbose: Reading file " + textFilePath.string();
+   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedReadingFileMessage));
 }
 
 RUN_TESTS(ReplaceTextInTextFilesSubProgramTests)

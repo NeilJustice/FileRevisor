@@ -86,8 +86,7 @@ TEST(ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDen
    THROWS_EXCEPTION(_recursiveFileDeleter.ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDenied(filePath, args),
       FileSystemException, fileSystemException.what());
    //
-   METALMOCK(_fileSystemExceptionMakerMock->
-      MakeFileSystemExceptionForFailedToDeleteFileMock.CalledOnceWith(filePath));
+   METALMOCK(_fileSystemExceptionMakerMock->MakeFileSystemExceptionForFailedToDeleteFileMock.CalledOnceWith(filePath));
 }
 
 TEST(ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDenied_SkipFilesInUseIsTrue_ErrnoIs13_WritesSkippingMessage_DoesNotThrowException)
@@ -97,16 +96,16 @@ TEST(ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDen
 
    _fileSystemExceptionMakerMock->GetErrnoValueMock.Return(ErrnoValue::PermissionDenied);
 
-   _consoleMock->WriteLineMock.Expect();
+   _consoleMock->ThreadIdWriteLineMock.Expect();
 
    const char* const filePath = ZenUnit::Random<const char*>();
    //
    _recursiveFileDeleter.ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDenied(filePath, args);
    //
    const string expectedSkippingFileMessage = String::ConcatStrings(
-      "[FileRevisor] Skipped file: \"", filePath, "\" because of error 13 (permission denied) when attempting to delete it");
+      "Skipped file: \"", filePath, "\" because of error 13 (permission denied) when attempting to delete it");
    METALMOCK(_fileSystemExceptionMakerMock->GetErrnoValueMock.CalledOnce());
-   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(expectedSkippingFileMessage));
+   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedSkippingFileMessage));
 }
 
 TEST(ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDenied_SkipFilesInUseIsTrue_ErrnoIsNot13_ThrowsFileSystemException)
@@ -114,8 +113,7 @@ TEST(ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDen
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    args.skipFilesInUse = true;
 
-   const FileSystemException fileSystemException =
-      _fileSystemExceptionMakerMock->MakeFileSystemExceptionForFailedToDeleteFileMock.ReturnRandom();
+   const FileSystemException fileSystemException = _fileSystemExceptionMakerMock->MakeFileSystemExceptionForFailedToDeleteFileMock.ReturnRandom();
 
    const int errnoValueThatIsNotPermissionDenied =
       ZenUnit::RandomBetween<int>(0, static_cast<long long>(ErrnoValue::PermissionDenied) - 1);
@@ -123,13 +121,11 @@ TEST(ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDen
 
    const char* const filePath = ZenUnit::Random<const char*>();
    //
-   THROWS_EXCEPTION(_recursiveFileDeleter.
-      ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDenied(filePath, args),
+   THROWS_EXCEPTION(_recursiveFileDeleter.ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDenied(filePath, args),
       FileSystemException, fileSystemException.what());
    //
    METALMOCK(_fileSystemExceptionMakerMock->GetErrnoValueMock.CalledOnce());
-   METALMOCK(_fileSystemExceptionMakerMock->
-      MakeFileSystemExceptionForFailedToDeleteFileMock.CalledOnceWith(filePath));
+   METALMOCK(_fileSystemExceptionMakerMock->MakeFileSystemExceptionForFailedToDeleteFileMock.CalledOnceWith(filePath));
 }
 
 #ifdef _WIN32
@@ -143,8 +139,8 @@ TEST(ThrowFileSystemExceptionIfFindFirstFileExReturnedInvalidHandleValue_FindFir
 
 TEST(ThrowFileSystemExceptionIfFindFirstFileExReturnedInvalidHandleValue_FindFirstFileExHandleIsInvalidHandleValue_ThrowsFileSystemException)
 {
-   const FileSystemException fileSystemException = _fileSystemExceptionMakerMock->
-      MakeFileSystemExceptionForFindFirstFileExHavingReturnedInvalidHandleValueMock.ReturnRandom();
+   const FileSystemException fileSystemException =
+      _fileSystemExceptionMakerMock->MakeFileSystemExceptionForFindFirstFileExHavingReturnedInvalidHandleValueMock.ReturnRandom();
    const HANDLE findFirstFileExHandle = INVALID_HANDLE_VALUE;
    const char* const directoryPathSearchPatternChars = ZenUnit::Random<const char*>();
    //
@@ -189,8 +185,7 @@ TEST1X1(RemoveReadonlyFlagFromConstCharPointerFilePath_GetsFileAttributesWhichIn
    static_cast<DWORD>(FILE_ATTRIBUTE_READONLY),
    static_cast<DWORD>(FILE_ATTRIBUTE_READONLY | FILE_ATTRIBUTE_HIDDEN))
 {
-   const FileSystemException fileSystemException = _fileSystemExceptionMakerMock->
-      MakeFileSystemExceptionForFailedToSetFileAttributeMock.ReturnRandom();
+   const FileSystemException fileSystemException = _fileSystemExceptionMakerMock->MakeFileSystemExceptionForFailedToSetFileAttributeMock.ReturnRandom();
    GetFileAttributesAMock.Return(fileAttributes);
    SetFileAttributesAMock.Return(FALSE);
    const char* const filePath = ZenUnit::Random<const char*>();
@@ -218,9 +213,7 @@ TEST(PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException_U
 
 TEST(PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException_UnlinkReturnValueIs0_QuietIsFalse_PrintsDeletedFileMessage)
 {
-   _recursiveFileDeleter_SelfMocked._consoleMock->WriteLineMock.Expect();
-
-   const thread::id thisThreadId = _recursiveFileDeleter_SelfMocked._threadIdGetterMock->GetThreadIdMock.ReturnRandom();
+   _recursiveFileDeleter_SelfMocked._consoleMock->ThreadIdWriteLineMock.Expect();
 
    const char* const filePath = ZenUnit::Random<const char*>();
    const int unlinkReturnValue = 0;
@@ -229,9 +222,8 @@ TEST(PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException_U
    //
    _recursiveFileDeleter_SelfMocked.PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException(filePath, unlinkReturnValue, args);
    //
-   const string expectedDeletedFileMessage = String::ConcatValues("[FileRevisor Thread ", thisThreadId, "] Deleted file ", filePath);
-   METALMOCK(_recursiveFileDeleter_SelfMocked._consoleMock->WriteLineMock.CalledOnceWith(expectedDeletedFileMessage));
-   METALMOCK(_recursiveFileDeleter_SelfMocked._threadIdGetterMock->GetThreadIdMock.CalledOnce());
+   const string expectedDeletedFilePathMessage = String::ConcatValues(" Deleted ", filePath);
+   METALMOCK(_recursiveFileDeleter_SelfMocked._consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedDeletedFilePathMessage));
 }
 
 TEST(PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException_UnlinkReturnValueIsNot0_CallsThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDenied)

@@ -26,9 +26,8 @@ RecursiveFileDeleter::~RecursiveFileDeleter()
 
 void RecursiveFileDeleter::PrintDeletedFileMessage(const char* filePath) const
 {
-   const thread::id threadId = _threadIdGetter->GetThreadId();
-   const string deletedFileMessage = String::ConcatValues("[FileRevisor Thread ", threadId, "] Deleted file ", filePath);
-   _console->WriteLine(deletedFileMessage);
+   const string deletedFileMessage = String::ConcatStrings(" Deleted ", filePath);
+   _console->ThreadIdWriteLine(deletedFileMessage);
 }
 
 #if defined __linux__|| defined __APPLE__
@@ -60,7 +59,7 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* dire
             const char* const filePath = filePathOrSubdirectoryPathChars;
             if (args.dryrun)
             {
-               const string wouldDeleteFileMessage = String::ConcatStrings("[FileRevisor] DryRun: Would delete file ", filePath);
+               const string wouldDeleteFileMessage = String::ConcatStrings("DryRun: Would delete file ", filePath);
                _console->ThreadIdWriteLine(wouldDeleteFileMessage);
             }
             else
@@ -116,7 +115,7 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* dire
             const char* const filePath = filePathOrSubdirectoryPathChars;
             if (args.dryrun)
             {
-               const string wouldDeleteFileMessage = String::ConcatStrings("[FileRevisor] DryRun: Would delete file ", filePath);
+               const string wouldDeleteFileMessage = String::ConcatStrings("DryRun: Would delete file ", filePath);
                _console->ThreadIdWriteLine(wouldDeleteFileMessage);
             }
             else
@@ -157,8 +156,8 @@ void RecursiveFileDeleter::ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueA
       if (errnoValue == ErrnoValue::PermissionDenied)
       {
          const string skippingFileMessage = String::ConcatStrings(
-            "[FileRevisor] Skipped file: \"", filePath, "\" because of error 13 (permission denied) when attempting to delete it");
-         _console->WriteLine(skippingFileMessage);
+            "Skipped file: \"", filePath, "\" because of error 13 (permission denied) when attempting to delete it");
+         _console->ThreadIdWriteLine(skippingFileMessage);
          return;
       }
    }

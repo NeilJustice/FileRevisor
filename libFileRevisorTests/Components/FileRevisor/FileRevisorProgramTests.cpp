@@ -81,7 +81,7 @@ TEST(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTim
 
    const string elapsedSeconds = _stopwatchMock->StopAndGetElapsedSecondsMock.ReturnRandom();
 
-   _consoleMock->WriteLineMock.Expect();
+   _consoleMock->ThreadIdWriteLineMock.Expect();
 
    const int argc = ZenUnit::RandomBetween<int>(2, 5);
    const string exePath = ZenUnit::Random<string>();
@@ -95,9 +95,9 @@ TEST(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTim
    METALMOCK(_nonVoidOneArgTryCatchCallerMock->TryCatchCallConstMemberFunctionMock.CalledOnceWith(
       &_fileRevisorProgram, &FileRevisorProgram::Run, vectorArgs, &FileRevisorProgram::ExceptionHandler));
    METALMOCK(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce());
-   const string expectedDurationLine = "[FileRevisor] Duration: " + elapsedSeconds + " seconds";
-   const string expectedExitCodeLine = "[FileRevisor] ExitCode: " + to_string(exitCode);
-   METALMOCK(_consoleMock->WriteLineMock.CalledAsFollows(
+   const string expectedDurationLine = "Duration: " + elapsedSeconds + " seconds";
+   const string expectedExitCodeLine = "ExitCode: " + to_string(exitCode);
+   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledAsFollows(
    {
       { expectedDurationLine },
       { expectedExitCodeLine }
