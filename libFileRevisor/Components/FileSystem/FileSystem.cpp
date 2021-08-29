@@ -12,7 +12,7 @@
 #include "libFileRevisor/UtilityComponents/FunctionCallers/Member/NonVoidTwoArgMemberFunctionCaller.h"
 #include "libFileRevisor/UtilityComponents/FunctionCallers/Member/VoidOneArgMemberFunctionCaller.h"
 #include "libFileRevisor/UtilityComponents/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
-#include "libFileRevisor/UtilityComponents/Iteration/ForEach/ThreeArgMemberForEacher.h"
+#include "libFileRevisor/UtilityComponents/Iteration/ForEach/ThreeArgMemberFunctionForEacher.h"
 #include "libFileRevisor/UtilityComponents/Strings/ConstCharPointerGetter.h"
 
 FileSystem::FileSystem()

@@ -5,10 +5,10 @@
 #endif
 
 template<typename ClassType, typename T, typename Arg2Type>
-class ParallelTwoArgMemberForEacher
+class ParallelTwoArgMemberFunctionForEacher
 {
 public:
-   virtual ~ParallelTwoArgMemberForEacher() = default;
+   virtual ~ParallelTwoArgMemberFunctionForEacher() = default;
 
    using ConstMemberFunctionType = void(ClassType::*)(const T&, Arg2Type) const;
 

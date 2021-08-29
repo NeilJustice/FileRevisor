@@ -1,8 +1,8 @@
 #pragma once
-#include "libFileRevisor/UtilityComponents/Iteration/ForEach/ParallelTwoArgMemberForEacher.h"
+#include "libFileRevisor/UtilityComponents/Iteration/ForEach/ParallelTwoArgMemberFunctionForEacher.h"
 
 template<typename ClassType, typename T, typename Arg2Type>
-class ParallelTwoArgMemberForEacherMock : public Metal::Mock<ParallelTwoArgMemberForEacher<ClassType, T, Arg2Type>>
+class ParallelTwoArgMemberFunctionForEacherMock : public Metal::Mock<ParallelTwoArgMemberFunctionForEacher<ClassType, T, Arg2Type>>
 {
 public:
    using ConstMemberFunctionType = void(ClassType::*)(const T&, Arg2Type) const;

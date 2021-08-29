@@ -1,8 +1,8 @@
 #pragma once
-#include "libFileRevisor/UtilityComponents/Iteration/ForEach/TwoArgMemberForEacher.h"
+#include "libFileRevisor/UtilityComponents/Iteration/ForEach/TwoArgMemberFunctionForEacher.h"
 
 template<typename ClassType, typename T, typename Arg2Type>
-class TwoArgMemberForEacherMock : public Metal::Mock<TwoArgMemberForEacher<ClassType, T, Arg2Type>>
+class TwoArgMemberFunctionForEacherMock : public Metal::Mock<TwoArgMemberFunctionForEacher<ClassType, T, Arg2Type>>
 {
 public:
    using ConstMemberFunctionType = void(ClassType::*)(const T&, Arg2Type) const;

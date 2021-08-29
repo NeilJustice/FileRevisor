@@ -2,15 +2,15 @@
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Components/SubPrograms/DeleteDirectorySubProgram.h"
 #include "libFileRevisor/UtilityComponents/FunctionCallers/TryCatchCallers/NonVoidOneArgTryCatchCaller.h"
-#include "libFileRevisor/UtilityComponents/Iteration/ForEach/TwoArgMemberForEacher.h"
-#include "libFileRevisor/UtilityComponents/Iteration/ForEach/ParallelTwoArgMemberForEacher.h"
+#include "libFileRevisor/UtilityComponents/Iteration/ForEach/TwoArgMemberFunctionForEacher.h"
+#include "libFileRevisor/UtilityComponents/Iteration/ForEach/ParallelTwoArgMemberFunctionForEacher.h"
 #include "libFileRevisor/UtilityComponents/Strings/Pluralizer.h"
 #include "libFileRevisor/UtilityComponents/FunctionCallers/TryCatchCallers/VoidTwoArgTryCatchCaller.h"
 
 DeleteDirectorySubProgram::DeleteDirectorySubProgram()
    // Function Callers
-   : _oneExtraArgMemberForEacher_DeleteDirectory(make_unique<TwoArgMemberForEacherType>())
-   , _parallelTwoArgMemberForEacher_DeleteDirectory(make_unique<ParallelTwoArgMemberForEacherType>())
+   : _oneExtraArgMemberForEacher_DeleteDirectory(make_unique<TwoArgMemberFunctionForEacherType>())
+   , _parallelTwoArgMemberFunctionForEacher_DeleteDirectory(make_unique<ParallelTwoArgMemberFunctionForEacherType>())
    , _voidTwoArgTryCatchCaller(make_unique<_voidTwoArgTryCatchCallerType>())
 {
 }
@@ -33,7 +33,7 @@ int DeleteDirectorySubProgram::Run(const FileRevisorArgs& args) const
    {
       const string deletingInParallelMessage = String::ConcatStrings("Deleting in parallel all files in directory: ", args.targetDirectoryPath.string());
       _console->ThreadIdWriteLine(deletingInParallelMessage);
-      _parallelTwoArgMemberForEacher_DeleteDirectory->ParallelCallConstMemberFunctionWithEachElement(
+      _parallelTwoArgMemberFunctionForEacher_DeleteDirectory->ParallelCallConstMemberFunctionWithEachElement(
          topLevelDirectoryPathsInTargetDirectory, this, &DeleteDirectorySubProgram::TryCatchCallDeleteDirectory, args);
    }
    else

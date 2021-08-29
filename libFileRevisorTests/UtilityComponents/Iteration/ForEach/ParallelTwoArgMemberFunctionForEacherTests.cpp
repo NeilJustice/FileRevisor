@@ -1,9 +1,9 @@
 #include "pch.h"
-#include "libFileRevisor/UtilityComponents/Iteration/ForEach/TwoArgMemberForEacher.h"
-#include "libFileRevisorTests/UtilityComponents/Iteration/ForEach/MetalMock/ParallelTwoArgMemberForEacherMock.h"
+#include "libFileRevisor/UtilityComponents/Iteration/ForEach/TwoArgMemberFunctionForEacher.h"
+#include "libFileRevisorTests/UtilityComponents/Iteration/ForEach/MetalMock/ParallelTwoArgMemberFunctionForEacherMock.h"
 
 template<typename T, typename Arg2Type>
-TEMPLATE_TESTS(ParallelTwoArgMemberForEacherTests, T, Arg2Type)
+TEMPLATE_TESTS(ParallelTwoArgMemberFunctionForEacherTests, T, Arg2Type)
 AFACT(ParallelCallConstMemberFunctionWithEachElement_EmptyElements_DoesNotCallMemberFunction)
 AFACT(ParallelCallConstMemberFunctionWithEachElement_OneItemElements_CallsMemberFunctionWithElementAndExtraArgOnce)
 AFACT(ParallelCallConstMemberFunctionWithEachElement_TwoItemElements_CallsInParallelOnBothElementsTheMemberFunctionWithElementAndExtraArg)
@@ -50,9 +50,9 @@ public:
 };
 
 using ConstMemberFunctionType = void(TestingClass::*)(const T&, Arg2Type) const;
-using ParallelTwoArgMemberForEacherType = ParallelTwoArgMemberForEacher<TestingClass, T, Arg2Type>;
+using ParallelTwoArgMemberFunctionForEacherType = ParallelTwoArgMemberFunctionForEacher<TestingClass, T, Arg2Type>;
 
-ParallelTwoArgMemberForEacherType _parallelTwoArgMemberForEacher_DeleteDirectory;
+ParallelTwoArgMemberFunctionForEacherType _parallelTwoArgMemberFunctionForEacher_DeleteDirectory;
 
 TEST(ParallelCallConstMemberFunctionWithEachElement_EmptyElements_DoesNotCallMemberFunction)
 {
@@ -60,7 +60,7 @@ TEST(ParallelCallConstMemberFunctionWithEachElement_EmptyElements_DoesNotCallMem
    const vector<T> emptyElements;
    const Arg2Type arg2 = ZenUnit::Random<Arg2Type>();
    //
-   _parallelTwoArgMemberForEacher_DeleteDirectory.ParallelCallConstMemberFunctionWithEachElement(
+   _parallelTwoArgMemberFunctionForEacher_DeleteDirectory.ParallelCallConstMemberFunctionWithEachElement(
       emptyElements, &testingClass, &TestingClass::TwoArgMemberFunction, arg2);
    //
    testingClass.AssertFunctionNotCalled();
@@ -72,7 +72,7 @@ TEST(ParallelCallConstMemberFunctionWithEachElement_OneItemElements_CallsMemberF
    const vector<T> elements = { ZenUnit::Random<T>() };
    const Arg2Type arg2 = ZenUnit::Random<Arg2Type>();
    //
-   _parallelTwoArgMemberForEacher_DeleteDirectory.ParallelCallConstMemberFunctionWithEachElement(
+   _parallelTwoArgMemberFunctionForEacher_DeleteDirectory.ParallelCallConstMemberFunctionWithEachElement(
       elements, &testingClass, &TestingClass::TwoArgMemberFunction, arg2);
    //
    testingClass.AssertFunctionCalledOnceWith(elements[0], arg2);
@@ -84,7 +84,7 @@ TEST(ParallelCallConstMemberFunctionWithEachElement_TwoItemElements_CallsInParal
    const vector<T> elements = { ZenUnit::Random<T>(), ZenUnit::Random<T>() };
    const Arg2Type arg2 = ZenUnit::Random<Arg2Type>();
    //
-   _parallelTwoArgMemberForEacher_DeleteDirectory.ParallelCallConstMemberFunctionWithEachElement(
+   _parallelTwoArgMemberFunctionForEacher_DeleteDirectory.ParallelCallConstMemberFunctionWithEachElement(
       elements, &testingClass, &TestingClass::TwoArgMemberFunction, arg2);
    //
    testingClass.AssertCalledTwiceInAnyOrder(
@@ -98,5 +98,5 @@ TEST(TestingClassTwoArgMemberFunction_CodeCoverage)
    testingClass.TwoArgMemberFunction(ZenUnit::Random<T>(), ZenUnit::Random<Arg2Type>());
 }
 
-RUN_TEMPLATE_TESTS(ParallelTwoArgMemberForEacherTests, int, int)
-THEN_RUN_TEMPLATE_TESTS(ParallelTwoArgMemberForEacherTests, double, char)
+RUN_TEMPLATE_TESTS(ParallelTwoArgMemberFunctionForEacherTests, int, int)
+THEN_RUN_TEMPLATE_TESTS(ParallelTwoArgMemberFunctionForEacherTests, double, char)

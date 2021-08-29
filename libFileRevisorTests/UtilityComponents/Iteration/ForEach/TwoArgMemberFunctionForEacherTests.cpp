@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "libFileRevisor/UtilityComponents/Iteration/ForEach/TwoArgMemberForEacher.h"
+#include "libFileRevisor/UtilityComponents/Iteration/ForEach/TwoArgMemberFunctionForEacher.h"
 
 template<typename T, typename Arg2Type>
-TEMPLATE_TESTS(TwoArgMemberForEacherTests, T, Arg2Type)
+TEMPLATE_TESTS(TwoArgMemberFunctionForEacherTests, T, Arg2Type)
 AFACT(TwoArgMemberForEach_EmptyCollection_DoesNotCallFunc)
 AFACT(TwoArgMemberForEach_OneItemCollection_CallsThisPointerBoundFuncOnce)
 AFACT(TwoArgMemberForEach_TwoItemCollection_CallsThisPointerBoundFuncTwice)
@@ -23,16 +23,16 @@ public:
    METALMOCK_VOID2_CONST(TwoArgFunction, const T&, Arg2Type)
 };
 
-using TwoArgMemberForEacherType = TwoArgMemberForEacher<ClassType, T, Arg2Type>;
+using TwoArgMemberFunctionForEacherType = TwoArgMemberFunctionForEacher<ClassType, T, Arg2Type>;
 
-TwoArgMemberForEacherType _twoArgMemberForEacher;
+TwoArgMemberFunctionForEacherType _twoArgMemberFunctionForEacher;
 
 TEST(TwoArgMemberForEach_EmptyCollection_DoesNotCallFunc)
 {
    const ClassTypeMock classInstance{};
    const Arg2Type arg2 = ZenUnit::Random<Arg2Type>();
    //
-   _twoArgMemberForEacher.CallConstMemberFunctionWithEachElement(classInstance.elements, &classInstance, &ClassType::TwoArgFunction, arg2);
+   _twoArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElement(classInstance.elements, &classInstance, &ClassType::TwoArgFunction, arg2);
 }
 
 TEST(TwoArgMemberForEach_OneItemCollection_CallsThisPointerBoundFuncOnce)
@@ -43,7 +43,7 @@ TEST(TwoArgMemberForEach_OneItemCollection_CallsThisPointerBoundFuncOnce)
    classInstance.TwoArgFunctionMock.Expect();
    const Arg2Type arg2 = ZenUnit::Random<Arg2Type>();
    //
-   _twoArgMemberForEacher.CallConstMemberFunctionWithEachElement(classInstance.elements, &classInstance, &ClassType::TwoArgFunction, arg2);
+   _twoArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElement(classInstance.elements, &classInstance, &ClassType::TwoArgFunction, arg2);
    //
    classInstance.TwoArgFunctionMock.CalledOnceWith(element1, arg2);
 }
@@ -57,7 +57,7 @@ TEST(TwoArgMemberForEach_TwoItemCollection_CallsThisPointerBoundFuncTwice)
    classInstance.TwoArgFunctionMock.Expect();
    const Arg2Type arg2 = ZenUnit::Random<Arg2Type>();
    //
-   _twoArgMemberForEacher.CallConstMemberFunctionWithEachElement(classInstance.elements, &classInstance, &ClassType::TwoArgFunction, arg2);
+   _twoArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElement(classInstance.elements, &classInstance, &ClassType::TwoArgFunction, arg2);
    //
    classInstance.TwoArgFunctionMock.CalledAsFollows(
    {
@@ -72,5 +72,5 @@ TEST(TwoArgFunction_CodeCoverage)
    classInstance.TwoArgFunction(T{}, Arg2Type{});
 }
 
-RUN_TEMPLATE_TESTS(TwoArgMemberForEacherTests, int, int)
-THEN_RUN_TEMPLATE_TESTS(TwoArgMemberForEacherTests, double, char)
+RUN_TEMPLATE_TESTS(TwoArgMemberFunctionForEacherTests, int, int)
+THEN_RUN_TEMPLATE_TESTS(TwoArgMemberFunctionForEacherTests, double, char)

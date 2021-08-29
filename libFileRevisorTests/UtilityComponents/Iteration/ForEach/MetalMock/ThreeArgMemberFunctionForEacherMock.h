@@ -1,8 +1,8 @@
 #pragma once
-#include "libFileRevisor/UtilityComponents/Iteration/ForEach/ThreeArgMemberForEacher.h"
+#include "libFileRevisor/UtilityComponents/Iteration/ForEach/ThreeArgMemberFunctionForEacher.h"
 
 template<typename ClassType, typename T, typename Arg2Type, typename Arg3Type>
-class ThreeArgMemberForEacherMock : public Metal::Mock<ThreeArgMemberForEacher<ClassType, T, Arg2Type, Arg3Type>>
+class ThreeArgMemberFunctionForEacherMock : public Metal::Mock<ThreeArgMemberFunctionForEacher<ClassType, T, Arg2Type, Arg3Type>>
 {
 public:
    using ConstMemberFunctionType = void(ClassType::*)(const T&, Arg2Type, Arg3Type) const;

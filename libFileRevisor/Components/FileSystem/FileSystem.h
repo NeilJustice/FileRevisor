@@ -8,7 +8,7 @@ template<typename ReturnType, typename ClassType, typename Argument1Type, typena
 class NonVoidTwoArgMemberFunctionCaller;
 
 template<typename ClassType, typename T, typename Arg2Type, typename Arg3Type>
-class ThreeArgMemberForEacher;
+class ThreeArgMemberFunctionForEacher;
 
 template<typename ClassType, typename Arg1Type>
 class VoidOneArgMemberFunctionCaller;
@@ -56,7 +56,7 @@ private:
 
    unique_ptr<const VoidTwoArgMemberFunctionCaller<FileSystem, const fs::path&, bool>> _caller_RemoveFileSystemFileOrDirectory;
 
-   using _foreacher_DeleteFileOrDirectoryType = ThreeArgMemberForEacher<FileSystem, fs::path, bool, bool>;
+   using _foreacher_DeleteFileOrDirectoryType = ThreeArgMemberFunctionForEacher<FileSystem, fs::path, bool, bool>;
    unique_ptr<const _foreacher_DeleteFileOrDirectoryType> _foreacher_DeleteFileOrDirectory;
 
    // Constant Components

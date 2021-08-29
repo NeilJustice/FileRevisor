@@ -3,8 +3,8 @@
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 #include "libFileRevisorTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
 #include "libFileRevisorTests/UtilityComponents/FunctionCallers/TryCatchCallers/MetalMock/VoidTwoArgTryCatchCallerMock.h"
-#include "libFileRevisorTests/UtilityComponents/Iteration/ForEach/MetalMock/TwoArgMemberForEacherMock.h"
-#include "libFileRevisorTests/UtilityComponents/Iteration/ForEach/MetalMock/ParallelTwoArgMemberForEacherMock.h"
+#include "libFileRevisorTests/UtilityComponents/Iteration/ForEach/MetalMock/TwoArgMemberFunctionForEacherMock.h"
+#include "libFileRevisorTests/UtilityComponents/Iteration/ForEach/MetalMock/ParallelTwoArgMemberFunctionForEacherMock.h"
 #include "libFileRevisorTests/UtilityComponents/Strings/MetalMock/PluralizerMock.h"
 
 TESTS(DeleteDirectorySubProgramTests)
@@ -24,11 +24,11 @@ ConsoleMock* _consoleMock = nullptr;
 FileSystemMock* _fileSystemMock = nullptr;
 PluralizerMock* _pluralizerMock = nullptr;
 // Function Callers
-using TwoArgMemberForEacherMockType = TwoArgMemberForEacherMock<DeleteDirectorySubProgram, string, const FileRevisorArgs&>;
-TwoArgMemberForEacherMockType* _oneExtraArgMemberForEacher_DeleteDirectoryMock = nullptr;
+using TwoArgMemberFunctionForEacherMockType = TwoArgMemberFunctionForEacherMock<DeleteDirectorySubProgram, string, const FileRevisorArgs&>;
+TwoArgMemberFunctionForEacherMockType* _oneExtraArgMemberForEacher_DeleteDirectoryMock = nullptr;
 
-using ParallelTwoArgMemberForEacherMockType = ParallelTwoArgMemberForEacherMock<DeleteDirectorySubProgram, string, const FileRevisorArgs&>;
-ParallelTwoArgMemberForEacherMockType* _parallelTwoArgMemberForEacher_DeleteDirectoryMock = nullptr;
+using ParallelTwoArgMemberFunctionForEacherMockType = ParallelTwoArgMemberFunctionForEacherMock<DeleteDirectorySubProgram, string, const FileRevisorArgs&>;
+ParallelTwoArgMemberFunctionForEacherMockType* _parallelTwoArgMemberFunctionForEacher_DeleteDirectoryMock = nullptr;
 
 using _voidTwoArgTryCatchCallerMockType = VoidTwoArgTryCatchCallerMock<DeleteDirectorySubProgram, const string&, const FileRevisorArgs&>;
 _voidTwoArgTryCatchCallerMockType* _voidTwoArgTryCatchCallerMock = nullptr;
@@ -40,8 +40,8 @@ STARTUP
    _deleteDirectorySubProgram._fileSystem.reset(_fileSystemMock = new FileSystemMock);
    _deleteDirectorySubProgram._pluralizer.reset(_pluralizerMock = new PluralizerMock);
    // Function Callers
-   _deleteDirectorySubProgram._oneExtraArgMemberForEacher_DeleteDirectory.reset(_oneExtraArgMemberForEacher_DeleteDirectoryMock = new TwoArgMemberForEacherMockType);
-   _deleteDirectorySubProgram._parallelTwoArgMemberForEacher_DeleteDirectory.reset(_parallelTwoArgMemberForEacher_DeleteDirectoryMock = new ParallelTwoArgMemberForEacherMockType);
+   _deleteDirectorySubProgram._oneExtraArgMemberForEacher_DeleteDirectory.reset(_oneExtraArgMemberForEacher_DeleteDirectoryMock = new TwoArgMemberFunctionForEacherMockType);
+   _deleteDirectorySubProgram._parallelTwoArgMemberFunctionForEacher_DeleteDirectory.reset(_parallelTwoArgMemberFunctionForEacher_DeleteDirectoryMock = new ParallelTwoArgMemberFunctionForEacherMockType);
    _deleteDirectorySubProgram._voidTwoArgTryCatchCaller.reset(_voidTwoArgTryCatchCallerMock = new _voidTwoArgTryCatchCallerMockType);
 }
 
@@ -54,7 +54,7 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(DeleteDirectorySubProgram._pluralizer);
    // Function Callers
    DELETE_TO_ASSERT_NEWED(DeleteDirectorySubProgram._oneExtraArgMemberForEacher_DeleteDirectory);
-   DELETE_TO_ASSERT_NEWED(DeleteDirectorySubProgram._parallelTwoArgMemberForEacher_DeleteDirectory);
+   DELETE_TO_ASSERT_NEWED(DeleteDirectorySubProgram._parallelTwoArgMemberFunctionForEacher_DeleteDirectory);
    DELETE_TO_ASSERT_NEWED(DeleteDirectorySubProgram._voidTwoArgTryCatchCaller);
 }
 
@@ -100,7 +100,7 @@ TEST(Run_TargetDirectoryExists_ParallelIsTrue_WritesDeletingInParallelMessage_Re
 {
    _fileSystemMock->FileOrDirectoryExistsMock.Return(true);
 
-   _parallelTwoArgMemberForEacher_DeleteDirectoryMock->ParallelCallConstMemberFunctionWithEachElementMock.Expect();
+   _parallelTwoArgMemberFunctionForEacher_DeleteDirectoryMock->ParallelCallConstMemberFunctionWithEachElementMock.Expect();
 
    const vector<string> topLevelDirectoryPathsInDirectory = _fileSystemMock->GetStringDirectoryPathsInDirectoryMock.ReturnRandom();
 
@@ -115,9 +115,10 @@ TEST(Run_TargetDirectoryExists_ParallelIsTrue_WritesDeletingInParallelMessage_Re
    //
    METALMOCK(_fileSystemMock->FileOrDirectoryExistsMock.CalledOnceWith(args.targetDirectoryPath));
    METALMOCK(_fileSystemMock->GetStringDirectoryPathsInDirectoryMock.CalledOnceWith(args.targetDirectoryPath, false));
-   METALMOCK(_parallelTwoArgMemberForEacher_DeleteDirectoryMock->ParallelCallConstMemberFunctionWithEachElementMock.CalledOnceWith(
+   METALMOCK(_parallelTwoArgMemberFunctionForEacher_DeleteDirectoryMock->ParallelCallConstMemberFunctionWithEachElementMock.CalledOnceWith(
       topLevelDirectoryPathsInDirectory, &_deleteDirectorySubProgram, &DeleteDirectorySubProgram::TryCatchCallDeleteDirectory, args));
-   METALMOCK(_fileSystemMock->DeleteTopLevelFilesAndEmptyDirectoriesInDirectoryMock.CalledOnceWith(args.targetDirectoryPath, args.skipFilesInUse, args.dryrun));
+   METALMOCK(_fileSystemMock->DeleteTopLevelFilesAndEmptyDirectoriesInDirectoryMock.CalledOnceWith(
+      args.targetDirectoryPath, args.skipFilesInUse, args.dryrun));
    const string expectedDeletingInParallelMessage = "Deleting in parallel all files in directory: " + args.targetDirectoryPath.string();
    METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedDeletingInParallelMessage));
    IS_ZERO(exitCode);

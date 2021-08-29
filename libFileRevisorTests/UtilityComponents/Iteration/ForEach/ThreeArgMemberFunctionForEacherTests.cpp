@@ -1,8 +1,8 @@
 #include "pch.h"
-#include "libFileRevisor/UtilityComponents/Iteration/ForEach/ThreeArgMemberForEacher.h"
+#include "libFileRevisor/UtilityComponents/Iteration/ForEach/ThreeArgMemberFunctionForEacher.h"
 
 template<typename T, typename Arg2Type, typename Arg3Type>
-TEMPLATE_TESTS(ThreeArgMemberForEacherTests, T, Arg2Type, Arg3Type)
+TEMPLATE_TESTS(ThreeArgMemberFunctionForEacherTests, T, Arg2Type, Arg3Type)
 AFACT(ThreeArgMemberForEach_EmptyCollection_DoesNotCallFunction)
 AFACT(ThreeArgMemberForEach_OneItemCollection_CallsThisPointerBoundFuncOnce)
 AFACT(ThreeArgMemberForEach_TwoItemCollection_CallsThisPointerBoundFuncTwice)
@@ -23,9 +23,9 @@ public:
    METALMOCK_VOID3_CONST(ThreeArgFunction, const T&, Arg2Type, Arg3Type)
 };
 
-using ThreeArgMemberForEacherType = ThreeArgMemberForEacher<ClassType, T, Arg2Type, Arg3Type>;
+using ThreeArgMemberFunctionForEacherType = ThreeArgMemberFunctionForEacher<ClassType, T, Arg2Type, Arg3Type>;
 
-ThreeArgMemberForEacherType _threeArgMemberForEacher;
+ThreeArgMemberFunctionForEacherType _threeArgMemberFunctionForEacher;
 
 TEST(ThreeArgMemberForEach_EmptyCollection_DoesNotCallFunction)
 {
@@ -33,7 +33,7 @@ TEST(ThreeArgMemberForEach_EmptyCollection_DoesNotCallFunction)
    const Arg2Type arg2 = ZenUnit::Random<Arg2Type>();
    const Arg3Type arg3 = ZenUnit::Random<Arg3Type>();
    //
-   _threeArgMemberForEacher.CallConstMemberFunctionWithEachElement(classInstance.elements, &classInstance, &ClassType::ThreeArgFunction, arg2, arg3);
+   _threeArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElement(classInstance.elements, &classInstance, &ClassType::ThreeArgFunction, arg2, arg3);
 }
 
 TEST(ThreeArgMemberForEach_OneItemCollection_CallsThisPointerBoundFuncOnce)
@@ -45,7 +45,7 @@ TEST(ThreeArgMemberForEach_OneItemCollection_CallsThisPointerBoundFuncOnce)
    const Arg2Type arg2 = ZenUnit::Random<Arg2Type>();
    const Arg3Type arg3 = ZenUnit::Random<Arg3Type>();
    //
-   _threeArgMemberForEacher.CallConstMemberFunctionWithEachElement(classInstance.elements, &classInstance, &ClassType::ThreeArgFunction, arg2, arg3);
+   _threeArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElement(classInstance.elements, &classInstance, &ClassType::ThreeArgFunction, arg2, arg3);
    //
    classInstance.ThreeArgFunctionMock.CalledOnceWith(element, arg2, arg3);
 }
@@ -60,7 +60,7 @@ TEST(ThreeArgMemberForEach_TwoItemCollection_CallsThisPointerBoundFuncTwice)
    const Arg2Type arg2 = ZenUnit::Random<Arg2Type>();
    const Arg3Type arg3 = ZenUnit::Random<Arg3Type>();
    //
-   _threeArgMemberForEacher.CallConstMemberFunctionWithEachElement(classInstance.elements, &classInstance, &ClassType::ThreeArgFunction, arg2, arg3);
+   _threeArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElement(classInstance.elements, &classInstance, &ClassType::ThreeArgFunction, arg2, arg3);
    //
    classInstance.ThreeArgFunctionMock.CalledAsFollows(
    {
@@ -75,5 +75,5 @@ TEST(ThreeArgFunction_CodeCoverage)
    classInstance.ThreeArgFunction(T{}, Arg2Type{}, Arg3Type{});
 }
 
-RUN_TEMPLATE_TESTS(ThreeArgMemberForEacherTests, int, int, int)
-THEN_RUN_TEMPLATE_TESTS(ThreeArgMemberForEacherTests, double, string, int)
+RUN_TEMPLATE_TESTS(ThreeArgMemberFunctionForEacherTests, int, int, int)
+THEN_RUN_TEMPLATE_TESTS(ThreeArgMemberFunctionForEacherTests, double, string, int)
