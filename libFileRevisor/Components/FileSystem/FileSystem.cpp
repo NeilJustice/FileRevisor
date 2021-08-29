@@ -31,7 +31,7 @@ FileSystem::FileSystem()
    // Function Callers
    , _caller_Exists(make_unique<NonVoidOneArgMemberFunctionCaller<bool, FileSystem, const fs::path&>>())
    , _caller_GetFileOrDirectoryPathsInDirectory(make_unique<_caller_GetFileOrDirectoryPathsInDirectoryType>())
-   , _caller_RemoveFileSystemFileOrDirectory(make_unique<VoidTwoArgMemberFunctionCaller<FileSystem, const fs::path&, bool>>())
+   , _caller_DeleteFileSystemFileOrDirectory(make_unique<VoidTwoArgMemberFunctionCaller<FileSystem, const fs::path&, bool>>())
    , _foreacher_DeleteFileOrDirectory(make_unique<_foreacher_DeleteFileOrDirectoryType>())
    // Constant Components
    , _console(make_unique<Console>())
@@ -227,7 +227,7 @@ fs::path FileSystem::RenameDirectory(const fs::path& directoryPath, string_view 
 
 void FileSystem::DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(const fs::path& directoryPath, bool skipFilesInUse, bool dryRun) const
 {
-   _caller_RemoveFileSystemFileOrDirectory->CallConstMemberFunction(
+   _caller_DeleteFileSystemFileOrDirectory->CallConstMemberFunction(
       this, &FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows, directoryPath, dryRun);
 
    const vector<fs::path> topLevelDirectoryPaths = _caller_GetFileOrDirectoryPathsInDirectory->CallConstMemberFunction(
@@ -236,9 +236,9 @@ void FileSystem::DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(const fs::pat
       this, &FileSystem::GetFilePathsInDirectory, directoryPath, false);
 
    _foreacher_DeleteFileOrDirectory->CallConstMemberFunctionWithEachElement(
-      topLevelDirectoryPaths, this, &FileSystem::RemoveFileSystemFileOrDirectory, skipFilesInUse, dryRun);
+      topLevelDirectoryPaths, this, &FileSystem::DeleteFileSystemFileOrDirectory, skipFilesInUse, dryRun);
    _foreacher_DeleteFileOrDirectory->CallConstMemberFunctionWithEachElement(
-      topLevelFilePaths, this, &FileSystem::RemoveFileSystemFileOrDirectory, skipFilesInUse, dryRun);
+      topLevelFilePaths, this, &FileSystem::DeleteFileSystemFileOrDirectory, skipFilesInUse, dryRun);
 }
 
 void FileSystem::RemoveFile(const char* filePath, bool ignoreFileDeleteError) const
@@ -258,7 +258,7 @@ void FileSystem::RemoveFile(const char* filePath, bool ignoreFileDeleteError) co
    }
 }
 
-void FileSystem::RemoveFileSystemFileOrDirectory(const fs::path& filePath, bool ignoreFileDeleteError, bool dryRun) const
+void FileSystem::DeleteFileSystemFileOrDirectory(const fs::path& filePath, bool ignoreFileDeleteError, bool dryRun) const
 {
    if (dryRun)
    {

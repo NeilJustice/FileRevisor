@@ -8,7 +8,7 @@ public:
    METALMOCK_VOID3_CONST(DeleteTopLevelFilesAndEmptyDirectoriesInDirectory, const fs::path&, bool, bool)
    METALMOCK_VOID2_CONST(RecursivelyDeleteAllFilesInDirectory, const string&, const FileRevisorArgs&)
    METALMOCK_VOID2_CONST(RemoveFile, const char*, bool)
-   METALMOCK_VOID3_CONST(RemoveFileSystemFileOrDirectory, const fs::path&, bool, bool)
+   METALMOCK_VOID3_CONST(DeleteFileSystemFileOrDirectory, const fs::path&, bool, bool)
 
    // Open File
    METALMOCK_NONVOID2_CONST(shared_ptr<FILE>, OpenFile, const fs::path&, const char*)

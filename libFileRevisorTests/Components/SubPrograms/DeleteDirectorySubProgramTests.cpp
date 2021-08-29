@@ -81,6 +81,7 @@ TEST(Run_TargetDirectoryExists_ParallelIsFalse_WritesDeletingSequentiallyMessage
    const vector<string> topLevelDirectoryPathsInDirectory = _fileSystemMock->GetStringDirectoryPathsInDirectoryMock.ReturnRandom();
 
    _fileSystemMock->DeleteTopLevelFilesAndEmptyDirectoriesInDirectoryMock.Expect();
+   _fileSystemMock->DeleteFileSystemFileOrDirectoryMock.Expect();
 
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    args.parallel = false;
@@ -93,6 +94,7 @@ TEST(Run_TargetDirectoryExists_ParallelIsFalse_WritesDeletingSequentiallyMessage
       topLevelDirectoryPathsInDirectory, &_deleteDirectorySubProgram, &DeleteDirectorySubProgram::DeleteDirectory, args));
    METALMOCK(_fileSystemMock->DeleteTopLevelFilesAndEmptyDirectoriesInDirectoryMock.CalledOnceWith(
       args.targetDirectoryPath, args.skipFilesInUse, args.dryrun));
+   METALMOCK(_fileSystemMock->DeleteFileSystemFileOrDirectoryMock.CalledOnceWith(args.targetDirectoryPath, args.skipFilesInUse, args.dryrun));
    IS_ZERO(exitCode);
 }
 
@@ -105,6 +107,7 @@ TEST(Run_TargetDirectoryExists_ParallelIsTrue_WritesDeletingInParallelMessage_Re
    const vector<string> topLevelDirectoryPathsInDirectory = _fileSystemMock->GetStringDirectoryPathsInDirectoryMock.ReturnRandom();
 
    _fileSystemMock->DeleteTopLevelFilesAndEmptyDirectoriesInDirectoryMock.Expect();
+   _fileSystemMock->DeleteFileSystemFileOrDirectoryMock.Expect();
 
    _consoleMock->ThreadIdWriteLineMock.Expect();
 
@@ -115,12 +118,13 @@ TEST(Run_TargetDirectoryExists_ParallelIsTrue_WritesDeletingInParallelMessage_Re
    //
    METALMOCK(_fileSystemMock->FileOrDirectoryExistsMock.CalledOnceWith(args.targetDirectoryPath));
    METALMOCK(_fileSystemMock->GetStringDirectoryPathsInDirectoryMock.CalledOnceWith(args.targetDirectoryPath, false));
+   const string expectedDeletingInParallelMessage = "Deleting in parallel all files in directory: " + args.targetDirectoryPath.string();
+   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedDeletingInParallelMessage));
    METALMOCK(_parallelTwoArgMemberFunctionForEacher_DeleteDirectoryMock->ParallelCallConstMemberFunctionWithEachElementMock.CalledOnceWith(
       topLevelDirectoryPathsInDirectory, &_deleteDirectorySubProgram, &DeleteDirectorySubProgram::TryCatchCallDeleteDirectory, args));
    METALMOCK(_fileSystemMock->DeleteTopLevelFilesAndEmptyDirectoriesInDirectoryMock.CalledOnceWith(
       args.targetDirectoryPath, args.skipFilesInUse, args.dryrun));
-   const string expectedDeletingInParallelMessage = "Deleting in parallel all files in directory: " + args.targetDirectoryPath.string();
-   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedDeletingInParallelMessage));
+   METALMOCK(_fileSystemMock->DeleteFileSystemFileOrDirectoryMock.CalledOnceWith(args.targetDirectoryPath, args.skipFilesInUse, args.dryrun));
    IS_ZERO(exitCode);
 }
 

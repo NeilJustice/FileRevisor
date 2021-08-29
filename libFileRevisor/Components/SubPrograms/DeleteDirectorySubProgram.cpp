@@ -42,6 +42,7 @@ int DeleteDirectorySubProgram::Run(const FileRevisorArgs& args) const
          topLevelDirectoryPathsInTargetDirectory, this, &DeleteDirectorySubProgram::DeleteDirectory, args);
    }
    _fileSystem->DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(args.targetDirectoryPath, args.skipFilesInUse, args.dryrun);
+   _fileSystem->DeleteFileSystemFileOrDirectory(args.targetDirectoryPath, args.skipFilesInUse, args.dryrun);
    return 0;
 }
 
