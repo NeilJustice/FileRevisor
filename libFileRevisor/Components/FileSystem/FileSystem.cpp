@@ -291,7 +291,7 @@ void FileSystem::DeleteFileSystemFileOrDirectory(const fs::path& filePath, bool 
 
 // Readonly Flags
 
-void FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows([[maybe_unused]]const fs::path& directoryPath, bool dryRun) const
+void FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows([[maybe_unused]]const fs::path& directoryPath, [[maybe_unused]]bool dryRun) const
 {
 #ifdef _WIN32
    if (!dryRun)
