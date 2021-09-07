@@ -84,14 +84,14 @@ TEST2X2(Run_CallsRenameDirectoryOnEachDirectoryPathInArgsDirPath_PrintsNumberOfD
    //
    const int exitCode = _renameDirectoriesSubProgram.Run(args);
    //
-   METALMOCK(_fileSystemMock->GetDirectoryPathsInDirectoryMock.CalledOnceWith(args.targetDirectoryPath, args.recurse));
-   METALMOCK(_directoryPathsTransformer_RenameDirectoryMock->TransformMock.CalledOnceWith(
-      directoryPathsInDirectory, &_renameDirectoriesSubProgram, &RenameDirectoriesSubProgram::RenameDirectory, args));
-   METALMOCK(_predicateCounterMock->CountWhereMock.CalledOnceWith(directoryRenameResults, RenameResult::DidRenameFileOrDirectoryFieldIsTrue));
-   METALMOCK(_pluralizerMock->PotentiallyPluralizeWordMock.CalledOnceWith(numberOfRenamedDirectories, "directory", "directories"));
    const string expectedNumberOfDirectoriesMessage = String::ConcatValues(
       expectedNumberOfDirectoriesMessagePrefix, numberOfRenamedDirectories, ' ', directoryOrDirectories);
-   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedNumberOfDirectoriesMessage));
+   METALMOCKTHEN(_fileSystemMock->GetDirectoryPathsInDirectoryMock.CalledOnceWith(args.targetDirectoryPath, args.recurse)).Then(
+   METALMOCKTHEN(_directoryPathsTransformer_RenameDirectoryMock->TransformMock.CalledOnceWith(
+      directoryPathsInDirectory, &_renameDirectoriesSubProgram, &RenameDirectoriesSubProgram::RenameDirectory, args))).Then(
+   METALMOCKTHEN(_predicateCounterMock->CountWhereMock.CalledOnceWith(directoryRenameResults, RenameResult::DidRenameFileOrDirectoryFieldIsTrue))).Then(
+   METALMOCKTHEN(_pluralizerMock->PotentiallyPluralizeWordMock.CalledOnceWith(numberOfRenamedDirectories, "directory", "directories"))).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedNumberOfDirectoriesMessage)));
    IS_ZERO(exitCode);
 }
 

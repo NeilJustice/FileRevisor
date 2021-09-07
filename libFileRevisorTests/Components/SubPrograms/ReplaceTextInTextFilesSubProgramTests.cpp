@@ -128,12 +128,12 @@ TEST(RegexReplaceTextInTextFile_DryRunIsTrueOrFalse_ReplacedFileTextEqualsOrigin
    //
    const size_t numberOfFilesThatWereOrWouldBeModified = _replaceTextInTextFilesSubProgram.RegexReplaceTextInTextFile(textFilePath, args);
    //
-   METALMOCK(_call_PrintReadingFileMessageIfVerboseModeMock->CallConstMemberFunctionMock.CalledOnceWith(
+   METALMOCKTHEN(_call_PrintReadingFileMessageIfVerboseModeMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_replaceTextInTextFilesSubProgram,
       &ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue,
-      args.verbose, textFilePath));
-   METALMOCK(_fileSystemMock->ReadTextMock.CalledOnceWith(textFilePath));
-   METALMOCK(_regexerMock->ReplaceMock.CalledOnceWith(textFileText, args.fromRegexPattern, args.toRegexPattern));
+      args.verbose, textFilePath)).Then(
+   METALMOCKTHEN(_fileSystemMock->ReadTextMock.CalledOnceWith(textFilePath))).Then(
+   METALMOCKTHEN(_regexerMock->ReplaceMock.CalledOnceWith(textFileText, args.fromRegexPattern, args.toRegexPattern)));
    IS_ZERO(numberOfFilesThatWereOrWouldBeModified);
 }
 
@@ -154,14 +154,14 @@ TEST(RegexReplaceTextInTextFile_DryRunIsTrue_ReplacedFileTextDiffersFromOriginal
    //
    const size_t numberOfFilesThatWereOrWouldBeModified = _replaceTextInTextFilesSubProgram.RegexReplaceTextInTextFile(textFilePath, args);
    //
-   METALMOCK(_call_PrintReadingFileMessageIfVerboseModeMock->CallConstMemberFunctionMock.CalledOnceWith(
+   const string expectedReplacedTextMessage = "DryRun: Would replace text in file " + textFilePath.string();;
+   METALMOCKTHEN(_call_PrintReadingFileMessageIfVerboseModeMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_replaceTextInTextFilesSubProgram,
       &ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue,
-      args.verbose, textFilePath));
-   METALMOCK(_fileSystemMock->ReadTextMock.CalledOnceWith(textFilePath));
-   METALMOCK(_regexerMock->ReplaceMock.CalledOnceWith(textFileText, args.fromRegexPattern, args.toRegexPattern));
-   const string expectedReplacedTextMessage = "DryRun: Would replace text in file " + textFilePath.string();;
-   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedReplacedTextMessage));
+      args.verbose, textFilePath)).Then(
+   METALMOCKTHEN(_fileSystemMock->ReadTextMock.CalledOnceWith(textFilePath))).Then(
+   METALMOCKTHEN(_regexerMock->ReplaceMock.CalledOnceWith(textFileText, args.fromRegexPattern, args.toRegexPattern))).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedReplacedTextMessage)));
    ARE_EQUAL(1, numberOfFilesThatWereOrWouldBeModified);
 }
 
@@ -184,13 +184,13 @@ TEST(RegexReplaceTextInTextFile_DryRunIsFalse_ReplacedFileTextDiffersFromOrigina
    //
    const size_t numberOfFilesThatWereOrWouldBeModified = _replaceTextInTextFilesSubProgram.RegexReplaceTextInTextFile(textFilePath, args);
    //
-   METALMOCK(_call_PrintReadingFileMessageIfVerboseModeMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &_replaceTextInTextFilesSubProgram, &ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue, args.verbose, textFilePath));
-   METALMOCK(_fileSystemMock->ReadTextMock.CalledOnceWith(textFilePath));
-   METALMOCK(_regexerMock->ReplaceMock.CalledOnceWith(textFileText, args.fromRegexPattern, args.toRegexPattern));
-   METALMOCK(_fileSystemMock->CreateTextFileMock.CalledOnceWith(textFilePath, replacedTextFileText));
    const string expectedReplacedTextMessage = "Replaced: Text in file " + textFilePath.string();;
-   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedReplacedTextMessage));
+   METALMOCKTHEN(_call_PrintReadingFileMessageIfVerboseModeMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &_replaceTextInTextFilesSubProgram, &ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue, args.verbose, textFilePath)).Then(
+   METALMOCKTHEN(_fileSystemMock->ReadTextMock.CalledOnceWith(textFilePath))).Then(
+   METALMOCKTHEN(_regexerMock->ReplaceMock.CalledOnceWith(textFileText, args.fromRegexPattern, args.toRegexPattern))).Then(
+   METALMOCKTHEN(_fileSystemMock->CreateTextFileMock.CalledOnceWith(textFilePath, replacedTextFileText))).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedReplacedTextMessage)));
    ARE_EQUAL(1, numberOfFilesThatWereOrWouldBeModified);
 }
 

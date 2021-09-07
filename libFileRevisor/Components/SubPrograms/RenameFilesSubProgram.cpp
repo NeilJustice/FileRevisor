@@ -48,8 +48,7 @@ bool RenameFilesSubProgram::DidRenameFileIsTrue(const RenameResult& fileRenameRe
    return fileRenameResult.didRenameFileOrDirectory;
 }
 
-RenameResult RenameFilesSubProgram::
-RenameFileIfFileNameMatchesFromPattern(const fs::path& filePath, const FileRevisorArgs& args) const
+RenameResult RenameFilesSubProgram::RenameFileIfFileNameMatchesFromPattern(const fs::path& filePath, const FileRevisorArgs& args) const
 {
    const string fileName = filePath.filename().string();
    const string regexReplacedFileName = _regexer->Replace(fileName, args.fromRegexPattern, args.toRegexPattern);
@@ -73,8 +72,7 @@ RenameFileIfFileNameMatchesFromPattern(const fs::path& filePath, const FileRevis
    return RenameResult(true, filePath, renamedFilePath);
 }
 
-void RenameFilesSubProgram::
-PrintDidNotMatchFileMessageIfVerboseMode(bool verbose, const fs::path& filePath) const
+void RenameFilesSubProgram::PrintDidNotMatchFileMessageIfVerboseMode(bool verbose, const fs::path& filePath) const
 {
    if (verbose)
    {
