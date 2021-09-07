@@ -115,9 +115,9 @@ TEST(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNull
    //
    const bool isFileEmptyOrBinaryOrNotAnsiOrNotOpenable = _directoryIterator.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(filePath);
    //
-   METALMOCK(_fileOpenerCloserMock->OpenReadModeBinaryFileMock.CalledOnceWith(filePath, false));
    const string expectedUnableToOpenFileMessage = String::ConcatStrings("Note: Unable to open file ", filePath.string());
-   METALMOCK(_consoleMock->ThreadIdWriteLineColorMock.CalledOnceWith(expectedUnableToOpenFileMessage, Color::Yellow));
+   METALMOCKTHEN(_fileOpenerCloserMock->OpenReadModeBinaryFileMock.CalledOnceWith(filePath, false)).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineColorMock.CalledOnceWith(expectedUnableToOpenFileMessage, Color::Yellow)));
    IS_TRUE(isFileEmptyOrBinaryOrNotAnsiOrNotOpenable);
 }
 
@@ -133,8 +133,8 @@ TEST(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotN
    //
    const bool isFileEmptyOrBinaryOrNotAnsiOrNotOpenable = _directoryIterator.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(filePath);
    //
-   METALMOCK(_fileOpenerCloserMock->OpenReadModeBinaryFileMock.CalledOnceWith(filePath, false));
-   METALMOCK(_fileReaderMock->ReadFirst64BytesMock.CalledOnceWith(fileOpenInBinaryReadMode.get()));
+   METALMOCKTHEN(_fileOpenerCloserMock->OpenReadModeBinaryFileMock.CalledOnceWith(filePath, false)).Then(
+   METALMOCKTHEN(_fileReaderMock->ReadFirst64BytesMock.CalledOnceWith(fileOpenInBinaryReadMode.get())));
    IS_TRUE(isFileEmptyOrBinaryOrNotAnsiOrNotOpenable);
 }
 
@@ -153,9 +153,9 @@ TEST(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotN
    //
    const bool isFileEmptyOrBinaryOrNotAnsiOrNotOpenable = _directoryIterator.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(filePath);
    //
-   METALMOCK(_fileOpenerCloserMock->OpenReadModeBinaryFileMock.CalledOnceWith(filePath, false));
-   METALMOCK(_fileReaderMock->ReadFirst64BytesMock.CalledOnceWith(fileOpenInBinaryReadMode.get()));
-   METALMOCK(_charArray64HelperMock->ArrayContains0Mock.CalledOnceWith(fileIsEmptyAndFirst64Bytes.second, numberOfBytesRead));
+   METALMOCKTHEN(_fileOpenerCloserMock->OpenReadModeBinaryFileMock.CalledOnceWith(filePath, false)).Then(
+   METALMOCKTHEN(_fileReaderMock->ReadFirst64BytesMock.CalledOnceWith(fileOpenInBinaryReadMode.get()))).Then(
+   METALMOCKTHEN(_charArray64HelperMock->ArrayContains0Mock.CalledOnceWith(fileIsEmptyAndFirst64Bytes.second, numberOfBytesRead)));
    IS_TRUE(isFileEmptyOrBinaryOrNotAnsiOrNotOpenable);
 }
 
@@ -174,9 +174,9 @@ TEST(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotN
    //
    const bool isFileEmptyOrBinaryOrNotAnsiOrNotOpenable = _directoryIterator.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(filePath);
    //
-   METALMOCK(_fileOpenerCloserMock->OpenReadModeBinaryFileMock.CalledOnceWith(filePath, false));
-   METALMOCK(_fileReaderMock->ReadFirst64BytesMock.CalledOnceWith(fileOpenInBinaryReadMode.get()));
-   METALMOCK(_charArray64HelperMock->ArrayContains0Mock.CalledOnceWith(fileIsEmptyAndFirst64Bytes.second, numberOfBytesRead));
+   METALMOCKTHEN(_fileOpenerCloserMock->OpenReadModeBinaryFileMock.CalledOnceWith(filePath, false)).Then(
+   METALMOCKTHEN(_fileReaderMock->ReadFirst64BytesMock.CalledOnceWith(fileOpenInBinaryReadMode.get()))).Then(
+   METALMOCKTHEN(_charArray64HelperMock->ArrayContains0Mock.CalledOnceWith(fileIsEmptyAndFirst64Bytes.second, numberOfBytesRead)));
    IS_FALSE(isFileEmptyOrBinaryOrNotAnsiOrNotOpenable);
 }
 
