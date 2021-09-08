@@ -2,7 +2,7 @@
 
 [![Standard](https://img.shields.io/badge/c%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B20) ![GitHub](https://img.shields.io/github/license/NeilJustice/FileRevisor) ![GitHub last commit](https://img.shields.io/github/last-commit/NeilJustice/FileRevisor)
 
-FileRevisor is a cross-platform C++ command line program for quickly deleting large directories in parallel, quickly renaming files or directories, or quickly replacing text in files.
+FileRevisor is a cross-platform C++ command line program for quickly deleting large directories in parallel, quickly renaming files or directories, and quickly replacing text in text files.
 
 FileRevisor's key feature is its extreme performance when deleting large folders in parallel on Windows. On Linux, directory deletions are quite a bit faster than on Windows, and so the parallel directory deletion peformance boost which FileRevisor provides is more modest on Linux relative to Windows. See below for Linux vs. Windows performance graphs.
 
@@ -21,8 +21,8 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
   * [rename-files](#rename-files)
   * [rename-directories](#rename-directories)
   * [replace-text](#replace-text)
-* [Linux directory deletion performance: rm -rf > /dev/null vs. FileRevisor](#linux-directory-deletion-performance-rm-rf->-dev-null-vs-FileRevisor)
-* [Windows folder deletion performance: CMD vs. Git Bash vs. PowerShell vs. FileRevisor delete-directory --parallel](#windows-folder-deletion-performance-cmd-vs-git-bash-vs-powershell-vs-filerevisor-delete-directory---parallel)
+* [Linux directory deletion performance graph](#linux-directory-deletion-performance-graph)
+* [Windows folder deletion performance graph](#windows-folder-deletion-performance-graph)
 * [FileRevisor code structure as it appears in Visual Studio Code on Linux](#filerevisor-code-structure-as-it-appears-in-visual-studio-code-on-linux)
 * [FileRevisor code structure as it appears in Visual Studio 2019 on Windows](#filerevisor-code-structure-as-it-appears-in-visual-studio-2019-on-windows)
 * [Linux Jenkins jobs which build, cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor's C++ code and mypy-flake8-pylint-SonarQube FileRevisor's CI/CD Python code](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filerevisors-c-code-and-mypy-flake8-pylint-sonarqube-scan-filerevisors-cicd-python-code)
@@ -72,9 +72,11 @@ Usage:
 
 ```prolog
 filerevisor delete-directory
-      --target=<TargetDirectoryPath>
-      [--parallel]
-      [--minimal]
+   --target=<TargetDirectoryPath>
+   [--parallel]
+   [--skip-files-in-use]
+   [--dryrun]
+   [--quiet]
 ```
 
 FileRevisor `delete-directory` mode quickly deletes all files in and below `--target=<TargetDirectoryPath>`. For extreme directory deletion performance, especially on Windows, specify `--parallel` to delete subdirectories below `TargetDirectoryPath` using one thread per subdirectory.
@@ -87,15 +89,15 @@ Shown in this screenshot is `filerevisor delete-directory` deleting `directory1`
 
 ```prolog
 filerevisor rename-files
-      --target=<TargetDirectoryPath>
-      --from=<FileNameRegex>
-      --to=<FileNameRegex>
-      [--recurse]
-      [--dryrun]
-      [--verbose]
+   --target=<TargetDirectoryPath>
+   --from=<FileNameRegex>
+   --to=<FileNameRegex>
+   [--recurse]
+   [--dryrun]
+   [--verbose]
 ```
 
-FileRevisor `rename-files` renames files in a specified directory matching a specified regular expression. `--recurse` can be specified to rename files in and below a specified directory.
+FileRevisor `rename-files` mode renames files in a specified directory matching a specified regular expression. `--recurse` can be specified to rename files in and below a specified directory.
 
 Shown in this screenshot is `filerevisor rename-files` renaming files with name `file` to new name `new_file_name` in the current directory:
 
@@ -105,15 +107,15 @@ Shown in this screenshot is `filerevisor rename-files` renaming files with name 
 
 ```prolog
 filerevisor rename-directories
-      --target=<TargetDirectoryPath>
-      --from=<DirectoryNameRegex>
-      --to=<DirectoryNameRegex>
-      [--recurse]
-      [--dryrun]
-      [--verbose]
+   --target=<TargetDirectoryPath>
+   --from=<DirectoryNameRegex>
+   --to=<DirectoryNameRegex>
+   [--recurse]
+   [--dryrun]
+   [--verbose]
 ```
 
-FileRevisor `rename-directories` renames directories in a specified directory matching a specified regular expression. `--recurse` can be specified to rename directories in and below a specified directory.
+FileRevisor `rename-directories` mode renames directories in a specified directory matching a specified regular expression. `--recurse` can be specified to rename directories in and below a specified directory.
 
 Shown in this screenshot is `filerevisor rename-directories` renaming directories with name `directory` to new name `new_directory_name` in the current directory:
 
@@ -123,31 +125,31 @@ Shown in this screenshot is `filerevisor rename-directories` renaming directorie
 
 ```prolog
 filerevisor replace-text
-      --target=<TargetDirectoryPath>
-      --from=<FileTextRegexPattern>
-      --to=<ReplacementFileTextRegexPattern>
-      [--recurse]
-      [--dryrun]
-      [--verbose]
+   --target=<TargetDirectoryPath>
+   --from=<FileTextRegexPattern>
+   --to=<ReplacementFileTextRegexPattern>
+   [--recurse]
+   [--dryrun]
+   [--verbose]
 ```
 
-FileRevisor `replace-text` replaces text in files in a specified directory matching a specified regular expression. `--recurse` can be specified to replace text in files in and below a specified directory.
+FileRevisor `replace-text` mode replaces text in files in a specified directory matching a specified regular expression. `--recurse` can be specified to replace text in files in and below a specified directory.
 
 Shown in this screenshot is `filerevisor replace-text` replacing text in files in the current directory containing text `apple` with replacement text `orange`:
 
 ![replace-text](Screenshots/replace-text.png)
 
-### Linux directory deletion performance: rm -rf > /dev/null vs. FileRevisor
+### Linux directory deletion performance graph
 
 ![Linux Directory Deletion Performance: rm -rf > /dev/null vs. FileRevisor](Screenshots/LinuxFileRevisorPerformanceGraph.png)
 
-### Windows folder deletion performance: CMD vs. Git Bash vs. PowerShell vs. FileRevisor delete-directory --parallel
+### Windows folder deletion performance graph
 
 ![Windows Folder Deletion Performance: Remove-Item -Recurse vs. FileRevisor delete-directory](Screenshots/WindowsFileRevisorPerformanceGraph.png)
 
-As you can see from the above two graphs, the implementation of Linux file deletions is quite a bit faster than the implementation of Windows file deletions, with modest time savings on Linux and massive time savings on Windows available by way of FileRevisor parallel folder deletion.
+As you can see from the above two graphs, Linux file deletions are quite a bit faster than Windows file deletions, with modest time savings available on Linux and massive time savings available on Windows by way of FileRevisor --parallel directory deletion.
 
-The CPU and storage hardware which generated the above performance numbers is a 32-core 64-thread AMD Threadripper 2990WX with a 512 GB Samsung 970 PRO NVMe drive.
+The OS, CPU, and storage hardware which generated the above performance numbers is Fedora 33 / Windows 10, 32-core 64-thread AMD Threadripper 2990WX, and a 512 GB Samsung 970 PRO NVMe drive.
 
 ### FileRevisor code structure as it appears in Visual Studio Code on Linux
 
@@ -182,7 +184,7 @@ CXX=clang++ cmake .. -DCMAKE_BUILD_TYPE=Release
 sudo cmake --build . --target install
 ```
 
-Result binary `/usr/local/bin/filerevisor`:
+Resulting binary `/usr/local/bin/filerevisor`:
 
 ![Linux filerevisor binary in /usr/local/bin](Screenshots/LinuxFileRevisorBinaryInUsrLocalBin.png)
 
