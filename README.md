@@ -32,7 +32,7 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
 
 ## FileRevisor command line usage
 
-```prolog
+```ini
 FileRevisor v0.16.0
 Quickly deletes directories, renames files, renames directories, or replaces text in files.
 
@@ -70,7 +70,7 @@ Usage:
 
 ### delete-directory
 
-```prolog
+```ini
 filerevisor delete-directory
    --target=<TargetDirectoryPath>
    [--parallel]
@@ -87,7 +87,7 @@ Shown in this screenshot is `filerevisor delete-directory` deleting `directory1`
 
 ### rename-files
 
-```prolog
+```ini
 filerevisor rename-files
    --target=<TargetDirectoryPath>
    --from=<FileNameRegex>
@@ -105,7 +105,7 @@ Shown in this screenshot is `filerevisor rename-files` renaming files with name 
 
 ### rename-directories
 
-```prolog
+```ini
 filerevisor rename-directories
    --target=<TargetDirectoryPath>
    --from=<DirectoryNameRegex>
@@ -123,7 +123,7 @@ Shown in this screenshot is `filerevisor rename-directories` renaming directorie
 
 ### replace-text
 
-```prolog
+```ini
 filerevisor replace-text
    --target=<TargetDirectoryPath>
    --from=<FileTextRegexPattern>
