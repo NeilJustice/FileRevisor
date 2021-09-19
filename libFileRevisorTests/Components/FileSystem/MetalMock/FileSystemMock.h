@@ -5,10 +5,10 @@ class FileSystemMock : public Metal::Mock<FileSystem>
 {
 public:
    // Deletes
-   METALMOCK_VOID3_CONST(DeleteTopLevelFilesAndEmptyDirectoriesInDirectory, const fs::path&, bool, bool)
+   METALMOCK_VOID4_CONST(DeleteTopLevelFilesAndEmptyDirectoriesInDirectory, const fs::path&, bool, bool, bool)
    METALMOCK_VOID2_CONST(RecursivelyDeleteAllFilesInDirectory, const string&, const FileRevisorArgs&)
    METALMOCK_VOID2_CONST(RemoveFile, const char*, bool)
-   METALMOCK_VOID3_CONST(DeleteFileSystemFileOrDirectory, const fs::path&, bool, bool)
+   METALMOCK_VOID4_CONST(DeleteFileSystemFileOrDirectory, const fs::path&, bool, bool, bool)
 
    // Open File
    METALMOCK_NONVOID2_CONST(shared_ptr<FILE>, OpenFile, const fs::path&, const char*)

@@ -93,8 +93,8 @@ TEST(Run_TargetDirectoryExists_ParallelIsFalse_WritesDeletingSequentiallyMessage
    METALMOCKTHEN(_oneExtraArgMemberForEacher_DeleteDirectoryMock->CallConstMemberFunctionWithEachElementMock.CalledOnceWith(
       topLevelDirectoryPathsInDirectory, &_deleteDirectorySubProgram, &DeleteDirectorySubProgram::DeleteDirectory, args))).Then(
    METALMOCKTHEN(_fileSystemMock->DeleteTopLevelFilesAndEmptyDirectoriesInDirectoryMock.CalledOnceWith(
-      args.targetDirectoryPath, args.skipFilesInUse, args.dryrun))).Then(
-   METALMOCKTHEN(_fileSystemMock->DeleteFileSystemFileOrDirectoryMock.CalledOnceWith(args.targetDirectoryPath, args.skipFilesInUse, args.dryrun)));
+      args.targetDirectoryPath, args.skipFilesInUse, args.dryrun, args.quiet))).Then(
+   METALMOCKTHEN(_fileSystemMock->DeleteFileSystemFileOrDirectoryMock.CalledOnceWith(args.targetDirectoryPath, args.skipFilesInUse, args.dryrun, args.quiet)));
    IS_ZERO(exitCode);
 }
 
@@ -123,8 +123,8 @@ TEST(Run_TargetDirectoryExists_ParallelIsTrue_WritesDeletingInParallelMessage_Re
    METALMOCKTHEN(_parallelTwoArgMemberFunctionForEacher_DeleteDirectoryMock->ParallelCallConstMemberFunctionWithEachElementMock.CalledOnceWith(
       topLevelDirectoryPathsInDirectory, &_deleteDirectorySubProgram, &DeleteDirectorySubProgram::TryCatchCallDeleteDirectory, args))).Then(
    METALMOCKTHEN(_fileSystemMock->DeleteTopLevelFilesAndEmptyDirectoriesInDirectoryMock.CalledOnceWith(
-      args.targetDirectoryPath, args.skipFilesInUse, args.dryrun))).Then(
-   METALMOCKTHEN(_fileSystemMock->DeleteFileSystemFileOrDirectoryMock.CalledOnceWith(args.targetDirectoryPath, args.skipFilesInUse, args.dryrun)));
+      args.targetDirectoryPath, args.skipFilesInUse, args.dryrun, args.quiet))).Then(
+   METALMOCKTHEN(_fileSystemMock->DeleteFileSystemFileOrDirectoryMock.CalledOnceWith(args.targetDirectoryPath, args.skipFilesInUse, args.dryrun, args.quiet)));
    IS_ZERO(exitCode);
 }
 

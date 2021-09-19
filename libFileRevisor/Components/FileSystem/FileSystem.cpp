@@ -12,7 +12,7 @@
 #include "libFileRevisor/UtilityComponents/FunctionCallers/Member/NonVoidTwoArgMemberFunctionCaller.h"
 #include "libFileRevisor/UtilityComponents/FunctionCallers/Member/VoidOneArgMemberFunctionCaller.h"
 #include "libFileRevisor/UtilityComponents/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
-#include "libFileRevisor/UtilityComponents/Iteration/ForEach/ThreeArgMemberFunctionForEacher.h"
+#include "libFileRevisor/UtilityComponents/Iteration/ForEach/FourArgMemberFunctionForEacher.h"
 #include "libFileRevisor/UtilityComponents/Strings/ConstCharPointerGetter.h"
 
 FileSystem::FileSystem()
@@ -225,7 +225,8 @@ fs::path FileSystem::RenameDirectory(const fs::path& directoryPath, string_view 
 
 // Deletes
 
-void FileSystem::DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(const fs::path& directoryPath, bool skipFilesInUse, bool dryRun) const
+void FileSystem::DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(
+   const fs::path& directoryPath, bool skipFilesInUse, bool dryRun, bool quietMode) const
 {
    _caller_DeleteFileSystemFileOrDirectory->CallConstMemberFunction(
       this, &FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows, directoryPath, dryRun);
@@ -236,9 +237,9 @@ void FileSystem::DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(const fs::pat
       this, &FileSystem::GetFilePathsInDirectory, directoryPath, false);
 
    _foreacher_DeleteFileOrDirectory->CallConstMemberFunctionWithEachElement(
-      topLevelDirectoryPaths, this, &FileSystem::DeleteFileSystemFileOrDirectory, skipFilesInUse, dryRun);
+      topLevelDirectoryPaths, this, &FileSystem::DeleteFileSystemFileOrDirectory, skipFilesInUse, dryRun, quietMode);
    _foreacher_DeleteFileOrDirectory->CallConstMemberFunctionWithEachElement(
-      topLevelFilePaths, this, &FileSystem::DeleteFileSystemFileOrDirectory, skipFilesInUse, dryRun);
+      topLevelFilePaths, this, &FileSystem::DeleteFileSystemFileOrDirectory, skipFilesInUse, dryRun, quietMode);
 }
 
 void FileSystem::RemoveFile(const char* filePath, bool ignoreFileDeleteError) const
@@ -258,7 +259,7 @@ void FileSystem::RemoveFile(const char* filePath, bool ignoreFileDeleteError) co
    }
 }
 
-void FileSystem::DeleteFileSystemFileOrDirectory(const fs::path& filePath, bool ignoreFileDeleteError, bool dryRun) const
+void FileSystem::DeleteFileSystemFileOrDirectory(const fs::path& filePath, bool ignoreFileDeleteError, bool dryRun, bool quietMode) const
 {
    if (dryRun)
    {
@@ -270,8 +271,11 @@ void FileSystem::DeleteFileSystemFileOrDirectory(const fs::path& filePath, bool 
       try
       {
          _call_fs_remove(filePath);
-         const string deletedFileMessage = "Deleted " + filePath.string();
-         _console->ThreadIdWriteLine(deletedFileMessage);
+         if (!quietMode)
+         {
+            const string deletedFileMessage = "Deleted " + filePath.string();
+            _console->ThreadIdWriteLine(deletedFileMessage);
+         }
       }
       catch (const exception& ex)
       {
@@ -291,7 +295,8 @@ void FileSystem::DeleteFileSystemFileOrDirectory(const fs::path& filePath, bool 
 
 // Readonly Flags
 
-void FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows([[maybe_unused]]const fs::path& directoryPath, [[maybe_unused]]bool dryRun) const
+void FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows(
+   [[maybe_unused]]const fs::path& directoryPath, [[maybe_unused]]bool dryRun) const
 {
 #ifdef _WIN32
    if (!dryRun)

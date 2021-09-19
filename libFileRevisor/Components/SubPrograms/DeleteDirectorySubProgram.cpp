@@ -41,8 +41,8 @@ int DeleteDirectorySubProgram::Run(const FileRevisorArgs& args) const
       _oneExtraArgMemberForEacher_DeleteDirectory->CallConstMemberFunctionWithEachElement(
          topLevelDirectoryPathsInTargetDirectory, this, &DeleteDirectorySubProgram::DeleteDirectory, args);
    }
-   _fileSystem->DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(args.targetDirectoryPath, args.skipFilesInUse, args.dryrun);
-   _fileSystem->DeleteFileSystemFileOrDirectory(args.targetDirectoryPath, args.skipFilesInUse, args.dryrun);
+   _fileSystem->DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(args.targetDirectoryPath, args.skipFilesInUse, args.dryrun, args.quiet);
+   _fileSystem->DeleteFileSystemFileOrDirectory(args.targetDirectoryPath, args.skipFilesInUse, args.dryrun, args.quiet);
    return 0;
 }
 

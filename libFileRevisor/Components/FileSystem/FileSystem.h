@@ -10,6 +10,12 @@ class NonVoidTwoArgMemberFunctionCaller;
 template<typename ClassType, typename T, typename Arg2Type, typename Arg3Type>
 class ThreeArgMemberFunctionForEacher;
 
+namespace Utils
+{
+   template<typename ClassType, typename T, typename Arg2Type, typename Arg3Type, typename Arg4Type>
+   class FourArgMemberFunctionForEacher;
+}
+
 template<typename ClassType, typename Arg1Type>
 class VoidOneArgMemberFunctionCaller;
 
@@ -56,7 +62,7 @@ private:
 
    unique_ptr<const VoidTwoArgMemberFunctionCaller<FileSystem, const fs::path&, bool>> _caller_DeleteFileSystemFileOrDirectory;
 
-   using _foreacher_DeleteFileOrDirectoryType = ThreeArgMemberFunctionForEacher<FileSystem, fs::path, bool, bool>;
+   using _foreacher_DeleteFileOrDirectoryType = Utils::FourArgMemberFunctionForEacher<FileSystem, fs::path, bool, bool, bool>;
    unique_ptr<const _foreacher_DeleteFileOrDirectoryType> _foreacher_DeleteFileOrDirectory;
 
    // Constant Components
@@ -70,10 +76,11 @@ public:
    virtual ~FileSystem();
 
    // Deletes
-   virtual void DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(const fs::path& directoryPath, bool skipFilesInUse, bool dryRun) const;
+   virtual void DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(
+      const fs::path& directoryPath, bool skipFilesInUse, bool dryRun, bool quietMode) const;
    virtual void RecursivelyDeleteAllFilesInDirectory(const string& directoryPath, const FileRevisorArgs& args) const;
    virtual void RemoveFile(const char* filePath, bool skipFilesInUse) const;
-   virtual void DeleteFileSystemFileOrDirectory(const fs::path& filePath, bool ignoreFileDeleteError, bool dryRun) const;
+   virtual void DeleteFileSystemFileOrDirectory(const fs::path& filePath, bool ignoreFileDeleteError, bool dryRun, bool quietMode) const;
 
    // Open File
    virtual shared_ptr<FILE> OpenFile(const fs::path& filePath, const char* fileOpenMode) const;
