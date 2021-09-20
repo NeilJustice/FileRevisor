@@ -33,7 +33,7 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
 ## FileRevisor command line usage
 
 ```ini
-FileRevisor v0.16.0
+FileRevisor v1.0.0
 Quickly deletes directories, renames files, renames directories, or replaces text in files.
 
 Usage:
