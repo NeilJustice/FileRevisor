@@ -81,9 +81,9 @@ filerevisor delete-directory
 
 FileRevisor `delete-directory` mode quickly deletes all files in and below `--target=<TargetDirectoryPath>`. For extreme directory deletion performance, especially on Windows, specify `--parallel` to delete subdirectories below `TargetDirectoryPath` using one thread per subdirectory.
 
-Shown in this screenshot is `filerevisor delete-directory` deleting `directory1` in parallel:
+Here is `filerevisor delete-directory` in action:
 
-![delete-directory](Screenshots/delete-directory.png)
+![delete-directory](Screenshots/Linux/delete-directory.png)
 
 ### rename-files
 
