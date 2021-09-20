@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "libFileRevisor/UtilityComponents/Console/ConsoleColorer.h"
 #include "libFileRevisor/UtilityComponents/Assertion/Asserter.h"
+#include "libFileRevisor/UtilityComponents/Console/ConsoleColorer.h"
 
 ConsoleColorer::ConsoleColorer() noexcept
    // Function Pointers

@@ -79,7 +79,7 @@ public:
    virtual void DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(
       const fs::path& directoryPath, bool skipFilesInUse, bool dryRun, bool quietMode) const;
    virtual void RecursivelyDeleteAllFilesInDirectory(const string& directoryPath, const FileRevisorArgs& args) const;
-   virtual void RemoveFile(const char* filePath, bool skipFilesInUse) const;
+   virtual void RemoveFile(const char* filePath, bool ignoreFileDeleteError) const;
    virtual void DeleteFileOrDirectory(const fs::path& filePath, bool ignoreFileDeleteError, bool dryRun, bool quietMode) const;
 
    // Open File
