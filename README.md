@@ -101,7 +101,7 @@ FileRevisor `rename-files` mode renames files in a specified directory matching 
 
 Here is `filerevisor rename-files` in action:
 
-![rename-files](Screenshots/rename-files.png)
+![rename-files](Screenshots/Linux/rename-files.png)
 
 ### rename-directories
 
