@@ -64,7 +64,7 @@ size_t fread_CallInstead(void* buffer, size_t elementSize, size_t elementCount, 
    return _fread_CallHistory.returnValue;
 }
 
-void fread_AssertCalledOnceWith(size_t expectedElementSize, size_t expectedElementCount, FILE* expectedRawFilePointer)
+void fread_AssertCalledOnceWith(size_t expectedElementSize, size_t expectedElementCount, FILE* expectedRawFilePointer) const
 {
    ARE_EQUAL(1, _fread_CallHistory.numberOfCalls);
    ARE_EQUAL(expectedElementSize, _fread_CallHistory.elementSize);

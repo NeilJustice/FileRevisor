@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "libFileRevisor/Components/FileSystem/DirectoryIterator.h"
-#include "libFileRevisorTests/UtilityComponents/DataStructures/MetalMock/CharArray64HelperMock.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileOpenerCloserMock.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileReaderMock.h"
+#include "libFileRevisorTests/UtilityComponents/DataStructures/MetalMock/CharArray64HelperMock.h"
 
 TESTS(DirectoryIteratorTests)
 AFACT(DefaultConstructor_NewsComponents_SetsFieldsToDefaultValues)
