@@ -99,7 +99,7 @@ filerevisor rename-files
 
 FileRevisor `rename-files` mode renames files in a specified directory matching a specified regular expression. `--recurse` can be specified to rename files in and below a specified directory.
 
-Shown in this screenshot is `filerevisor rename-files` renaming files with name `file` to new name `new_file_name` in the current directory:
+Here is `filerevisor rename-files` in action:
 
 ![rename-files](Screenshots/rename-files.png)
 
@@ -117,7 +117,7 @@ filerevisor rename-directories
 
 FileRevisor `rename-directories` mode renames directories in a specified directory matching a specified regular expression. `--recurse` can be specified to rename directories in and below a specified directory.
 
-Shown in this screenshot is `filerevisor rename-directories` renaming directories with name `directory` to new name `new_directory_name` in the current directory:
+Here is `filerevisor rename-directories` in action:
 
 ![rename-directories](Screenshots/rename-directories.png)
 
@@ -135,7 +135,7 @@ filerevisor replace-text
 
 FileRevisor `replace-text` mode replaces text in files in a specified directory matching a specified regular expression. `--recurse` can be specified to replace text in files in and below a specified directory.
 
-Shown in this screenshot is `filerevisor replace-text` replacing text in files in the current directory containing text `apple` with replacement text `orange`:
+Here is `filerevisor replace-text` in action:
 
 ![replace-text](Screenshots/replace-text.png)
 
