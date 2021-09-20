@@ -137,7 +137,7 @@ FileRevisor `replace-text` mode replaces text in files in a specified directory 
 
 Here is `filerevisor replace-text` in action:
 
-![replace-text](Screenshots/replace-text.png)
+![replace-text](Screenshots/Linux/replace-text.png)
 
 ### Linux directory deletion performance graph
 
