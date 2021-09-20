@@ -2,6 +2,7 @@
 #include "libFileRevisor/Components/SubPrograms/DeleteDirectorySubProgram.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 #include "libFileRevisorTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
+#include "libFileRevisorTests/UtilityComponents/FunctionCallers/Member/MetalMock/VoidOneArgMemberFunctionCallerMock.h"
 #include "libFileRevisorTests/UtilityComponents/FunctionCallers/TryCatchCallers/MetalMock/VoidTwoArgTryCatchCallerMock.h"
 #include "libFileRevisorTests/UtilityComponents/Iteration/ForEach/MetalMock/TwoArgMemberFunctionForEacherMock.h"
 #include "libFileRevisorTests/UtilityComponents/Iteration/ForEach/MetalMock/ParallelTwoArgMemberFunctionForEacherMock.h"
@@ -13,8 +14,10 @@ AFACT(Run_TargetDirectoryDoesNotExist_WritesDirectoryDoesNotExistInformationalMe
 AFACT(Run_TargetDirectoryExists_ParallelIsFalse_WritesDeletingSequentiallyMessage_RecursivelyDeletesAllTopLevelDirectoriesInTargetDirectorySequentiallyThenDeletesTargetDirectory_Returns0)
 AFACT(Run_TargetDirectoryExists_ParallelIsTrue_WritesDeletingInParallelMessage_RecursivelyDeletesAllTopLevelDirectoriesInTargetDirectoryInParallelThenDeletesTargetDirectory_Returns0)
 // Private Functions
-AFACT(TryCatchCallDeleteDirectory_TryCatchCallsDeleteDirectoryWithParallelExceptionHandler)
 AFACT(DeleteDirectory_CallsRecursivelyDeleteAllFilesInDirectoryOnDirectoryPath)
+AFACT(DeleteTargetDirectoryIfNotCurrentDirectory_CurrentDirectoryPathIsTargetDirectoryPath_DoesNothing)
+AFACT(DeleteTargetDirectoryIfNotCurrentDirectory_CurrentDirectoryPathIsNotTargetDirectoryPath_DeletesTargetDirectory)
+AFACT(TryCatchCallDeleteDirectory_TryCatchCallsDeleteDirectoryWithParallelExceptionHandler)
 AFACT(ParallelExceptionHandler_WritesExceptionMessageWithThreadIdAndRedText)
 EVIDENCE
 
@@ -24,6 +27,9 @@ ConsoleMock* _consoleMock = nullptr;
 FileSystemMock* _fileSystemMock = nullptr;
 PluralizerMock* _pluralizerMock = nullptr;
 // Function Callers
+using _caller_DeleteTargetDirectoryIfNotCurrentDirectoryMockType = VoidOneArgMemberFunctionCallerMock<DeleteDirectorySubProgram, const FileRevisorArgs&>;
+_caller_DeleteTargetDirectoryIfNotCurrentDirectoryMockType* _caller_DeleteTargetDirectoryIfNotCurrentDirectoryMock = nullptr;
+
 using TwoArgMemberFunctionForEacherMockType = TwoArgMemberFunctionForEacherMock<DeleteDirectorySubProgram, string, const FileRevisorArgs&>;
 TwoArgMemberFunctionForEacherMockType* _oneExtraArgMemberForEacher_DeleteDirectoryMock = nullptr;
 
@@ -40,6 +46,7 @@ STARTUP
    _deleteDirectorySubProgram._fileSystem.reset(_fileSystemMock = new FileSystemMock);
    _deleteDirectorySubProgram._pluralizer.reset(_pluralizerMock = new PluralizerMock);
    // Function Callers
+   _deleteDirectorySubProgram._caller_DeleteTargetDirectoryIfNotCurrentDirectory.reset(_caller_DeleteTargetDirectoryIfNotCurrentDirectoryMock = new _caller_DeleteTargetDirectoryIfNotCurrentDirectoryMockType);
    _deleteDirectorySubProgram._oneExtraArgMemberForEacher_DeleteDirectory.reset(_oneExtraArgMemberForEacher_DeleteDirectoryMock = new TwoArgMemberFunctionForEacherMockType);
    _deleteDirectorySubProgram._parallelTwoArgMemberFunctionForEacher_DeleteDirectory.reset(_parallelTwoArgMemberFunctionForEacher_DeleteDirectoryMock = new ParallelTwoArgMemberFunctionForEacherMockType);
    _deleteDirectorySubProgram._voidTwoArgTryCatchCaller.reset(_voidTwoArgTryCatchCallerMock = new _voidTwoArgTryCatchCallerMockType);
@@ -53,6 +60,7 @@ TEST(DefaultConstructor_NewsComponents)
    DELETE_TO_ASSERT_NEWED(deleteDirectorySubProgram._fileSystem);
    DELETE_TO_ASSERT_NEWED(deleteDirectorySubProgram._pluralizer);
    // Function Callers
+   DELETE_TO_ASSERT_NEWED(deleteDirectorySubProgram._caller_DeleteTargetDirectoryIfNotCurrentDirectory);
    DELETE_TO_ASSERT_NEWED(deleteDirectorySubProgram._oneExtraArgMemberForEacher_DeleteDirectory);
    DELETE_TO_ASSERT_NEWED(deleteDirectorySubProgram._parallelTwoArgMemberFunctionForEacher_DeleteDirectory);
    DELETE_TO_ASSERT_NEWED(deleteDirectorySubProgram._voidTwoArgTryCatchCaller);
@@ -81,7 +89,8 @@ TEST(Run_TargetDirectoryExists_ParallelIsFalse_WritesDeletingSequentiallyMessage
    const vector<string> topLevelDirectoryPathsInDirectory = _fileSystemMock->GetStringDirectoryPathsInDirectoryMock.ReturnRandom();
 
    _fileSystemMock->DeleteTopLevelFilesAndEmptyDirectoriesInDirectoryMock.Expect();
-   _fileSystemMock->DeleteFileOrDirectoryMock.Expect();
+
+   _caller_DeleteTargetDirectoryIfNotCurrentDirectoryMock->CallConstMemberFunctionMock.Expect();
 
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    args.parallel = false;
@@ -94,7 +103,8 @@ TEST(Run_TargetDirectoryExists_ParallelIsFalse_WritesDeletingSequentiallyMessage
       topLevelDirectoryPathsInDirectory, &_deleteDirectorySubProgram, &DeleteDirectorySubProgram::DeleteDirectory, args))).Then(
    METALMOCKTHEN(_fileSystemMock->DeleteTopLevelFilesAndEmptyDirectoriesInDirectoryMock.CalledOnceWith(
       args.targetDirectoryPath, args.skipFilesInUse, args.dryrun, args.quiet))).Then(
-   METALMOCKTHEN(_fileSystemMock->DeleteFileOrDirectoryMock.CalledOnceWith(args.targetDirectoryPath, args.skipFilesInUse, args.dryrun, args.quiet)));
+   METALMOCKTHEN(_caller_DeleteTargetDirectoryIfNotCurrentDirectoryMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &_deleteDirectorySubProgram, &DeleteDirectorySubProgram::DeleteTargetDirectoryIfNotCurrentDirectory, args)));
    IS_ZERO(exitCode);
 }
 
@@ -107,7 +117,8 @@ TEST(Run_TargetDirectoryExists_ParallelIsTrue_WritesDeletingInParallelMessage_Re
    const vector<string> topLevelDirectoryPathsInDirectory = _fileSystemMock->GetStringDirectoryPathsInDirectoryMock.ReturnRandom();
 
    _fileSystemMock->DeleteTopLevelFilesAndEmptyDirectoriesInDirectoryMock.Expect();
-   _fileSystemMock->DeleteFileOrDirectoryMock.Expect();
+
+   _caller_DeleteTargetDirectoryIfNotCurrentDirectoryMock->CallConstMemberFunctionMock.Expect();
 
    _consoleMock->ThreadIdWriteLineMock.Expect();
 
@@ -124,11 +135,46 @@ TEST(Run_TargetDirectoryExists_ParallelIsTrue_WritesDeletingInParallelMessage_Re
       topLevelDirectoryPathsInDirectory, &_deleteDirectorySubProgram, &DeleteDirectorySubProgram::TryCatchCallDeleteDirectory, args))).Then(
    METALMOCKTHEN(_fileSystemMock->DeleteTopLevelFilesAndEmptyDirectoriesInDirectoryMock.CalledOnceWith(
       args.targetDirectoryPath, args.skipFilesInUse, args.dryrun, args.quiet))).Then(
-   METALMOCKTHEN(_fileSystemMock->DeleteFileOrDirectoryMock.CalledOnceWith(args.targetDirectoryPath, args.skipFilesInUse, args.dryrun, args.quiet)));
+   METALMOCKTHEN(_caller_DeleteTargetDirectoryIfNotCurrentDirectoryMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &_deleteDirectorySubProgram, &DeleteDirectorySubProgram::DeleteTargetDirectoryIfNotCurrentDirectory, args)));
    IS_ZERO(exitCode);
 }
 
 // Private Functions
+
+TEST(DeleteDirectory_CallsRecursivelyDeleteAllFilesInDirectoryOnDirectoryPath)
+{
+   _fileSystemMock->RecursivelyDeleteAllFilesInDirectoryMock.Expect();
+   const string directoryPath = ZenUnit::Random<string>();
+   const FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
+   //
+   _deleteDirectorySubProgram.DeleteDirectory(directoryPath, args);
+   //
+   METALMOCK(_fileSystemMock->RecursivelyDeleteAllFilesInDirectoryMock.CalledOnceWith(directoryPath, args));
+}
+
+TEST(DeleteTargetDirectoryIfNotCurrentDirectory_CurrentDirectoryPathIsTargetDirectoryPath_DoesNothing)
+{
+   const FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
+   _fileSystemMock->CurrentDirectoryPathMock.Return(args.targetDirectoryPath);
+   //
+   _deleteDirectorySubProgram.DeleteTargetDirectoryIfNotCurrentDirectory(args);
+   //
+   METALMOCK(_fileSystemMock->CurrentDirectoryPathMock.CalledOnce());
+}
+
+TEST(DeleteTargetDirectoryIfNotCurrentDirectory_CurrentDirectoryPathIsNotTargetDirectoryPath_DeletesTargetDirectory)
+{
+   const FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
+   const fs::path currentDirectoryPath = ZenUnit::RandomNotEqualToValue<fs::path>(args.targetDirectoryPath);
+   _fileSystemMock->CurrentDirectoryPathMock.Return(currentDirectoryPath);
+   _fileSystemMock->DeleteFileOrDirectoryMock.Expect();
+   //
+   _deleteDirectorySubProgram.DeleteTargetDirectoryIfNotCurrentDirectory(args);
+   //
+   METALMOCK(_fileSystemMock->CurrentDirectoryPathMock.CalledOnce());
+   METALMOCK(_fileSystemMock->DeleteFileOrDirectoryMock.CalledOnceWith(args.targetDirectoryPath, args.skipFilesInUse, args.dryrun, args.quiet));
+}
 
 TEST(TryCatchCallDeleteDirectory_TryCatchCallsDeleteDirectoryWithParallelExceptionHandler)
 {
@@ -140,17 +186,6 @@ TEST(TryCatchCallDeleteDirectory_TryCatchCallsDeleteDirectoryWithParallelExcepti
    //
    METALMOCK(_voidTwoArgTryCatchCallerMock->TryCatchCallConstMemberFunctionMock.CalledOnceWith(
       &_deleteDirectorySubProgram, &DeleteDirectorySubProgram::DeleteDirectory, directoryPath, args, &DeleteDirectorySubProgram::ParallelExceptionHandler));
-}
-
-TEST(DeleteDirectory_CallsRecursivelyDeleteAllFilesInDirectoryOnDirectoryPath)
-{
-   _fileSystemMock->RecursivelyDeleteAllFilesInDirectoryMock.Expect();
-   const string directoryPath = ZenUnit::Random<string>();
-   const FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
-   //
-   _deleteDirectorySubProgram.DeleteDirectory(directoryPath, args);
-   //
-   METALMOCK(_fileSystemMock->RecursivelyDeleteAllFilesInDirectoryMock.CalledOnceWith(directoryPath, args));
 }
 
 TEST(ParallelExceptionHandler_WritesExceptionMessageWithThreadIdAndRedText)
