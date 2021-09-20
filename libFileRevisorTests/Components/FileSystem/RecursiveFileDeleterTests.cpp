@@ -222,7 +222,7 @@ TEST(PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException_U
    //
    _recursiveFileDeleter_SelfMocked.PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException(filePath, unlinkReturnValue, args);
    //
-   const string expectedDeletedFilePathMessage = String::ConcatValues(" Deleted ", filePath);
+   const string expectedDeletedFilePathMessage = String::ConcatValues("Deleted ", filePath);
    METALMOCK(_recursiveFileDeleter_SelfMocked._consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedDeletedFilePathMessage));
 }
 

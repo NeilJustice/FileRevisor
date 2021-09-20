@@ -26,7 +26,7 @@ RecursiveFileDeleter::~RecursiveFileDeleter()
 
 void RecursiveFileDeleter::PrintDeletedFileMessage(const char* filePath) const
 {
-   const string deletedFileMessage = String::ConcatStrings(" Deleted ", filePath);
+   const string deletedFileMessage = String::ConcatStrings("Deleted ", filePath);
    _console->ThreadIdWriteLine(deletedFileMessage);
 }
 

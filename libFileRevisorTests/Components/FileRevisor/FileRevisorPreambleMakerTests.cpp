@@ -46,7 +46,7 @@ TEST3X3(PrintPreambleLines_PrintsPreambleLines,
    const string expectedRunningLine = String::ConcatStrings("Running: ", args.commandLine);
    const string expectedProgramModeString = ENUM_AS_STRING(ProgramMode, args.programMode);
    const string expectedProgramModeLine = String::ConcatValues("ProgramMode: ", expectedProgramModeString, expectedActionSuffix);
-   const string expectedWorkingDirectoryLine = String::ConcatStrings(" WorkingDirectory: ", currentDirectoryPath.string());
+   const string expectedWorkingDirectoryLine = String::ConcatStrings("WorkingDirectory: ", currentDirectoryPath.string());
    const string expectedTargetDirectoryLine = String::ConcatStrings(" TargetDirectory: ", args.targetDirectoryPath.string());
    METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledAsFollows(
    {

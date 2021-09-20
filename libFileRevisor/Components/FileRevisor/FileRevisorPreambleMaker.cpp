@@ -22,7 +22,7 @@ void FileRevisorPreambleMaker::PrintPreambleLines(const FileRevisorArgs& args) c
 
    const string runningLine = String::ConcatStrings("Running: ", args.commandLine);
    const string programModeLine = String::ConcatValues("ProgramMode: ", programModeString, dryRunOrEmptyString, verboseOrEmptyString);
-   const string workingDirectoryLine = String::ConcatStrings(" WorkingDirectory: ", currentDirectoryPath.string());
+   const string workingDirectoryLine = String::ConcatStrings("WorkingDirectory: ", currentDirectoryPath.string());
    const string targetDirectoryLine = String::ConcatStrings(" TargetDirectory: ", args.targetDirectoryPath.string());
 
    _console->ThreadIdWriteLine(runningLine);
