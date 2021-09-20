@@ -119,7 +119,7 @@ FileRevisor `rename-directories` mode renames directories in a specified directo
 
 Here is `filerevisor rename-directories` in action:
 
-![rename-directories](Screenshots/rename-directories.png)
+![rename-directories](Screenshots/Linux/rename-directories.png)
 
 ### replace-text
 
