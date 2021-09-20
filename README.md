@@ -21,8 +21,8 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
   * [rename-files](#rename-files)
   * [rename-directories](#rename-directories)
   * [replace-text](#replace-text)
-* [Linux directory deletion performance graph](#linux-directory-deletion-performance-graph)
-* [Windows folder deletion performance graph](#windows-folder-deletion-performance-graph)
+* [Linux FileRevisor parallel directory deletion performance](#linux-filerevisor-parallel-directory-deletion-performance)
+* [Windows FileRevisor parallel folder deletion performance](#windows-filerevisor-parallel-folder-deletion-performance)
 * [FileRevisor code structure as it appears in Visual Studio Code on Linux](#filerevisor-code-structure-as-it-appears-in-visual-studio-code-on-linux)
 * [FileRevisor code structure as it appears in Visual Studio 2019 on Windows](#filerevisor-code-structure-as-it-appears-in-visual-studio-2019-on-windows)
 * [Linux Jenkins jobs which build, cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor's C++ code and mypy-flake8-pylint-SonarQube FileRevisor's CI/CD Python code](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filerevisors-c-code-and-mypy-flake8-pylint-sonarqube-scan-filerevisors-cicd-python-code)
@@ -139,11 +139,11 @@ Here is `filerevisor replace-text` in action:
 
 ![replace-text](Screenshots/Linux/replace-text.png)
 
-### Linux directory deletion performance graph
+### Linux FileRevisor parallel directory deletion performance
 
 ![Linux Directory Deletion Performance: rm -rf > /dev/null vs. FileRevisor](Screenshots/LinuxFileRevisorPerformanceGraph.png)
 
-### Windows folder deletion performance graph
+### Windows FileRevisor parallel folder deletion performance
 
 ![Windows Folder Deletion Performance: Remove-Item -Recurse vs. FileRevisor delete-directory](Screenshots/WindowsFileRevisorPerformanceGraph.png)
 
