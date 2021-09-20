@@ -60,7 +60,7 @@ private:
    using _caller_GetFileOrDirectoryPathsInDirectoryType = NonVoidTwoArgMemberFunctionCaller<vector<fs::path>, FileSystem, const fs::path&, bool>;
    unique_ptr<const _caller_GetFileOrDirectoryPathsInDirectoryType> _caller_GetFileOrDirectoryPathsInDirectory;
 
-   unique_ptr<const VoidTwoArgMemberFunctionCaller<FileSystem, const fs::path&, bool>> _caller_DeleteFileSystemFileOrDirectory;
+   unique_ptr<const VoidTwoArgMemberFunctionCaller<FileSystem, const fs::path&, bool>> _caller_DeleteFileOrDirectory;
 
    using _foreacher_DeleteFileOrDirectoryType = Utils::FourArgMemberFunctionForEacher<FileSystem, fs::path, bool, bool, bool>;
    unique_ptr<const _foreacher_DeleteFileOrDirectoryType> _foreacher_DeleteFileOrDirectory;
@@ -80,7 +80,7 @@ public:
       const fs::path& directoryPath, bool skipFilesInUse, bool dryRun, bool quietMode) const;
    virtual void RecursivelyDeleteAllFilesInDirectory(const string& directoryPath, const FileRevisorArgs& args) const;
    virtual void RemoveFile(const char* filePath, bool skipFilesInUse) const;
-   virtual void DeleteFileSystemFileOrDirectory(const fs::path& filePath, bool ignoreFileDeleteError, bool dryRun, bool quietMode) const;
+   virtual void DeleteFileOrDirectory(const fs::path& filePath, bool ignoreFileDeleteError, bool dryRun, bool quietMode) const;
 
    // Open File
    virtual shared_ptr<FILE> OpenFile(const fs::path& filePath, const char* fileOpenMode) const;
