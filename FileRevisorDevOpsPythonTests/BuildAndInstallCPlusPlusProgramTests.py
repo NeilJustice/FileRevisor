@@ -119,5 +119,6 @@ Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-gener
       testcase(True, True)
       testcase(False, False)
 
+
 if __name__ == '__main__': # pragma nocover
    UnitTester.run_tests(BuildAndInstallCPlusPlusProgramTests, testNames)

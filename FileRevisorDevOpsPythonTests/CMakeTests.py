@@ -43,5 +43,6 @@ class CMakeTests(unittest.TestCase):
       testcase('Windows', '-DCMAKE_INSTALL_PREFIX=C:/',
          f'cmake -Werror=dev -G"{self.cmakeGenerator}" -DCMAKE_INSTALL_PREFIX=C:/ {self.cmakeListsFolderPath}')
 
+
 if __name__ == '__main__': # pragma nocover
    UnitTester.run_tests(CMakeTests, testNames)

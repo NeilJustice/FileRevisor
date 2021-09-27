@@ -44,6 +44,7 @@ def main() -> None:
    else:
       windows_cmake_build_test_install(solutionName, cmakeGenerator, cmakeBuildType, testsProjectName, cmakeDefinitions, doInstallProgram)
 
+
 if __name__ == "__main__": # pragma nocover
    main()
 

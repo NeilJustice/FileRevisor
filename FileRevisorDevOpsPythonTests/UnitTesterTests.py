@@ -27,5 +27,6 @@ class UnitTesterTests(unittest.TestCase):
       unittest.TestSuite.assert_called_once_with(sentinel.testCaseMapObject)
       textTestRunnerMock.run.assert_called_once_with(unittest.TestSuite.return_value)
 
+
 if __name__ == '__main__': # pragma nocover
    UnitTester.run_tests(UnitTesterTests, specification)

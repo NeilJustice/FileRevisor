@@ -22,5 +22,6 @@ class RandomTests(unittest.TestCase):
       randomString = Random.string()
       self.assertTrue(re.fullmatch(r'RandomString\d{1,5}', randomString))
 
+
 if __name__ == '__main__': # pragma nocover
    UnitTester.run_tests(RandomTests, testNames)

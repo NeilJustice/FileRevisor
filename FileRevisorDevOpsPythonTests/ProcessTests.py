@@ -209,5 +209,6 @@ class ProcessTests(unittest.TestCase):
       testcase(False, [0, 1])
       testcase(False, [0, 1, 0])
 
+
 if __name__ == '__main__': # pragma nocover
    UnitTester.run_tests(ProcessTests, testNames)
