@@ -70,4 +70,3 @@ if(UNIX)
       find -name "*.cpp" -print0 | xargs -0 -n 1 -P ${NumberOfCores} -t clang-tidy -p ${CMAKE_BUILD_TYPE}
       WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} VERBATIM USES_TERMINAL)
 endif()
-
