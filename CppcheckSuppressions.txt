@@ -2,9 +2,7 @@
 *:*ZenUnit.h
 *:*MetalMock.h
 allocaCalled:*
+preprocessorErrorDirective:*
 syntaxError:*
 unmatchedSuppression:*
-unusedFunction:libFileRevisorTests/ValueTypes/ZenUnit/RenameResultZenUnitEqualizerAndRandom.cpp:23
-
-# Fedora 34
-preprocessorErrorDirective:/usr/include/c++/v1/__config:104
+unusedFunction:*
