@@ -22,9 +22,6 @@ coverage.profraw
 # Windows
 .vs/
 x64/
-*.bin
-*.dat
-*.db
 *.dir
 *.exe
 *.filters
