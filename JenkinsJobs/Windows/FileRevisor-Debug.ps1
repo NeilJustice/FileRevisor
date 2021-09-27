@@ -1,7 +1,5 @@
 param($fastWindowsDebugBuildMode = "ON")
 
-Set-PSDebug -Trace 1
-
 $env:PYTHONPATH="."
 python.exe -u FileRevisorDevOpsPython\BuildAndInstallCPlusPlusProgram.py `
    --solution-name=FileRevisor `
@@ -10,6 +8,4 @@ python.exe -u FileRevisorDevOpsPython\BuildAndInstallCPlusPlusProgram.py `
    --tests-project=libFileRevisorTests `
    --cmake-definitions="-DFastWindowsDebugBuildMode=$fastWindowsDebugBuildMode" `
    --no-install
-   
-Set-PSDebug -Trace 0
 exit $LastExitCode

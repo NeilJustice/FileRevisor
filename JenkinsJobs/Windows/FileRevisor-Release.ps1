@@ -1,5 +1,3 @@
-Set-PSDebug -Trace 1
-
 $env:PYTHONPATH="."
 python.exe -u FileRevisorDevOpsPython\BuildAndInstallCPlusPlusProgram.py `
    --solution-name=FileRevisor `
@@ -8,6 +6,4 @@ python.exe -u FileRevisorDevOpsPython\BuildAndInstallCPlusPlusProgram.py `
    --tests-project-name=libFileRevisorTests `
    --cmake-definitions="-DCMAKE_INSTALL_PREFIX=C:\" `
    --install
-
-Set-PSDebug -Trace 0
 exit $LastExitCode
