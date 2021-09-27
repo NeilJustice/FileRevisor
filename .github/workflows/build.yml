@@ -8,7 +8,7 @@ jobs:
          cmake_build_type: [Debug, Release]
          cxx: [clang++, g++-10]
 
-    runs-on: ubuntu-latest
+    runs-on: [ubuntu-latest, macos-latest]
 
     steps:
       - uses: actions/checkout@v2
