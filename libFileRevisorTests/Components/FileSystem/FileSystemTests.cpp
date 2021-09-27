@@ -162,8 +162,7 @@ TEST(DeleteTopLevelFilesAndEmptyDirectoriesInDirectory_IfWindowsRemovesReadOnlyF
    //
    _fileSystem.DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(directoryPath, skipFilesInUse, dryRun, quietMode);
    //
-   METALMOCKTHEN(_caller_DeleteFileOrDirectoryMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &_fileSystem, &FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows, directoryPath, dryRun)).Then(
+   METALMOCKTHEN(_caller_DeleteFileOrDirectoryMock->CallConstMemberFunctionMock.CalledOnceWith(&_fileSystem, &FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows, directoryPath, dryRun)).Then(
    METALMOCKTHEN(_caller_GetFileOrDirectoryPathsInDirectoryMock->CallConstMemberFunctionMock.CalledAsFollows(
    {
       { &_fileSystem, &FileSystem::GetDirectoryPathsInDirectory, directoryPath, false },
