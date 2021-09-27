@@ -3,7 +3,6 @@
 #include "libFileRevisorTests/Components/ErrorHandling/MetalMock/ErrorCodeTranslatorMock.h"
 #include "libFileRevisorTests/Components/Exceptions/MetalMock/FileSystemExceptionMakerMock.h"
 #include "libFileRevisorTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
-#include "libFileRevisorTests/UtilityComponents/Threading/MetalMock/ThreadIdGetterMock.h"
 
 TESTS(RecursiveFileDeleterTests)
 AFACT(Constructor_NewsComponents_SetsFunctionCallers)
@@ -36,12 +35,10 @@ class RecursiveFileDeleter_SelfMocked : public Metal::Mock<RecursiveFileDeleter>
 {
 public:
    ConsoleMock* _consoleMock = nullptr;
-   ThreadIdGetterMock* _threadIdGetterMock = nullptr;
 
    RecursiveFileDeleter_SelfMocked()
    {
       _console.reset(_consoleMock = new ConsoleMock);
-      _threadIdGetter.reset(_threadIdGetterMock = new ThreadIdGetterMock);
    }
 
    METALMOCK_VOID2_CONST(ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDenied, const char*, const FileRevisorArgs&)
@@ -70,7 +67,6 @@ TEST(Constructor_NewsComponents_SetsFunctionCallers)
    // Constant Components
    DELETE_TO_ASSERT_NEWED(recursiveFileDeleter._console);
    DELETE_TO_ASSERT_NEWED(recursiveFileDeleter._fileSystemExceptionMaker);
-   DELETE_TO_ASSERT_NEWED(recursiveFileDeleter._threadIdGetter);
 }
 
 TEST(ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDenied_SkipFilesInUseIsFalse_ThrowsFileSystemException)

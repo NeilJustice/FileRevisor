@@ -64,7 +64,6 @@ folder_source_group_subsubsubfolder(UtilityComponents Iteration Transform MetalM
 folder_source_group_subfolder(UtilityComponents Strings)
 folder_source_group_subsubfolder(UtilityComponents Strings MetalMock)
 folder_source_group_subfolder(UtilityComponents Threading)
-folder_source_group_subsubfolder(UtilityComponents Threading MetalMock)
 folder_source_group_subfolder(UtilityComponents Time)
 folder_source_group_subsubfolder(UtilityComponents Time MetalMock)
 folder_source_group_subsubfolder(UtilityComponents Time ZenUnit)
