@@ -9,10 +9,12 @@ EVIDENCE
 
 TEST(DefaultConstructor_SetsFieldsToDefaults)
 {
-   RenameResult renameResult;
-   IS_FALSE(renameResult.didRenameFileOrDirectory);
-   IS_DEFAULT_VALUE(renameResult.originalFileOrDirectoryPath);
-   IS_DEFAULT_VALUE(renameResult.renamedFileOrDirectoryPath);
+   const RenameResult defaultRenameResult;
+   RenameResult expectedDefaultRenameResult;
+   expectedDefaultRenameResult.didRenameFileOrDirectory = false;
+   expectedDefaultRenameResult.originalFileOrDirectoryPath = fs::path();
+   expectedDefaultRenameResult.renamedFileOrDirectoryPath = fs::path();
+   ARE_EQUAL(expectedDefaultRenameResult, defaultRenameResult);
 }
 
 TEST(ThreeArgConstructor_SetsFields)
