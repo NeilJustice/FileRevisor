@@ -36,8 +36,9 @@ private:
    // Function Pointers
    function<int(FILE*)> _call_fclose;
    function<FILE* (const char*, const char*)> _call_fopen;
+   function<bool(const fs::path&)> _call_fs_is_directory;
    function<bool(const fs::path&)> _call_fs_remove;
-   function<uintmax_t(const fs::path&, error_code&)> _call_fs_remove_all;
+   function<uintmax_t(const fs::path&)> _call_fs_remove_all;
    function<int(const char*, const char*)> _call_std_rename;
 
 #ifdef _WIN32
@@ -55,12 +56,15 @@ private:
    function<void(const fs::path&, const fs::path&, std::error_code&)> _call_fs_rename_with_error_code;
 
    // Function Callers
+   using _caller_DoDeleteFileOrDirectoryType = VoidOneArgMemberFunctionCaller<FileSystem, const fs::path&>;
+   unique_ptr<const _caller_DoDeleteFileOrDirectoryType> _caller_DoDeleteFileOrDirectory;
+
+   unique_ptr<const VoidTwoArgMemberFunctionCaller<FileSystem, const fs::path&, bool>> _caller_DeleteFileOrDirectory;
+
    unique_ptr<const NonVoidOneArgMemberFunctionCaller<bool, FileSystem, const fs::path&>> _caller_Exists;
 
    using _caller_GetFileOrDirectoryPathsInDirectoryType = NonVoidTwoArgMemberFunctionCaller<vector<fs::path>, FileSystem, const fs::path&, bool>;
    unique_ptr<const _caller_GetFileOrDirectoryPathsInDirectoryType> _caller_GetFileOrDirectoryPathsInDirectory;
-
-   unique_ptr<const VoidTwoArgMemberFunctionCaller<FileSystem, const fs::path&, bool>> _caller_DeleteFileOrDirectory;
 
    using _foreacher_DeleteFileOrDirectoryType = Utils::FourArgMemberFunctionForEacher<FileSystem, fs::path, bool, bool, bool>;
    unique_ptr<const _foreacher_DeleteFileOrDirectoryType> _foreacher_DeleteFileOrDirectory;
@@ -80,7 +84,7 @@ public:
       const fs::path& directoryPath, bool skipFilesInUse, bool dryRun, bool quietMode) const;
    virtual void RecursivelyDeleteAllFilesInDirectory(const string& directoryPath, const FileRevisorArgs& args) const;
    virtual void RemoveFile(const char* filePath, bool ignoreFileDeleteError) const;
-   virtual void DeleteFileOrDirectory(const fs::path& filePath, bool ignoreFileDeleteError, bool dryRun, bool quietMode) const;
+   virtual void DeleteFileOrDirectory(const fs::path& fileOrDirectoryPath, bool ignoreFileDeleteError, bool dryRun, bool quietMode) const;
 
    // Open File
    virtual shared_ptr<FILE> OpenFile(const fs::path& filePath, const char* fileOpenMode) const;
@@ -106,6 +110,7 @@ public:
    virtual fs::path RenameFile(const fs::path& filePath, string_view newFileName) const;
    virtual fs::path RenameDirectory(const fs::path& directoryPath, string_view newDirectoryName) const;
 private:
+   virtual void DoDeleteFileOrDirectory(const fs::path& fileOrDirectoryPath) const;
    virtual size_t GetFileSize(std::ifstream& file) const;
    virtual void CreateBinaryOrTextFile(const fs::path& filePath, bool trueBinaryFalseText, const char* bytes, size_t bytesLength) const;
    virtual void EraseTrailingBinaryZeros(std::string& outStr) const;

@@ -19,8 +19,9 @@ FileSystem::FileSystem()
    // Function Pointers
    : _call_fclose(::fclose)
    , _call_fopen(::fopen)
+   , _call_fs_is_directory(static_cast<bool(*)(const fs::path&)>(fs::is_directory))
    , _call_fs_remove(static_cast<bool(*)(const fs::path&)>(fs::remove))
-   , _call_fs_remove_all(static_cast<uintmax_t(*)(const fs::path&, error_code&)>(fs::remove_all))
+   , _call_fs_remove_all(static_cast<uintmax_t(*)(const fs::path&)>(fs::remove_all))
    , _call_std_rename(std::rename)
 #ifdef _WIN32
    , _call_fs_absolute_as_assignable_function_pointer(fs::absolute)
@@ -29,9 +30,10 @@ FileSystem::FileSystem()
    , _call_fs_exists_as_assignable_function_pointer(fs::exists)
    , _call_fs_rename_with_error_code_as_assignable_function_pointer(fs::rename)
    // Function Callers
+   , _caller_DoDeleteFileOrDirectory(make_unique<_caller_DoDeleteFileOrDirectoryType>())
+   , _caller_DeleteFileOrDirectory(make_unique<VoidTwoArgMemberFunctionCaller<FileSystem, const fs::path&, bool>>())
    , _caller_Exists(make_unique<NonVoidOneArgMemberFunctionCaller<bool, FileSystem, const fs::path&>>())
    , _caller_GetFileOrDirectoryPathsInDirectory(make_unique<_caller_GetFileOrDirectoryPathsInDirectoryType>())
-   , _caller_DeleteFileOrDirectory(make_unique<VoidTwoArgMemberFunctionCaller<FileSystem, const fs::path&, bool>>())
    , _foreacher_DeleteFileOrDirectory(make_unique<_foreacher_DeleteFileOrDirectoryType>())
    // Constant Components
    , _console(make_unique<Console>())
@@ -259,22 +261,22 @@ void FileSystem::RemoveFile(const char* filePath, bool ignoreFileDeleteError) co
    }
 }
 
-void FileSystem::DeleteFileOrDirectory(const fs::path& filePath, bool ignoreFileDeleteError, bool dryRun, bool quietMode) const
+void FileSystem::DeleteFileOrDirectory(const fs::path& fileOrDirectoryPath, bool ignoreFileDeleteError, bool dryRun, bool quietMode) const
 {
    if (dryRun)
    {
-      const string wouldDeleteMessage = "DryRun: Would delete " + filePath.string();
+      const string wouldDeleteMessage = "DryRun: Would delete " + fileOrDirectoryPath.string();
       _console->ThreadIdWriteLine(wouldDeleteMessage);
    }
    else
    {
       try
       {
-         _call_fs_remove(filePath);
+         _caller_DoDeleteFileOrDirectory->CallConstMemberFunction(this, &FileSystem::DoDeleteFileOrDirectory, fileOrDirectoryPath);
          if (!quietMode)
          {
-            const string deletedFileMessage = "Deleted " + filePath.string();
-            _console->ThreadIdWriteLine(deletedFileMessage);
+            const string deletedMessage = "Deleted " + fileOrDirectoryPath.string();
+            _console->ThreadIdWriteLine(deletedMessage);
          }
       }
       catch (const exception& ex)
@@ -326,6 +328,19 @@ shared_ptr<FILE> FileSystem::OpenFile(const fs::path& filePath, const char* file
 }
 
 // Private Functions
+
+void FileSystem::DoDeleteFileOrDirectory(const fs::path& fileOrDirectoryPath) const
+{
+   const bool isDirectory = _call_fs_is_directory(fileOrDirectoryPath);
+   if (isDirectory)
+   {
+      _call_fs_remove_all(fileOrDirectoryPath);
+   }
+   else
+   {
+      _call_fs_remove(fileOrDirectoryPath);
+   }
+}
 
 size_t FileSystem::GetFileSize(ifstream& fileStream) const
 {
