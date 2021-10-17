@@ -14,7 +14,7 @@ cppcheck.exe `
    -I C:\include\ZenUnitAndMetalMock `
    -I libFileRevisor `
    -I . `
-   -j 48 `
+   -j 64 `
    --output-file=cppcheck_results.txt `
    --error-exitcode=1 `
    .
