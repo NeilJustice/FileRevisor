@@ -36,20 +36,20 @@ public:
    static string RegexReplace(string_view stringView, string_view matchingRegex, string_view replacingRegex);
 
    template<typename T, typename... Ts>
-   static void RecursivelyConcatenate(ostringstream* outStringStream, const T& value, const Ts&... values)
+   static void RecursivelyConcatenate(const ostringstream* outStringStream, const T& value, const Ts&... values)
    {
       (*outStringStream) << value;
       RecursivelyConcatenate(outStringStream, values...);
    }
 
    template<typename T, typename... Ts>
-   static void RecursivelyConcatenate(ostringstream* outStringStream, const T& value)
+   static void RecursivelyConcatenate(const ostringstream* outStringStream, const T& value)
    {
       (*outStringStream) << value;
    }
 
    template<typename... T>
-   static void RecursivelyConcatenate(ostringstream*)
+   static void RecursivelyConcatenate(const ostringstream*)
    {
    }
 

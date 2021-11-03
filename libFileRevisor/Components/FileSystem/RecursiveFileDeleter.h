@@ -31,7 +31,7 @@ private:
       const char* filePath, const FileRevisorArgs& args) const;
 #ifdef _WIN32
    void ThrowFileSystemExceptionIfFindFirstFileExReturnedInvalidHandleValue(
-      HANDLE findFirstFileExHandle, const char* directoryPathSearchPatternChars) const;
+      const HANDLE findFirstFileExHandle, const char* directoryPathSearchPatternChars) const;
 #endif
    void PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException(
       const char* filePath, int unlinkReturnValue, const FileRevisorArgs& args) const;

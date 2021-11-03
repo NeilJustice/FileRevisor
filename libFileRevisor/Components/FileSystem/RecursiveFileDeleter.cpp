@@ -134,7 +134,7 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* dire
 }
 
 void RecursiveFileDeleter::ThrowFileSystemExceptionIfFindFirstFileExReturnedInvalidHandleValue(
-   HANDLE findFirstFileExHandle, const char* directoryPathSearchPatternChars) const
+   const HANDLE findFirstFileExHandle, const char* directoryPathSearchPatternChars) const
 {
    if (findFirstFileExHandle == INVALID_HANDLE_VALUE)
    {

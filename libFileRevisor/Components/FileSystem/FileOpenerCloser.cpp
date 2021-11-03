@@ -66,7 +66,7 @@ shared_ptr<FILE> FileOpenerCloser::OpenFileOnWindows(const fs::path& filePath, c
 
 #endif
 
-void FileOpenerCloser::ThrowFileOpenExceptionIfFileOpenFailed(FILE* rawFilePointer, const fs::path& filePath, bool throwIfFileNotOpenable) const
+void FileOpenerCloser::ThrowFileOpenExceptionIfFileOpenFailed(const FILE* rawFilePointer, const fs::path& filePath, bool throwIfFileNotOpenable) const
 {
    if (rawFilePointer == nullptr)
    {
