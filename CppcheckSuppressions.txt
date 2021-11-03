@@ -2,6 +2,7 @@
 *:*ZenUnit.h
 *:*MetalMock.h
 allocaCalled:*
+missingReturn:*
 preprocessorErrorDirective:*
 syntaxError:*
 unmatchedSuppression:*
