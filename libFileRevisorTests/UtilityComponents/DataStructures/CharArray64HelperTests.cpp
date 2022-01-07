@@ -25,7 +25,7 @@ TEST(ArrayContains0_MaximumNumberOfElementsToCompareIs0_ReturnsFalse)
 TEST(ArrayContains0_MaximumNumberOfElementsToCompareIs1_Char0IsNot0_ReturnsFalse)
 {
    array<char, 64> chars = ZenUnit::RandomStdArray<char, 64>();
-   chars[0] = ZenUnit::RandomNotEqualToValue<char>(0);
+   chars[0] = ZenUnit::RandomNotEqualTo<char>(0);
    //
    const bool arrayContains0 = _charArray64Helper.ArrayContains0(chars, 1);
    //
@@ -45,8 +45,8 @@ TEST(ArrayContains0_MaximumNumberOfElementsToCompareIs1_Char0Is0_ReturnsTrue)
 TEST(ArrayContains0_MaximumNumberOfElementsToCompareIs2_Char0IsNot0_Char1IsNot0_ReturnsFalse)
 {
    array<char, 64> chars = ZenUnit::RandomStdArray<char, 64>();
-   chars[0] = ZenUnit::RandomNotEqualToValue<char>(0);
-   chars[1] = ZenUnit::RandomNotEqualToValue<char>(0);
+   chars[0] = ZenUnit::RandomNotEqualTo<char>(0);
+   chars[1] = ZenUnit::RandomNotEqualTo<char>(0);
    //
    const bool arrayContains0 = _charArray64Helper.ArrayContains0(chars, 2);
    //
@@ -56,7 +56,7 @@ TEST(ArrayContains0_MaximumNumberOfElementsToCompareIs2_Char0IsNot0_Char1IsNot0_
 TEST(ArrayContains0_MaximumNumberOfElementsToCompareIs2_Char0IsNot0_Char1Is0_ReturnsTrue)
 {
    array<char, 64> chars = ZenUnit::RandomStdArray<char, 64>();
-   chars[0] = ZenUnit::RandomNotEqualToValue<char>(0);
+   chars[0] = ZenUnit::RandomNotEqualTo<char>(0);
    chars[1] = 0;
    //
    const bool arrayContains0 = _charArray64Helper.ArrayContains0(chars, 2);

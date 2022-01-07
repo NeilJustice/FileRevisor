@@ -166,7 +166,7 @@ TEST(DeleteTargetDirectoryIfNotCurrentDirectory_CurrentDirectoryPathIsTargetDire
 TEST(DeleteTargetDirectoryIfNotCurrentDirectory_CurrentDirectoryPathIsNotTargetDirectoryPath_DeletesTargetDirectory)
 {
    const FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
-   const fs::path currentDirectoryPath = ZenUnit::RandomNotEqualToValue<fs::path>(args.targetDirectoryPath);
+   const fs::path currentDirectoryPath = ZenUnit::RandomNotEqualTo<fs::path>(args.targetDirectoryPath);
    _fileSystemMock->CurrentDirectoryPathMock.Return(currentDirectoryPath);
    _fileSystemMock->DeleteFileOrDirectoryMock.Expect();
    //

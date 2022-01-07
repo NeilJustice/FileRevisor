@@ -120,7 +120,7 @@ TEST(RenameDirectory_RegexReplacedDirectoryNameDoesNotEqualSourceDirectoryName_D
 
    _consoleMock->ThreadIdWriteLineMock.Expect();
 
-   const fs::path directoryPath = ZenUnit::RandomNotEqualToValue<string>(regexReplacedDirectoryName);
+   const fs::path directoryPath = ZenUnit::RandomNotEqualTo<string>(regexReplacedDirectoryName);
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    args.dryrun = true;
    //
@@ -143,7 +143,7 @@ TEST(RenameDirectory_RegexReplacedDirectoryNameDoesNotEqualSourceDirectoryName_D
 
    _consoleMock->ThreadIdWriteLineMock.Expect();
 
-   const fs::path directoryPath = ZenUnit::RandomNotEqualToValue<string>(regexReplacedDirectoryName);
+   const fs::path directoryPath = ZenUnit::RandomNotEqualTo<string>(regexReplacedDirectoryName);
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    args.dryrun = false;
    //
