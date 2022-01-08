@@ -2,11 +2,11 @@
 #include "libFileRevisor/Components/FileSystem/DirectoryIterator.h"
 #include "libFileRevisor/Components/FileSystem/FileOpenerCloser.h"
 #include "libFileRevisor/Components/FileSystem/FileReader.h"
-#include "libFileRevisor/UtilityComponents/DataStructures/CharArray64Helper.h"
+#include "libFileRevisor/UtilityComponents/DataStructures/CharArray128Helper.h"
 
 DirectoryIterator::DirectoryIterator() noexcept
    // Constant Components
-   : _charArray64Helper(make_unique<CharArray64Helper>())
+   : _charArray128Helper(make_unique<CharArray128Helper>())
    , _console(make_unique<Console>())
    , _fileOpenerCloser(make_unique<FileOpenerCloser>())
    , _fileReader(make_unique<FileReader>())
@@ -97,15 +97,15 @@ bool DirectoryIterator::IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(const fs::path
       _console->ThreadIdWriteLineColor(unableToOpenFileMessage, Color::Yellow);
       return true;
    }
-   const pair<size_t, array<char, 64>> fileIsEmptyAndFirst64Bytes = _fileReader->ReadFirst64Bytes(fileOpenInBinaryReadMode.get());
-   const size_t numberOfBytesRead = fileIsEmptyAndFirst64Bytes.first;
+   const pair<size_t, array<char, 128>> fileIsEmptyAndFirst128Bytes = _fileReader->ReadFirst128Bytes(fileOpenInBinaryReadMode.get());
+   const size_t numberOfBytesRead = fileIsEmptyAndFirst128Bytes.first;
    if (numberOfBytesRead == 0)
    {
-      release_assert(fileIsEmptyAndFirst64Bytes.second[0] == 0);
+      release_assert(fileIsEmptyAndFirst128Bytes.second[0] == 0);
       return true;
    }
-   const bool first64BytesContains0 = _charArray64Helper->ArrayContains0(fileIsEmptyAndFirst64Bytes.second, numberOfBytesRead);
-   if (first64BytesContains0)
+   const bool first128BytesContain0 = _charArray128Helper->ArrayContains0(fileIsEmptyAndFirst128Bytes.second, numberOfBytesRead);
+   if (first128BytesContain0)
    {
       return true;
    }
