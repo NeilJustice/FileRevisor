@@ -9,10 +9,14 @@ FCloseDeleter::FCloseDeleter()
 
 void FCloseDeleter::operator()(FILE* rawFilePointer) const
 {
-   const int fcloseReturnValue = _call_fclose(rawFilePointer);
-   if (fcloseReturnValue != 0)
+   if (rawFilePointer != nullptr)
    {
-      const string exceptionMessage = String::ConcatValues("fclose(rawFilePointer) returned ", fcloseReturnValue);
-      throw runtime_error(exceptionMessage);
+      const int fcloseReturnValue = _call_fclose(rawFilePointer);
+      if (fcloseReturnValue != 0)
+      {
+         const string exceptionMessage = String::ConcatValues(
+            "fclose(rawFilePointer) in FCloseDeleter::operator(FILE* rawFilePointer) failed with return value ", fcloseReturnValue);
+         throw runtime_error(exceptionMessage);
+      }
    }
 }
