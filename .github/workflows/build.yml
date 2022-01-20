@@ -24,18 +24,17 @@ jobs:
           path: ${{ env.pythonLocation }}
           key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
 
-      - name: Install apt packages
-        run: sudo apt-get install ninja-build
+      - name: Install lld and ninja-build
+        run: sudo apt-get install lld ninja-build
 
       - name: Install lcov if g++-10 Release
         run: sudo apt-get install lcov
         if: ${{ matrix.cxx == 'g++-10' && matrix.cmake_build_type == 'Release' }}
 
       - name: Download ZenUnit.h
-        run: curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/ZenUnit.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/ZenUnit.h"
-
-      - name: Download MetalMock.h
-        run: curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/MetalMock.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/MetalMock.h"
+        run: |
+           curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/ZenUnit.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/ZenUnit.h"
+           curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/MetalMock.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/MetalMock.h"
 
       - name: Install pip packages
         run: pip install --upgrade --upgrade-strategy eager -r dev-requirements.txt
@@ -80,6 +79,9 @@ jobs:
           CXX: "/usr/bin/${{ matrix.cxx }}"
           PYTHONPATH: "."
         if: ${{ matrix.cxx == 'g++-10' && matrix.cmake_build_type == 'Release' }}
+
+      - name: Print .comment section of binary libFileRevisorTests to confirm it was linked with LLD
+        run: readelf --string-dump .comment "${{matrix.cmake_build_type}}/libFileRevisorTests/libFileRevisorTests"
 
       - name: Install and run lcov 1.15 then upload to Codecov.io if g++-10 Release
         run: |
