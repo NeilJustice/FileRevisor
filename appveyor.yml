@@ -1,11 +1,11 @@
 shallow_clone: true
 
 image:
-    - Visual Studio 2019
+    - Visual Studio 2022
 
 environment:
    matrix:
-      - generator: "Visual Studio 16 2019"
+      - generator: "Visual Studio 17 2022"
 
 platform:
    - x64
