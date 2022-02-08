@@ -2,8 +2,7 @@
 #include "libFileRevisor/ValueTypes/FileRevisorArgs.h"
 
 const string FileRevisorArgs::CommandLineUsage =
-R"(FileRevisor v1.1.0
-Quickly deletes directories, renames files, renames directories, or replaces text in files.
+R"(FileRevisor v1.1.0 - Quickly deletes directories, renames files, renames directories, or replaces text in files.
 
 Usage:
    filerevisor delete-directory --target=<TargetDirectoryPath> [--parallel] [--skip-files-in-use] [--dryrun] [--quiet]

@@ -8,8 +8,7 @@ EVIDENCE
 
 TEST(CommandLineUsage_IsExpectedString)
 {
-   ARE_EQUAL(R"(FileRevisor v1.1.0
-Quickly deletes directories, renames files, renames directories, or replaces text in files.
+   ARE_EQUAL(R"(FileRevisor v1.1.0 - Quickly deletes directories, renames files, renames directories, or replaces text in files.
 
 Usage:
    filerevisor delete-directory --target=<TargetDirectoryPath> [--parallel] [--skip-files-in-use] [--dryrun] [--quiet]
