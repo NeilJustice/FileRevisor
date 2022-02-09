@@ -100,9 +100,9 @@ TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsRegexReplaceFileTextOnEachText
    //
    METALMOCK(_directoryIteratorMock->SetDirectoryIteratorMock.CalledOnceWith(args.targetDirectoryPath, args.recurse));
 #if defined __linux__ || defined __APPLE__
-   static const vector<string> fileAndDirectoryPathIgnoreSubstrings = { "/.git/" };
+   static const vector<string> fileAndDirectoryPathIgnoreSubstrings = { "/.git/", ".p7s" };
 #elif defined _WIN32
-   static const vector<string> fileAndDirectoryPathIgnoreSubstrings = { "\\.git\\" };
+   static const vector<string> fileAndDirectoryPathIgnoreSubstrings = { "\\.git\\", ".p7s" };
 #endif
    METALMOCK(_directoryIteratorMock->SetFileAndDirectoryPathIgnoreSubstringsMock.CalledOnceWith(fileAndDirectoryPathIgnoreSubstrings));
    METALMOCK(_directoryIteratorMock->GetNonEmptyNonIgnoredTextFilePathsMock.CalledOnce());

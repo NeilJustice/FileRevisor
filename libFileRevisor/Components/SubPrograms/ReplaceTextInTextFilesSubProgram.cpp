@@ -28,9 +28,9 @@ int ReplaceTextInTextFilesSubProgram::Run(const FileRevisorArgs& args) const
 {
    _directoryIterator->SetDirectoryIterator(args.targetDirectoryPath, args.recurse);
 #if defined __linux__ || defined __APPLE__
-   static const vector<string> fileAndDirectoryPathIgnoreSubstrings = { "/.git/" };
+   static const vector<string> fileAndDirectoryPathIgnoreSubstrings = { "/.git/", ".p7s" };
 #elif defined _WIN32
-   static const vector<string> fileAndDirectoryPathIgnoreSubstrings = { "\\.git\\" };
+   static const vector<string> fileAndDirectoryPathIgnoreSubstrings = { "\\.git\\", ".p7s" };
 #endif
    _directoryIterator->SetFileAndDirectoryPathIgnoreSubstrings(fileAndDirectoryPathIgnoreSubstrings);
    const vector<fs::path> nonEmptyNonIgnoredTextFilePathsInTargetDirectory = _directoryIterator->GetNonEmptyNonIgnoredTextFilePaths();
