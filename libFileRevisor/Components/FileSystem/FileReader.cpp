@@ -15,22 +15,22 @@ FileReader::~FileReader()
 {
 }
 
-pair<size_t, array<char, 128>> FileReader::ReadFirst128Bytes(FILE* rawFilePointer) const
+pair<size_t, array<char, 256>> FileReader::ReadFirst256Bytes(FILE* rawFilePointer) const
 {
-   pair<size_t, array<char, 128>> numberOfBytesReadAndFirst128FileBytes{};
+   pair<size_t, array<char, 256>> numberOfBytesReadAndFirst256FileBytes{};
 #if defined __linux__|| defined __APPLE__
-   numberOfBytesReadAndFirst128FileBytes.first = _call_fread(
-      numberOfBytesReadAndFirst128FileBytes.second.data(),
+   numberOfBytesReadAndFirst256FileBytes.first = _call_fread(
+      numberOfBytesReadAndFirst256FileBytes.second.data(),
       1,
-      numberOfBytesReadAndFirst128FileBytes.second.size(),
+      numberOfBytesReadAndFirst256FileBytes.second.size(),
       rawFilePointer);
 #else
-   numberOfBytesReadAndFirst128FileBytes.first = _call_fread_nolock_s(
-      numberOfBytesReadAndFirst128FileBytes.second.data(),
-      numberOfBytesReadAndFirst128FileBytes.second.size(),
+   numberOfBytesReadAndFirst256FileBytes.first = _call_fread_nolock_s(
+      numberOfBytesReadAndFirst256FileBytes.second.data(),
+      numberOfBytesReadAndFirst256FileBytes.second.size(),
       1,
-      numberOfBytesReadAndFirst128FileBytes.second.size(),
+      numberOfBytesReadAndFirst256FileBytes.second.size(),
       rawFilePointer);
 #endif
-   return numberOfBytesReadAndFirst128FileBytes;
+   return numberOfBytesReadAndFirst256FileBytes;
 }

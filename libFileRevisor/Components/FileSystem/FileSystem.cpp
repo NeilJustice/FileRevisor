@@ -7,7 +7,7 @@
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Components/FileSystem/RecursiveFileDeleter.h"
 #include "libFileRevisor/Exceptions/FileSystemException.h"
-#include "libFileRevisor/UtilityComponents/DataStructures/CharArray128Helper.h"
+#include "libFileRevisor/UtilityComponents/DataStructures/CharArray256Helper.h"
 #include "libFileRevisor/UtilityComponents/FunctionCallers/Member/NonVoidOneArgMemberFunctionCaller.h"
 #include "libFileRevisor/UtilityComponents/FunctionCallers/Member/NonVoidTwoArgMemberFunctionCaller.h"
 #include "libFileRevisor/UtilityComponents/FunctionCallers/Member/VoidOneArgMemberFunctionCaller.h"

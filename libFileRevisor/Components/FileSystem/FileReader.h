@@ -13,5 +13,5 @@ private:
 public:
    FileReader();
    virtual ~FileReader();
-   virtual pair<size_t, array<char, 128>> ReadFirst128Bytes(FILE* rawFilePointer) const;
+   virtual pair<size_t, array<char, 256>> ReadFirst256Bytes(FILE* rawFilePointer) const;
 };

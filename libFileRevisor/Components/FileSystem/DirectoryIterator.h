@@ -1,5 +1,5 @@
 #pragma once
-class CharArray128Helper;
+class CharArray256Helper;
 class FileOpenerCloser;
 class FileReader;
 template<typename ReturnType, typename ClassType, typename Arg1Type, typename Arg2Type>
@@ -10,7 +10,7 @@ class DirectoryIterator
    friend class DirectoryIteratorTests;
 private:
    // Constant Components
-   unique_ptr<const CharArray128Helper> _charArray128Helper;
+   unique_ptr<const CharArray256Helper> _charArray256Helper;
    unique_ptr<const Console> _console;
    unique_ptr<const FileOpenerCloser> _fileOpenerCloser;
    unique_ptr<const FileReader> _fileReader;

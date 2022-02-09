@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "libFileRevisor/UtilityComponents/DataStructures/CharArray128Helper.h"
+#include "libFileRevisor/UtilityComponents/DataStructures/CharArray256Helper.h"
 
-bool CharArray128Helper::ArrayContains0(const array<char, 128>& chars, size_t maximumNumberOfElementsToCompare) const
+bool CharArray256Helper::ArrayContains0(const array<char, 256>& chars, size_t maximumNumberOfElementsToCompare) const
 {
    for (size_t i = 0; i < maximumNumberOfElementsToCompare; ++i)
    {
