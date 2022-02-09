@@ -163,14 +163,22 @@ void FileSystem::CreateDirectories(const fs::path& directoryPath) const
    fs::create_directories(directoryPath);
 }
 
-void FileSystem::CreateTextFile(const fs::path& filePath, string_view fileText) const
+void FileSystem::CreateFileWithText(const fs::path& filePath, string_view fileText) const
 {
-   CreateBinaryOrTextFile(filePath, false, fileText.data(), fileText.size());
+   CreateFileWithBytes(filePath, fileText.data(), fileText.size());
 }
 
-void FileSystem::CreateBinaryFile(const fs::path& filePath, const char* bytes, size_t bytesLength) const
+void FileSystem::CreateFileWithBytes(const fs::path& filePath, const char* bytes, size_t bytesLength) const
 {
-   CreateBinaryOrTextFile(filePath, true, bytes, bytesLength);
+   const fs::path parentDirectoryPath = filePath.parent_path();
+   fs::create_directories(parentDirectoryPath);
+   const shared_ptr<FILE> binaryOrTextFileOpenInWriteMode = OpenFile(filePath, "wb");
+#if defined __linux__ || defined __APPLE__
+   const size_t numberOfBytesWritten = fwrite(bytes, 1, bytesLength, binaryOrTextFileOpenInWriteMode.get());
+#elif defined _WIN32
+   const size_t numberOfBytesWritten = _fwrite_nolock(bytes, 1, bytesLength, binaryOrTextFileOpenInWriteMode.get());
+#endif
+   release_assert(numberOfBytesWritten == bytesLength);
 }
 
 fs::path FileSystem::RenameFile(const fs::path& filePath, string_view newFileName) const
@@ -349,19 +357,6 @@ size_t FileSystem::GetFileSize(ifstream& fileStream) const
    fileStream.seekg(0, ios::beg);
    const size_t fileSizeAsSizeT = static_cast<size_t>(fileSizeAsStreamPos);
    return fileSizeAsSizeT;
-}
-
-void FileSystem::CreateBinaryOrTextFile(const fs::path& filePath, bool trueBinaryFalseText, const char* bytes, size_t bytesLength) const
-{
-   const fs::path parentDirectoryPath = filePath.parent_path();
-   fs::create_directories(parentDirectoryPath);
-   const shared_ptr<FILE> binaryOrTextFileOpenInWriteMode = OpenFile(filePath, trueBinaryFalseText ? "wb" : "w");
-#if defined __linux__ || defined __APPLE__
-   const size_t numberOfBytesWritten = fwrite(bytes, 1, bytesLength, binaryOrTextFileOpenInWriteMode.get());
-#elif defined _WIN32
-   const size_t numberOfBytesWritten = _fwrite_nolock(bytes, 1, bytesLength, binaryOrTextFileOpenInWriteMode.get());
-#endif
-   release_assert(numberOfBytesWritten == bytesLength);
 }
 
 void FileSystem::EraseTrailingBinaryZeros(string& outStr) const

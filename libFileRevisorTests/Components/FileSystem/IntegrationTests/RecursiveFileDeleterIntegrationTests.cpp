@@ -37,22 +37,22 @@ STARTUP
 
   fs::remove_all(_rootDirectoryPath);
 
-  _fileSystem.CreateTextFile(_root_file1 = _rootDirectoryPath / "file1.ext", ZenUnit::Random<string>());
-  _fileSystem.CreateTextFile(_root_file2 = _rootDirectoryPath / ".gitignore", ZenUnit::Random<string>());
+  _fileSystem.CreateFileWithText(_root_file1 = _rootDirectoryPath / "file1.ext", ZenUnit::Random<string>());
+  _fileSystem.CreateFileWithText(_root_file2 = _rootDirectoryPath / ".gitignore", ZenUnit::Random<string>());
 
   _fileSystem.CreateDirectories(_root_subdirectory1 = _rootDirectoryPath / "subdirectory1");
-  _fileSystem.CreateTextFile(_root_subdirectory1_file1 = _rootDirectoryPath / "subdirectory1" / "file1.ext", ZenUnit::Random<string>());
-  _fileSystem.CreateTextFile(_root_subdirectory1_file2 = _rootDirectoryPath / "subdirectory1" / "file2.ext", ZenUnit::Random<string>());
+  _fileSystem.CreateFileWithText(_root_subdirectory1_file1 = _rootDirectoryPath / "subdirectory1" / "file1.ext", ZenUnit::Random<string>());
+  _fileSystem.CreateFileWithText(_root_subdirectory1_file2 = _rootDirectoryPath / "subdirectory1" / "file2.ext", ZenUnit::Random<string>());
 
   _fileSystem.CreateDirectories(_root_subdirectory2 = _rootDirectoryPath / "subdirectory2");
   _fileSystem.CreateDirectories(_root_subdirectory2_subdirectory3 = _rootDirectoryPath / "subdirectory2" / "subdirectory3");
-  _fileSystem.CreateTextFile(_root_subdirectory2_subdirectory3_file1 = _rootDirectoryPath / "subdirectory2" / "subdirectory3" / "file1.ext", ZenUnit::Random<string>());
-  _fileSystem.CreateTextFile(_root_subdirectory2_subdirectory3_file2 = _rootDirectoryPath / "subdirectory2" / "subdirectory3" / "file2.ext", ZenUnit::Random<string>());
+  _fileSystem.CreateFileWithText(_root_subdirectory2_subdirectory3_file1 = _rootDirectoryPath / "subdirectory2" / "subdirectory3" / "file1.ext", ZenUnit::Random<string>());
+  _fileSystem.CreateFileWithText(_root_subdirectory2_subdirectory3_file2 = _rootDirectoryPath / "subdirectory2" / "subdirectory3" / "file2.ext", ZenUnit::Random<string>());
 
   _fileSystem.CreateDirectories(_root_subdirectory4 = _rootDirectoryPath / "subdirectory4");
 
   _fileSystem.CreateDirectories(_root_subdirectory5 = _rootDirectoryPath / "subdirectory5");
-  _fileSystem.CreateTextFile(_root_subdirectory5_file1 = _rootDirectoryPath / "subdirectory5" / "file1.ext", ZenUnit::Random<string>());
+  _fileSystem.CreateFileWithText(_root_subdirectory5_file1 = _rootDirectoryPath / "subdirectory5" / "file1.ext", ZenUnit::Random<string>());
 }
 
 CLEANUP

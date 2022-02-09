@@ -105,13 +105,12 @@ public:
 
    // Writes
    virtual void CreateDirectories(const fs::path& directoryPath) const;
-   virtual void CreateTextFile(const fs::path& filePath, string_view fileText) const;
-   virtual void CreateBinaryFile(const fs::path& filePath, const char* bytes, size_t bytesLength) const;
+   virtual void CreateFileWithText(const fs::path& filePath, string_view fileText) const;
+   virtual void CreateFileWithBytes(const fs::path& filePath, const char* bytes, size_t bytesLength) const;
    virtual fs::path RenameFile(const fs::path& filePath, string_view newFileName) const;
    virtual fs::path RenameDirectory(const fs::path& directoryPath, string_view newDirectoryName) const;
 private:
    virtual void DoDeleteFileOrDirectory(const fs::path& fileOrDirectoryPath) const;
    virtual size_t GetFileSize(std::ifstream& file) const;
-   virtual void CreateBinaryOrTextFile(const fs::path& filePath, bool trueBinaryFalseText, const char* bytes, size_t bytesLength) const;
    virtual void EraseTrailingBinaryZeros(std::string& outStr) const;
 };

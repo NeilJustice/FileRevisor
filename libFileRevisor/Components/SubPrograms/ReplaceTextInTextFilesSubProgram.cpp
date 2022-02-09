@@ -64,7 +64,7 @@ size_t ReplaceTextInTextFilesSubProgram::RegexReplaceTextInTextFile(const fs::pa
          _console->ThreadIdWriteLine(wouldReplaceTextInFileMessage);
          return 1;
       }
-      _fileSystem->CreateTextFile(textFilePath, regexReplacedTextFileText);
+      _fileSystem->CreateFileWithText(textFilePath, regexReplacedTextFileText);
       const string replacedTextInFileMessage = "Replaced: Text in file " + textFilePath.string();
       _console->ThreadIdWriteLine(replacedTextInFileMessage);
       return 1;

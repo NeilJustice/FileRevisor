@@ -28,7 +28,7 @@ public:
    METALMOCK_VOID2_CONST(RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows, const fs::path&, bool)
 
    // Writes
-   METALMOCK_VOID2_CONST(CreateTextFile, const fs::path&, string_view)
+   METALMOCK_VOID2_CONST(CreateFileWithText, const fs::path&, string_view)
    METALMOCK_NONVOID2_CONST(fs::path, RenameFile, const fs::path&, string_view)
    METALMOCK_NONVOID2_CONST(fs::path, RenameDirectory, const fs::path&, string_view)
 };

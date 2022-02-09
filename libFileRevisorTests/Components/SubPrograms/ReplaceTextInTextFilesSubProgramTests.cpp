@@ -168,7 +168,7 @@ TEST(RegexReplaceTextInTextFile_DryRunIsFalse_ReplacedFileTextDiffersFromOrigina
    const string replacedTextFileText = ZenUnit::Random<string>() + ZenUnit::Random<string>();
    _regexerMock->ReplaceMock.Return(replacedTextFileText);
 
-   _fileSystemMock->CreateTextFileMock.Expect();
+   _fileSystemMock->CreateFileWithTextMock.Expect();
 
    _consoleMock->ThreadIdWriteLineMock.Expect();
 
@@ -182,7 +182,7 @@ TEST(RegexReplaceTextInTextFile_DryRunIsFalse_ReplacedFileTextDiffersFromOrigina
    METALMOCKTHEN(_call_PrintReadingFileMessageIfVerboseModeMock->CallConstMemberFunctionMock.CalledOnceWith(&_replaceTextInTextFilesSubProgram, &ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue, args.verbose, textFilePath)).Then(
    METALMOCKTHEN(_fileSystemMock->ReadTextMock.CalledOnceWith(textFilePath))).Then(
    METALMOCKTHEN(_regexerMock->ReplaceMock.CalledOnceWith(textFileText, args.fromRegexPattern, args.toRegexPattern))).Then(
-   METALMOCKTHEN(_fileSystemMock->CreateTextFileMock.CalledOnceWith(textFilePath, replacedTextFileText))).Then(
+   METALMOCKTHEN(_fileSystemMock->CreateFileWithTextMock.CalledOnceWith(textFilePath, replacedTextFileText))).Then(
    METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledOnceWith(expectedReplacedTextMessage)));
    ARE_EQUAL(1, numberOfFilesThatWereOrWouldBeModified);
 }

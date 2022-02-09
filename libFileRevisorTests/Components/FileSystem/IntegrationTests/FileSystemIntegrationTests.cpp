@@ -28,20 +28,20 @@ void CreateIntegrationTestsDirectoryStructure()
   FileSystem fileSystem;
   const char bytesContaining0A[] = { 1, 0 };
   const char bytesContaining0B[] = { 1, 2, 0, 3 };
-  fileSystem.CreateTextFile(_rootDirectoryPath / ".git/gitfile1", "");
-  fileSystem.CreateTextFile(_rootDirectoryPath / ".git/gitfile2", "");
-  fileSystem.CreateTextFile(_rootDirectoryPath / ".git/gitfile3", "");
-  fileSystem.CreateTextFile(_rootDirectoryPath / "root.emptyFile1", "");
-  fileSystem.CreateTextFile(_rootDirectoryPath / "root.textFile1", "abc");
-  fileSystem.CreateBinaryFile(_rootDirectoryPath / "root.binaryFile1", bytesContaining0A, sizeof(bytesContaining0A));
-  fileSystem.CreateTextFile(_rootDirectoryPath / "root.textFile2", "123");
-  fileSystem.CreateTextFile(_rootDirectoryPath / "subdirectory1/subdirectory1.emptyFile1", "");
-  fileSystem.CreateTextFile(_rootDirectoryPath / "subdirectory1/subdirectory1.textFile1", "abc");
-  fileSystem.CreateBinaryFile(_rootDirectoryPath / "subdirectory1/subdirectory1.binaryFile1", bytesContaining0B, sizeof(bytesContaining0B));
+  fileSystem.CreateFileWithText(_rootDirectoryPath / ".git/gitfile1", "");
+  fileSystem.CreateFileWithText(_rootDirectoryPath / ".git/gitfile2", "");
+  fileSystem.CreateFileWithText(_rootDirectoryPath / ".git/gitfile3", "");
+  fileSystem.CreateFileWithText(_rootDirectoryPath / "root.emptyFile1", "");
+  fileSystem.CreateFileWithText(_rootDirectoryPath / "root.textFile1", "abc");
+  fileSystem.CreateFileWithBytes(_rootDirectoryPath / "root.binaryFile1", bytesContaining0A, sizeof(bytesContaining0A));
+  fileSystem.CreateFileWithText(_rootDirectoryPath / "root.textFile2", "123");
+  fileSystem.CreateFileWithText(_rootDirectoryPath / "subdirectory1/subdirectory1.emptyFile1", "");
+  fileSystem.CreateFileWithText(_rootDirectoryPath / "subdirectory1/subdirectory1.textFile1", "abc");
+  fileSystem.CreateFileWithBytes(_rootDirectoryPath / "subdirectory1/subdirectory1.binaryFile1", bytesContaining0B, sizeof(bytesContaining0B));
   fileSystem.CreateDirectories(_rootDirectoryPath / "subdirectory1/subdirectoryA/subdirectoryB");
-  fileSystem.CreateTextFile(_rootDirectoryPath / "subdirectory2/subdirectory2.emptyFile1", "");
-  fileSystem.CreateTextFile(_rootDirectoryPath / "subdirectory2/subdirectory2.textFile1", "123");
-  fileSystem.CreateBinaryFile(_rootDirectoryPath / "subdirectory2/subdirectory2.binaryFile1", bytesContaining0B, sizeof(bytesContaining0B));
+  fileSystem.CreateFileWithText(_rootDirectoryPath / "subdirectory2/subdirectory2.emptyFile1", "");
+  fileSystem.CreateFileWithText(_rootDirectoryPath / "subdirectory2/subdirectory2.textFile1", "123");
+  fileSystem.CreateFileWithBytes(_rootDirectoryPath / "subdirectory2/subdirectory2.binaryFile1", bytesContaining0B, sizeof(bytesContaining0B));
   fileSystem.CreateDirectories(_rootDirectoryPath / "subdirectory3");
   fileSystem.CreateDirectories(_rootDirectoryPath / "subdirectory3/subdirectory4");
 }
@@ -170,7 +170,7 @@ TEST(ReadText_FileDoesNotExist_ThrowsFileSystemException)
 TEST(ReadText_FileExists_FileIsEmpty_ReturnsEmptyString)
 {
   const fs::path textFilePath = _rootDirectoryPath / "ReadTextTest.txt";
-  _fileSystem.CreateTextFile(textFilePath, "");
+  _fileSystem.CreateFileWithText(textFilePath, "");
   //
   const string fileText = _fileSystem.ReadText(textFilePath);
   //
@@ -181,7 +181,7 @@ TEST(ReadText_FileExists_FileIsNotEmptyAndContainsTrailingBinaryZeros_ReturnsFil
 {
   const fs::path textFilePath = _rootDirectoryPath / "ReadTextTest.txt";
   const char fileBytes[] = { 'a', 'b', '\n', 'c', 0, 0 };
-  _fileSystem.CreateBinaryFile(textFilePath, fileBytes, sizeof(fileBytes));
+  _fileSystem.CreateFileWithBytes(textFilePath, fileBytes, sizeof(fileBytes));
   //
   const string fileText = _fileSystem.ReadText(textFilePath);
   //
@@ -192,7 +192,7 @@ TEST(ReadText_FileExists_FileIsNotEmptyAndContainsTrailingBinaryZeros_ReturnsFil
 TEST(RemoveFile_FileExistsAndIsDeletable_IgnoreFileDeleteErrorIsEitherTrueOrFalse_DeletesTheFile)
 {
   const string filePathThatExists = (_rootDirectoryPath / "DeleteFileTest.txt").string();
-  _fileSystem.CreateTextFile(filePathThatExists, ZenUnit::Random<string>());
+  _fileSystem.CreateFileWithText(filePathThatExists, ZenUnit::Random<string>());
   IS_TRUE(_fileSystem.FileOrDirectoryExists(filePathThatExists));
   const bool skipFilesInUse = ZenUnit::Random<bool>();
   //
