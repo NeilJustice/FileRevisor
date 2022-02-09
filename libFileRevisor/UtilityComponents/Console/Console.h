@@ -15,4 +15,6 @@ public:
    virtual void WriteLine(string_view message) const;
    virtual void ThreadIdWriteLine(string_view message) const;
    virtual void ThreadIdWriteLineColor(string_view message, Color color) const;
+private:
+   static string MakeThreadIdMessage(string_view message);
 };

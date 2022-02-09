@@ -20,18 +20,27 @@ void Console::WriteLine(string_view message) const
 
 void Console::ThreadIdWriteLine(string_view message) const
 {
-   const thread::id threadId = this_thread::get_id();
-   const string fullMessage = String::ConcatValues("[FileRevisor T", threadId, "] ", message, "\n");
+   const string threadIdMessage = MakeThreadIdMessage(message);
    scoped_lock<mutex> coutLock(_coutMutex);
-   cout << fullMessage;
+   cout << threadIdMessage;
 }
 
 void Console::ThreadIdWriteLineColor(string_view message, Color color) const
 {
-   const thread::id threadId = this_thread::get_id();
-   const string fullMessage = String::ConcatValues("[FileRevisor T", threadId, "] ", message, "\n");
+   const string threadIdMessage = MakeThreadIdMessage(message);
    scoped_lock<mutex> coutLock(_coutMutex);
    const bool didSetTextColor = _consoleColorer->SetTextColor(color);
-   cout << fullMessage;
+   cout << threadIdMessage;
    _consoleColorer->UnsetTextColor(didSetTextColor);
+}
+
+// Private Functions
+
+string Console::MakeThreadIdMessage(string_view message)
+{
+   const thread::id threadId = this_thread::get_id();
+   ostringstream threadIdMessageBuilder;
+   threadIdMessageBuilder << "[FileRevisor T" << left << setw(5) << threadId << "] " << message << '\n';
+   string threadIdMessage = threadIdMessageBuilder.str();
+   return threadIdMessage;
 }
