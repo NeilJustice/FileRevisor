@@ -21,7 +21,7 @@ void Console::WriteLine(string_view message) const
 void Console::ThreadIdWriteLine(string_view message) const
 {
    const thread::id threadId = this_thread::get_id();
-   const string fullMessage = String::ConcatValues("[FileRevisor Thread ", threadId, "] ", message, "\n");
+   const string fullMessage = String::ConcatValues("[FileRevisor T", threadId, "] ", message, "\n");
    scoped_lock<mutex> coutLock(_coutMutex);
    cout << fullMessage;
 }
@@ -29,7 +29,7 @@ void Console::ThreadIdWriteLine(string_view message) const
 void Console::ThreadIdWriteLineColor(string_view message, Color color) const
 {
    const thread::id threadId = this_thread::get_id();
-   const string fullMessage = String::ConcatValues("[FileRevisor Thread ", threadId, "] ", message, "\n");
+   const string fullMessage = String::ConcatValues("[FileRevisor T", threadId, "] ", message, "\n");
    scoped_lock<mutex> coutLock(_coutMutex);
    const bool didSetTextColor = _consoleColorer->SetTextColor(color);
    cout << fullMessage;
