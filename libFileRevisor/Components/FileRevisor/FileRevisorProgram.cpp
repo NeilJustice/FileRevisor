@@ -55,7 +55,7 @@ int FileRevisorProgram::Run(const vector<string>& stringArgs) const
 int FileRevisorProgram::ExceptionHandler(const exception& ex) const
 {
    const string exceptionClassNameAndMessage = _call_Type_GetExceptionClassNameAndMessage(&ex);
-   const string exceptionMessage = "Error: " + exceptionClassNameAndMessage;
+   const string exceptionMessage = "Error: Exception thrown: " + exceptionClassNameAndMessage;
    _console->ThreadIdWriteLineColor(exceptionMessage, Color::Red);
    return 1;
 }
