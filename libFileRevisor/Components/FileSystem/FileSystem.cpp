@@ -143,7 +143,7 @@ void FileSystem::RecursivelyDeleteAllFilesInDirectory(const string& directoryPat
 
 string FileSystem::ReadText(const fs::path& textFilePath) const
 {
-   ifstream textFileStream(textFilePath.c_str());
+   ifstream textFileStream(textFilePath.c_str(), ios_base::binary);
    if (!textFileStream.is_open())
    {
       const FileSystemException fileSystemException = _fileSystemExceptionMaker->MakeFileSystemExceptionForFailedToOpenFileWithFStream(textFilePath);
