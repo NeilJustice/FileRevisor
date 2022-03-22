@@ -8,7 +8,7 @@ EVIDENCE
 
 TEST(TwoArgConstructor_MakesWhatReturnExpectedExceptionMessage)
 {
-   const FileExceptionType fileExceptionType = ZenUnit::RandomEnum<FileExceptionType>(FileExceptionType::MaxValue);
+   const FileExceptionType fileExceptionType = ZenUnit::RandomEnum<FileExceptionType>();
    const string exceptionMessage = ZenUnit::Random<string>();
    //
    const FileSystemException fileException(fileExceptionType, exceptionMessage);

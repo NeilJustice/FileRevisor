@@ -84,7 +84,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
    _docoptParserMock->GetOptionalBoolMock.ReturnValues(
       recurse, parallel, skipFilesInUse, dryrun, quiet, verbose);
 
-   const ProgramMode programMode = ZenUnit::RandomEnum<ProgramMode>(ProgramMode::MaxValue);
+   const ProgramMode programMode = ZenUnit::RandomEnum<ProgramMode>();
    DetermineProgramModeMock.Return(programMode);
 
    const tuple<fs::path, string, string> targetDirectory_fromRegexPattern_toRegexPattern(

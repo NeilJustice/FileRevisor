@@ -8,7 +8,7 @@ EVIDENCE
 TEST(TestableRandomFileSystemException_ReturnsNewFileSystemExceptionWithRandomFileExceptionTypeAndRandomExceptionMessage)
 {
    ZenUnit::RandomGeneratorMock randomGeneratorMock;
-   const FileExceptionType fileExceptionType = ZenUnit::RandomEnum<FileExceptionType>(FileExceptionType::MaxValue);
+   const FileExceptionType fileExceptionType = ZenUnit::RandomEnum<FileExceptionType>();
    randomGeneratorMock.EnumMock.Return(static_cast<int>(fileExceptionType));
    const string exceptionMessage = randomGeneratorMock.StringMock.ReturnRandom();
    //
