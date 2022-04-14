@@ -34,7 +34,6 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
 
 ```ini
 FileRevisor v1.1.0
-Quickly deletes directories, renames files, renames directories, or replaces text in files.
 
 Usage:
    filerevisor delete-directory
