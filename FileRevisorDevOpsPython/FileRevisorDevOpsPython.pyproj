@@ -8,7 +8,7 @@
     </ProjectHome>
     <StartupFile>MypyFlake8PylintThenRunTestsWithCoverage.py</StartupFile>
     <SearchPath>..\</SearchPath>
-    <WorkingDirectory>D:\Code\FileRevisor\FileRevisorDevOpsPython</WorkingDirectory>
+    <WorkingDirectory>C:\Code\FileRevisor\FileRevisorDevOpsPython</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <Name>PyUtils</Name>
     <RootNamespace>PyUtils</RootNamespace>

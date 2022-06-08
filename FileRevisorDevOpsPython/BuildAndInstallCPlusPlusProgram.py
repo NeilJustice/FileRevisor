@@ -49,4 +49,4 @@ if __name__ == "__main__": # pragma nocover
    main()
 
 # --solution-name=FileRevisor --cmake-generator="Visual Studio 17 2022" --cmake-build-type=Debug --tests-project=libFileRevisorTests --no-install
-# Working directory: D:\Code\FileRevisor
+# Working directory: C:\Code\FileRevisor
