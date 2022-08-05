@@ -152,15 +152,11 @@ The OS, CPU, and storage hardware which generated the above performance numbers 
 
 ### FileRevisor code structure as it appears in Visual Studio Code on Linux
 
-Shown in this screenshot is function `FileRevisorArgsParser::ParseArgs` which uses the excellent single-header command line arguments parsing library [docopt.cpp](https://github.com/docopt/docopt.cpp) to parse FileRevisor's command line arguments:
-
 ![FileRevisor Code Structure As It Appears In Visual Studio Code On Linux](Screenshots/Linux/VisualStudioCode.png)
 
 ### FileRevisor code structure as it appears in Visual Studio 2022 on Windows
 
-Shown in this screenshot is function `DeleteDirectorySubProgram::Run` with the key if-statement highlighted for determining whether to delete a given directory's subdirectories in parallel or sequentially:
-
-![FileRevisor Code Structure As It Appears In Visual Studio 2022 On Windows](Screenshots/Windows/VisualStudio.png)
+![FileRevisor Code Structure As It Appears In Visual Studio 2022 On Windows](Screenshots/Windows/FileRevisorCodeStructureInVisualStudio2022.png)
 
 ### Linux Jenkins jobs which build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor's C++ code and Mypy-Flake8-Pylint-SonarQube scan FileRevisor's CI/CD Python code
 
