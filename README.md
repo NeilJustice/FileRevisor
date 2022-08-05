@@ -24,16 +24,16 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
 * [Linux FileRevisor parallel directory deletion performance](#linux-filerevisor-parallel-directory-deletion-performance)
 * [Windows FileRevisor parallel folder deletion performance](#windows-filerevisor-parallel-folder-deletion-performance)
 * [FileRevisor code structure as it appears in Visual Studio Code on Linux](#filerevisor-code-structure-as-it-appears-in-visual-studio-code-on-linux)
-* [FileRevisor code structure as it appears in Visual Studio 2019 on Windows](#filerevisor-code-structure-as-it-appears-in-visual-studio-2019-on-windows)
+* [FileRevisor code structure as it appears in Visual Studio 2022 on Windows](#filerevisor-code-structure-as-it-appears-in-visual-studio-2022-on-windows)
 * [Linux Jenkins jobs which build, cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor's C++ code and mypy-flake8-pylint-SonarQube FileRevisor's CI/CD Python code](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filerevisors-c-code-and-mypy-flake8-pylint-sonarqube-scan-filerevisors-cicd-python-code)
 * [Windows Jenkins jobs which build and cppcheck FileRevisor's C++ code and mypy-flake8-pylint-SonarQube FileRevisor's CI/CD Python code](#windows-jenkins-jobs-which-build-and-cppcheck-filerevisors-c-code-and-mypy-flake8-pylint-sonarqube-scan-filerevisors-cicd-python-code)
 * [4 steps to build binary filerevisor from source on Linux with Clang](#4-steps-to-build-binary-filerevisor-from-source-on-linux-with-clang)
-* [4 steps to build executable FileRevisor.exe from source on Windows with Visual Studio 2019](#4-steps-to-build-executable-filerevisorexe-from-source-on-windows-with-visual-studio-2019)
+* [4 steps to build executable FileRevisor.exe from source on Windows with Visual Studio 2022](#4-steps-to-build-executable-filerevisorexe-from-source-on-windows-with-visual-studio-2022)
 
 ## FileRevisor command line usage
 
 ```ini
-FileRevisor v1.1.0
+FileRevisor v1.1.0 - Quickly deletes directories, renames files, renames directories, or replaces text in files.
 
 Usage:
    filerevisor delete-directory
@@ -156,11 +156,11 @@ Shown in this screenshot is function `FileRevisorArgsParser::ParseArgs` which us
 
 ![FileRevisor Code Structure As It Appears In Visual Studio Code On Linux](Screenshots/Linux/VisualStudioCode.png)
 
-### FileRevisor code structure as it appears in Visual Studio 2019 on Windows
+### FileRevisor code structure as it appears in Visual Studio 2022 on Windows
 
 Shown in this screenshot is function `DeleteDirectorySubProgram::Run` with the key if-statement highlighted for determining whether to delete a given directory's subdirectories in parallel or sequentially:
 
-![FileRevisor Code Structure As It Appears In Visual Studio 2019 On Windows](Screenshots/Windows/VisualStudio.png)
+![FileRevisor Code Structure As It Appears In Visual Studio 2022 On Windows](Screenshots/Windows/VisualStudio.png)
 
 ### Linux Jenkins jobs which build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor's C++ code and Mypy-Flake8-Pylint-SonarQube scan FileRevisor's CI/CD Python code
 
@@ -183,7 +183,7 @@ Resulting binary `/usr/local/bin/filerevisor`:
 
 ![Linux filerevisor binary in /usr/local/bin](Screenshots/LinuxFileRevisorBinaryInUsrLocalBin.png)
 
-## 4 steps to build executable FileRevisor.exe from source on Windows with Visual Studio 2019
+## 4 steps to build executable FileRevisor.exe from source on Windows with Visual Studio 2022
 
 ```powershell
 git clone https://github.com/NeilJustice/FileRevisor
