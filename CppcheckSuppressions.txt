@@ -2,6 +2,7 @@
 *:*ZenUnit.h
 *:*MetalMock.h
 allocaCalled:*
+constVariable:libFileRevisor\StaticUtilities\StringUtil.h:10
 missingReturn:*
 preprocessorErrorDirective:*
 syntaxError:*
