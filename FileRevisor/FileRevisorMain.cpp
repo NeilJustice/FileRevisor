@@ -1,4 +1,9 @@
 #include "libFileRevisor/Compiler/IfWindowsIgnoreTheseWarningsGlobally.h"
+#include <functional>
+#include <memory>
+#include <string>
+#include <vector>
+using namespace std;
 #include "libFileRevisor/Components/FileRevisor/FileRevisorProgram.h"
 
 // Example FileRevisor command line arguments:
