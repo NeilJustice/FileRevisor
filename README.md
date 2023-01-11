@@ -1,17 +1,9 @@
 # 🗂️ FileRevisor 🗂️
-
-[![Standard](https://img.shields.io/badge/c%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B20) ![GitHub](https://img.shields.io/github/license/NeilJustice/FileRevisor) ![Dependencies 0](Screenshots/Dependencies-0-brightgreen.svg)
+[![Standard](https://img.shields.io/badge/c%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B20) [![FileRevisor](https://github.com/NeilJustice/FileRevisor/actions/workflows/build.yml/badge.svg)](https://github.com/NeilJustice/FileRevisor/actions/workflows/build.yml) <img src="https://ci.appveyor.com/api/projects/status/fl8f0jle01k04nwp?svg=true"/></a> [![codecov](https://codecov.io/gh/NeilJustice/FileRevisor/branch/master/graph/badge.svg?token=KH1wxoYSdS)](https://codecov.io/gh/NeilJustice/FileRevisor) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=NeilJustice_FileRevisor&metric=alert_status)](https://sonarcloud.io/dashboard?id=NeilJustice_FileRevisor) ![Dependencies 0](Screenshots/Dependencies-0-brightgreen.svg)
 
 FileRevisor is a cross-platform C++ command line program for quickly deleting large directories in parallel, quickly renaming files or directories, and quickly replacing text in text files.
 
 FileRevisor's key feature is its extreme performance when deleting large folders in parallel on Windows. On Linux, directory deletions are quite a bit faster than on Windows, and so the parallel directory deletion peformance boost which FileRevisor provides is more modest on Linux relative to Windows. See below for Linux vs. Windows directory deletion performance graphs.
-
-|Build Type|Build Status|
-|----------|------------|
-|GitHub Actions Debug and Release build - ubuntu-latest Clang 11 / GCC 10|[![FileRevisor](https://github.com/NeilJustice/FileRevisor/actions/workflows/build.yml/badge.svg)](https://github.com/NeilJustice/FileRevisor/actions/workflows/build.yml)|
-|AppVeyor Debug and Release build - Visual Studio 2022 x64|<a href="https://ci.appveyor.com/project/NeilJustice/FileRevisor"><img src="https://ci.appveyor.com/api/projects/status/fl8f0jle01k04nwp?svg=true"/></a>|
-|Codecov.io code coverage for FileRevisor's C++ and FileRevisorDevOpsPython|[![codecov](https://codecov.io/gh/NeilJustice/FileRevisor/branch/master/graph/badge.svg?token=KH1wxoYSdS)](https://codecov.io/gh/NeilJustice/FileRevisor)|
-|SonarCloud scan of FileRevisorDevOpsPython - the Python code which builds and tests FileRevisor|[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=NeilJustice_FileRevisor&metric=alert_status)](https://sonarcloud.io/dashboard?id=NeilJustice_FileRevisor)|
 
 FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJustice/ZenUnitAndMetalMock">ZenUnit and MetalMock</a>.
 
