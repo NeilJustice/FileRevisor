@@ -25,7 +25,7 @@ FileRevisor is rigorously unit tested with <a href="https://github.com/NeilJusti
 ## FileRevisor command line usage
 
 ```ini
-FileRevisor v1.1.0 - Quickly deletes directories, renames files, renames directories, or replaces text in files.
+FileRevisor v1.1.0 - Quickly delete directories, rename files or directories, or replace text in files.
 
 Usage:
    filerevisor delete-directory
