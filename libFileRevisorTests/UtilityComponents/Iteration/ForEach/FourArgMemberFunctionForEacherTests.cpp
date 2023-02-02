@@ -60,11 +60,9 @@ TEST(CallConstMemberFunctionWithEachElement_TwoItemCollection_CallsThisPointerBo
    _fourArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElement(
       classInstance.elements, &classInstance, &ClassType::ConstFourArgFunction, 20, 30, 40);
    //
-   classInstance.ConstFourArgFunctionMock.CalledAsFollows(
-   {
-      { 1, 20, 30, 40 },
-      { 2, 20, 30, 40 }
-   });
+   METALMOCK(classInstance.ConstFourArgFunctionMock.CalledNTimes(2));
+   METALMOCKTHEN(classInstance.ConstFourArgFunctionMock.CalledWith(1, 20, 30, 40)).Then(
+   METALMOCKTHEN(classInstance.ConstFourArgFunctionMock.CalledWith(2, 20, 30, 40)));
 }
 
 TEST(CallNonConstMemberFunctionWithEachElement_EmptyCollection_DoesNotCallFunction)
@@ -95,11 +93,9 @@ TEST(CallNonConstMemberFunctionWithEachElement_TwoItemCollection_CallsThisPointe
    _fourArgMemberFunctionForEacher.CallNonConstMemberFunctionWithEachElement(
       classInstance.elements, &classInstance, &ClassType::NonConstFourArgFunction, 20, 30, 40);
    //
-   classInstance.NonConstFourArgFunctionMock.CalledAsFollows(
-   {
-      { 1, 20, 30, 40 },
-      { 2, 20, 30, 40 }
-   });
+   METALMOCK(classInstance.NonConstFourArgFunctionMock.CalledNTimes(2));
+   METALMOCKTHEN(classInstance.NonConstFourArgFunctionMock.CalledWith(1, 20, 30, 40)).Then(
+   METALMOCKTHEN(classInstance.NonConstFourArgFunctionMock.CalledWith(2, 20, 30, 40)));
 }
 
 TEST(ConstAndNonConstFourArgFunction_CodeCoverage)

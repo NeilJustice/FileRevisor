@@ -32,7 +32,8 @@ TEST(TwoArgMemberForEach_EmptyCollection_DoesNotCallFunc)
    const ClassTypeMock classInstance{};
    const Arg2Type arg2 = ZenUnit::Random<Arg2Type>();
    //
-   _twoArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElement(classInstance.elements, &classInstance, &ClassType::TwoArgFunction, arg2);
+   _twoArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElement(
+      classInstance.elements, &classInstance, &ClassType::TwoArgFunction, arg2);
 }
 
 TEST(TwoArgMemberForEach_OneItemCollection_CallsThisPointerBoundFuncOnce)
@@ -43,7 +44,8 @@ TEST(TwoArgMemberForEach_OneItemCollection_CallsThisPointerBoundFuncOnce)
    classInstance.TwoArgFunctionMock.Expect();
    const Arg2Type arg2 = ZenUnit::Random<Arg2Type>();
    //
-   _twoArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElement(classInstance.elements, &classInstance, &ClassType::TwoArgFunction, arg2);
+   _twoArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElement(
+      classInstance.elements, &classInstance, &ClassType::TwoArgFunction, arg2);
    //
    classInstance.TwoArgFunctionMock.CalledOnceWith(element1, arg2);
 }
@@ -57,13 +59,12 @@ TEST(TwoArgMemberForEach_TwoItemCollection_CallsThisPointerBoundFuncTwice)
    classInstance.TwoArgFunctionMock.Expect();
    const Arg2Type arg2 = ZenUnit::Random<Arg2Type>();
    //
-   _twoArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElement(classInstance.elements, &classInstance, &ClassType::TwoArgFunction, arg2);
+   _twoArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElement(
+      classInstance.elements, &classInstance, &ClassType::TwoArgFunction, arg2);
    //
-   classInstance.TwoArgFunctionMock.CalledAsFollows(
-   {
-      { element1, arg2 },
-      { element2, arg2 }
-   });
+   METALMOCK(classInstance.TwoArgFunctionMock.CalledNTimes(2));
+   METALMOCKTHEN(classInstance.TwoArgFunctionMock.CalledWith(element1, arg2)).Then(
+   METALMOCKTHEN(classInstance.TwoArgFunctionMock.CalledWith(element2, arg2)));
 }
 
 TEST(TwoArgFunction_CodeCoverage)

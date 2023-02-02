@@ -87,18 +87,24 @@ TEST(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsNotEndIterationM
    const fs::path secondFilePath = ZenUnit::Random<fs::path>();
    const fs::path thirdFilePath = ZenUnit::Random<fs::path>();
    const fs::path endIterationMarker{};
-   _directoryIteratorSelfMocked.NextNonIgnoredFilePathMock.ReturnValues(firstFilePath, secondFilePath, thirdFilePath, endIterationMarker);
-   _directoryIteratorSelfMocked.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenableMock.ReturnValues(false, true, false);
+   _directoryIteratorSelfMocked.NextNonIgnoredFilePathMock.ReturnValues(
+      firstFilePath,
+      secondFilePath,
+      thirdFilePath,
+      endIterationMarker);
+
+   _directoryIteratorSelfMocked.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenableMock.ReturnValues(
+      false,
+      true,
+      false);
    //
    const vector<fs::path> textFilePaths = _directoryIteratorSelfMocked.GetNonEmptyNonIgnoredTextFilePaths();
    //
    METALMOCK(_directoryIteratorSelfMocked.NextNonIgnoredFilePathMock.CalledNTimes(4));
-   METALMOCK(_directoryIteratorSelfMocked.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenableMock.CalledAsFollows(
-   {
-      firstFilePath,
-      secondFilePath,
-      thirdFilePath
-   }));
+   METALMOCK(_directoryIteratorSelfMocked.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenableMock.CalledNTimes(3));
+   METALMOCKTHEN(_directoryIteratorSelfMocked.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenableMock.CalledWith(firstFilePath)).Then(
+   METALMOCKTHEN(_directoryIteratorSelfMocked.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenableMock.CalledWith(secondFilePath))).Then(
+   METALMOCKTHEN(_directoryIteratorSelfMocked.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenableMock.CalledWith(thirdFilePath)));
    const vector<fs::path> expectedTextFilePaths =
    {
       firstFilePath,

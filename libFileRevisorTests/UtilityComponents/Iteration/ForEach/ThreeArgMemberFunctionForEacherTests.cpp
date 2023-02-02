@@ -62,11 +62,9 @@ TEST(ThreeArgMemberForEach_TwoItemCollection_CallsThisPointerBoundFuncTwice)
    //
    _threeArgMemberFunctionForEacher.CallConstMemberFunctionWithEachElement(classInstance.elements, &classInstance, &ClassType::ThreeArgFunction, arg2, arg3);
    //
-   classInstance.ThreeArgFunctionMock.CalledAsFollows(
-   {
-      { element1, arg2, arg3 },
-      { element2, arg2, arg3 }
-   });
+   METALMOCK(classInstance.ThreeArgFunctionMock.CalledNTimes(2));
+   METALMOCKTHEN(classInstance.ThreeArgFunctionMock.CalledWith(element1, arg2, arg3)).Then(
+   METALMOCKTHEN(classInstance.ThreeArgFunctionMock.CalledWith(element2, arg2, arg3)));
 }
 
 TEST(ThreeArgFunction_CodeCoverage)

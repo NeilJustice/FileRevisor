@@ -95,29 +95,30 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
    //
    const FileRevisorArgs args = _fileRevisorArgsParser.ParseArgs(stringArgs);
    //
-   METALMOCK(_docoptParserMock->ParseArgsMock.CalledOnceWith(FileRevisorArgs::CommandLineUsage, stringArgs));
-   METALMOCK(_docoptParserMock->GetRequiredBoolMock.CalledAsFollows(
-   {
-      { docoptValues, "rename-files" },
-      { docoptValues, "rename-directories" },
-      { docoptValues, "replace-text" },
-      { docoptValues, "delete-directory" }
-   }));
-   METALMOCK(DetermineProgramModeMock.CalledOnceWith(
-      isRenameFilesMode, isRenameDirectoriesMode, isReplaceTextInTextFilesMode, isDeleteDirectoryMode));
-   METALMOCK(_caller_ParseDirAndFromAndToArgumentsMock->CallConstMemberFunctionMock.CalledOnceWith(
+   METALMOCK(_docoptParserMock->GetRequiredBoolMock.CalledNTimes(4));
+   METALMOCK(_docoptParserMock->GetOptionalBoolMock.CalledNTimes(6));
+
+   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledOnceWith(FileRevisorArgs::CommandLineUsage, stringArgs)).Then(
+   METALMOCKTHEN(_docoptParserMock->GetRequiredBoolMock.CalledWith(docoptValues, "rename-files"))).Then(
+   METALMOCKTHEN(_docoptParserMock->GetRequiredBoolMock.CalledWith(docoptValues, "rename-directories"))).Then(
+   METALMOCKTHEN(_docoptParserMock->GetRequiredBoolMock.CalledWith(docoptValues, "replace-text"))).Then(
+   METALMOCKTHEN(_docoptParserMock->GetRequiredBoolMock.CalledWith(docoptValues, "delete-directory"))).Then(
+
+   METALMOCKTHEN(DetermineProgramModeMock.CalledOnceWith(
+      isRenameFilesMode, isRenameDirectoriesMode, isReplaceTextInTextFilesMode, isDeleteDirectoryMode))).Then(
+
+   METALMOCKTHEN(_caller_ParseDirAndFromAndToArgumentsMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_fileRevisorArgsParser, &FileRevisorArgsParser::ParseTargetAndFromAndToArguments,
-      docoptValues, isDeleteDirectoryMode));
-   METALMOCK(_docoptParserMock->GetOptionalBoolMock.CalledAsFollows(
-   {
-      { docoptValues, "--recurse" },
-      { docoptValues, "--parallel" },
-      { docoptValues, "--skip-files-in-use" },
-      { docoptValues, "--dryrun" },
-      { docoptValues, "--quiet" },
-      { docoptValues, "--verbose" }
-   }));
-   FileRevisorArgs expectedArgs;
+      docoptValues, isDeleteDirectoryMode))).Then(
+
+   METALMOCKTHEN(_docoptParserMock->GetOptionalBoolMock.CalledWith(docoptValues, "--recurse"))).Then(
+   METALMOCKTHEN(_docoptParserMock->GetOptionalBoolMock.CalledWith(docoptValues, "--parallel"))).Then(
+   METALMOCKTHEN(_docoptParserMock->GetOptionalBoolMock.CalledWith(docoptValues, "--skip-files-in-use"))).Then(
+   METALMOCKTHEN(_docoptParserMock->GetOptionalBoolMock.CalledWith(docoptValues, "--dryrun"))).Then(
+   METALMOCKTHEN(_docoptParserMock->GetOptionalBoolMock.CalledWith(docoptValues, "--quiet"))).Then(
+   METALMOCKTHEN(_docoptParserMock->GetOptionalBoolMock.CalledWith(docoptValues, "--verbose")));
+
+   FileRevisorArgs expectedArgs{};
    expectedArgs.commandLine = Vector::Join(stringArgs, ' ');
    expectedArgs.programMode = programMode;
    expectedArgs.targetDirectoryPath = get<0>(targetDirectory_fromRegexPattern_toRegexPattern);
@@ -195,13 +196,11 @@ TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsFalse_FromArgumentI
    tuple<fs::path, string, string> targetDirectoryPath_fromRegexPattern_toRegexPattern =
       _fileRevisorArgsParser.ParseTargetAndFromAndToArguments(docoptValues, false);
    //
-   METALMOCK(_docoptParserMock->GetOptionalStringWithDefaultValueMock.CalledOnceWith(docoptValues, "--target", "."));
-   METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledAsFollows(
-   {
-      { docoptValues, "--from" },
-      { docoptValues, "--to" }
-   }));
-   METALMOCK(_fileSystemMock->GetAbsolutePathMock.CalledOnceWith(targetDirectoryPathString));
+   METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledNTimes(2));
+   METALMOCKTHEN(_docoptParserMock->GetOptionalStringWithDefaultValueMock.CalledOnceWith(docoptValues, "--target", ".")).Then(
+   METALMOCKTHEN(_docoptParserMock->GetRequiredStringMock.CalledWith(docoptValues, "--from"))).Then(
+   METALMOCKTHEN(_docoptParserMock->GetRequiredStringMock.CalledWith(docoptValues, "--to"))).Then(
+   METALMOCKTHEN(_fileSystemMock->GetAbsolutePathMock.CalledOnceWith(targetDirectoryPathString)));
    tuple<fs::path, string, string> expected_targetDirectoryPath_fromRegexPattern_toRegexPattern(
       targetDirectoryPath, fromRegexPattern, toRegexPattern);
    ARE_EQUAL(expected_targetDirectoryPath_fromRegexPattern_toRegexPattern, targetDirectoryPath_fromRegexPattern_toRegexPattern);

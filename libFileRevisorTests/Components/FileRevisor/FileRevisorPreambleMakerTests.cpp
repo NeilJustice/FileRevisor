@@ -48,13 +48,11 @@ TEST3X3(PrintPreambleLines_PrintsPreambleLines,
    const string expectedProgramModeLine = String::ConcatValues("ProgramMode: ", expectedProgramModeString, expectedActionSuffix);
    const string expectedWorkingDirectoryLine = String::ConcatStrings("WorkingDirectory: ", currentDirectoryPath.string());
    const string expectedTargetDirectoryLine = String::ConcatStrings(" TargetDirectory: ", args.targetDirectoryPath.string());
-   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledAsFollows(
-   {
-      { expectedRunningLine },
-      { expectedProgramModeLine },
-      { expectedWorkingDirectoryLine },
-      { expectedTargetDirectoryLine }
-   }));
+   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledNTimes(4));
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedRunningLine)).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedProgramModeLine))).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedWorkingDirectoryLine))).Then(
+   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedTargetDirectoryLine)));
 }
 
 RUN_TESTS(FileRevisorPreambleMakerTests)
