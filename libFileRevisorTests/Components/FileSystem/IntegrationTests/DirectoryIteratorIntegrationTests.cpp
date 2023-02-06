@@ -18,27 +18,27 @@ const fs::path _rootDirectoryPath = "DirectoryIteratorIntegrationTests";
 void CreateIntegrationTestsDirectoryStructure()
 {
   FileSystem fileSystem;
-  fileSystem.CreateFileWithText(_rootDirectoryPath / "root.file1", "");
+  fileSystem.CreateTextFile(_rootDirectoryPath / "root.file1", "");
   const string file2Path = (_rootDirectoryPath / "root.file2").string();
-  fileSystem.CreateFileWithText(file2Path, "");
+  fileSystem.CreateTextFile(file2Path, "");
 #if defined __linux__|| defined __APPLE__
   const string symlinkPath = (_rootDirectoryPath / "root.symlink3").string();
   int symlinkResult = symlink(file2Path.c_str(), symlinkPath.c_str());
   release_assert(symlinkResult == 0);
 #endif
-  fileSystem.CreateFileWithText(_rootDirectoryPath / "root.ignored_file_extension_1", "");
-  fileSystem.CreateFileWithText(_rootDirectoryPath / "root.ignored_file_extension_2", "");
-  fileSystem.CreateFileWithText(_rootDirectoryPath / "subdirectory1" / "subdirectory1.file1", "");
-  fileSystem.CreateFileWithText(_rootDirectoryPath / "subdirectory1" / "subdirectory1.file2", "");
-  fileSystem.CreateFileWithText(_rootDirectoryPath / "subdirectory1" / "subdirectory1.ignored_extension1", "");
-  fileSystem.CreateFileWithText(_rootDirectoryPath / "subdirectory1" / "subdirectory1.ignored_extension2", "");
-  fileSystem.CreateFileWithText(_rootDirectoryPath / "subdirectory2" / "subdirectory2.file1", "");
-  fileSystem.CreateFileWithText(_rootDirectoryPath / "subdirectory2" / "subdirectory2.ignored_extension1", "");
-  fileSystem.CreateFileWithText(_rootDirectoryPath / "subdirectory3" / "subdirectory3.ignored_extension2", "");
-  fileSystem.CreateFileWithText(_rootDirectoryPath / "ignored_directory_nameA" / "fileA.txt", "");
-  fileSystem.CreateFileWithText(_rootDirectoryPath / "ignored_directory_nameB" / "fileB.txt", "");
-  fileSystem.CreateFileWithText(_rootDirectoryPath / "subdirectory4" / "subdirectory4.file1", "");
-  fileSystem.CreateFileWithText(_rootDirectoryPath / "subdirectory5" / "subdirectory6" / "subdirectory6.file1", "");
+  fileSystem.CreateTextFile(_rootDirectoryPath / "root.ignored_file_extension_1", "");
+  fileSystem.CreateTextFile(_rootDirectoryPath / "root.ignored_file_extension_2", "");
+  fileSystem.CreateTextFile(_rootDirectoryPath / "subdirectory1" / "subdirectory1.file1", "");
+  fileSystem.CreateTextFile(_rootDirectoryPath / "subdirectory1" / "subdirectory1.file2", "");
+  fileSystem.CreateTextFile(_rootDirectoryPath / "subdirectory1" / "subdirectory1.ignored_extension1", "");
+  fileSystem.CreateTextFile(_rootDirectoryPath / "subdirectory1" / "subdirectory1.ignored_extension2", "");
+  fileSystem.CreateTextFile(_rootDirectoryPath / "subdirectory2" / "subdirectory2.file1", "");
+  fileSystem.CreateTextFile(_rootDirectoryPath / "subdirectory2" / "subdirectory2.ignored_extension1", "");
+  fileSystem.CreateTextFile(_rootDirectoryPath / "subdirectory3" / "subdirectory3.ignored_extension2", "");
+  fileSystem.CreateTextFile(_rootDirectoryPath / "ignored_directory_nameA" / "fileA.txt", "");
+  fileSystem.CreateTextFile(_rootDirectoryPath / "ignored_directory_nameB" / "fileB.txt", "");
+  fileSystem.CreateTextFile(_rootDirectoryPath / "subdirectory4" / "subdirectory4.file1", "");
+  fileSystem.CreateTextFile(_rootDirectoryPath / "subdirectory5" / "subdirectory6" / "subdirectory6.file1", "");
   fileSystem.CreateDirectories(_rootDirectoryPath / "subdirectory7");
   fileSystem.CreateDirectories(_rootDirectoryPath / "subdirectory7" / "subdirectory8");
 }

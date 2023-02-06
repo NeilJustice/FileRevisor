@@ -163,7 +163,7 @@ void FileSystem::CreateDirectories(const fs::path& directoryPath) const
    fs::create_directories(directoryPath);
 }
 
-void FileSystem::CreateFileWithText(const fs::path& filePath, string_view fileText) const
+void FileSystem::CreateTextFile(const fs::path& filePath, string_view fileText) const
 {
    CreateFileWithBytes(filePath, fileText.data(), fileText.size());
 }
