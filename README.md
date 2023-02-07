@@ -155,11 +155,11 @@ The OS, CPU, and storage hardware which generated the above performance numbers 
 
 ![FileRevisor Code Structure As It Appears In Visual Studio 2022 On Windows](Screenshots/Windows/FileRevisorCodeStructureInVisualStudio2022.png)
 
-### Linux Jenkins jobs which build, Cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor's C++ code and Mypy-Flake8-Pylint FileRevisor's CI/CD Python code
+### Linux Jenkins jobs
 
 ![Linux FileRevisor Jenkins Jobs](Screenshots/Linux/LinuxJenkinsJobs.png)
 
-### Windows Jenkins jobs which build and Cppcheck FileRevisor's C++ code and Mypy-Flake8-Pylint FileRevisor's CI/CD Python code
+### Windows Jenkins jobs
 
 ![Windows Jenkins Jobs](Screenshots/Windows/WindowsJenkinsJobs.png)
 
