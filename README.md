@@ -1,5 +1,11 @@
-# 🗂️ FileRevisor 🗂️
-[![Standard](https://img.shields.io/badge/c%2B%2B-20-blue.svg)](https://en.wikipedia.org/wiki/C%2B%2B20) [![FileRevisor](https://github.com/NeilJustice/FileRevisor/actions/workflows/build.yml/badge.svg)](https://github.com/NeilJustice/FileRevisor/actions/workflows/build.yml) <a href="https://ci.appveyor.com/project/NeilJustice/FileRevisor"><img src="https://ci.appveyor.com/api/projects/status/fl8f0jle01k04nwp?svg=true"/></a> [![codecov](https://codecov.io/gh/NeilJustice/FileRevisor/branch/master/graph/badge.svg?token=KH1wxoYSdS)](https://codecov.io/gh/NeilJustice/FileRevisor) [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=NeilJustice_FileRevisor&metric=alert_status)](https://sonarcloud.io/dashboard?id=NeilJustice_FileRevisor) ![Dependencies 0](Screenshots/Dependencies-0-brightgreen.svg)
+<p align="center"> 
+<img src="Screenshots/FileRevisorLogo.png" width="64%"><br>
+<img src="https://img.shields.io/badge/c%2B%2B-20-blue.svg"/>
+<a href="https://github.com/NeilJustice/FileRevisor/actions/workflows/build.yml"><img src="https://github.com/NeilJustice/FileRevisor/actions/workflows/build.yml/badge.svg"></a>
+<a href="https://ci.appveyor.com/project/NeilJustice/FileRevisor"><img src="https://ci.appveyor.com/api/projects/status/fl8f0jle01k04nwp?svg=true"></a>
+<a href="https://codecov.io/gh/NeilJustice/FileRevisor"><img src="https://codecov.io/gh/NeilJustice/FileRevisor/branch/master/graph/badge.svg?token=KH1wxoYSdS"></a>
+<a href="https://sonarcloud.io/dashboard?id=NeilJustice_FileRevisor"><img src="https://sonarcloud.io/api/project_badges/measure?project=NeilJustice_FileRevisor&metric=alert_status"></a>
+</p>
 
 FileRevisor is a cross-platform C++ command line program for quickly deleting large directories in parallel, quickly renaming files or directories, and quickly replacing text in text files.
 
@@ -15,10 +21,11 @@ FileRevisor's key feature is its extreme performance when deleting large folders
 * [Windows FileRevisor parallel folder deletion performance](#windows-filerevisor-parallel-folder-deletion-performance)
 * [FileRevisor code structure as it appears in Visual Studio Code on Linux](#filerevisor-code-structure-as-it-appears-in-visual-studio-code-on-linux)
 * [FileRevisor code structure as it appears in Visual Studio 2022 on Windows](#filerevisor-code-structure-as-it-appears-in-visual-studio-2022-on-windows)
-* [Linux Jenkins jobs which build, cppcheck, clang-tidy, AddressSanitize, UndefinedBehaviorSanitize, and ThreadSanitize FileRevisor's C++ code and mypy-flake8-pylint FileRevisor's CI/CD Python code](#linux-jenkins-jobs-which-build-cppcheck-clang-tidy-addresssanitize-undefinedbehaviorsanitize-and-threadsanitize-filerevisors-c-code-and-mypy-flake8-pylint-filerevisors-cicd-python-code)
-* [Windows Jenkins jobs which build and cppcheck FileRevisor's C++ code and mypy-flake8-pylint FileRevisor's CI/CD Python code](#windows-jenkins-jobs-which-build-and-cppcheck-filerevisors-c-code-and-mypy-flake8-pylint-filerevisors-cicd-python-code)
+* [Linux Jenkins jobs](#linux-jenkins-jobs)
+* [Windows Jenkins jobs](#windows-jenkins-jobs)
 * [4 steps to build binary filerevisor from source on Linux with Clang](#4-steps-to-build-binary-filerevisor-from-source-on-linux-with-clang)
 * [4 steps to build executable FileRevisor.exe from source on Windows with Visual Studio 2022](#4-steps-to-build-executable-filerevisorexe-from-source-on-windows-with-visual-studio-2022)
+* [Thanks to](#thanks-to)
 
 ## FileRevisor command line usage
 
@@ -181,3 +188,7 @@ cmake --build . --config Release --target install
 Resulting executable `C:\bin\FileRevisor.exe`:
 
 ![Windows FileRevisor.exe](Screenshots/WindowsFileRevisorDotExe.png)
+
+## Thanks to
+
+<a href="https://brandmark.io">brandmark.io</a> for FileRevisor's AI-generated logo
