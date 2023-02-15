@@ -35,6 +35,7 @@ int ReplaceTextInTextFilesSubProgram::Run(const FileRevisorArgs& args) const
       ".p7s",
       "__Instrumented",
       "AltCoverCodeCoverageResults_",
+      "CMakeFiles",
       "CoberturaCodeCoverageResults_",
       "ReportGenerator_"
    };

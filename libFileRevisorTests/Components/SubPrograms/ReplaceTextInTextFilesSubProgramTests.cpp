@@ -106,6 +106,7 @@ TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsRegexReplaceFileTextOnEachText
       ".p7s",
       "__Instrumented",
       "AltCoverCodeCoverageResults_",
+      "CMakeFiles",
       "CoberturaCodeCoverageResults_",
       "ReportGenerator_"
    };
