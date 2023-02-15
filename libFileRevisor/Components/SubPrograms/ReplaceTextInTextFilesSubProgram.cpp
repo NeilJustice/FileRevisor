@@ -10,7 +10,8 @@
 
 ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFilesSubProgram()
    // Function Pointers
-   : _call_PrintReadingFileMessageIfVerboseMode(make_unique<VoidTwoArgMemberFunctionCaller<ReplaceTextInTextFilesSubProgram, bool, const fs::path&>>())
+   : _call_PrintReadingFileMessageIfVerboseMode(
+      make_unique<VoidTwoArgMemberFunctionCaller<ReplaceTextInTextFilesSubProgram, bool, const fs::path&>>())
    // Function Callers
    , _memberFunctionAccumulator_RegexReplaceTextInTextFile(make_unique<OneExtraArgMemberFunctionAccumulatorType>())
    // Constant Components
@@ -27,11 +28,16 @@ ReplaceTextInTextFilesSubProgram::~ReplaceTextInTextFilesSubProgram()
 int ReplaceTextInTextFilesSubProgram::Run(const FileRevisorArgs& args) const
 {
    _directoryIterator->SetDirectoryIterator(args.targetDirectoryPath, args.recurse);
-#if defined __linux__ || defined __APPLE__
-   static const vector<string> fileAndDirectoryPathIgnoreSubstrings = { "/.git/", ".p7s" };
-#elif defined _WIN32
-   static const vector<string> fileAndDirectoryPathIgnoreSubstrings = { "\\.git\\", ".p7s" };
-#endif
+   static const vector<string> fileAndDirectoryPathIgnoreSubstrings =
+   {
+      ".git",
+      ".mypy_cache",
+      ".p7s",
+      "__Instrumented",
+      "AltCoverCodeCoverageResults_",
+      "CoberturaCodeCoverageResults_",
+      "ReportGenerator_"
+   };
    _directoryIterator->SetFileAndDirectoryPathIgnoreSubstrings(fileAndDirectoryPathIgnoreSubstrings);
    const vector<fs::path> nonEmptyNonIgnoredTextFilePathsInTargetDirectory = _directoryIterator->GetNonEmptyNonIgnoredTextFilePaths();
    const size_t numberOfFilesThatWereOrWouldBeModified = _memberFunctionAccumulator_RegexReplaceTextInTextFile->SumElementsWithFunction(

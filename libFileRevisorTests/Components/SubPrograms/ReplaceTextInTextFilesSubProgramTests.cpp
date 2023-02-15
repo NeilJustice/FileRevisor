@@ -99,12 +99,18 @@ TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsRegexReplaceFileTextOnEachText
    const int exitCode = _replaceTextInTextFilesSubProgram.Run(args);
    //
    METALMOCK(_directoryIteratorMock->SetDirectoryIteratorMock.CalledOnceWith(args.targetDirectoryPath, args.recurse));
-#if defined __linux__ || defined __APPLE__
-   static const vector<string> fileAndDirectoryPathIgnoreSubstrings = { "/.git/", ".p7s" };
-#elif defined _WIN32
-   static const vector<string> fileAndDirectoryPathIgnoreSubstrings = { "\\.git\\", ".p7s" };
-#endif
-   METALMOCK(_directoryIteratorMock->SetFileAndDirectoryPathIgnoreSubstringsMock.CalledOnceWith(fileAndDirectoryPathIgnoreSubstrings));
+   static const vector<string> expectedFileAndDirectoryPathIgnoreSubstrings =
+   {
+      ".git",
+      ".mypy_cache",
+      ".p7s",
+      "__Instrumented",
+      "AltCoverCodeCoverageResults_",
+      "CoberturaCodeCoverageResults_",
+      "ReportGenerator_"
+   };
+   METALMOCK(_directoryIteratorMock->SetFileAndDirectoryPathIgnoreSubstringsMock.CalledOnceWith(
+      expectedFileAndDirectoryPathIgnoreSubstrings));
    METALMOCK(_directoryIteratorMock->GetNonEmptyNonIgnoredTextFilePathsMock.CalledOnce());
    METALMOCK(_memberFunctionAccumulator_RegexReplaceTextInTextFileMock->SumElementsWithFunctionMock.CalledOnceWith(
       &_replaceTextInTextFilesSubProgram, nonEmptyNonIgnoredTextFilePathsInTargetDirectory,

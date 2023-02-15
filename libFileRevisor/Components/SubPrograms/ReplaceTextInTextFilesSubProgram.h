@@ -20,11 +20,11 @@ class ReplaceTextInTextFilesSubProgram : public FileRevisorSubProgram
    friend class ReplaceTextInTextFilesSubProgramTests;
 private:
    // Function Pointers
-   unique_ptr<const VoidTwoArgMemberFunctionCaller<
-      ReplaceTextInTextFilesSubProgram, bool, const fs::path&>> _call_PrintReadingFileMessageIfVerboseMode;
+   unique_ptr<const VoidTwoArgMemberFunctionCaller<ReplaceTextInTextFilesSubProgram, bool, const fs::path&>>
+      _call_PrintReadingFileMessageIfVerboseMode;
+   // Function Callers
    using OneExtraArgMemberFunctionAccumulatorType = OneExtraArgMemberFunctionAccumulator<
       ReplaceTextInTextFilesSubProgram, size_t, vector, fs::path, const FileRevisorArgs&>;
-   // Function Callers
    unique_ptr<const OneExtraArgMemberFunctionAccumulatorType> _memberFunctionAccumulator_RegexReplaceTextInTextFile;
    // Constant Components
    unique_ptr<const Regexer> _regexer;
