@@ -192,4 +192,4 @@ Resulting executable `C:\bin\FileRevisor.exe`:
 
 ## Thanks to
 
-<a href="https://brandmark.io">brandmark.io</a> for FileRevisor's AI-generated logo
+<a href="https://brandmark.io">brandmark.io</a> for FileRevisor's logo
