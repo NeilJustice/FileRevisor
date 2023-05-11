@@ -179,8 +179,7 @@ TEST(DeleteTopLevelFilesAndEmptyDirectoriesInDirectory_IfWindowsRemovesReadOnlyF
    METALMOCK(_caller_GetFileOrDirectoryPathsInDirectoryMock->CallConstMemberFunctionMock.CalledNTimes(2));
    METALMOCK(_foreacher_DeleteFileOrDirectoryMock->CallConstMemberFunctionWithEachElementMock.CalledNTimes(2));
 
-   METALMOCKTHEN(_caller_DeleteFileOrDirectoryMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &_fileSystem, &FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows, directoryPath, dryRun)).Then(
+   METALMOCKTHEN(_caller_DeleteFileOrDirectoryMock->CallConstMemberFunctionMock.CalledOnceWith(&_fileSystem, &FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows, directoryPath, dryRun)).Then(
 
    METALMOCKTHEN(_caller_GetFileOrDirectoryPathsInDirectoryMock->CallConstMemberFunctionMock.CalledWith(
       &_fileSystem, &FileSystem::GetDirectoryPathsInDirectory, directoryPath, false))).Then(
@@ -494,10 +493,8 @@ TEST2X2(RenameFile_FilePathExists_DestinationFilePathDoesNotExist_RenamesFile_Th
    //
    METALMOCK(_caller_ExistsMock->CallConstMemberFunctionMock.CalledNTimes(2));
    METALMOCK(_constCharPointerGetterMock->GetStringConstCharPointerMock.CalledNTimes(2));
-   METALMOCKTHEN(_caller_ExistsMock->CallConstMemberFunctionMock.CalledWith(
-      &_fileSystem, &FileSystem::FileOrDirectoryExists, filePath)).Then(
-   METALMOCKTHEN(_caller_ExistsMock->CallConstMemberFunctionMock.CalledWith(
-      &_fileSystem, &FileSystem::FileOrDirectoryExists, expectedRenamedFilePath))).Then(
+   METALMOCKTHEN(_caller_ExistsMock->CallConstMemberFunctionMock.CalledWith(&_fileSystem, &FileSystem::FileOrDirectoryExists, filePath)).Then(
+   METALMOCKTHEN(_caller_ExistsMock->CallConstMemberFunctionMock.CalledWith(&_fileSystem, &FileSystem::FileOrDirectoryExists, expectedRenamedFilePath))).Then(
    METALMOCKTHEN(_constCharPointerGetterMock->GetStringConstCharPointerMock.CalledWith(expectedFilePathString))).Then(
    METALMOCKTHEN(_constCharPointerGetterMock->GetStringConstCharPointerMock.CalledWith(expectedRenamedFilePathString))).Then(
    METALMOCKTHEN(_call_std_renameMock.CalledOnceWith(filePathStringCCP, destinationFilePathStringCCP)));
