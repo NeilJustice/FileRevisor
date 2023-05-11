@@ -93,10 +93,7 @@ TEST(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsNotEndIterationM
       thirdFilePath,
       endIterationMarker);
 
-   _directoryIteratorSelfMocked.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenableMock.ReturnValues(
-      false,
-      true,
-      false);
+   _directoryIteratorSelfMocked.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenableMock.ReturnValues(false, true, false);
    //
    const vector<fs::path> textFilePaths = _directoryIteratorSelfMocked.GetNonEmptyNonIgnoredTextFilePaths();
    //
