@@ -74,6 +74,7 @@ file(GLOB_RECURSE Sources *.h *.cpp)
 source_group("" FILES ${Sources})
 
 add_executable(libFileRevisorTests ${Sources})
+set_property(TARGET libFileRevisorTests PROPERTY CXX_STANDARD 20)
 target_link_libraries(libFileRevisorTests libFileRevisor)
 if(UNIX AND NOT APPLE)
    target_link_libraries(libFileRevisorTests stdc++fs)

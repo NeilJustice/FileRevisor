@@ -8,6 +8,7 @@ file(GLOB_RECURSE Sources *.h *.cpp)
 source_group("" FILES ${Sources})
 
 add_executable(FileRevisor ${Sources})
+set_property(TARGET FileRevisor PROPERTY CXX_STANDARD 20)
 if(UNIX)
    set_target_properties(FileRevisor PROPERTIES OUTPUT_NAME filerevisor)
 endif()
