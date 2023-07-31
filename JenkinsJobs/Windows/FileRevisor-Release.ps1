@@ -1,9 +1,0 @@
-$env:PYTHONPATH="."
-python.exe -u FileRevisorDevOpsPython\BuildAndInstallCPlusPlusProgram.py `
-   --solution-name=FileRevisor `
-   --cmake-generator="Visual Studio 17 2022" `
-   --cmake-build-type=Release `
-   --tests-project-name=libFileRevisorTests `
-   --cmake-definitions="-DFastWindowsReleaseBuildMode=ON" `
-   --no-install
-exit $LastExitCode
