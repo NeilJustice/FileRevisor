@@ -6,6 +6,6 @@ python.exe -u FileRevisorDevOpsPython\BuildAndInstallCPlusPlusProgram.py `
    --cmake-generator="Visual Studio 17 2022" `
    --cmake-build-type=Debug `
    --tests-project=libFileRevisorTests `
-   --cmake-definitions="-DFastWindowsDebugBuildMode=$fastWindowsDebugBuildMode" `
+   --cmake-definitions="" `
    --no-install
 exit $LastExitCode
