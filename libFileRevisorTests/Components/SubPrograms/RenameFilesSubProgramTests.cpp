@@ -29,7 +29,7 @@ ConsoleMock* _consoleMock = nullptr;
 FileSystemMock* _fileSystemMock = nullptr;
 // Constant Components
 PluralizerMock* _pluralizerMock = nullptr;
-PredicateCounterMock<vector<RenameResult>, RenameResult>* _predicateCounterMock = nullptr;
+PredicateCounterMock<RenameResult>* _predicateCounterMock = nullptr;
 RegexerMock* _regexerMock = nullptr;
 
 STARTUP
@@ -42,7 +42,7 @@ STARTUP
    _renameFilesSubProgram._fileSystem.reset(_fileSystemMock = new FileSystemMock);
    // Constant Components
    _renameFilesSubProgram._pluralizer.reset(_pluralizerMock = new PluralizerMock);
-   _renameFilesSubProgram._predicateCounter.reset(_predicateCounterMock = new PredicateCounterMock<vector<RenameResult>, RenameResult>);
+   _renameFilesSubProgram._predicateCounter.reset(_predicateCounterMock = new PredicateCounterMock<RenameResult>);
    _renameFilesSubProgram._regexer.reset(_regexerMock = new RegexerMock);
 }
 

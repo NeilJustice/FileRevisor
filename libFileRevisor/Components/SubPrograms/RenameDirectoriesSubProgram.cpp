@@ -13,7 +13,7 @@ RenameDirectoriesSubProgram::RenameDirectoriesSubProgram()
       make_unique<VoidTwoArgMemberFunctionCaller<RenameDirectoriesSubProgram, bool, const fs::path& >>())
    , _directoryPathsTransformer_RenameDirectory(make_unique<OneExtraArgMemberFunctionTransformerType>())
    // Constant Components
-   , _predicateCounter(make_unique<PredicateCounter<vector<RenameResult>, RenameResult>>())
+   , _predicateCounter(make_unique<PredicateCounter<RenameResult>>())
    , _regexer(make_unique<Regexer>())
 {
 }

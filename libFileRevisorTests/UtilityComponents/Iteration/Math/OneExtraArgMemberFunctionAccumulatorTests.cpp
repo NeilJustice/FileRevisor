@@ -3,11 +3,9 @@
 
 template<
    typename SumType,
-   template<typename...>
-   typename ContainerType,
    typename ElementType,
    typename ExtraArgType>
-TEMPLATE_TESTS(OneExtraArgMemberFunctionAccumulatorTests, SumType, ContainerType, ElementType, ExtraArgType)
+TEMPLATE_TESTS(OneExtraArgMemberFunctionAccumulatorTests, SumType, ElementType, ExtraArgType)
 AFACT(SumElementsWithFunction_ElementsAreEmpty_DoesNotCallMemberFunction_ReturnsDefaultSumType)
 AFACT(SumElementsWithFunction_CallsMemberFunctionElementsNumberOfTimes_ReturnsSumOfFunctionReturnValues)
 EVIDENCE
@@ -29,12 +27,12 @@ public:
    }
 };
 
-OneExtraArgMemberFunctionAccumulator<AccumulatorTestClass, SumType, vector, ElementType, ExtraArgType> _oneExtraArgMemberFunctionAccumulator;
+OneExtraArgMemberFunctionAccumulator<AccumulatorTestClass, SumType, ElementType, ExtraArgType> _oneExtraArgMemberFunctionAccumulator;
 AccumulatorTestClass _sumatorTestClass;
 
 TEST(SumElementsWithFunction_ElementsAreEmpty_DoesNotCallMemberFunction_ReturnsDefaultSumType)
 {
-   const ContainerType<ElementType> emptyElements;
+   const vector<ElementType> emptyElements;
    const ExtraArgType extraArg = ZenUnit::Random<ExtraArgType>();
    //
    const SumType sum = _oneExtraArgMemberFunctionAccumulator.SumElementsWithFunction(
@@ -51,7 +49,7 @@ TEST(SumElementsWithFunction_CallsMemberFunctionElementsNumberOfTimes_ReturnsSum
 {
    _sumatorTestClass._functionReturnValue = ZenUnit::RandomBetween<SumType>(-100, 100);
 
-   const ContainerType<ElementType> elements = { ZenUnit::Random<ElementType>(), ZenUnit::Random<ElementType>() };
+   const vector<ElementType> elements = { ZenUnit::Random<ElementType>(), ZenUnit::Random<ElementType>() };
    const ExtraArgType extraArg = ZenUnit::Random<ExtraArgType>();
    //
    const SumType sum = _oneExtraArgMemberFunctionAccumulator.SumElementsWithFunction(
@@ -69,5 +67,5 @@ TEST(SumElementsWithFunction_CallsMemberFunctionElementsNumberOfTimes_ReturnsSum
    ARE_EQUAL(expectedSum, sum);
 }
 
-RUN_TEMPLATE_TESTS(OneExtraArgMemberFunctionAccumulatorTests, long long, vector, int, int)
-THEN_RUN_TEMPLATE_TESTS(OneExtraArgMemberFunctionAccumulatorTests, long long, vector, short, short)
+RUN_TEMPLATE_TESTS(OneExtraArgMemberFunctionAccumulatorTests, long long, int, int)
+THEN_RUN_TEMPLATE_TESTS(OneExtraArgMemberFunctionAccumulatorTests, long long, short, short)

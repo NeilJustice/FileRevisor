@@ -7,7 +7,7 @@ AFACT(CountWhere_IsEvenPredicate_TwoElementsOutOfFiveAreEven_Returns2)
 AFACT(CountWhere_IsOddPredicate_ThreeElementsOutOfFiveAreEven_Returns3)
 EVIDENCE
 
-PredicateCounter<vector<int>, int> _predicateCounter;
+PredicateCounter<int> _predicateCounter;
 
 TEST(CountWhere_ZeroElementsMatchPredicate_Returns0)
 {

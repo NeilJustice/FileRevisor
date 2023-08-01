@@ -6,12 +6,12 @@ class DirectoryIterator;
 template<
    typename ClassType,
    typename AccumulatedType,
-   template<typename...>
-   typename ContainerType,
    typename ElementType,
    typename ExtraArgType>
 class OneExtraArgMemberFunctionAccumulator;
+
 class Regexer;
+
 template<typename ClassType, typename Arg1Type, typename Arg2Type>
 class VoidTwoArgMemberFunctionCaller;
 
@@ -24,7 +24,7 @@ private:
       _call_PrintReadingFileMessageIfVerboseMode;
    // Function Callers
    using OneExtraArgMemberFunctionAccumulatorType = OneExtraArgMemberFunctionAccumulator<
-      ReplaceTextInTextFilesSubProgram, size_t, vector, fs::path, const FileRevisorArgs&>;
+      ReplaceTextInTextFilesSubProgram, size_t, fs::path, const FileRevisorArgs&>;
    unique_ptr<const OneExtraArgMemberFunctionAccumulatorType> _memberFunctionAccumulator_RegexReplaceTextInTextFile;
    // Constant Components
    unique_ptr<const Regexer> _regexer;

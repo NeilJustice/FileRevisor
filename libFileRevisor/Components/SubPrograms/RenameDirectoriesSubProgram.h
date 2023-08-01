@@ -1,10 +1,14 @@
 #pragma once
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgram.h"
+
 template<typename ClassType, typename ElementType, typename TransformedElementType, typename ExtraArgType>
 class OneExtraArgMemberFunctionTransformer;
-template<typename ContainerType, typename T>
+
+template<typename T>
 class PredicateCounter;
+
 class Regexer;
+
 template<typename ClassType, typename Arg1Type, typename Arg2Type>
 class VoidTwoArgMemberFunctionCaller;
 
@@ -20,7 +24,7 @@ private:
    // Function Callers
    unique_ptr<const OneExtraArgMemberFunctionTransformerType> _directoryPathsTransformer_RenameDirectory;
    // Constant Components
-   unique_ptr<const PredicateCounter<vector<RenameResult>, RenameResult>> _predicateCounter;
+   unique_ptr<const PredicateCounter<RenameResult>> _predicateCounter;
    unique_ptr<const Regexer> _regexer;
 public:
    RenameDirectoriesSubProgram();

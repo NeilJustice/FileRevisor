@@ -28,7 +28,6 @@ const VoidTwoArgMemberFunctionCallerMock<ReplaceTextInTextFilesSubProgram, bool,
 using OneExtraArgMemberFunctionAccumulatorMockType = OneExtraArgMemberFunctionAccumulatorMock<
    ReplaceTextInTextFilesSubProgram,
    size_t,
-   vector,
    fs::path,
    const FileRevisorArgs&>;
 OneExtraArgMemberFunctionAccumulatorMockType* _memberFunctionAccumulator_RegexReplaceTextInTextFileMock = nullptr;

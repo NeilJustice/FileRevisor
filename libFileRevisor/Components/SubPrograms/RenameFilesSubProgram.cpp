@@ -13,7 +13,7 @@ RenameFilesSubProgram::RenameFilesSubProgram()
       RenameFilesSubProgram, bool, const fs::path& >>())
    , _transformer_RenameFileIfFileNameMatchesFromPattern(make_unique<OneExtraArgMemberFunctionTransformerType>())
    // Constant Components
-   , _predicateCounter(make_unique<PredicateCounter<vector<RenameResult>, RenameResult>>())
+   , _predicateCounter(make_unique<PredicateCounter<RenameResult>>())
    , _regexer(make_unique<Regexer>())
 {
 }

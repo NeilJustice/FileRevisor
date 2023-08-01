@@ -1,12 +1,12 @@
 #pragma once
 
-template<typename ContainerType, typename T>
+template<typename T>
 class PredicateCounter
 {
 public:
    using PredicateFunctionPointerType = bool(*)(const T&);
 
-   virtual size_t CountWhere(const ContainerType& elements, PredicateFunctionPointerType predicateFunction) const
+   virtual size_t CountWhere(const vector<T>& elements, PredicateFunctionPointerType predicateFunction) const
    {
       size_t numberOfElementsMatchingPredicate = 0;
       const size_t numberOfElements = elements.size();

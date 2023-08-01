@@ -3,7 +3,6 @@
 template<
    typename ClassType,
    typename SumType,
-   template<typename...> typename ContainerType,
    typename ElementType,
    typename ExtraArgType>
    class OneExtraArgMemberFunctionAccumulator
@@ -11,7 +10,7 @@ template<
 public:
    virtual SumType SumElementsWithFunction(
       const ClassType* classInstance,
-      const ContainerType<ElementType>& elements,
+      const vector<ElementType>& elements,
       SumType(ClassType::* sumationFunction)(const ElementType&, const ExtraArgType&) const,
       const ExtraArgType& extraArg) const
    {
