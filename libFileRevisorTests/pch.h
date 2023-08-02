@@ -27,13 +27,15 @@ using namespace std;
 
 // libFileRevisor Constants
 #include "libFileRevisor/Constants/ErrnoValue.h"
-
-// libFileRevisor Enums
 #include "libFileRevisor/Enums/Color.h"
 #include "libFileRevisor/Enums/FileExceptionType.h"
 #include "libFileRevisor/Enums/ProgramMode.h"
 #include "libFileRevisor/Enums/WindowsColor.h"
-
+// libFileRevisor ValueTypes
+#include "libFileRevisor/ValueTypes/FileRevisorArgs.h"
+#include "libFileRevisor/ValueTypes/RenameResult.h"
+// libFileRevisorTests Components
+#include "libFileRevisorTests/Components/Utility/Console/MetalMock/ConsoleMock.h"
 // libFileRevisor StaticUtilities
 #include "libFileRevisor/StaticUtilities/ENUM_STRING_ARRAY.h"
 #include "libFileRevisor/StaticUtilities/Map.h"
@@ -42,16 +44,8 @@ using namespace std;
 #include "libFileRevisor/StaticUtilities/Type.h"
 #include "libFileRevisor/StaticUtilities/Vector.h"
 
-// libFileRevisorTests UtilityComponents Console MetalMock
-#include "libFileRevisorTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
-
-// libFileRevisor ValueTypes
-#include "libFileRevisor/ValueTypes/FileRevisorArgs.h"
-#include "libFileRevisor/ValueTypes/RenameResult.h"
-
-// libFileRevisorTests Exceptions ZenUnit
+// libFileRevisorTests Exceptions
 #include "libFileRevisorTests/Exceptions/ZenUnit/FileSystemExceptionRandom.h"
-
-// libFileRevisorTests ValueTypes ZenUnit
+// libFileRevisorTests ValueTypes
 #include "libFileRevisorTests/ValueTypes/ZenUnit/FileRevisorArgsEqualizerAndRandom.h"
 #include "libFileRevisorTests/ValueTypes/ZenUnit/RenameResultEqualizerAndRandom.h"

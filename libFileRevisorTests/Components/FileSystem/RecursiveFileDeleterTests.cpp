@@ -2,7 +2,7 @@
 #include "libFileRevisor/Components/FileSystem/RecursiveFileDeleter.h"
 #include "libFileRevisorTests/Components/ErrorHandling/MetalMock/ErrorCodeTranslatorMock.h"
 #include "libFileRevisorTests/Components/Exceptions/MetalMock/FileSystemExceptionMakerMock.h"
-#include "libFileRevisorTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
+#include "libFileRevisorTests/Components/Utility/Console/MetalMock/ConsoleMock.h"
 
 TESTS(RecursiveFileDeleterTests)
 AFACT(Constructor_NewsComponents_SetsFunctionCallers)

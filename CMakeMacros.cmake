@@ -18,6 +18,11 @@ macro(folder_source_group_subsubsubfolder folderName subfolderName subsubFolderN
    source_group(${folderName}\\${subfolderName}\\${subsubFolderName}\\${subsubsubFolderName} FILES ${${folderName}${subfolderName}${subsubFolderName}${subsubsubFolderName}Files})
 endmacro()
 
+macro(folder_source_group_subsubsubsubfolder folderName subfolderName subsubFolderName subsubsubFolderName subsubsubsubFolderName)
+   file(GLOB ${folderName}${subfolderName}${subsubFolderName}${subsubsubFolderName}${subsubsubsubFolderName}Files ${folderName}/${subfolderName}/${subsubFolderName}/${subsubsubFolderName}/${subsubsubsubFolderName}/*.*)
+   source_group(${folderName}\\${subfolderName}\\${subsubFolderName}\\${subsubsubFolderName}\\${subsubsubsubFolderName} FILES ${${folderName}${subfolderName}${subsubFolderName}${subsubsubFolderName}${subsubsubsubFolderName}Files})
+endmacro()
+
 macro(append variable value)
    set(${variable} "${${variable}} ${value}")
 endmacro()

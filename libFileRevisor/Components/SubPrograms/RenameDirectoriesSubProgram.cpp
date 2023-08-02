@@ -1,11 +1,11 @@
 #include "pch.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Components/SubPrograms/RenameDirectoriesSubProgram.h"
-#include "libFileRevisor/UtilityComponents/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
-#include "libFileRevisor/UtilityComponents/Iteration/Counter/PredicateCounter.h"
-#include "libFileRevisor/UtilityComponents/Iteration/Transform/OneExtraArgMemberFunctionTransformer.h"
-#include "libFileRevisor/UtilityComponents/Strings/Pluralizer.h"
-#include "libFileRevisor/UtilityComponents/Strings/Regexer.h"
+#include "libFileRevisor/Components/Utility/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
+#include "libFileRevisor/Components/Utility/Iteration/Counter/PredicateCounter.h"
+#include "libFileRevisor/Components/Utility/Iteration/Transform/OneExtraArgMemberFunctionTransformer.h"
+#include "libFileRevisor/Components/Utility/Strings/Pluralizer.h"
+#include "libFileRevisor/Components/Utility/Strings/Regexer.h"
 
 RenameDirectoriesSubProgram::RenameDirectoriesSubProgram()
    // Function Callers

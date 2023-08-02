@@ -32,23 +32,18 @@ using namespace std;
 
 // libFileRevisor Constants
 #include "libFileRevisor/Constants/ErrnoValue.h"
-
-// libFileRevisor Enums
 #include "libFileRevisor/Enums/Color.h"
 #include "libFileRevisor/Enums/FileExceptionType.h"
 #include "libFileRevisor/Enums/ProgramMode.h"
 #include "libFileRevisor/Enums/WindowsColor.h"
-
+// libFileRevisor Components
+#include "libFileRevisor/Components/Utility/Console/Console.h"
 // libFileRevisor StaticUtilities
 #include "libFileRevisor/StaticUtilities/ENUM_STRING_ARRAY.h"
 #include "libFileRevisor/StaticUtilities/ReleaseAssert.h"
 #include "libFileRevisor/StaticUtilities/StringUtil.h"
 #include "libFileRevisor/StaticUtilities/Vector.h"
 #include "libFileRevisor/StaticUtilities/Type.h"
-
-// libFileRevisor UtilityComponents
-#include "libFileRevisor/UtilityComponents/Console/Console.h"
-
 // libFileRevisor ValueTypes
 #include "libFileRevisor/ValueTypes/FileRevisorArgs.h"
 #include "libFileRevisor/ValueTypes/RenameResult.h"

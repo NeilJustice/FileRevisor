@@ -6,13 +6,13 @@
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileOpenerCloserMock.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/RecursiveFileDeleterMock.h"
 #include "libFileRevisorTests/Exceptions/ZenUnit/FileSystemExceptionRandom.h"
-#include "libFileRevisorTests/UtilityComponents/FunctionCallers/Member/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
-#include "libFileRevisorTests/UtilityComponents/FunctionCallers/Member/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
-#include "libFileRevisorTests/UtilityComponents/FunctionCallers/Member/MetalMock/VoidOneArgMemberFunctionCallerMock.h"
-#include "libFileRevisorTests/UtilityComponents/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
-#include "libFileRevisorTests/UtilityComponents/Iteration/ForEach/MetalMock/FourArgMemberFunctionForEacherMock.h"
-#include "libFileRevisorTests/UtilityComponents/Iteration/ForEach/MetalMock/ParallelThreeArgMemberFunctionForEacherMock.h"
-#include "libFileRevisorTests/UtilityComponents/Strings/MetalMock/ConstCharPointerGetterMock.h"
+#include "libFileRevisorTests/Components/Utility/FunctionCallers/Member/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
+#include "libFileRevisorTests/Components/Utility/FunctionCallers/Member/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
+#include "libFileRevisorTests/Components/Utility/FunctionCallers/Member/MetalMock/VoidOneArgMemberFunctionCallerMock.h"
+#include "libFileRevisorTests/Components/Utility/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
+#include "libFileRevisorTests/Components/Utility/Iteration/ForEach/MetalMock/FourArgMemberFunctionForEacherMock.h"
+#include "libFileRevisorTests/Components/Utility/Iteration/ForEach/MetalMock/ParallelThreeArgMemberFunctionForEacherMock.h"
+#include "libFileRevisorTests/Components/Utility/Strings/MetalMock/ConstCharPointerGetterMock.h"
 
 TESTS(FileSystemTests)
 AFACT(DefaultConstructor_NewsComponents_SetsFunctionPointers)

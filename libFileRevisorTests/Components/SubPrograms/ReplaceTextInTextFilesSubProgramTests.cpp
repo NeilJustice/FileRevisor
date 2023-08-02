@@ -1,15 +1,15 @@
 #include "pch.h"
 #include "libFileRevisor/Components/SubPrograms/ReplaceTextInTextFilesSubProgram.h"
-#include "libFileRevisor/UtilityComponents/DataStructures/CharArray256Helper.h"
+#include "libFileRevisor/Components/Utility/DataStructures/CharArray256Helper.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/DirectoryIteratorMock.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileOpenerCloserMock.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileReaderMock.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
-#include "libFileRevisorTests/UtilityComponents/Console/MetalMock/ConsoleMock.h"
-#include "libFileRevisorTests/UtilityComponents/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
-#include "libFileRevisorTests/UtilityComponents/Iteration/Math/MetalMock/OneExtraArgMemberFunctionAccumulatorMock.h"
-#include "libFileRevisorTests/UtilityComponents/Strings/MetalMock/PluralizerMock.h"
-#include "libFileRevisorTests/UtilityComponents/Strings/MetalMock/RegexerMock.h"
+#include "libFileRevisorTests/Components/Utility/Console/MetalMock/ConsoleMock.h"
+#include "libFileRevisorTests/Components/Utility/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
+#include "libFileRevisorTests/Components/Utility/Iteration/Math/MetalMock/OneExtraArgMemberFunctionAccumulatorMock.h"
+#include "libFileRevisorTests/Components/Utility/Strings/MetalMock/PluralizerMock.h"
+#include "libFileRevisorTests/Components/Utility/Strings/MetalMock/RegexerMock.h"
 
 TESTS(ReplaceTextInTextFilesSubProgramTests)
 AFACT(DefaultConstructor_NewsFileSystem)

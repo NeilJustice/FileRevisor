@@ -2,10 +2,10 @@
 #include "libFileRevisor/Components/FileRevisor/FileRevisorArgsParser.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorPreambleMaker.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
-#include "libFileRevisor/UtilityComponents/Docopt/DocoptParser.h"
-#include "libFileRevisor/UtilityComponents/Docopt/docopt.h"
-#include "libFileRevisor/UtilityComponents/FunctionCallers/Member/NonVoidTwoArgMemberFunctionCaller.h"
-#include "libFileRevisor/UtilityComponents/Iteration/Transform/OneExtraArgMemberFunctionTransformer.h"
+#include "libFileRevisor/Components/Utility/Docopt/DocoptParser.h"
+#include "libFileRevisor/Components/Utility/Docopt/docopt.h"
+#include "libFileRevisor/Components/Utility/FunctionCallers/Member/NonVoidTwoArgMemberFunctionCaller.h"
+#include "libFileRevisor/Components/Utility/Iteration/Transform/OneExtraArgMemberFunctionTransformer.h"
 
 FileRevisorArgsParser::FileRevisorArgsParser()
    // Function Pointers

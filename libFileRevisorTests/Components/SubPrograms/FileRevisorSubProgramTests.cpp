@@ -1,8 +1,8 @@
 #include "pch.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgram.h"
-#include "libFileRevisor/UtilityComponents/Console/Console.h"
-#include "libFileRevisorTests/UtilityComponents/Strings/MetalMock/PluralizerMock.h"
+#include "libFileRevisor/Components/Utility/Console/Console.h"
+#include "libFileRevisorTests/Components/Utility/Strings/MetalMock/PluralizerMock.h"
 
 TESTS(FileRevisorSubProgramTests)
 AFACT(DefaultConstructor_NewsComponents)
