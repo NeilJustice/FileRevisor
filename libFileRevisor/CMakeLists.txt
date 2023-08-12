@@ -43,7 +43,6 @@ file(GLOB_RECURSE Sources *.h *.cpp *.ui)
 source_group("" FILES ${Sources})
 
 add_library(libFileRevisor ${Sources})
-set_property(TARGET libFileRevisor PROPERTY CXX_STANDARD 20)
 if(UNIX)
    set_target_properties(libFileRevisor PROPERTIES DEBUG_OUTPUT_NAME "FileRevisorDebug")
    set_target_properties(libFileRevisor PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "FileRevisorRelWithDebInfo")
