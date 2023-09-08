@@ -1,4 +1,4 @@
-$numberOfLogicalProcessorsDividedBy2 = (Get-CimInstance -ClassName Win32_ComputerSystem).NumberOfLogicalProcessors / 2
+$numberOfLogicalProcessors = (Get-CimInstance -ClassName Win32_ComputerSystem).NumberOfLogicalProcessors
 cppcheck.exe `
    --enable=all `
    --cppcheck-build-dir=Cppcheck `
@@ -25,10 +25,11 @@ cppcheck.exe `
    -DMETALMOCK_VOID2 `
    -DMETALMOCK_NONVOID2_FREE `
    -DMETALMOCK_VOID5_CONST `
+   -I . `
+   -I "C:\Program Files (x86)\Windows Kits\10\Include\10.0.22621.0\um" `
    -I C:\include\ZenUnitAndMetalMock `
    -I libFileRevisor `
-   -I . `
-   -j $numberOfLogicalProcessorsDividedBy2 `
+   -j $numberOfLogicalProcessors `
    --output-file=cppcheck_results.txt `
    --error-exitcode=1 `
    .

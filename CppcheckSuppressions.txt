@@ -3,6 +3,7 @@
 *:*MetalMock.h
 allocaCalled:*
 constVariable:libFileRevisor\StaticUtilities\StringUtil.h:10
+missingIncludeSystem:*
 missingReturn:*
 preprocessorErrorDirective:*
 syntaxError:*
