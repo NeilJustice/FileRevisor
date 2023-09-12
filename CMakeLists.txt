@@ -40,7 +40,7 @@ if(UNIX)
    endif()
 elseif(MSVC)
    set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-   set(CMAKE_CXX_FLAGS "/std:c++20 /EHsc /Wall /WX /sdl /permissive- /MP /D_CRT_SECURE_NO_WARNINGS")
+   set(CMAKE_CXX_FLAGS "/std:c++latest /EHsc /Wall /WX /sdl /permissive- /MP /D_CRT_SECURE_NO_WARNINGS")
 endif()
 
 add_subdirectory(FileRevisor)
