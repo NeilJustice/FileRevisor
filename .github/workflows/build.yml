@@ -19,7 +19,7 @@ jobs:
         with:
           python-version: '3.11'
 
-      - uses: actions/cache@v2
+      - uses: actions/cache@v3
         with:
           path: ${{ env.pythonLocation }}
           key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
@@ -83,7 +83,7 @@ jobs:
       - name: Print .comment section of binary libFileRevisorTests to confirm it was linked with LLD
         run: readelf --string-dump .comment "${{matrix.cmake_build_type}}/libFileRevisorTests/libFileRevisorTests"
 
-      - name: Install and run lcov 1.15 then upload to Codecov.io if g++-11 Release
+      - name: Install and run lcov 2.0 then upload to Codecov.io if g++-11 Release
         run: |
           mkdir -p lcov_2_0
           wget https://github.com/linux-test-project/lcov/releases/download/v2.0/lcov-2.0.tar.gz --output-document="lcov_2_0/lcov-2.0.tar.gz"
