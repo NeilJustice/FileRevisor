@@ -28,7 +28,7 @@ jobs:
         run: sudo apt-get install lld ninja-build
 
       - name: Install lcov if g++-11 Release
-        run: sudo apt-get install lcov libcapture-tiny-perl
+        run: sudo apt-get install libcapture-tiny-perl libdatetime-perl
         if: ${{ matrix.cxx == 'g++-11' && matrix.cmake_build_type == 'Release' }}
 
       - name: Download ZenUnit.h
