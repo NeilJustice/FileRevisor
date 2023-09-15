@@ -52,7 +52,7 @@ jobs:
           fail_ci_if_error: true
         if: ${{ matrix.cxx == 'g++-11' && matrix.cmake_build_type == 'Release' }}
 
-      - name: Run BuildAndInstallCPlusPlusProgram.py in non code coverage mode if clang++ Debug/Release or g++-11 Debug
+      - name: Run BuildAndInstallCPlusPlusProgram.py in non-code-coverage mode if clang++ Debug/Release or g++-11 Debug
         run: |
            python FileRevisorDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
               --solution-name=FileRevisor \
@@ -94,7 +94,7 @@ jobs:
           bash <(curl -s https://codecov.io/bash) -f coverage.info || echo "Codecov did not collect coverage reports"
         if: ${{ matrix.cxx == 'g++-11' && matrix.cmake_build_type == 'Release' }}
 
-      - name: SonarCloud scan if g++-11 Release
+      - name: SonarCloud scan the FileRevisorDevOpsPython code if g++-11 Release
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
