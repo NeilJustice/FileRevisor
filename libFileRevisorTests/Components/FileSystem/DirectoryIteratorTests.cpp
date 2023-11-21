@@ -14,7 +14,7 @@ AFACT(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNot
 AFACT(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotNullptr_ReadsFirst256BytesOfFile_FileLengthIsNot0_First256BytesContains0_ReturnsTrue)
 AFACT(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotNullptr_ReadsFirst256BytesOfFile_FileLengthIsNot0_First256BytesDoesNotContain0_ReturnsFalse)
 FACTS(PathContainsAnySubstringCaseInsensitive_ReturnsTrueIfFilePathCaseInsensitiveContainsAnySubstring)
-AFACT(SetFileAndDirectoryPathIgnoreSubstrings_SetsFileAndDirectoryPathIgnoreSubstringsVector)
+AFACT(SetFileAndFolderPathIgnoreSubstrings_SetsFileAndFolderPathIgnoreSubstringsVector)
 EVIDENCE
 
 DirectoryIterator _directoryIterator;
@@ -52,7 +52,7 @@ TEST(DefaultConstructor_NewsComponents_SetsFieldsToDefaultValues)
    // Mutable Fields
    ARE_EQUAL(fs::directory_iterator(), directoryIterator._directoryIterator);
    ARE_EQUAL(fs::recursive_directory_iterator(), directoryIterator._recursiveDirectoryIterator);
-   IS_EMPTY(directoryIterator._fileAndDirectoryPathIgnoreSubstrings);
+   IS_EMPTY(directoryIterator._fileAndFolderPathIgnoreSubstrings);
    IS_FALSE(directoryIterator._recursiveMode);
 }
 
@@ -113,14 +113,14 @@ TEST(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsNotEndIterationM
 TEST(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNullptr_WritesYellowNoteMessage_ReturnsTrue)
 {
    _fileOpenerCloserMock->OpenReadModeBinaryFileMock.Return(nullptr);
-   _consoleMock->ThreadIdWriteLineColorMock.Expect();
+   _consoleMock->ProgramNameThreadIdWriteLineColorMock.Expect();
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
    const bool isFileEmptyOrBinaryOrNotAnsiOrNotOpenable = _directoryIterator.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(filePath);
    //
    const string expectedUnableToOpenFileMessage = String::ConcatStrings("Note: Unable to open file ", filePath.string());
    METALMOCKTHEN(_fileOpenerCloserMock->OpenReadModeBinaryFileMock.CalledOnceWith(filePath, false)).Then(
-   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineColorMock.CalledOnceWith(expectedUnableToOpenFileMessage, Color::Yellow)));
+   METALMOCKTHEN(_consoleMock->ProgramNameThreadIdWriteLineColorMock.CalledOnceWith(expectedUnableToOpenFileMessage, Color::Yellow)));
    IS_TRUE(isFileEmptyOrBinaryOrNotAnsiOrNotOpenable);
 }
 
@@ -184,7 +184,7 @@ TEST(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNotN
 }
 
 TEST3X3(PathContainsAnySubstringCaseInsensitive_ReturnsTrueIfFilePathCaseInsensitiveContainsAnySubstring,
-   const fs::path& path, const vector<string>& substrings, bool expectedReturnValue,
+   const fs::path& fileOrFolderPath, const vector<string>& substrings, bool expectedReturnValue,
    "", vector<string>{}, false,
    "a", vector<string>{"a"}, true,
    "A", vector<string>{"a"}, true,
@@ -193,17 +193,18 @@ TEST3X3(PathContainsAnySubstringCaseInsensitive_ReturnsTrueIfFilePathCaseInsensi
    "C:\\Directory\\SubdirectoryC\\FileName.ext", vector<string>{"subdirectoryA\\", "subdirectoryB\\", "subdirectoryC\\"}, true,
    "C:\\Directory\\SubdirectoryC", vector<string>{"subdirectoryA\\", "subdirectoryB\\", "subdirectoryC\\"}, false)
 {
-   bool pathContainsAnySubstringCaseInsensitive = DirectoryIterator::PathContainsAnySubstringCaseInsensitive(path, substrings);
+   const bool pathContainsAnySubstringCaseInsensitive =
+      DirectoryIterator::PathContainsAnySubstringCaseInsensitive(fileOrFolderPath, substrings);
    ARE_EQUAL(expectedReturnValue, pathContainsAnySubstringCaseInsensitive);
 }
 
-TEST(SetFileAndDirectoryPathIgnoreSubstrings_SetsFileAndDirectoryPathIgnoreSubstringsVector)
+TEST(SetFileAndFolderPathIgnoreSubstrings_SetsFileAndFolderPathIgnoreSubstringsVector)
 {
-   const vector<string> fileAndDirectoryPathIgnoreSubstrings = ZenUnit::RandomVector<string>();
+   const vector<string> fileAndFolderPathIgnoreSubstrings = ZenUnit::RandomVector<string>();
    //
-   _directoryIterator.SetFileAndDirectoryPathIgnoreSubstrings(fileAndDirectoryPathIgnoreSubstrings);
+   _directoryIterator.SetFileAndFolderPathIgnoreSubstrings(fileAndFolderPathIgnoreSubstrings);
    //
-   VECTORS_ARE_EQUAL(fileAndDirectoryPathIgnoreSubstrings, _directoryIterator._fileAndDirectoryPathIgnoreSubstrings);
+   VECTORS_ARE_EQUAL(fileAndFolderPathIgnoreSubstrings, _directoryIterator._fileAndFolderPathIgnoreSubstrings);
 }
 
 RUN_TESTS(DirectoryIteratorTests)

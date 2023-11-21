@@ -11,8 +11,8 @@ TEST(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
 {
    ZENUNIT_EQUALIZER_TEST_SETUP(RenameResult);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(RenameResult, didRenameFileOrDirectory, true);
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(RenameResult, originalFileOrDirectoryPath, ZenUnit::Random<fs::path>());
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(RenameResult, renamedFileOrDirectoryPath, ZenUnit::Random<fs::path>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(RenameResult, originalFileOrFolderPath, ZenUnit::Random<fs::path>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(RenameResult, renamedFileOrFolderPath, ZenUnit::Random<fs::path>());
 }
 
 TEST(TestableRenameResultRandom_ReturnsRenameResultWithAllRandomFields)
@@ -20,8 +20,8 @@ TEST(TestableRenameResultRandom_ReturnsRenameResultWithAllRandomFields)
    ZenUnit::RandomGeneratorMock randomGeneratorMock;
    const bool didRenameFileOrDirectory = randomGeneratorMock.BoolMock.ReturnRandom();
    const fs::path originalPath = ZenUnit::Random<fs::path>();
-   const fs::path renamedFileOrDirectoryPath = ZenUnit::Random<fs::path>();
-   randomGeneratorMock.FilesystemPathMock.ReturnValues(originalPath, renamedFileOrDirectoryPath);
+   const fs::path renamedFileOrFolderPath = ZenUnit::Random<fs::path>();
+   randomGeneratorMock.FilesystemPathMock.ReturnValues(originalPath, renamedFileOrFolderPath);
    //
    const RenameResult randomRenameResult = ZenUnit::TestableRenameResultRandom(&randomGeneratorMock);
    //
@@ -29,8 +29,8 @@ TEST(TestableRenameResultRandom_ReturnsRenameResultWithAllRandomFields)
    METALMOCK(randomGeneratorMock.FilesystemPathMock.CalledNTimes(2));
    RenameResult expectedRandomRenameResult;
    expectedRandomRenameResult.didRenameFileOrDirectory = didRenameFileOrDirectory;
-   expectedRandomRenameResult.originalFileOrDirectoryPath = originalPath;
-   expectedRandomRenameResult.renamedFileOrDirectoryPath = renamedFileOrDirectoryPath;
+   expectedRandomRenameResult.originalFileOrFolderPath = originalPath;
+   expectedRandomRenameResult.renamedFileOrFolderPath = renamedFileOrFolderPath;
    ARE_EQUAL(expectedRandomRenameResult, randomRenameResult);
 }
 

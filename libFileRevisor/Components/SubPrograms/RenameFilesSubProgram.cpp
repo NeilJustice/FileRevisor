@@ -5,7 +5,7 @@
 #include "libFileRevisor/Components/Utility/Iteration/Counter/PredicateCounter.h"
 #include "libFileRevisor/Components/Utility/Iteration/Transform/OneExtraArgMemberFunctionTransformer.h"
 #include "libFileRevisor/Components/Utility/Strings/Pluralizer.h"
-#include "libFileRevisor/Components/Utility/Strings/Regexer.h"
+#include "libFileRevisor/Components/Utility/Strings/RegexReplacer.h"
 
 RenameFilesSubProgram::RenameFilesSubProgram()
    // Function Callers
@@ -14,7 +14,7 @@ RenameFilesSubProgram::RenameFilesSubProgram()
    , _transformer_RenameFileIfFileNameMatchesFromPattern(make_unique<OneExtraArgMemberFunctionTransformerType>())
    // Constant Components
    , _predicateCounter(make_unique<PredicateCounter<RenameResult>>())
-   , _regexer(make_unique<Regexer>())
+   , _regexReplacer(make_unique<RegexReplacer>())
 {
 }
 
@@ -25,7 +25,7 @@ RenameFilesSubProgram::~RenameFilesSubProgram()
 int RenameFilesSubProgram::Run(const FileRevisorArgs& args) const
 {
    const vector<fs::path> filePathsInAndPossiblyBelowDirectory =
-      _fileSystem->GetFilePathsInDirectory(args.targetDirectoryPath, args.recurse);
+      _fileSystem->GetFilePathsInDirectory(args.targetFolderPath, args.recurse);
    const vector<RenameResult> fileRenameResults = _transformer_RenameFileIfFileNameMatchesFromPattern->Transform(
       filePathsInAndPossiblyBelowDirectory, this, &RenameFilesSubProgram::RenameFileIfFileNameMatchesFromPattern, args);
    const size_t numberOfRenamedFiles = _predicateCounter->CountWhere(fileRenameResults, DidRenameFileIsTrue);
@@ -39,7 +39,7 @@ int RenameFilesSubProgram::Run(const FileRevisorArgs& args) const
    {
       renamedFilesMessage = String::ConcatValues("Result: Renamed ", numberOfRenamedFiles, ' ', fileOrFiles);
    }
-   _console->ThreadIdWriteLine(renamedFilesMessage);
+   _console->ProgramNameThreadIdWriteLine(renamedFilesMessage);
    return 0;
 }
 
@@ -51,7 +51,7 @@ bool RenameFilesSubProgram::DidRenameFileIsTrue(const RenameResult& fileRenameRe
 RenameResult RenameFilesSubProgram::RenameFileIfFileNameMatchesFromPattern(const fs::path& filePath, const FileRevisorArgs& args) const
 {
    const string fileName = filePath.filename().string();
-   const string regexReplacedFileName = _regexer->Replace(fileName, args.fromRegexPattern, args.toRegexPattern);
+   const string regexReplacedFileName = _regexReplacer->RegexReplace(fileName, args.fromRegexPattern, args.toRegexPattern);
    if (regexReplacedFileName == fileName)
    {
       _caller_PrintDidNotMatchFileMessageIfVerboseMode->CallConstMemberFunction(
@@ -61,14 +61,14 @@ RenameResult RenameFilesSubProgram::RenameFileIfFileNameMatchesFromPattern(const
    if (args.dryrun)
    {
       const string wouldRenameMessage = String::ConcatStrings("DryRun: Would rename file ", filePath.string(), " to ", regexReplacedFileName);
-      _console->ThreadIdWriteLine(wouldRenameMessage);
-      const fs::path sourceDirectoryPath = filePath.parent_path();
-      const fs::path renamedFilePath = sourceDirectoryPath / regexReplacedFileName;
+      _console->ProgramNameThreadIdWriteLine(wouldRenameMessage);
+      const fs::path sourceFolderPath = filePath.parent_path();
+      const fs::path renamedFilePath = sourceFolderPath / regexReplacedFileName;
       return RenameResult(true, filePath, renamedFilePath);
    }
    const fs::path renamedFilePath = _fileSystem->RenameFile(filePath, regexReplacedFileName);
    const string renamedFileMessage = String::ConcatStrings("Renamed file ", filePath.string(), " to ", regexReplacedFileName);
-   _console->ThreadIdWriteLine(renamedFileMessage);
+   _console->ProgramNameThreadIdWriteLine(renamedFileMessage);
    return RenameResult(true, filePath, renamedFilePath);
 }
 
@@ -77,6 +77,6 @@ void RenameFilesSubProgram::PrintDidNotMatchFileMessageIfVerboseMode(bool verbos
    if (verbose)
    {
       const string didNotMatchFileMessage = "Verbose: Did not match " + filePath.string();
-      _console->ThreadIdWriteLine(didNotMatchFileMessage);
+      _console->ProgramNameThreadIdWriteLine(didNotMatchFileMessage);
    }
 }

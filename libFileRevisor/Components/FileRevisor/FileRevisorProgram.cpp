@@ -37,9 +37,9 @@ int FileRevisorProgram::Main(int argc, char* argv[])
       this, &FileRevisorProgram::Run, stringArgs, &FileRevisorProgram::ExceptionHandler);
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    const string durationLine = "Duration: " + elapsedSeconds + " seconds";
-   _console->ThreadIdWriteLine(durationLine);
+   _console->ProgramNameThreadIdWriteLine(durationLine);
    const string exitCodeLine = "ExitCode: " + to_string(exitCode);
-   _console->ThreadIdWriteLine(exitCodeLine);
+   _console->ProgramNameThreadIdWriteLine(exitCodeLine);
    return exitCode;
 }
 
@@ -48,7 +48,7 @@ int FileRevisorProgram::Run(const vector<string>& stringArgs) const
    const FileRevisorArgs args = _argsParser->ParseArgs(stringArgs);
    _argsParser->PrintPreambleLines(args);
    const shared_ptr<FileRevisorSubProgram> fileRevisorSubProgram = _fileRevisorSubProgramFactory->NewFileRevisorSubProgram(args.programMode);
-   const int exitCode = fileRevisorSubProgram->Run(args);
+   int exitCode = fileRevisorSubProgram->Run(args);
    return exitCode;
 }
 
@@ -56,6 +56,6 @@ int FileRevisorProgram::ExceptionHandler(const exception& ex) const
 {
    const string exceptionClassNameAndMessage = _call_Type_GetExceptionClassNameAndMessage(&ex);
    const string exceptionMessage = "Error: Exception thrown: " + exceptionClassNameAndMessage;
-   _console->ThreadIdWriteLineColor(exceptionMessage, Color::Red);
+   _console->ProgramNameThreadIdWriteLineColor(exceptionMessage, Color::Red);
    return 1;
 }

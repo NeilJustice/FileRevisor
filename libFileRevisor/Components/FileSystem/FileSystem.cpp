@@ -33,7 +33,7 @@ FileSystem::FileSystem()
    , _caller_DoDeleteFileOrDirectory(make_unique<_caller_DoDeleteFileOrDirectoryType>())
    , _caller_DeleteFileOrDirectory(make_unique<VoidTwoArgMemberFunctionCaller<FileSystem, const fs::path&, bool>>())
    , _caller_Exists(make_unique<NonVoidOneArgMemberFunctionCaller<bool, FileSystem, const fs::path&>>())
-   , _caller_GetFileOrDirectoryPathsInDirectory(make_unique<_caller_GetFileOrDirectoryPathsInDirectoryType>())
+   , _caller_GetFileOrFolderPathsInDirectory(make_unique<_caller_GetFileOrFolderPathsInDirectoryType>())
    , _foreacher_DeleteFileOrDirectory(make_unique<_foreacher_DeleteFileOrDirectoryType>())
    // Constant Components
    , _console(make_unique<Console>())
@@ -56,49 +56,49 @@ FileSystem::~FileSystem()
 
 // Queries
 
-fs::path FileSystem::GetAbsolutePath(const fs::path& fileOrDirectoryPath) const
+fs::path FileSystem::GetAbsolutePath(const fs::path& fileOrFolderPath) const
 {
 #if defined __linux__|| defined __APPLE__
-   fs::path absoluteFileOrDirectoryPath = fs::absolute(fileOrDirectoryPath);
-   const fs::path absoluteFileOrDirectoryPathFileName = absoluteFileOrDirectoryPath.filename();
-   if (absoluteFileOrDirectoryPathFileName == ".")
+   fs::path absoluteFileOrFolderPath = fs::absolute(fileOrFolderPath);
+   const fs::path absoluteFileOrFolderPathFileName = absoluteFileOrFolderPath.filename();
+   if (absoluteFileOrFolderPathFileName == ".")
    {
       // On Linux, "/dir/subdir/." becomes "/dir/subdir"
-      absoluteFileOrDirectoryPath = absoluteFileOrDirectoryPath.parent_path();
+      absoluteFileOrFolderPath = absoluteFileOrFolderPath.parent_path();
    }
-   return absoluteFileOrDirectoryPath;
+   return absoluteFileOrFolderPath;
 #elif _WIN32
-   fs::path absoluteFileOrDirectoryPath = _call_fs_absolute(fileOrDirectoryPath);
-   return absoluteFileOrDirectoryPath;
+   fs::path absoluteFileOrFolderPath = _call_fs_absolute(fileOrFolderPath);
+   return absoluteFileOrFolderPath;
 #endif
 }
 
-fs::path FileSystem::CurrentDirectoryPath() const
+fs::path FileSystem::CurrentFolderPath() const
 {
-   fs::path currentDirectoryPath = _call_fs_current_path();
-   return currentDirectoryPath;
+   fs::path currentFolderPath = _call_fs_current_path();
+   return currentFolderPath;
 }
 
-bool FileSystem::FileOrDirectoryExists(const fs::path& fileOrDirectoryPath) const
+bool FileSystem::FileOrDirectoryExists(const fs::path& fileOrFolderPath) const
 {
-   const bool fileOrDirectoryPathExists = _call_fs_exists(fileOrDirectoryPath);
-   return fileOrDirectoryPathExists;
+   const bool fileOrFolderPathExists = _call_fs_exists(fileOrFolderPath);
+   return fileOrFolderPathExists;
 }
 
-vector<fs::path> FileSystem::GetDirectoryPathsInDirectory(const fs::path& directoryPath, bool recurse) const
+vector<fs::path> FileSystem::GetFolderPathsInDirectory(const fs::path& directoryPath, bool recurse) const
 {
    vector<fs::path> directoryPaths;
    DirectoryIterator directoryIterator;
    directoryIterator.SetDirectoryIterator(directoryPath, recurse);
    while (true)
    {
-      fs::path nonIgnoredDirectoryPath = directoryIterator.NextNonIgnoredDirectoryPath();
+      fs::path nonIgnoredFolderPath = directoryIterator.NextNonIgnoredFolderPath();
       static const fs::path endIterationMarker{};
-      if (nonIgnoredDirectoryPath == endIterationMarker)
+      if (nonIgnoredFolderPath == endIterationMarker)
       {
          break;
       }
-      directoryPaths.emplace_back(std::move(nonIgnoredDirectoryPath));
+      directoryPaths.emplace_back(std::move(nonIgnoredFolderPath));
    }
    return directoryPaths;
 }
@@ -121,9 +121,9 @@ vector<fs::path> FileSystem::GetFilePathsInDirectory(const fs::path& directoryPa
    return filePaths;
 }
 
-vector<string> FileSystem::GetStringDirectoryPathsInDirectory(const fs::path& directoryPath, bool recurse) const
+vector<string> FileSystem::GetStringFolderPathsInDirectory(const fs::path& directoryPath, bool recurse) const
 {
-   const vector<fs::path> subdirectoryPaths = GetDirectoryPathsInDirectory(directoryPath, recurse);
+   const vector<fs::path> subdirectoryPaths = GetFolderPathsInDirectory(directoryPath, recurse);
    const size_t numberOfSubdirectoryPaths = subdirectoryPaths.size();
    vector<string> stringSubdirectoryPaths(numberOfSubdirectoryPaths);
    for (size_t i = 0; i < numberOfSubdirectoryPaths; ++i)
@@ -170,8 +170,8 @@ void FileSystem::CreateTextFile(const fs::path& filePath, string_view fileText) 
 
 void FileSystem::CreateFileWithBytes(const fs::path& filePath, const char* bytes, size_t bytesLength) const
 {
-   const fs::path parentDirectoryPath = filePath.parent_path();
-   fs::create_directories(parentDirectoryPath);
+   const fs::path parentFolderPath = filePath.parent_path();
+   fs::create_directories(parentFolderPath);
    const shared_ptr<FILE> binaryOrTextFileOpenInWriteMode = OpenFile(filePath, "wb");
 #if defined __linux__ || defined __APPLE__
    const size_t numberOfBytesWritten = fwrite(bytes, 1, bytesLength, binaryOrTextFileOpenInWriteMode.get());
@@ -190,8 +190,8 @@ fs::path FileSystem::RenameFile(const fs::path& filePath, string_view newFileNam
          "FileSystem::RenameFile(const fs::path& filePath, string_view newFileName) error: filePath does not exist: ", filePath.string());
       throw runtime_error(exceptionMessage);
    }
-   const fs::path sourceDirectoryPath = filePath.parent_path();
-   fs::path renamedFilePath = sourceDirectoryPath / newFileName;
+   const fs::path sourceFolderPath = filePath.parent_path();
+   fs::path renamedFilePath = sourceFolderPath / newFileName;
    const bool destinationFilePathExists = _caller_Exists->CallConstMemberFunction(this, &FileSystem::FileOrDirectoryExists, renamedFilePath);
    if (destinationFilePathExists)
    {
@@ -220,17 +220,17 @@ fs::path FileSystem::RenameDirectory(const fs::path& directoryPath, string_view 
    {
       return fs::path(directoryPath).remove_filename();
    }();
-   fs::path renamedDirectoryPath = directoryPathMinusLeafDirectory / newDirectoryName;
+   fs::path renamedFolderPath = directoryPathMinusLeafDirectory / newDirectoryName;
    error_code renameErrorCode;
-   _call_fs_rename_with_error_code(directoryPath, renamedDirectoryPath, renameErrorCode);
+   _call_fs_rename_with_error_code(directoryPath, renamedFolderPath, renameErrorCode);
    const int renameErrorCodeValue = renameErrorCode.value();
    if (renameErrorCodeValue != 0)
    {
       const FileSystemException fileSystemException =
-         _fileSystemExceptionMaker->MakeFileSystemExceptionForFailedToRenameDirectory(directoryPath, renamedDirectoryPath, renameErrorCode);
+         _fileSystemExceptionMaker->MakeFileSystemExceptionForFailedToRenameDirectory(directoryPath, renamedFolderPath, renameErrorCode);
       throw fileSystemException;
    }
-   return renamedDirectoryPath;
+   return renamedFolderPath;
 }
 
 // Deletes
@@ -241,13 +241,13 @@ void FileSystem::DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(
    _caller_DeleteFileOrDirectory->CallConstMemberFunction(
       this, &FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows, directoryPath, dryRun);
 
-   const vector<fs::path> topLevelDirectoryPaths = _caller_GetFileOrDirectoryPathsInDirectory->CallConstMemberFunction(
-      this, &FileSystem::GetDirectoryPathsInDirectory, directoryPath, false);
-   const vector<fs::path> topLevelFilePaths = _caller_GetFileOrDirectoryPathsInDirectory->CallConstMemberFunction(
+   const vector<fs::path> topLevelFolderPaths = _caller_GetFileOrFolderPathsInDirectory->CallConstMemberFunction(
+      this, &FileSystem::GetFolderPathsInDirectory, directoryPath, false);
+   const vector<fs::path> topLevelFilePaths = _caller_GetFileOrFolderPathsInDirectory->CallConstMemberFunction(
       this, &FileSystem::GetFilePathsInDirectory, directoryPath, false);
 
    _foreacher_DeleteFileOrDirectory->CallConstMemberFunctionWithEachElement(
-      topLevelDirectoryPaths, this, &FileSystem::DeleteFileOrDirectory, skipFilesInUse, dryRun, quietMode);
+      topLevelFolderPaths, this, &FileSystem::DeleteFileOrDirectory, skipFilesInUse, dryRun, quietMode);
    _foreacher_DeleteFileOrDirectory->CallConstMemberFunctionWithEachElement(
       topLevelFilePaths, this, &FileSystem::DeleteFileOrDirectory, skipFilesInUse, dryRun, quietMode);
 }
@@ -269,22 +269,22 @@ void FileSystem::RemoveFile(const char* filePath, bool ignoreFileDeleteError) co
    }
 }
 
-void FileSystem::DeleteFileOrDirectory(const fs::path& fileOrDirectoryPath, bool ignoreFileDeleteError, bool dryRun, bool quietMode) const
+void FileSystem::DeleteFileOrDirectory(const fs::path& fileOrFolderPath, bool ignoreFileDeleteError, bool dryRun, bool quietMode) const
 {
    if (dryRun)
    {
-      const string wouldDeleteMessage = "DryRun: Would delete " + fileOrDirectoryPath.string();
-      _console->ThreadIdWriteLine(wouldDeleteMessage);
+      const string wouldDeleteMessage = "DryRun: Would delete " + fileOrFolderPath.string();
+      _console->ProgramNameThreadIdWriteLine(wouldDeleteMessage);
    }
    else
    {
       try
       {
-         _caller_DoDeleteFileOrDirectory->CallConstMemberFunction(this, &FileSystem::DoDeleteFileOrDirectory, fileOrDirectoryPath);
+         _caller_DoDeleteFileOrDirectory->CallConstMemberFunction(this, &FileSystem::DoDeleteFileOrDirectory, fileOrFolderPath);
          if (!quietMode)
          {
-            const string deletedMessage = "Deleted " + fileOrDirectoryPath.string();
-            _console->ThreadIdWriteLine(deletedMessage);
+            const string deletedMessage = "Deleted " + fileOrFolderPath.string();
+            _console->ProgramNameThreadIdWriteLine(deletedMessage);
          }
       }
       catch (const exception& ex)
@@ -293,7 +293,7 @@ void FileSystem::DeleteFileOrDirectory(const fs::path& fileOrDirectoryPath, bool
          {
             const string exceptionClassNameAndMessage = Type::GetExceptionClassNameAndMessage(&ex);
             const string message = "Ignoring exception because --skip-files-in-use: " + exceptionClassNameAndMessage;
-            _console->ThreadIdWriteLineColor(message, Color::Yellow);
+            _console->ProgramNameThreadIdWriteLineColor(message, Color::Yellow);
          }
          else
          {
@@ -337,16 +337,16 @@ shared_ptr<FILE> FileSystem::OpenFile(const fs::path& filePath, const char* file
 
 // Private Functions
 
-void FileSystem::DoDeleteFileOrDirectory(const fs::path& fileOrDirectoryPath) const
+void FileSystem::DoDeleteFileOrDirectory(const fs::path& fileOrFolderPath) const
 {
-   const bool isDirectory = _call_fs_is_directory(fileOrDirectoryPath);
+   const bool isDirectory = _call_fs_is_directory(fileOrFolderPath);
    if (isDirectory)
    {
-      _call_fs_remove_all(fileOrDirectoryPath);
+      _call_fs_remove_all(fileOrFolderPath);
    }
    else
    {
-      _call_fs_remove(fileOrDirectoryPath);
+      _call_fs_remove(fileOrFolderPath);
    }
 }
 

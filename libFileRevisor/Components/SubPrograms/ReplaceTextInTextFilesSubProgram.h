@@ -10,7 +10,7 @@ template<
    typename ExtraArgType>
 class OneExtraArgMemberFunctionAccumulator;
 
-class Regexer;
+class TextReplacer;
 
 template<typename ClassType, typename Arg1Type, typename Arg2Type>
 class VoidTwoArgMemberFunctionCaller;
@@ -25,9 +25,9 @@ private:
    // Function Callers
    using OneExtraArgMemberFunctionAccumulatorType = OneExtraArgMemberFunctionAccumulator<
       ReplaceTextInTextFilesSubProgram, size_t, fs::path, const FileRevisorArgs&>;
-   unique_ptr<const OneExtraArgMemberFunctionAccumulatorType> _memberFunctionAccumulator_RegexReplaceTextInTextFile;
+   unique_ptr<const OneExtraArgMemberFunctionAccumulatorType> _memberFunctionAccumulator_ReplaceTextInTextFile;
    // Constant Components
-   unique_ptr<const Regexer> _regexer;
+   unique_ptr<const TextReplacer> _textReplacer;
    // Mutable Components
    unique_ptr<DirectoryIterator> _directoryIterator;
 public:
@@ -36,5 +36,5 @@ public:
    int Run(const FileRevisorArgs& args) const override;
 private:
    void PrintReadingFileMessageIfVerboseIsTrue(bool verbose, const fs::path& textFilePath) const;
-   size_t RegexReplaceTextInTextFile(const fs::path& textFilePath, const FileRevisorArgs& args) const;
+   size_t ReplaceTextInTextFile(const fs::path& textFilePath, const FileRevisorArgs& args) const;
 };

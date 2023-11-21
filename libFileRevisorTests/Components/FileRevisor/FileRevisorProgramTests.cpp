@@ -81,7 +81,7 @@ TEST(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTim
 
    const string elapsedSeconds = _stopwatchMock->StopAndGetElapsedSecondsMock.ReturnRandom();
 
-   _consoleMock->ThreadIdWriteLineMock.Expect();
+   _consoleMock->ProgramNameThreadIdWriteLineMock.Expect();
 
    const int argc = ZenUnit::RandomBetween<int>(2, 5);
    const string exePath = ZenUnit::Random<string>();
@@ -90,7 +90,7 @@ TEST(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTim
    //
    const int exitCode = _fileRevisorProgram.Main(argc, const_cast<char**>(argv));
    //
-   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledNTimes(2));
+   METALMOCK(_consoleMock->ProgramNameThreadIdWriteLineMock.CalledNTimes(2));
    const string expectedDurationLine = "Duration: " + elapsedSeconds + " seconds";
    const string expectedExitCodeLine = "ExitCode: " + to_string(exitCode);
    METALMOCKTHEN(_stopwatchMock->StartMock.CalledOnce()).Then(
@@ -98,8 +98,8 @@ TEST(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTim
    METALMOCKTHEN(_nonVoidOneArgTryCatchCallerMock->TryCatchCallConstMemberFunctionMock.CalledOnceWith(
       &_fileRevisorProgram, &FileRevisorProgram::Run, vectorArgs, &FileRevisorProgram::ExceptionHandler))).Then(
    METALMOCKTHEN(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce())).Then(
-   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedDurationLine))).Then(
-   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedExitCodeLine)));
+   METALMOCKTHEN(_consoleMock->ProgramNameThreadIdWriteLineMock.CalledWith(expectedDurationLine))).Then(
+   METALMOCKTHEN(_consoleMock->ProgramNameThreadIdWriteLineMock.CalledWith(expectedExitCodeLine)));
    ARE_EQUAL(tryCatchCallReturnValue, exitCode);
 }
 
@@ -129,7 +129,7 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndWhat_Returns1)
    const string exceptionTypeNameAndMessage = ZenUnit::Random<string>();
    _call_Type_GetExceptionClassNameAndMessageMock.Return(exceptionTypeNameAndMessage);
 
-   _consoleMock->ThreadIdWriteLineColorMock.Expect();
+   _consoleMock->ProgramNameThreadIdWriteLineColorMock.Expect();
 
    const exception ex;
    //
@@ -137,7 +137,7 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndWhat_Returns1)
    //
    METALMOCK(_call_Type_GetExceptionClassNameAndMessageMock.CalledOnceWith(&ex));
    const string expectedExceptionMessage = "Error: Exception thrown: " + exceptionTypeNameAndMessage;
-   METALMOCK(_consoleMock->ThreadIdWriteLineColorMock.CalledOnceWith(expectedExceptionMessage, Color::Red));
+   METALMOCK(_consoleMock->ProgramNameThreadIdWriteLineColorMock.CalledOnceWith(expectedExceptionMessage, Color::Red));
    ARE_EQUAL(1, exitCode);
 }
 

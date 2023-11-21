@@ -27,10 +27,10 @@ public:
       const fs::path& filePath) const;
 
    virtual FileSystemException MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory(
-      const fs::path& fileOrDirectoryPath, int errorCodeValue) const;
+      const fs::path& fileOrFolderPath, int errorCodeValue) const;
 
    virtual FileSystemException MakeFileSystemExceptionForFailedToRenameDirectory(
-      const fs::path& directoryPath, const fs::path& renamedDirectoryPath, const error_code& renameErrorCode) const;
+      const fs::path& directoryPath, const fs::path& renamedFolderPath, const error_code& renameErrorCode) const;
 
    virtual FileSystemException MakeFileSystemExceptionForFailedToDeleteFile(const char* filePath) const;
 

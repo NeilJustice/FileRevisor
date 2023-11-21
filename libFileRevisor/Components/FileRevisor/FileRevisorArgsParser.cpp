@@ -37,7 +37,7 @@ FileRevisorArgs FileRevisorArgsParser::ParseArgs(const vector<string>& stringArg
    tuple<fs::path, string, string> targetDirectory_fromRegexPattern_toRegexPattern =
       _caller_ParseDirAndFromAndToArguments->CallConstMemberFunction(
          this, &FileRevisorArgsParser::ParseTargetAndFromAndToArguments, docoptValues, isDeleteDirectoryMode);
-   args.targetDirectoryPath = get<0>(targetDirectory_fromRegexPattern_toRegexPattern);
+   args.targetFolderPath = get<0>(targetDirectory_fromRegexPattern_toRegexPattern);
    args.fromRegexPattern = get<1>(targetDirectory_fromRegexPattern_toRegexPattern);
    args.toRegexPattern = get<2>(targetDirectory_fromRegexPattern_toRegexPattern);
    args.recurse = _docoptParser->GetOptionalBool(docoptValues, "--recurse");
@@ -57,16 +57,16 @@ void FileRevisorArgsParser::PrintPreambleLines(const FileRevisorArgs& args) cons
 tuple<fs::path, string, string> FileRevisorArgsParser::ParseTargetAndFromAndToArguments(
    const map<string, docopt::Value>& docoptValues, bool isDeleteDirectoryMode) const
 {
-   string targetDirectoryPathString;
+   string targetFolderPathString;
    string fromRegexPattern;
    string toRegexPattern;
    if (isDeleteDirectoryMode)
    {
-      targetDirectoryPathString = _docoptParser->GetRequiredString(docoptValues, "--target");
+      targetFolderPathString = _docoptParser->GetRequiredString(docoptValues, "--target");
    }
    else
    {
-      targetDirectoryPathString = _docoptParser->GetOptionalStringWithDefaultValue(docoptValues, "--target", ".");
+      targetFolderPathString = _docoptParser->GetOptionalStringWithDefaultValue(docoptValues, "--target", ".");
       fromRegexPattern = _docoptParser->GetRequiredString(docoptValues, "--from");
       if (fromRegexPattern.empty())
       {
@@ -74,9 +74,9 @@ tuple<fs::path, string, string> FileRevisorArgsParser::ParseTargetAndFromAndToAr
       }
       toRegexPattern = _docoptParser->GetRequiredString(docoptValues, "--to");
    }
-   fs::path targetDirectoryPath = _fileSystem->GetAbsolutePath(targetDirectoryPathString);
-   tuple<fs::path, string, string> targetDirectoryPath_fromRegexPattern_toRegexPattern(targetDirectoryPath, fromRegexPattern, toRegexPattern);
-   return targetDirectoryPath_fromRegexPattern_toRegexPattern;
+   fs::path targetFolderPath = _fileSystem->GetAbsolutePath(targetFolderPathString);
+   tuple<fs::path, string, string> targetFolderPath_fromRegexPattern_toRegexPattern(targetFolderPath, fromRegexPattern, toRegexPattern);
+   return targetFolderPath_fromRegexPattern_toRegexPattern;
 }
 
 ProgramMode FileRevisorArgsParser::DetermineProgramMode(

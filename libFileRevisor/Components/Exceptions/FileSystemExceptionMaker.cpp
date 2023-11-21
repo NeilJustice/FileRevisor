@@ -50,22 +50,22 @@ FileSystemException FileSystemExceptionMaker::MakeFileSystemExceptionForFailedTo
 }
 
 FileSystemException FileSystemExceptionMaker::MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory(
-   const fs::path& fileOrDirectoryPath, int errorCodeValue) const
+   const fs::path& fileOrFolderPath, int errorCodeValue) const
 {
    const string systemErrorDescription = _errorCodeTranslator->GetSystemErrorDescription(errorCodeValue);
    const string exceptionMessage = String::ConcatValues(
-      "fs::remove_all(\"", fileOrDirectoryPath.string(), "\", errorCode) failed with error code ", errorCodeValue, " (", systemErrorDescription, ")");
+      "fs::remove_all(\"", fileOrFolderPath.string(), "\", errorCode) failed with error code ", errorCodeValue, " (", systemErrorDescription, ")");
    FileSystemException fileSystemException(FileExceptionType::FailedToDeleteDirectory, exceptionMessage);
    return fileSystemException;
 }
 
 FileSystemException FileSystemExceptionMaker::MakeFileSystemExceptionForFailedToRenameDirectory(
-   const fs::path& directoryPath, const fs::path& renamedDirectoryPath, const error_code& renameErrorCode) const
+   const fs::path& directoryPath, const fs::path& renamedFolderPath, const error_code& renameErrorCode) const
 {
    const int renameErrorCodeValue = renameErrorCode.value();
    const string renameErrorCodeMessage = renameErrorCode.message();
    const string exceptionMessage = String::ConcatValues(
-      "Failed to rename directory ", directoryPath.string(), " to ", renamedDirectoryPath.string(),
+      "Failed to rename directory ", directoryPath.string(), " to ", renamedFolderPath.string(),
       ". renameErrorCode=", renameErrorCodeValue,
       ", renameErrorCodeMessage=\"", renameErrorCodeMessage, "\"");
    FileSystemException fileSystemException(FileExceptionType::FailedToRenameDirectory, exceptionMessage);

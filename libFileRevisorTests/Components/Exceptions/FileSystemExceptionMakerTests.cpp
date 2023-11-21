@@ -106,15 +106,15 @@ TEST(MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory_ReturnsExpectedF
 {
    const string systemErrorDescription = _errorCodeTranslatorMock->GetSystemErrorDescriptionMock.ReturnRandom();
 
-   const fs::path fileOrDirectoryPath = ZenUnit::Random<fs::path>();
+   const fs::path fileOrFolderPath = ZenUnit::Random<fs::path>();
    const int errorCodeValue = ZenUnit::Random<int>();
    //
    const FileSystemException fileSystemException =
-      _fileSystemExceptionMaker.MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory(fileOrDirectoryPath, errorCodeValue);
+      _fileSystemExceptionMaker.MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory(fileOrFolderPath, errorCodeValue);
    //
    METALMOCK(_errorCodeTranslatorMock->GetSystemErrorDescriptionMock.CalledOnceWith(errorCodeValue));
    const string exceptionMessage = String::ConcatValues(
-      "fs::remove_all(\"", fileOrDirectoryPath.string(), "\", errorCode) failed with error code ", errorCodeValue, " (", systemErrorDescription, ")");
+      "fs::remove_all(\"", fileOrFolderPath.string(), "\", errorCode) failed with error code ", errorCodeValue, " (", systemErrorDescription, ")");
    const FileSystemException expectedFileSystemException(
       FileExceptionType::FailedToDeleteDirectory, exceptionMessage);
    ARE_EQUAL(expectedFileSystemException.what(), fileSystemException.what());
@@ -123,16 +123,16 @@ TEST(MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory_ReturnsExpectedF
 TEST(MakeFileSystemExceptionForFailedToRenameDirectory_ReturnsExpectedFileSystemException)
 {
    const fs::path directoryPath = ZenUnit::Random<fs::path>();
-   const fs::path renamedDirectoryPath = ZenUnit::Random<fs::path>();
+   const fs::path renamedFolderPath = ZenUnit::Random<fs::path>();
    const error_code renameErrorCode = ZenUnit::Random<error_code>();
    //
    const FileSystemException fileSystemException =
-      _fileSystemExceptionMaker.MakeFileSystemExceptionForFailedToRenameDirectory(directoryPath, renamedDirectoryPath, renameErrorCode);
+      _fileSystemExceptionMaker.MakeFileSystemExceptionForFailedToRenameDirectory(directoryPath, renamedFolderPath, renameErrorCode);
    //
    const int renameErrorCodeValue = renameErrorCode.value();
    const string renameErrorCodeMessage = renameErrorCode.message();
    const string exceptionMessage = String::ConcatValues(
-      "Failed to rename directory ", directoryPath.string(), " to ", renamedDirectoryPath.string(),
+      "Failed to rename directory ", directoryPath.string(), " to ", renamedFolderPath.string(),
       ". renameErrorCode=", renameErrorCodeValue,
       ", renameErrorCodeMessage=\"", renameErrorCodeMessage, "\"");
    const FileSystemException expectedFileSystemException(

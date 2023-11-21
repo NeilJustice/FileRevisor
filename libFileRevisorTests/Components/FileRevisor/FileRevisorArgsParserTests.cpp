@@ -121,7 +121,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
    FileRevisorArgs expectedArgs{};
    expectedArgs.commandLine = Vector::Join(stringArgs, ' ');
    expectedArgs.programMode = programMode;
-   expectedArgs.targetDirectoryPath = get<0>(targetDirectory_fromRegexPattern_toRegexPattern);
+   expectedArgs.targetFolderPath = get<0>(targetDirectory_fromRegexPattern_toRegexPattern);
    expectedArgs.fromRegexPattern = get<1>(targetDirectory_fromRegexPattern_toRegexPattern);
    expectedArgs.toRegexPattern = get<2>(targetDirectory_fromRegexPattern_toRegexPattern);
    expectedArgs.recurse = recurse;
@@ -145,25 +145,25 @@ TEST(PrintPreambleLines_WritesPreambleLinesToConsole)
 
 TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsTrue_ParsesDirArgumentAsRequired_ReturnsDirAndFromAndToArgumentValues)
 {
-   const string targetDirectoryPathString = _docoptParserMock->GetRequiredStringMock.ReturnRandom();
+   const string targetFolderPathString = _docoptParserMock->GetRequiredStringMock.ReturnRandom();
 
-   const fs::path targetDirectoryPath = _fileSystemMock->GetAbsolutePathMock.ReturnRandom();
+   const fs::path targetFolderPath = _fileSystemMock->GetAbsolutePathMock.ReturnRandom();
 
    map<string, docopt::Value> docoptValues;
    docoptValues[ZenUnit::Random<string>()] = docopt::Value(ZenUnit::Random<string>());
    //
-   tuple<fs::path, string, string> targetDirectoryPath_fromRegexPattern_toRegexPattern =
+   tuple<fs::path, string, string> targetFolderPath_fromRegexPattern_toRegexPattern =
       _fileRevisorArgsParser.ParseTargetAndFromAndToArguments(docoptValues, true);
    //
    METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptValues, "--target"));
-   METALMOCK(_fileSystemMock->GetAbsolutePathMock.CalledOnceWith(targetDirectoryPathString));
-   tuple<fs::path, string, string> expected_targetDirectoryPath_fromRegexPattern_toRegexPattern(targetDirectoryPath, "", "");
-   ARE_EQUAL(expected_targetDirectoryPath_fromRegexPattern_toRegexPattern, targetDirectoryPath_fromRegexPattern_toRegexPattern);
+   METALMOCK(_fileSystemMock->GetAbsolutePathMock.CalledOnceWith(targetFolderPathString));
+   tuple<fs::path, string, string> expected_targetFolderPath_fromRegexPattern_toRegexPattern(targetFolderPath, "", "");
+   ARE_EQUAL(expected_targetFolderPath_fromRegexPattern_toRegexPattern, targetFolderPath_fromRegexPattern_toRegexPattern);
 }
 
 TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsFalse_FromArgumentIsEmpty_ThrowsInvalidArgumentException)
 {
-   const string targetDirectoryPathString = _docoptParserMock->GetOptionalStringWithDefaultValueMock.ReturnRandom();
+   const string targetFolderPathString = _docoptParserMock->GetOptionalStringWithDefaultValueMock.ReturnRandom();
 
    const string fromRegexPattern;
    _docoptParserMock->GetRequiredStringMock.Return(fromRegexPattern);
@@ -171,8 +171,8 @@ TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsFalse_FromArgumentI
    map<string, docopt::Value> docoptValues;
    docoptValues[ZenUnit::Random<string>()] = docopt::Value(ZenUnit::Random<string>());
    //
-   tuple<fs::path, string, string> targetDirectoryPath_fromRegexPattern_toRegexPattern;
-   THROWS_EXCEPTION(targetDirectoryPath_fromRegexPattern_toRegexPattern =
+   tuple<fs::path, string, string> targetFolderPath_fromRegexPattern_toRegexPattern;
+   THROWS_EXCEPTION(targetFolderPath_fromRegexPattern_toRegexPattern =
       _fileRevisorArgsParser.ParseTargetAndFromAndToArguments(docoptValues, false),
       invalid_argument, "--from value cannot be empty");
    //
@@ -182,9 +182,9 @@ TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsFalse_FromArgumentI
 
 TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsFalse_FromArgumentIsNotEmpty_ParsesDirArgumentAsOptional_ReturnsDirAndFromAndToArgumentValues)
 {
-   const string targetDirectoryPathString = _docoptParserMock->GetOptionalStringWithDefaultValueMock.ReturnRandom();
+   const string targetFolderPathString = _docoptParserMock->GetOptionalStringWithDefaultValueMock.ReturnRandom();
 
-   const fs::path targetDirectoryPath = _fileSystemMock->GetAbsolutePathMock.ReturnRandom();
+   const fs::path targetFolderPath = _fileSystemMock->GetAbsolutePathMock.ReturnRandom();
 
    const string fromRegexPattern = ZenUnit::Random<string>();
    const string toRegexPattern = ZenUnit::Random<string>();
@@ -193,17 +193,17 @@ TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsFalse_FromArgumentI
    map<string, docopt::Value> docoptValues;
    docoptValues[ZenUnit::Random<string>()] = docopt::Value(ZenUnit::Random<string>());
    //
-   tuple<fs::path, string, string> targetDirectoryPath_fromRegexPattern_toRegexPattern =
+   tuple<fs::path, string, string> targetFolderPath_fromRegexPattern_toRegexPattern =
       _fileRevisorArgsParser.ParseTargetAndFromAndToArguments(docoptValues, false);
    //
    METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledNTimes(2));
    METALMOCKTHEN(_docoptParserMock->GetOptionalStringWithDefaultValueMock.CalledOnceWith(docoptValues, "--target", ".")).Then(
    METALMOCKTHEN(_docoptParserMock->GetRequiredStringMock.CalledWith(docoptValues, "--from"))).Then(
    METALMOCKTHEN(_docoptParserMock->GetRequiredStringMock.CalledWith(docoptValues, "--to"))).Then(
-   METALMOCKTHEN(_fileSystemMock->GetAbsolutePathMock.CalledOnceWith(targetDirectoryPathString)));
-   tuple<fs::path, string, string> expected_targetDirectoryPath_fromRegexPattern_toRegexPattern(
-      targetDirectoryPath, fromRegexPattern, toRegexPattern);
-   ARE_EQUAL(expected_targetDirectoryPath_fromRegexPattern_toRegexPattern, targetDirectoryPath_fromRegexPattern_toRegexPattern);
+   METALMOCKTHEN(_fileSystemMock->GetAbsolutePathMock.CalledOnceWith(targetFolderPathString)));
+   tuple<fs::path, string, string> expected_targetFolderPath_fromRegexPattern_toRegexPattern(
+      targetFolderPath, fromRegexPattern, toRegexPattern);
+   ARE_EQUAL(expected_targetFolderPath_fromRegexPattern_toRegexPattern, targetFolderPath_fromRegexPattern_toRegexPattern);
 }
 
 TEST5X5(DetermineProgramMode_OneOfTheFourProgramModeBoolsTrue_ReturnsExpectedProgramMode,

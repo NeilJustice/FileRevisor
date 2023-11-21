@@ -56,8 +56,8 @@ Usage:
       [--verbose]
    filerevisor replace-text
       --target=<TargetDirectoryPath>
-      --from=<FileTextRegexPattern>
-      --to=<ReplacementFileTextRegexPattern>
+      --from=<LiteralFileText>
+      --to=<ReplacementLiteralFileText>
       [--recurse]
       [--dryrun]
       [--verbose]
@@ -123,14 +123,14 @@ Here is `filerevisor rename-directories` in action:
 ```ini
 filerevisor replace-text
    --target=<TargetDirectoryPath>
-   --from=<FileTextRegexPattern>
-   --to=<ReplacementFileTextRegexPattern>
+   --from=<LiteralFileText>
+   --to=<ReplacementLiteralFileText>
    [--recurse]
    [--dryrun]
    [--verbose]
 ```
 
-FileRevisor `replace-text` mode replaces text in files in a specified directory matching a specified regular expression. `--recurse` can be specified to replace text in files in and below a specified directory.
+FileRevisor `replace-text` mode replaces text in files containing a substring with a replacement substring. `--recurse` can be added to replace text in files in and below a specified directory.
 
 Here is `filerevisor replace-text` in action:
 

@@ -8,7 +8,7 @@
 #include "libFileRevisor/Components/Utility/Iteration/Math/OneExtraArgMemberFunctionAccumulator.h"
 #include "libFileRevisor/Components/Utility/Iteration/Transform/OneExtraArgMemberFunctionTransformer.h"
 #include "libFileRevisor/Components/Utility/Strings/Pluralizer.h"
-#include "libFileRevisor/Components/Utility/Strings/Regexer.h"
+#include "libFileRevisor/Components/Utility/Strings/RegexReplacer.h"
 #endif
 #include "libFileRevisor/Components/SubPrograms/DeleteDirectorySubProgram.h"
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgramFactory.h"

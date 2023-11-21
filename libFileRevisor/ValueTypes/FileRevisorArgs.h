@@ -6,7 +6,7 @@ struct FileRevisorArgs
    static const string CommandLineUsage;
    string commandLine;
    ProgramMode programMode = ProgramMode::Unset;
-   fs::path targetDirectoryPath;
+   fs::path targetFolderPath;
    string fromRegexPattern;
    string toRegexPattern;
    bool recurse = false;

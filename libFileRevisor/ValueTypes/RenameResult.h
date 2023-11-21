@@ -4,14 +4,14 @@ struct RenameResult
 {
 public:
    bool didRenameFileOrDirectory;
-   fs::path originalFileOrDirectoryPath;
-   fs::path renamedFileOrDirectoryPath;
+   fs::path originalFileOrFolderPath;
+   fs::path renamedFileOrFolderPath;
 
    RenameResult();
    RenameResult(
       bool didRenameFileOrDirectory,
-      const fs::path& originalFileOrDirectoryPath,
-      const fs::path& renamedFileOrDirectoryPath);
+      const fs::path& originalFileOrFolderPath,
+      const fs::path& renamedFileOrFolderPath);
    static bool DidRenameFileOrDirectoryFieldIsTrue(const RenameResult& renameResult);
 };
 

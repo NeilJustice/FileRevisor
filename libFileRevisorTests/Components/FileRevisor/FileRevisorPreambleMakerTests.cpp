@@ -34,25 +34,25 @@ TEST3X3(PrintPreambleLines_PrintsPreambleLines,
    false, true, " Verbose",
    true, true, " DryRun Verbose")
 {
-   const fs::path currentDirectoryPath = _fileSystemMock->CurrentDirectoryPathMock.ReturnRandom();
-   _consoleMock->ThreadIdWriteLineMock.Expect();
+   const fs::path currentFolderPath = _fileSystemMock->CurrentFolderPathMock.ReturnRandom();
+   _consoleMock->ProgramNameThreadIdWriteLineMock.Expect();
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    args.verbose = verbose;
    args.dryrun = dryrun;
    //
    _fileRevisorPreambleMaker.PrintPreambleLines(args);
    //
-   METALMOCK(_fileSystemMock->CurrentDirectoryPathMock.CalledOnce());
+   METALMOCK(_fileSystemMock->CurrentFolderPathMock.CalledOnce());
    const string expectedRunningLine = String::ConcatStrings("Running: ", args.commandLine);
    const string expectedProgramModeString = ENUM_AS_STRING(ProgramMode, args.programMode);
    const string expectedProgramModeLine = String::ConcatValues("ProgramMode: ", expectedProgramModeString, expectedActionSuffix);
-   const string expectedWorkingDirectoryLine = String::ConcatStrings("WorkingDirectory: ", currentDirectoryPath.string());
-   const string expectedTargetDirectoryLine = String::ConcatStrings(" TargetDirectory: ", args.targetDirectoryPath.string());
-   METALMOCK(_consoleMock->ThreadIdWriteLineMock.CalledNTimes(4));
-   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedRunningLine)).Then(
-   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedProgramModeLine))).Then(
-   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedWorkingDirectoryLine))).Then(
-   METALMOCKTHEN(_consoleMock->ThreadIdWriteLineMock.CalledWith(expectedTargetDirectoryLine)));
+   const string expectedWorkingDirectoryLine = String::ConcatStrings("WorkingDirectory: ", currentFolderPath.string());
+   const string expectedTargetDirectoryLine = String::ConcatStrings(" TargetDirectory: ", args.targetFolderPath.string());
+   METALMOCK(_consoleMock->ProgramNameThreadIdWriteLineMock.CalledNTimes(4));
+   METALMOCKTHEN(_consoleMock->ProgramNameThreadIdWriteLineMock.CalledWith(expectedRunningLine)).Then(
+   METALMOCKTHEN(_consoleMock->ProgramNameThreadIdWriteLineMock.CalledWith(expectedProgramModeLine))).Then(
+   METALMOCKTHEN(_consoleMock->ProgramNameThreadIdWriteLineMock.CalledWith(expectedWorkingDirectoryLine))).Then(
+   METALMOCKTHEN(_consoleMock->ProgramNameThreadIdWriteLineMock.CalledWith(expectedTargetDirectoryLine)));
 }
 
 RUN_TESTS(FileRevisorPreambleMakerTests)

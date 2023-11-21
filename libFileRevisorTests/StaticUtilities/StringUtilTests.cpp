@@ -4,7 +4,7 @@
 TESTS(StringTests)
 FACTS(ContainsSubstring_ReturnsTrueIfStringContainsSubstring)
 FACTS(CaseInsensitiveContainsSubstring_ReturnsTrueIfStringCaseInsensitiveContainsSubstring)
-FACTS(RegexReplace_ReturnsRegexReplacedString)
+FACTS(RegexReplace_ReturnsReplacedString)
 EVIDENCE
 
 struct UserType
@@ -80,7 +80,7 @@ TEST3X3(CaseInsensitiveContainsSubstring_ReturnsTrueIfStringCaseInsensitiveConta
    ARE_EQUAL(expectedReturnValue, String::CaseInsensitiveContainsSubstring(str, substring));
 }
 
-TEST4X4(RegexReplace_ReturnsRegexReplacedString,
+TEST4X4(RegexReplace_ReturnsReplacedString,
    string_view str, string_view pattern, string_view replacement, string_view expectedReturnValue,
    "", "", "", "",
    "a", "b", "c", "a",

@@ -15,8 +15,8 @@ EVIDENCE
 RecursiveFileDeleter _recursiveFileDeleter;
 FileSystem _fileSystem;
 
-string _rootDirectoryPathString;
-fs::path _rootDirectoryPath;
+string _rootFolderPathString;
+fs::path _rootFolderPath;
 fs::path _root_file1;
 fs::path _root_file2;
 fs::path _root_subdirectory1;
@@ -32,27 +32,27 @@ fs::path _root_subdirectory5_file1;
 
 STARTUP
 {
-  _rootDirectoryPathString = "RecursiveFileDeleterIntegrationTests";
-  _rootDirectoryPath = _rootDirectoryPathString;
+  _rootFolderPathString = "RecursiveFileDeleterIntegrationTests";
+  _rootFolderPath = _rootFolderPathString;
 
-  fs::remove_all(_rootDirectoryPath);
+  fs::remove_all(_rootFolderPath);
 
-  _fileSystem.CreateTextFile(_root_file1 = _rootDirectoryPath / "file1.ext", ZenUnit::Random<string>());
-  _fileSystem.CreateTextFile(_root_file2 = _rootDirectoryPath / ".gitignore", ZenUnit::Random<string>());
+  _fileSystem.CreateTextFile(_root_file1 = _rootFolderPath / "file1.ext", ZenUnit::Random<string>());
+  _fileSystem.CreateTextFile(_root_file2 = _rootFolderPath / ".gitignore", ZenUnit::Random<string>());
 
-  _fileSystem.CreateDirectories(_root_subdirectory1 = _rootDirectoryPath / "subdirectory1");
-  _fileSystem.CreateTextFile(_root_subdirectory1_file1 = _rootDirectoryPath / "subdirectory1" / "file1.ext", ZenUnit::Random<string>());
-  _fileSystem.CreateTextFile(_root_subdirectory1_file2 = _rootDirectoryPath / "subdirectory1" / "file2.ext", ZenUnit::Random<string>());
+  _fileSystem.CreateDirectories(_root_subdirectory1 = _rootFolderPath / "subdirectory1");
+  _fileSystem.CreateTextFile(_root_subdirectory1_file1 = _rootFolderPath / "subdirectory1" / "file1.ext", ZenUnit::Random<string>());
+  _fileSystem.CreateTextFile(_root_subdirectory1_file2 = _rootFolderPath / "subdirectory1" / "file2.ext", ZenUnit::Random<string>());
 
-  _fileSystem.CreateDirectories(_root_subdirectory2 = _rootDirectoryPath / "subdirectory2");
-  _fileSystem.CreateDirectories(_root_subdirectory2_subdirectory3 = _rootDirectoryPath / "subdirectory2" / "subdirectory3");
-  _fileSystem.CreateTextFile(_root_subdirectory2_subdirectory3_file1 = _rootDirectoryPath / "subdirectory2" / "subdirectory3" / "file1.ext", ZenUnit::Random<string>());
-  _fileSystem.CreateTextFile(_root_subdirectory2_subdirectory3_file2 = _rootDirectoryPath / "subdirectory2" / "subdirectory3" / "file2.ext", ZenUnit::Random<string>());
+  _fileSystem.CreateDirectories(_root_subdirectory2 = _rootFolderPath / "subdirectory2");
+  _fileSystem.CreateDirectories(_root_subdirectory2_subdirectory3 = _rootFolderPath / "subdirectory2" / "subdirectory3");
+  _fileSystem.CreateTextFile(_root_subdirectory2_subdirectory3_file1 = _rootFolderPath / "subdirectory2" / "subdirectory3" / "file1.ext", ZenUnit::Random<string>());
+  _fileSystem.CreateTextFile(_root_subdirectory2_subdirectory3_file2 = _rootFolderPath / "subdirectory2" / "subdirectory3" / "file2.ext", ZenUnit::Random<string>());
 
-  _fileSystem.CreateDirectories(_root_subdirectory4 = _rootDirectoryPath / "subdirectory4");
+  _fileSystem.CreateDirectories(_root_subdirectory4 = _rootFolderPath / "subdirectory4");
 
-  _fileSystem.CreateDirectories(_root_subdirectory5 = _rootDirectoryPath / "subdirectory5");
-  _fileSystem.CreateTextFile(_root_subdirectory5_file1 = _rootDirectoryPath / "subdirectory5" / "file1.ext", ZenUnit::Random<string>());
+  _fileSystem.CreateDirectories(_root_subdirectory5 = _rootFolderPath / "subdirectory5");
+  _fileSystem.CreateTextFile(_root_subdirectory5_file1 = _rootFolderPath / "subdirectory5" / "file1.ext", ZenUnit::Random<string>());
 }
 
 CLEANUP
@@ -60,12 +60,12 @@ CLEANUP
 #if defined __linux__|| defined __APPLE__
   Chmod777Directory(_root_subdirectory5);
 #endif
-   fs::remove_all(_rootDirectoryPath);
+   fs::remove_all(_rootFolderPath);
 }
 
 void AssertExpectedStartingStateOfFileSystem() const
 {
-  IS_TRUE(_fileSystem.FileOrDirectoryExists(_rootDirectoryPath));
+  IS_TRUE(_fileSystem.FileOrDirectoryExists(_rootFolderPath));
   IS_TRUE(_fileSystem.FileOrDirectoryExists(_root_file1));
   IS_TRUE(_fileSystem.FileOrDirectoryExists(_root_file2));
   IS_TRUE(_fileSystem.FileOrDirectoryExists(_root_subdirectory1));
@@ -82,7 +82,7 @@ void AssertExpectedStartingStateOfFileSystem() const
 
 void AssertExpectedEndingStateOfFileSystem() const
 {
-  IS_TRUE(_fileSystem.FileOrDirectoryExists(_rootDirectoryPath));
+  IS_TRUE(_fileSystem.FileOrDirectoryExists(_rootFolderPath));
   IS_FALSE(_fileSystem.FileOrDirectoryExists(_root_file1));
   IS_FALSE(_fileSystem.FileOrDirectoryExists(_root_file2));
   IS_TRUE(_fileSystem.FileOrDirectoryExists(_root_subdirectory1));
@@ -103,7 +103,7 @@ TEST(RecursivelyDeleteAllFilesInDirectory_DryRunIsTrue_RecursivelyPrintsWouldDel
   FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
   args.dryrun = true;
   //
-  _recursiveFileDeleter.RecursivelyDeleteAllFilesInDirectory(_rootDirectoryPathString.c_str(), args);
+  _recursiveFileDeleter.RecursivelyDeleteAllFilesInDirectory(_rootFolderPathString.c_str(), args);
   //
   AssertExpectedStartingStateOfFileSystem();
 }
@@ -114,7 +114,7 @@ TEST(RecursivelyDeleteAllFilesInDirectory_DryRunIsFalse_RecursivelyPrintsWouldDe
   FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
   args.dryrun = false;
   //
-  _recursiveFileDeleter.RecursivelyDeleteAllFilesInDirectory(_rootDirectoryPathString.c_str(), args);
+  _recursiveFileDeleter.RecursivelyDeleteAllFilesInDirectory(_rootFolderPathString.c_str(), args);
   //
   AssertExpectedEndingStateOfFileSystem();
 }

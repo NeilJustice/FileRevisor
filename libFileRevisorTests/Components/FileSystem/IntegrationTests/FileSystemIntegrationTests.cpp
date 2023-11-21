@@ -7,11 +7,11 @@
 
 TESTS(FileSystemIntegrationTests)
 AFACT(GetFilePathsInDirectory_RecurseIsFalse_ReturnsTopLevelFilePaths)
-AFACT(GetFilePathsInDirectory_RecurseIsTrue_ReturnsFilePathsInAndBelowDirectoryPath)
-AFACT(GetDirectoryPathsInDirectory_RecurseIsFalse_ReturnsTopLevelDirectoryPaths)
-AFACT(GetDirectoryPathsInDirectory_RecurseIsTrue_ReturnsDirectoryPathsInAndBelowDirectoryPath)
-AFACT(GetStringDirectoryPathsInDirectory_RecurseIsFalse_ReturnsTopLevelDirectoryPaths)
-AFACT(GetStringDirectoryPathsInDirectory_RecurseIsTrue_ReturnsDirectoryPathsInAndBelowDirectoryPath)
+AFACT(GetFilePathsInDirectory_RecurseIsTrue_ReturnsFilePathsInAndBelowFolderPath)
+AFACT(GetFolderPathsInDirectory_RecurseIsFalse_ReturnsTopLevelFolderPaths)
+AFACT(GetFolderPathsInDirectory_RecurseIsTrue_ReturnsFolderPathsInAndBelowFolderPath)
+AFACT(GetStringFolderPathsInDirectory_RecurseIsFalse_ReturnsTopLevelFolderPaths)
+AFACT(GetStringFolderPathsInDirectory_RecurseIsTrue_ReturnsFolderPathsInAndBelowFolderPath)
 AFACT(ReadText_FileDoesNotExist_ThrowsFileSystemException)
 AFACT(ReadText_FileExists_FileIsEmpty_ReturnsEmptyString)
 AFACT(ReadText_FileExists_FileIsNotEmptyAndContainsTrailingBinaryZeros_ReturnsFileTextMinusTrailingBinaryZeros)
@@ -21,139 +21,139 @@ AFACT(RemoveFile_FileDoesNotExist_IgnoreFileDeleteErrorIsTrue_DoesNotThrowExcept
 EVIDENCE
 
 FileSystem _fileSystem;
-const fs::path _rootDirectoryPath = "FileSystemIntegrationTests";
+const fs::path _rootFolderPath = "FileSystemIntegrationTests";
 
 void CreateIntegrationTestsDirectoryStructure()
 {
   FileSystem fileSystem;
   const char bytesContaining0A[] = { 1, 0 };
   const char bytesContaining0B[] = { 1, 2, 0, 3 };
-  fileSystem.CreateTextFile(_rootDirectoryPath / ".git/gitfile1", "");
-  fileSystem.CreateTextFile(_rootDirectoryPath / ".git/gitfile2", "");
-  fileSystem.CreateTextFile(_rootDirectoryPath / ".git/gitfile3", "");
-  fileSystem.CreateTextFile(_rootDirectoryPath / "root.emptyFile1", "");
-  fileSystem.CreateTextFile(_rootDirectoryPath / "root.textFile1", "abc");
-  fileSystem.CreateFileWithBytes(_rootDirectoryPath / "root.binaryFile1", bytesContaining0A, sizeof(bytesContaining0A));
-  fileSystem.CreateTextFile(_rootDirectoryPath / "root.textFile2", "123");
-  fileSystem.CreateTextFile(_rootDirectoryPath / "subdirectory1/subdirectory1.emptyFile1", "");
-  fileSystem.CreateTextFile(_rootDirectoryPath / "subdirectory1/subdirectory1.textFile1", "abc");
-  fileSystem.CreateFileWithBytes(_rootDirectoryPath / "subdirectory1/subdirectory1.binaryFile1", bytesContaining0B, sizeof(bytesContaining0B));
-  fileSystem.CreateDirectories(_rootDirectoryPath / "subdirectory1/subdirectoryA/subdirectoryB");
-  fileSystem.CreateTextFile(_rootDirectoryPath / "subdirectory2/subdirectory2.emptyFile1", "");
-  fileSystem.CreateTextFile(_rootDirectoryPath / "subdirectory2/subdirectory2.textFile1", "123");
-  fileSystem.CreateFileWithBytes(_rootDirectoryPath / "subdirectory2/subdirectory2.binaryFile1", bytesContaining0B, sizeof(bytesContaining0B));
-  fileSystem.CreateDirectories(_rootDirectoryPath / "subdirectory3");
-  fileSystem.CreateDirectories(_rootDirectoryPath / "subdirectory3/subdirectory4");
+  fileSystem.CreateTextFile(_rootFolderPath / ".git/gitfile1", "");
+  fileSystem.CreateTextFile(_rootFolderPath / ".git/gitfile2", "");
+  fileSystem.CreateTextFile(_rootFolderPath / ".git/gitfile3", "");
+  fileSystem.CreateTextFile(_rootFolderPath / "root.emptyFile1", "");
+  fileSystem.CreateTextFile(_rootFolderPath / "root.textFile1", "abc");
+  fileSystem.CreateFileWithBytes(_rootFolderPath / "root.binaryFile1", bytesContaining0A, sizeof(bytesContaining0A));
+  fileSystem.CreateTextFile(_rootFolderPath / "root.textFile2", "123");
+  fileSystem.CreateTextFile(_rootFolderPath / "subdirectory1/subdirectory1.emptyFile1", "");
+  fileSystem.CreateTextFile(_rootFolderPath / "subdirectory1/subdirectory1.textFile1", "abc");
+  fileSystem.CreateFileWithBytes(_rootFolderPath / "subdirectory1/subdirectory1.binaryFile1", bytesContaining0B, sizeof(bytesContaining0B));
+  fileSystem.CreateDirectories(_rootFolderPath / "subdirectory1/subdirectoryA/subdirectoryB");
+  fileSystem.CreateTextFile(_rootFolderPath / "subdirectory2/subdirectory2.emptyFile1", "");
+  fileSystem.CreateTextFile(_rootFolderPath / "subdirectory2/subdirectory2.textFile1", "123");
+  fileSystem.CreateFileWithBytes(_rootFolderPath / "subdirectory2/subdirectory2.binaryFile1", bytesContaining0B, sizeof(bytesContaining0B));
+  fileSystem.CreateDirectories(_rootFolderPath / "subdirectory3");
+  fileSystem.CreateDirectories(_rootFolderPath / "subdirectory3/subdirectory4");
 }
 
 STARTUP
 {
-  fs::remove_all(_rootDirectoryPath);
+  fs::remove_all(_rootFolderPath);
   CreateIntegrationTestsDirectoryStructure();
 }
 
 CLEANUP
 {
-  fs::remove_all(_rootDirectoryPath);
+  fs::remove_all(_rootFolderPath);
 }
 
 TEST(GetFilePathsInDirectory_RecurseIsFalse_ReturnsTopLevelFilePaths)
 {
-  const vector<fs::path> topLevelFilePathsInDirectory = _fileSystem.GetFilePathsInDirectory(_rootDirectoryPath, false);
+  const vector<fs::path> topLevelFilePathsInDirectory = _fileSystem.GetFilePathsInDirectory(_rootFolderPath, false);
   //
   const vector<fs::path> expectedTopLevelFilePathsInDirectory =
   {
-     _rootDirectoryPath / "root.binaryFile1",
-     _rootDirectoryPath / "root.emptyFile1",
-     _rootDirectoryPath / "root.textFile1",
-     _rootDirectoryPath / "root.textFile2"
+     _rootFolderPath / "root.binaryFile1",
+     _rootFolderPath / "root.emptyFile1",
+     _rootFolderPath / "root.textFile1",
+     _rootFolderPath / "root.textFile2"
   };
   INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedTopLevelFilePathsInDirectory, topLevelFilePathsInDirectory);
 }
 
-TEST(GetFilePathsInDirectory_RecurseIsTrue_ReturnsFilePathsInAndBelowDirectoryPath)
+TEST(GetFilePathsInDirectory_RecurseIsTrue_ReturnsFilePathsInAndBelowFolderPath)
 {
-  const vector<fs::path> filePathsInAndBelowDirectory = _fileSystem.GetFilePathsInDirectory(_rootDirectoryPath, true);
+  const vector<fs::path> filePathsInAndBelowDirectory = _fileSystem.GetFilePathsInDirectory(_rootFolderPath, true);
   //
   const vector<fs::path> expectedFilePathsInAndBelowDirectory =
   {
-     _rootDirectoryPath / ".git/gitfile1",
-     _rootDirectoryPath / ".git/gitfile2",
-     _rootDirectoryPath / ".git/gitfile3",
-     _rootDirectoryPath / "root.binaryFile1",
-     _rootDirectoryPath / "root.emptyFile1",
-     _rootDirectoryPath / "root.textFile1",
-     _rootDirectoryPath / "root.textFile2",
-     _rootDirectoryPath / "subdirectory1/subdirectory1.binaryFile1",
-     _rootDirectoryPath / "subdirectory1/subdirectory1.emptyFile1",
-     _rootDirectoryPath / "subdirectory1/subdirectory1.textFile1",
-     _rootDirectoryPath / "subdirectory2/subdirectory2.binaryFile1",
-     _rootDirectoryPath / "subdirectory2/subdirectory2.emptyFile1",
-     _rootDirectoryPath / "subdirectory2/subdirectory2.textFile1"
+     _rootFolderPath / ".git/gitfile1",
+     _rootFolderPath / ".git/gitfile2",
+     _rootFolderPath / ".git/gitfile3",
+     _rootFolderPath / "root.binaryFile1",
+     _rootFolderPath / "root.emptyFile1",
+     _rootFolderPath / "root.textFile1",
+     _rootFolderPath / "root.textFile2",
+     _rootFolderPath / "subdirectory1/subdirectory1.binaryFile1",
+     _rootFolderPath / "subdirectory1/subdirectory1.emptyFile1",
+     _rootFolderPath / "subdirectory1/subdirectory1.textFile1",
+     _rootFolderPath / "subdirectory2/subdirectory2.binaryFile1",
+     _rootFolderPath / "subdirectory2/subdirectory2.emptyFile1",
+     _rootFolderPath / "subdirectory2/subdirectory2.textFile1"
   };
   INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedFilePathsInAndBelowDirectory, filePathsInAndBelowDirectory);
 }
 
-TEST(GetDirectoryPathsInDirectory_RecurseIsFalse_ReturnsTopLevelDirectoryPaths)
+TEST(GetFolderPathsInDirectory_RecurseIsFalse_ReturnsTopLevelFolderPaths)
 {
-  const vector<fs::path> topLevelDirectoryPathsInDirectory = _fileSystem.GetDirectoryPathsInDirectory(_rootDirectoryPath, false);
+  const vector<fs::path> topLevelFolderPathsInDirectory = _fileSystem.GetFolderPathsInDirectory(_rootFolderPath, false);
   //
-  const vector<fs::path> expectedTopLevelDirectoryPathsInDirectory =
+  const vector<fs::path> expectedTopLevelFolderPathsInDirectory =
   {
-     _rootDirectoryPath / ".git",
-     _rootDirectoryPath / "subdirectory1",
-     _rootDirectoryPath / "subdirectory2",
-     _rootDirectoryPath / "subdirectory3"
+     _rootFolderPath / ".git",
+     _rootFolderPath / "subdirectory1",
+     _rootFolderPath / "subdirectory2",
+     _rootFolderPath / "subdirectory3"
   };
-  INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedTopLevelDirectoryPathsInDirectory, topLevelDirectoryPathsInDirectory);
+  INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedTopLevelFolderPathsInDirectory, topLevelFolderPathsInDirectory);
 }
 
-TEST(GetDirectoryPathsInDirectory_RecurseIsTrue_ReturnsDirectoryPathsInAndBelowDirectoryPath)
+TEST(GetFolderPathsInDirectory_RecurseIsTrue_ReturnsFolderPathsInAndBelowFolderPath)
 {
-  const vector<fs::path> directoryPathsInAndBelowDirectory = _fileSystem.GetDirectoryPathsInDirectory(_rootDirectoryPath, true);
+  const vector<fs::path> directoryPathsInAndBelowDirectory = _fileSystem.GetFolderPathsInDirectory(_rootFolderPath, true);
   //
-  const vector<fs::path> expectedDirectoryPathsInAndBelowDirectory =
+  const vector<fs::path> expectedFolderPathsInAndBelowDirectory =
   {
-     _rootDirectoryPath / ".git",
-     _rootDirectoryPath / "subdirectory1",
-     _rootDirectoryPath / "subdirectory1/subdirectoryA",
-     _rootDirectoryPath / "subdirectory1/subdirectoryA/subdirectoryB",
-     _rootDirectoryPath / "subdirectory2",
-     _rootDirectoryPath / "subdirectory3",
-     _rootDirectoryPath / "subdirectory3/subdirectory4"
+     _rootFolderPath / ".git",
+     _rootFolderPath / "subdirectory1",
+     _rootFolderPath / "subdirectory1/subdirectoryA",
+     _rootFolderPath / "subdirectory1/subdirectoryA/subdirectoryB",
+     _rootFolderPath / "subdirectory2",
+     _rootFolderPath / "subdirectory3",
+     _rootFolderPath / "subdirectory3/subdirectory4"
   };
-  INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedDirectoryPathsInAndBelowDirectory, directoryPathsInAndBelowDirectory);
+  INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedFolderPathsInAndBelowDirectory, directoryPathsInAndBelowDirectory);
 }
 
-TEST(GetStringDirectoryPathsInDirectory_RecurseIsFalse_ReturnsTopLevelDirectoryPaths)
+TEST(GetStringFolderPathsInDirectory_RecurseIsFalse_ReturnsTopLevelFolderPaths)
 {
-  const vector<string> topLevelDirectoryPathsInDirectory = _fileSystem.GetStringDirectoryPathsInDirectory(_rootDirectoryPath, false);
+  const vector<string> topLevelFolderPathsInDirectory = _fileSystem.GetStringFolderPathsInDirectory(_rootFolderPath, false);
   //
-  const vector<string> expectedTopLevelDirectoryPathsInDirectory =
+  const vector<string> expectedTopLevelFolderPathsInDirectory =
   {
-     (_rootDirectoryPath / ".git").string(),
-     (_rootDirectoryPath / "subdirectory1").string(),
-     (_rootDirectoryPath / "subdirectory2").string(),
-     (_rootDirectoryPath / "subdirectory3").string()
+     (_rootFolderPath / ".git").string(),
+     (_rootFolderPath / "subdirectory1").string(),
+     (_rootFolderPath / "subdirectory2").string(),
+     (_rootFolderPath / "subdirectory3").string()
   };
-  INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedTopLevelDirectoryPathsInDirectory, topLevelDirectoryPathsInDirectory);
+  INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedTopLevelFolderPathsInDirectory, topLevelFolderPathsInDirectory);
 }
 
-TEST(GetStringDirectoryPathsInDirectory_RecurseIsTrue_ReturnsDirectoryPathsInAndBelowDirectoryPath)
+TEST(GetStringFolderPathsInDirectory_RecurseIsTrue_ReturnsFolderPathsInAndBelowFolderPath)
 {
-  const vector<string> directoryPathsInAndBelowDirectory = _fileSystem.GetStringDirectoryPathsInDirectory(_rootDirectoryPath, true);
+  const vector<string> directoryPathsInAndBelowDirectory = _fileSystem.GetStringFolderPathsInDirectory(_rootFolderPath, true);
   //
-  const vector<string> expectedDirectoryPathsInAndBelowDirectory =
+  const vector<string> expectedFolderPathsInAndBelowDirectory =
   {
-     (_rootDirectoryPath / ".git").string(),
-     (_rootDirectoryPath / "subdirectory1").string(),
-     (_rootDirectoryPath / "subdirectory1" / "subdirectoryA").string(),
-     (_rootDirectoryPath / "subdirectory1" / "subdirectoryA" / "subdirectoryB").string(),
-     (_rootDirectoryPath / "subdirectory2").string(),
-     (_rootDirectoryPath / "subdirectory3").string(),
-     (_rootDirectoryPath / "subdirectory3" / "subdirectory4").string()
+     (_rootFolderPath / ".git").string(),
+     (_rootFolderPath / "subdirectory1").string(),
+     (_rootFolderPath / "subdirectory1" / "subdirectoryA").string(),
+     (_rootFolderPath / "subdirectory1" / "subdirectoryA" / "subdirectoryB").string(),
+     (_rootFolderPath / "subdirectory2").string(),
+     (_rootFolderPath / "subdirectory3").string(),
+     (_rootFolderPath / "subdirectory3" / "subdirectory4").string()
   };
-  INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedDirectoryPathsInAndBelowDirectory, directoryPathsInAndBelowDirectory);
+  INDEXABLES_ARE_EQUAL_IN_ANY_ORDER(expectedFolderPathsInAndBelowDirectory, directoryPathsInAndBelowDirectory);
 }
 
 TEST(ReadText_FileDoesNotExist_ThrowsFileSystemException)
@@ -169,7 +169,7 @@ TEST(ReadText_FileDoesNotExist_ThrowsFileSystemException)
 
 TEST(ReadText_FileExists_FileIsEmpty_ReturnsEmptyString)
 {
-  const fs::path textFilePath = _rootDirectoryPath / "ReadTextTest.txt";
+  const fs::path textFilePath = _rootFolderPath / "ReadTextTest.txt";
   _fileSystem.CreateTextFile(textFilePath, "");
   //
   const string fileText = _fileSystem.ReadText(textFilePath);
@@ -179,7 +179,7 @@ TEST(ReadText_FileExists_FileIsEmpty_ReturnsEmptyString)
 
 TEST(ReadText_FileExists_FileIsNotEmptyAndContainsTrailingBinaryZeros_ReturnsFileTextMinusTrailingBinaryZeros)
 {
-  const fs::path textFilePath = _rootDirectoryPath / "ReadTextTest.txt";
+  const fs::path textFilePath = _rootFolderPath / "ReadTextTest.txt";
   const char fileBytes[] = { 'a', 'b', '\n', 'c', 0, 0 };
   _fileSystem.CreateFileWithBytes(textFilePath, fileBytes, sizeof(fileBytes));
   //
@@ -191,7 +191,7 @@ TEST(ReadText_FileExists_FileIsNotEmptyAndContainsTrailingBinaryZeros_ReturnsFil
 
 TEST(RemoveFile_FileExistsAndIsDeletable_IgnoreFileDeleteErrorIsEitherTrueOrFalse_DeletesTheFile)
 {
-  const string filePathThatExists = (_rootDirectoryPath / "DeleteFileTest.txt").string();
+  const string filePathThatExists = (_rootFolderPath / "DeleteFileTest.txt").string();
   _fileSystem.CreateTextFile(filePathThatExists, ZenUnit::Random<string>());
   IS_TRUE(_fileSystem.FileOrDirectoryExists(filePathThatExists));
   const bool skipFilesInUse = ZenUnit::Random<bool>();

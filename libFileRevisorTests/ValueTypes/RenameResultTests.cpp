@@ -12,8 +12,8 @@ TEST(DefaultConstructor_SetsFieldsToDefaults)
    const RenameResult defaultRenameResult;
    RenameResult expectedDefaultRenameResult;
    expectedDefaultRenameResult.didRenameFileOrDirectory = false;
-   expectedDefaultRenameResult.originalFileOrDirectoryPath = fs::path();
-   expectedDefaultRenameResult.renamedFileOrDirectoryPath = fs::path();
+   expectedDefaultRenameResult.originalFileOrFolderPath = fs::path();
+   expectedDefaultRenameResult.renamedFileOrFolderPath = fs::path();
    ARE_EQUAL(expectedDefaultRenameResult, defaultRenameResult);
 }
 
@@ -21,13 +21,13 @@ TEST(ThreeArgConstructor_SetsFields)
 {
    const bool didRenameFileOrDirectory = ZenUnit::Random<bool>();
    const fs::path originalPath = ZenUnit::Random<fs::path>();
-   const fs::path renamedFileOrDirectoryPath = ZenUnit::Random<fs::path>();
+   const fs::path renamedFileOrFolderPath = ZenUnit::Random<fs::path>();
    //
-   const RenameResult renameResult(didRenameFileOrDirectory, originalPath, renamedFileOrDirectoryPath);
+   const RenameResult renameResult(didRenameFileOrDirectory, originalPath, renamedFileOrFolderPath);
    //
    ARE_EQUAL(didRenameFileOrDirectory, renameResult.didRenameFileOrDirectory);
-   ARE_EQUAL(originalPath, renameResult.originalFileOrDirectoryPath);
-   ARE_EQUAL(renamedFileOrDirectoryPath, renameResult.renamedFileOrDirectoryPath);
+   ARE_EQUAL(originalPath, renameResult.originalFileOrFolderPath);
+   ARE_EQUAL(renamedFileOrFolderPath, renameResult.renamedFileOrFolderPath);
 }
 
 TEST2X2(DidRenameFileOrDirectoryFieldIsTrue_ReturnsTrueIfDidRenameFileOrDirectoryFieldIsTrue,

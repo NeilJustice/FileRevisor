@@ -10,7 +10,7 @@ namespace ZenUnit
       FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, programMode);
       FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, fromRegexPattern);
       FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, toRegexPattern);
-      FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, targetDirectoryPath);
+      FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, targetFolderPath);
       FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, recurse);
       FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, parallel);
       FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, skipFilesInUse);
@@ -26,7 +26,7 @@ namespace ZenUnit
       randomFileRevisorArgs.programMode = static_cast<ProgramMode>(randomGenerator->Enum(static_cast<int>(ProgramMode::MaxValue)));
       randomFileRevisorArgs.fromRegexPattern = randomGenerator->String();
       randomFileRevisorArgs.toRegexPattern = randomGenerator->String();
-      randomFileRevisorArgs.targetDirectoryPath = randomGenerator->FilesystemPath();
+      randomFileRevisorArgs.targetFolderPath = randomGenerator->FilesystemPath();
       randomFileRevisorArgs.recurse = randomGenerator->Bool();
       randomFileRevisorArgs.parallel = randomGenerator->Bool();
       randomFileRevisorArgs.skipFilesInUse = randomGenerator->Bool();

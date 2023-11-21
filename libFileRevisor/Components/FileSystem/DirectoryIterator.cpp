@@ -40,18 +40,18 @@ vector<fs::path> DirectoryIterator::GetNonEmptyNonIgnoredTextFilePaths()
    return textFilePaths;
 }
 
-fs::path DirectoryIterator::NextNonIgnoredDirectoryPath()
+fs::path DirectoryIterator::NextNonIgnoredFolderPath()
 {
-   fs::path nextNonIgnoredDirectoryPath;
+   fs::path nextNonIgnoredFolderPath;
    if (_recursiveMode)
    {
-      nextNonIgnoredDirectoryPath = NextNonIgnoredPath(_recursiveDirectoryIterator, fs::file_type::directory);
+      nextNonIgnoredFolderPath = NextNonIgnoredPath(_recursiveDirectoryIterator, fs::file_type::directory);
    }
    else
    {
-      nextNonIgnoredDirectoryPath = NextNonIgnoredPath(_directoryIterator, fs::file_type::directory);
+      nextNonIgnoredFolderPath = NextNonIgnoredPath(_directoryIterator, fs::file_type::directory);
    }
-   return nextNonIgnoredDirectoryPath;
+   return nextNonIgnoredFolderPath;
 }
 
 fs::path DirectoryIterator::NextNonIgnoredFilePath()
@@ -81,9 +81,9 @@ void DirectoryIterator::SetDirectoryIterator(const fs::path& directoryPath, bool
    }
 }
 
-void DirectoryIterator::SetFileAndDirectoryPathIgnoreSubstrings(const vector<string>& fileAndDirectoryPathIgnoreSubstrings)
+void DirectoryIterator::SetFileAndFolderPathIgnoreSubstrings(const vector<string>& fileAndFolderPathIgnoreSubstrings)
 {
-   _fileAndDirectoryPathIgnoreSubstrings = fileAndDirectoryPathIgnoreSubstrings;
+   _fileAndFolderPathIgnoreSubstrings = fileAndFolderPathIgnoreSubstrings;
 }
 
 // Private Functions
@@ -94,7 +94,7 @@ bool DirectoryIterator::IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(const fs::path
    if (fileOpenInBinaryReadMode == nullptr)
    {
       const string unableToOpenFileMessage = String::ConcatStrings("Note: Unable to open file ", filePath.string());
-      _console->ThreadIdWriteLineColor(unableToOpenFileMessage, Color::Yellow);
+      _console->ProgramNameThreadIdWriteLineColor(unableToOpenFileMessage, Color::Yellow);
       return true;
    }
    const pair<size_t, array<char, 256>> fileIsEmptyAndFirst256Bytes = _fileReader->ReadFirst256Bytes(fileOpenInBinaryReadMode.get());
@@ -135,7 +135,7 @@ fs::path DirectoryIterator::NextNonIgnoredPath(DirectoryIteratorType& iter, fs::
       if (nextDirectoryEntryStatusType == requiredFileType)
       {
          fs::path nextPathWithMatchingFileType = nextDirectoryEntry.path();
-         const bool pathIsIgnored = PathContainsAnySubstringCaseInsensitive(nextPathWithMatchingFileType, _fileAndDirectoryPathIgnoreSubstrings);
+         const bool pathIsIgnored = PathContainsAnySubstringCaseInsensitive(nextPathWithMatchingFileType, _fileAndFolderPathIgnoreSubstrings);
          if (pathIsIgnored)
          {
             continue;
@@ -145,20 +145,20 @@ fs::path DirectoryIterator::NextNonIgnoredPath(DirectoryIteratorType& iter, fs::
    }
 }
 
-bool DirectoryIterator::PathContainsAnySubstringCaseInsensitive(const fs::path& path, const vector<string>& pathSubstrings)
+bool DirectoryIterator::PathContainsAnySubstringCaseInsensitive(const fs::path& fileOrFolderPath, const vector<string>& pathSubstrings)
 {
    if (pathSubstrings.empty())
    {
       return false;
    }
-   const string pathAsString = path.string();
-   const bool doIgnorePath = std::any_of(pathSubstrings.cbegin(), pathSubstrings.cend(), [&](const string& ignoredSubstring)
+   const string fileOrFolderPathAsString = fileOrFolderPath.string();
+   const bool doIgnoreFileOrFolderPath = std::any_of(pathSubstrings.cbegin(), pathSubstrings.cend(), [&](const string& ignoredSubstring)
    {
-      if (String::CaseInsensitiveContainsSubstring(pathAsString, ignoredSubstring))
+      if (String::CaseInsensitiveContainsSubstring(fileOrFolderPathAsString, ignoredSubstring))
       {
          return true;
       }
       return false;
    });
-   return doIgnorePath;
+   return doIgnoreFileOrFolderPath;
 }

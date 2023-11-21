@@ -23,27 +23,27 @@ DeleteDirectorySubProgram::~DeleteDirectorySubProgram()
 
 int DeleteDirectorySubProgram::Run(const FileRevisorArgs& args) const
 {
-   const bool targetDirectoryExists = _fileSystem->FileOrDirectoryExists(args.targetDirectoryPath);
+   const bool targetDirectoryExists = _fileSystem->FileOrDirectoryExists(args.targetFolderPath);
    if (!targetDirectoryExists)
    {
-      const string directoryDoesNotExistMessage = String::ConcatStrings("Directory does not exist: ", args.targetDirectoryPath.string());
-      _console->ThreadIdWriteLine(directoryDoesNotExistMessage);
+      const string directoryDoesNotExistMessage = String::ConcatStrings("Directory does not exist: ", args.targetFolderPath.string());
+      _console->ProgramNameThreadIdWriteLine(directoryDoesNotExistMessage);
       return 0;
    }
-   const vector<string> topLevelDirectoryPathsInTargetDirectory = _fileSystem->GetStringDirectoryPathsInDirectory(args.targetDirectoryPath, false);
+   const vector<string> topLevelFolderPathsInTargetDirectory = _fileSystem->GetStringFolderPathsInDirectory(args.targetFolderPath, false);
    if (args.parallel)
    {
-      const string deletingInParallelMessage = String::ConcatStrings("Deleting in parallel all files in directory: ", args.targetDirectoryPath.string());
-      _console->ThreadIdWriteLine(deletingInParallelMessage);
+      const string deletingInParallelMessage = String::ConcatStrings("Deleting in parallel all files in directory: ", args.targetFolderPath.string());
+      _console->ProgramNameThreadIdWriteLine(deletingInParallelMessage);
       _parallelTwoArgMemberFunctionForEacher_DeleteDirectory->ParallelCallConstMemberFunctionWithEachElement(
-         topLevelDirectoryPathsInTargetDirectory, this, &DeleteDirectorySubProgram::TryCatchCallDeleteDirectory, args);
+         topLevelFolderPathsInTargetDirectory, this, &DeleteDirectorySubProgram::TryCatchCallDeleteDirectory, args);
    }
    else
    {
       _oneExtraArgMemberForEacher_DeleteDirectory->CallConstMemberFunctionWithEachElement(
-         topLevelDirectoryPathsInTargetDirectory, this, &DeleteDirectorySubProgram::DeleteDirectory, args);
+         topLevelFolderPathsInTargetDirectory, this, &DeleteDirectorySubProgram::DeleteDirectory, args);
    }
-   _fileSystem->DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(args.targetDirectoryPath, args.skipFilesInUse, args.dryrun, args.quiet);
+   _fileSystem->DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(args.targetFolderPath, args.skipFilesInUse, args.dryrun, args.quiet);
    _caller_DeleteTargetDirectoryIfNotCurrentDirectory->CallConstMemberFunction(
       this, &DeleteDirectorySubProgram::DeleteTargetDirectoryIfNotCurrentDirectory, args);
    return 0;
@@ -58,10 +58,10 @@ void DeleteDirectorySubProgram::DeleteDirectory(const string& directoryPath, con
 
 void DeleteDirectorySubProgram::DeleteTargetDirectoryIfNotCurrentDirectory(const FileRevisorArgs& args) const
 {
-   const fs::path currentDirectoryPath = _fileSystem->CurrentDirectoryPath();
-   if (currentDirectoryPath != args.targetDirectoryPath)
+   const fs::path currentFolderPath = _fileSystem->CurrentFolderPath();
+   if (currentFolderPath != args.targetFolderPath)
    {
-      _fileSystem->DeleteFileOrDirectory(args.targetDirectoryPath, args.skipFilesInUse, args.dryrun, args.quiet);
+      _fileSystem->DeleteFileOrDirectory(args.targetFolderPath, args.skipFilesInUse, args.dryrun, args.quiet);
    }
 }
 
@@ -74,5 +74,5 @@ void DeleteDirectorySubProgram::TryCatchCallDeleteDirectory(const string& direct
 void DeleteDirectorySubProgram::ParallelExceptionHandler(string_view exceptionClassNameAndMessage) const
 {
    const string errorMessage = "Error: " + string(exceptionClassNameAndMessage);
-   _console->ThreadIdWriteLineColor(errorMessage, Color::Red);
+   _console->ProgramNameThreadIdWriteLineColor(errorMessage, Color::Red);
 }

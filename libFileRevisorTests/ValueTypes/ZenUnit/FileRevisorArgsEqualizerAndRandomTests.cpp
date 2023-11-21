@@ -14,7 +14,7 @@ TEST(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, programMode, ProgramMode::ReplaceTextInTextFiles);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, fromRegexPattern, ZenUnit::Random<string>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, toRegexPattern, ZenUnit::Random<string>());
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, targetDirectoryPath, ZenUnit::Random<fs::path>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, targetFolderPath, ZenUnit::Random<fs::path>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, recurse, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, parallel, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, skipFilesInUse, true);
@@ -57,7 +57,7 @@ TEST(TestableRandomFileRevisorArgs_ReturnsFileRevisorArgsWithAllRandomFields)
    expectedRandomFileRevisorArgs.programMode = programMode;
    expectedRandomFileRevisorArgs.fromRegexPattern = fromRegexPattern;
    expectedRandomFileRevisorArgs.toRegexPattern = toRegexPattern;
-   expectedRandomFileRevisorArgs.targetDirectoryPath = targetDirectory;
+   expectedRandomFileRevisorArgs.targetFolderPath = targetDirectory;
    expectedRandomFileRevisorArgs.recurse = recurse;
    expectedRandomFileRevisorArgs.parallel = parallel;
    expectedRandomFileRevisorArgs.skipFilesInUse = skipFilesInUse;
