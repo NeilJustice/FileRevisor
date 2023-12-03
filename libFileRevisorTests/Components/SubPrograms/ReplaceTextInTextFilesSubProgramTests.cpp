@@ -103,11 +103,16 @@ TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsReplaceTextInTextFileOnEachTex
       ".git",
       ".mypy_cache",
       ".p7s",
-      "__Instrumented",
-      "AltCoverCodeCoverageResults_",
+      ".vs",
       "CMakeFiles",
       "CoberturaCodeCoverageResults_",
       "ReportGenerator_"
+      // Windows
+      "__Instrumented",
+      "AltCoverCodeCoverageResults_",
+      "\\Debug\\",
+      "\\Release\\",
+      "\\RelWithDebInfo\\"
    };
    METALMOCK(_directoryIteratorMock->SetFileAndFolderPathIgnoreSubstringsMock.CalledOnceWith(
       expectedFileAndFolderPathIgnoreSubstrings));

@@ -33,11 +33,16 @@ int ReplaceTextInTextFilesSubProgram::Run(const FileRevisorArgs& args) const
       ".git",
       ".mypy_cache",
       ".p7s",
-      "__Instrumented",
-      "AltCoverCodeCoverageResults_",
+      ".vs",
       "CMakeFiles",
       "CoberturaCodeCoverageResults_",
       "ReportGenerator_"
+      // Windows
+      "__Instrumented",
+      "AltCoverCodeCoverageResults_",
+      "\\Debug\\",
+      "\\Release\\",
+      "\\RelWithDebInfo\\",
    };
    _directoryIterator->SetFileAndFolderPathIgnoreSubstrings(fileAndFolderPathIgnoreSubstrings);
    const vector<fs::path> nonEmptyNonIgnoredTextFilePathsInTargetDirectory = _directoryIterator->GetNonEmptyNonIgnoredTextFilePaths();
