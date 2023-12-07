@@ -8,14 +8,17 @@ string ReplaceAllSubstrings(string_view str, string_view substring, string_view 
       throw invalid_argument("Utils::ReplaceAllSubstrings(string_view str, string_view substring, string_view replacement) called with empty substring");
    }
    string replacedString(str);
+   size_t runningFindPosition = 0;
    while (true)
    {
-      const size_t findPosition = replacedString.find(substring);
-      if (findPosition == string::npos)
+      const char* const strstrResult = strstr(replacedString.data() + runningFindPosition, substring.data());
+      if (strstrResult == nullptr)
       {
          return replacedString;
       }
+      const size_t findPosition = static_cast<size_t>(strstrResult - replacedString.data());
       replacedString.replace(findPosition, substring.length(), replacement);
+      runningFindPosition += findPosition + substring.size();
    }
    return replacedString;
 }
