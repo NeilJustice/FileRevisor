@@ -54,18 +54,18 @@ EVIDENCE
 
 FileSystem _fileSystem;
 // Function Pointers
-METALMOCK_NONVOID1_FREE(int, _call_fclose, FILE*)
-METALMOCK_NONVOID2_FREE(FILE*, _call_fopen, const char*, const char*)
-METALMOCK_NONVOID1_FREE(bool, _call_fs_is_directory, const fs::path&)
-METALMOCK_NONVOID1_FREE(bool, _call_fs_remove, const fs::path&)
-METALMOCK_NONVOID1_FREE(uintmax_t, _call_fs_remove_all, const fs::path&)
+METALMOCK_NONVOID1_STATIC_OR_FREE(int, _call_fclose, FILE*)
+METALMOCK_NONVOID2_STATIC_OR_FREE(FILE*, _call_fopen, const char*, const char*)
+METALMOCK_NONVOID1_STATIC_OR_FREE(bool, _call_fs_is_directory, const fs::path&)
+METALMOCK_NONVOID1_STATIC_OR_FREE(bool, _call_fs_remove, const fs::path&)
+METALMOCK_NONVOID1_STATIC_OR_FREE(uintmax_t, _call_fs_remove_all, const fs::path&)
 #ifdef _WIN32
-METALMOCK_NONVOID1_FREE(fs::path, _call_fs_absolute, const fs::path&)
+METALMOCK_NONVOID1_STATIC_OR_FREE(fs::path, _call_fs_absolute, const fs::path&)
 #endif
-METALMOCK_NONVOID0_FREE(fs::path, _call_fs_current_path)
-METALMOCK_NONVOID1_FREE(bool, _call_fs_exists, const fs::path&)
-METALMOCK_NONVOID2_FREE(int, _call_std_rename, const char*, const char*)
-METALMOCK_VOID3_FREE(_call_fs_rename_with_error_code, const fs::path&, const fs::path&, std::error_code&)
+METALMOCK_NONVOID0_STATIC_OR_FREE(fs::path, _call_fs_current_path)
+METALMOCK_NONVOID1_STATIC_OR_FREE(bool, _call_fs_exists, const fs::path&)
+METALMOCK_NONVOID2_STATIC_OR_FREE(int, _call_std_rename, const char*, const char*)
+METALMOCK_VOID3_STATIC_OR_FREE(_call_fs_rename_with_error_code, const fs::path&, const fs::path&, std::error_code&)
 // Function Callers
 using _caller_DeleteFileOrDirectoryMockType = VoidTwoArgMemberFunctionCallerMock<FileSystem, const fs::path&, bool>;
 _caller_DeleteFileOrDirectoryMockType* _caller_DeleteFileOrDirectoryMock = nullptr;

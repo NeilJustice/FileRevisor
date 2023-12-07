@@ -24,7 +24,7 @@ EVIDENCE
 
 DocoptParser _docoptParser;
 // Function Pointers
-METALMOCK_NONVOID5_FREE(map<string COMMA docopt::Value>, docopt, const string&, const vector<string>&, bool, const string&, bool)
+METALMOCK_NONVOID5_STATIC_OR_FREE(map<string COMMA docopt::Value>, docopt, const string&, const vector<string>&, bool, const string&, bool)
 
 map<string, docopt::Value> _docoptArgs;
 string _argName;

@@ -15,11 +15,11 @@ EVIDENCE
 
 FileOpenerCloser _fileOpenerCloser;
 // Function Pointers
-METALMOCK_NONVOID1_FREE(int, fclose, FILE*)
+METALMOCK_NONVOID1_STATIC_OR_FREE(int, fclose, FILE*)
 #if defined __linux__ || defined __APPLE__
-METALMOCK_NONVOID2_FREE(FILE*, fopen, const char*, const char*)
+METALMOCK_NONVOID2_STATIC_OR_FREE(FILE*, fopen, const char*, const char*)
 #elif _WIN32
-METALMOCK_NONVOID3_FREE(FILE*, _wfsopen, const wchar_t*, const wchar_t*, int)
+METALMOCK_NONVOID3_STATIC_OR_FREE(FILE*, _wfsopen, const wchar_t*, const wchar_t*, int)
 #endif
 // Constant Components
 ErrorCodeTranslatorMock* _errorCodeTranslatorMock = nullptr;

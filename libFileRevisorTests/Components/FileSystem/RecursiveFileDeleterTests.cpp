@@ -24,8 +24,8 @@ EVIDENCE
 RecursiveFileDeleter _recursiveFileDeleter;
 // Function Pointers
 #ifdef _WIN32
-METALMOCK_NONVOID1_FREE(DWORD, GetFileAttributesA, const char*)
-METALMOCK_NONVOID2_FREE(BOOL, SetFileAttributesA, const char*, DWORD)
+METALMOCK_NONVOID1_STATIC_OR_FREE(DWORD, GetFileAttributesA, const char*)
+METALMOCK_NONVOID2_STATIC_OR_FREE(BOOL, SetFileAttributesA, const char*, DWORD)
 #endif
 // Constant Components
 ConsoleMock* _consoleMock = nullptr;

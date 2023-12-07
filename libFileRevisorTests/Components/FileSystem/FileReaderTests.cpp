@@ -9,9 +9,9 @@ EVIDENCE
 FileReader _fileReader;
 // Function Pointers
 #if defined __linux__ || defined __APPLE__
-METALMOCK_NONVOID4_FREE(size_t, _call_fread, void*, size_t, size_t, FILE*)
+METALMOCK_NONVOID4_STATIC_OR_FREE(size_t, _call_fread, void*, size_t, size_t, FILE*)
 #elif defined _WIN32
-METALMOCK_NONVOID5_FREE(size_t, _call_fread_nolock_s, void*, size_t, size_t, size_t, FILE*)
+METALMOCK_NONVOID5_STATIC_OR_FREE(size_t, _call_fread_nolock_s, void*, size_t, size_t, size_t, FILE*)
 #endif
 
 STARTUP

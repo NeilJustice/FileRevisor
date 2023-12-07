@@ -20,7 +20,7 @@ EVIDENCE
 
 FileRevisorArgsParser _fileRevisorArgsParser;
 // Function Pointers
-METALMOCK_NONVOID4_STATIC(ProgramMode, FileRevisorArgsParser, DetermineProgramMode, bool, bool, bool, bool)
+METALMOCK_NONVOID4_STATIC_OR_FREE(ProgramMode, _call_FileRevisorArgsParser_DetermineProgramMode, bool, bool, bool, bool)
 using NonVoidTwoArgMemberFunctionCallerMockType = NonVoidTwoArgMemberFunctionCallerMock<
    tuple<fs::path, string, string>, FileRevisorArgsParser, const map<string, docopt::Value>&, bool>;
 // Function Callers
@@ -34,7 +34,7 @@ FileRevisorPreambleMakerMock* _fileRevisorPreambleMakerMock = nullptr;
 STARTUP
 {
    // Function Pointers
-   _fileRevisorArgsParser._call_DetermineProgramMode = BIND_4ARG_METALMOCK_OBJECT(DetermineProgramModeMock);
+   _fileRevisorArgsParser._call_DetermineProgramMode = BIND_4ARG_METALMOCK_OBJECT(_call_FileRevisorArgsParser_DetermineProgramModeMock);
    // Function Callers
    _fileRevisorArgsParser._caller_ParseDirAndFromAndToArguments.reset(
       _caller_ParseDirAndFromAndToArgumentsMock = new NonVoidTwoArgMemberFunctionCallerMockType);
@@ -85,7 +85,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
       recurse, parallel, skipFilesInUse, dryrun, quiet, verbose);
 
    const ProgramMode programMode = ZenUnit::RandomEnum<ProgramMode>();
-   DetermineProgramModeMock.Return(programMode);
+   _call_FileRevisorArgsParser_DetermineProgramModeMock.Return(programMode);
 
    const tuple<fs::path, string, string> targetDirectory_fromRegexPattern_toRegexPattern(
       ZenUnit::Random<string>(), ZenUnit::Random<string>(), ZenUnit::Random<string>());
@@ -104,7 +104,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
    METALMOCKTHEN(_docoptParserMock->GetRequiredBoolMock.CalledWith(docoptValues, "replace-text"))).Then(
    METALMOCKTHEN(_docoptParserMock->GetRequiredBoolMock.CalledWith(docoptValues, "delete-directory"))).Then(
 
-   METALMOCKTHEN(DetermineProgramModeMock.CalledOnceWith(
+   METALMOCKTHEN(_call_FileRevisorArgsParser_DetermineProgramModeMock.CalledOnceWith(
       isRenameFilesMode, isRenameDirectoriesMode, isReplaceTextInTextFilesMode, isDeleteDirectoryMode))).Then(
 
    METALMOCKTHEN(_caller_ParseDirAndFromAndToArgumentsMock->CallConstMemberFunctionMock.CalledOnceWith(
