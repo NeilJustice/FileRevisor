@@ -9,7 +9,7 @@ template<
    typename ElementType,
    typename ExtraArgType>
 class OneExtraArgMemberFunctionAccumulator;
-class EscapedRegexReplacer;
+class TextReplacer;
 
 template<typename ClassType, typename Arg1Type, typename Arg2Type>
 class VoidTwoArgMemberFunctionCaller;
@@ -26,7 +26,7 @@ private:
       ReplaceTextInTextFilesSubProgram, size_t, fs::path, const FileRevisorArgs&>;
    unique_ptr<const OneExtraArgMemberFunctionAccumulatorType> _memberFunctionAccumulator_ReplaceTextInTextFile;
    // Constant Components
-   unique_ptr<const EscapedRegexReplacer> _escapedRegexReplacer;
+   unique_ptr<const TextReplacer> _textReplacer;
    // Mutable Components
    unique_ptr<DirectoryIterator> _directoryIterator;
 public:

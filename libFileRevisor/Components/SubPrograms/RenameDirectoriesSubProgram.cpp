@@ -5,7 +5,7 @@
 #include "libFileRevisor/Components/Utility/Iteration/Counter/PredicateCounter.h"
 #include "libFileRevisor/Components/Utility/Iteration/Transform/OneExtraArgMemberFunctionTransformer.h"
 #include "libFileRevisor/Components/Utility/Strings/Pluralizer.h"
-#include "libFileRevisor/Components/Utility/Strings/EscapedRegexReplacer.h"
+#include "libFileRevisor/Components/Utility/Strings/TextReplacer.h"
 
 RenameDirectoriesSubProgram::RenameDirectoriesSubProgram()
    // Function Callers
@@ -14,7 +14,7 @@ RenameDirectoriesSubProgram::RenameDirectoriesSubProgram()
    , _directoryPathsTransformer_RenameDirectory(make_unique<OneExtraArgMemberFunctionTransformerType>())
    // Constant Components
    , _predicateCounter(make_unique<PredicateCounter<RenameResult>>())
-   , _escapedRegexReplacer(make_unique<EscapedRegexReplacer>())
+   , _textReplacer(make_unique<TextReplacer>())
 {
 }
 
@@ -45,7 +45,7 @@ int RenameDirectoriesSubProgram::Run(const FileRevisorArgs& args) const
 RenameResult RenameDirectoriesSubProgram::RenameDirectory(const fs::path& directoryPath, const FileRevisorArgs& args) const
 {
    const string directoryName = directoryPath.filename().string();
-   const string regexReplacedDirectoryName = _escapedRegexReplacer->ReplaceText(directoryName, args.fromRegexPattern, args.toRegexPattern);
+   const string regexReplacedDirectoryName = _textReplacer->ReplaceText(directoryName, args.fromRegexPattern, args.toRegexPattern);
    if (regexReplacedDirectoryName == directoryName)
    {
       _call_PrintDidNotMatchDirectoryMessageIfVerboseMode->CallConstMemberFunction(

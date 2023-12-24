@@ -5,7 +5,7 @@
 #include "libFileRevisor/Components/Utility/Iteration/Counter/PredicateCounter.h"
 #include "libFileRevisor/Components/Utility/Iteration/Transform/OneExtraArgMemberFunctionTransformer.h"
 #include "libFileRevisor/Components/Utility/Strings/Pluralizer.h"
-#include "libFileRevisor/Components/Utility/Strings/EscapedRegexReplacer.h"
+#include "libFileRevisor/Components/Utility/Strings/TextReplacer.h"
 
 RenameFilesSubProgram::RenameFilesSubProgram()
    // Function Callers
@@ -14,7 +14,7 @@ RenameFilesSubProgram::RenameFilesSubProgram()
    , _transformer_RenameFileIfFileNameMatchesFromPattern(make_unique<OneExtraArgMemberFunctionTransformerType>())
    // Constant Components
    , _predicateCounter(make_unique<PredicateCounter<RenameResult>>())
-   , _escapedRegexReplacer(make_unique<EscapedRegexReplacer>())
+   , _textReplacer(make_unique<TextReplacer>())
 {
 }
 
@@ -51,7 +51,7 @@ bool RenameFilesSubProgram::DidRenameFileIsTrue(const RenameResult& fileRenameRe
 RenameResult RenameFilesSubProgram::RenameFileIfFileNameMatchesFromPattern(const fs::path& filePath, const FileRevisorArgs& args) const
 {
    const string fileName = filePath.filename().string();
-   const string regexReplacedFileName = _escapedRegexReplacer->ReplaceText(fileName, args.fromRegexPattern, args.toRegexPattern);
+   const string regexReplacedFileName = _textReplacer->ReplaceText(fileName, args.fromRegexPattern, args.toRegexPattern);
    if (regexReplacedFileName == fileName)
    {
       _caller_PrintDidNotMatchFileMessageIfVerboseMode->CallConstMemberFunction(

@@ -7,7 +7,7 @@ class OneExtraArgMemberFunctionTransformer;
 template<typename T>
 class PredicateCounter;
 
-class EscapedRegexReplacer;
+class TextReplacer;
 
 template<typename ClassType, typename Arg1Type, typename Arg2Type>
 class VoidTwoArgMemberFunctionCaller;
@@ -25,7 +25,7 @@ private:
    unique_ptr<const OneExtraArgMemberFunctionTransformerType> _directoryPathsTransformer_RenameDirectory;
    // Constant Components
    unique_ptr<const PredicateCounter<RenameResult>> _predicateCounter;
-   unique_ptr<const EscapedRegexReplacer> _escapedRegexReplacer;
+   unique_ptr<const TextReplacer> _textReplacer;
 public:
    RenameDirectoriesSubProgram();
    virtual ~RenameDirectoriesSubProgram();
