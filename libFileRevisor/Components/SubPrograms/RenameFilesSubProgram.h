@@ -6,7 +6,7 @@ class PredicateCounter;
 template<typename ClassType, typename ElementType, typename TransformedElementType, typename ExtraArgType>
 class OneExtraArgMemberFunctionTransformer;
 
-class RegexReplacer;
+class EscapedRegexReplacer;
 
 template<typename ClassType, typename Arg1Type, typename Arg2Type>
 class VoidTwoArgMemberFunctionCaller;
@@ -23,7 +23,7 @@ private:
    unique_ptr<const OneExtraArgMemberFunctionTransformerType> _transformer_RenameFileIfFileNameMatchesFromPattern;
    // Constant Components
    unique_ptr<const PredicateCounter<RenameResult>> _predicateCounter;
-   unique_ptr<const RegexReplacer> _regexReplacer;
+   unique_ptr<const EscapedRegexReplacer> _escapedRegexReplacer;
 public:
    RenameFilesSubProgram();
    virtual ~RenameFilesSubProgram();

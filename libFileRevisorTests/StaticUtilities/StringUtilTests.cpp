@@ -4,7 +4,7 @@
 TESTS(StringTests)
 FACTS(ContainsSubstring_ReturnsTrueIfStringContainsSubstring)
 FACTS(CaseInsensitiveContainsSubstring_ReturnsTrueIfStringCaseInsensitiveContainsSubstring)
-FACTS(RegexReplace_ReturnsReplacedString)
+FACTS(ReplaceText_ReturnsReplacedString)
 EVIDENCE
 
 struct UserType
@@ -80,7 +80,7 @@ TEST3X3(CaseInsensitiveContainsSubstring_ReturnsTrueIfStringCaseInsensitiveConta
    ARE_EQUAL(expectedReturnValue, String::CaseInsensitiveContainsSubstring(str, substring));
 }
 
-TEST4X4(RegexReplace_ReturnsReplacedString,
+TEST4X4(ReplaceText_ReturnsReplacedString,
    string_view str, string_view pattern, string_view replacement, string_view expectedReturnValue,
    "", "", "", "",
    "a", "b", "c", "a",
@@ -88,7 +88,7 @@ TEST4X4(RegexReplace_ReturnsReplacedString,
    "A", "a", "b", "A",
    "123 -> 456", "\\d\\d\\d -> ", "|", "|456")
 {
-   const string replacedString = String::RegexReplace(str, pattern, replacement);
+   const string replacedString = String::ReplaceText(str, pattern, replacement);
    ARE_EQUAL(expectedReturnValue, replacedString);
 }
 

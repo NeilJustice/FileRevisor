@@ -6,7 +6,7 @@
 #include "libFileRevisor/Components/Utility/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
 #include "libFileRevisor/Components/Utility/Iteration/Math/OneExtraArgMemberFunctionAccumulator.h"
 #include "libFileRevisor/Components/Utility/Strings/Pluralizer.h"
-#include "libFileRevisor/Components/Utility/Strings/TextReplacer.h"
+#include "libFileRevisor/Components/Utility/Strings/EscapedRegexReplacer.h"
 
 ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFilesSubProgram()
    // Function Pointers
@@ -15,7 +15,7 @@ ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFilesSubProgram()
    // Function Callers
    , _memberFunctionAccumulator_ReplaceTextInTextFile(make_unique<OneExtraArgMemberFunctionAccumulatorType>())
    // Constant Components
-   , _textReplacer(make_unique<TextReplacer>())
+   , _escapedRegexReplacer(make_unique<EscapedRegexReplacer>())
    // Mutable Components
    , _directoryIterator(make_unique<DirectoryIterator>())
 {
@@ -67,7 +67,7 @@ size_t ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFile(const fs::path& t
    _call_PrintReadingFileMessageIfVerboseMode->CallConstMemberFunction(
       this, &ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue, args.verbose, textFilePath);
    const string textFileText = _fileSystem->ReadText(textFilePath);
-   const string replacedTextFileText = _textReplacer->ReplaceText(textFileText, args.fromRegexPattern, args.toRegexPattern);
+   const string replacedTextFileText = _escapedRegexReplacer->ReplaceText(textFileText, args.fromRegexPattern, args.toRegexPattern);
    if (replacedTextFileText != textFileText)
    {
       if (args.dryrun)

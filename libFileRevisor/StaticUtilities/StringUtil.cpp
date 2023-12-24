@@ -15,7 +15,7 @@ bool String::CaseInsensitiveContainsSubstring(string_view stringView, string_vie
    return strContainsSubstring;
 }
 
-string String::RegexReplace(string_view stringView, string_view matchingRegex, string_view replacingRegex)
+string String::ReplaceText(string_view stringView, string_view matchingRegex, string_view replacingRegex)
 {
    const string stringViewString(stringView);
    const string matchingRegexString(matchingRegex);
