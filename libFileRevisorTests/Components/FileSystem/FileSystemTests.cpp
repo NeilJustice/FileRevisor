@@ -43,7 +43,7 @@ AFACT(CurrentFolderPath_ReturnsResultOfCallingFilesystemCurrentPath)
 AFACT(FileOrDirectoryExists_ReturnsResultOfCallingStdFilesystemExists)
 // Writes
 AFACT(RenameFile_FilePathDoesNotExist_ThrowsRuntimeError)
-AFACT(RenameFile_FilePathExists_DestinationFilePathAlreadyExists_ThrowsRuntimeError)
+AFACT(RenameFile_FilePathExists_DestinationFilePathExists_ThrowsRuntimeError)
 FACTS(RenameFile_FilePathExists_DestinationFilePathDoesNotExist_RenamesFile_ThrowsIfRenameReturnsNon0_OtherwiseReturns)
 AFACT(RenameDirectory_RenamesDirectory_FilesystemRenameReturns0_ReturnsRenamedFolderPath)
 FACTS(RenameDirectory_RenamesDirectory_FilesystemRenameReturnsNot0_ThrowsFileSystemException)
@@ -434,7 +434,7 @@ TEST(RenameFile_FilePathDoesNotExist_ThrowsRuntimeError)
       &_fileSystem, &FileSystem::FileOrDirectoryExists, filePath));
 }
 
-TEST(RenameFile_FilePathExists_DestinationFilePathAlreadyExists_ThrowsRuntimeError)
+TEST(RenameFile_FilePathExists_DestinationFilePathExists_ThrowsRuntimeError)
 {
    _caller_ExistsMock->CallConstMemberFunctionMock.ReturnValues(true, true);
    const fs::path filePath = ZenUnit::Random<fs::path>();
