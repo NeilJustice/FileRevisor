@@ -5,6 +5,7 @@ allocaCalled:*
 constVariable:libFileRevisor\StaticUtilities\StringUtil.h:10
 missingIncludeSystem:*
 missingReturn:*
+normalCheckLevelMaxBranches:*
 preprocessorErrorDirective:*
 syntaxError:*
 unmatchedSuppression:*

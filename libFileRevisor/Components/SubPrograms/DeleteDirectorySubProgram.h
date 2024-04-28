@@ -31,7 +31,7 @@ private:
    unique_ptr<const _voidTwoArgTryCatchCallerType> _voidTwoArgTryCatchCaller;
 public:
    DeleteDirectorySubProgram();
-   virtual ~DeleteDirectorySubProgram();
+   ~DeleteDirectorySubProgram() override;
    int Run(const FileRevisorArgs& args) const override;
 private:
    void DeleteDirectory(const string& directoryPath, const FileRevisorArgs& args) const;

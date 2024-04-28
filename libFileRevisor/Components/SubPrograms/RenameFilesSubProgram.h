@@ -26,7 +26,7 @@ private:
    unique_ptr<const TextReplacer> _textReplacer;
 public:
    RenameFilesSubProgram();
-   virtual ~RenameFilesSubProgram();
+   ~RenameFilesSubProgram() override;
    int Run(const FileRevisorArgs& args) const override;
 private:
    static bool DidRenameFileIsTrue(const RenameResult& fileRenameResult);

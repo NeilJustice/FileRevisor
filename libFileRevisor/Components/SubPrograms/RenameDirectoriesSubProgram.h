@@ -28,7 +28,7 @@ private:
    unique_ptr<const TextReplacer> _textReplacer;
 public:
    RenameDirectoriesSubProgram();
-   virtual ~RenameDirectoriesSubProgram();
+   ~RenameDirectoriesSubProgram() override;
    int Run(const FileRevisorArgs& args) const override;
 private:
    RenameResult RenameDirectory(const fs::path& directoryPath, const FileRevisorArgs& args) const;
