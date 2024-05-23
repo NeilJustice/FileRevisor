@@ -4,13 +4,10 @@
 <a href="https://github.com/NeilJustice/FileRevisor/actions/workflows/build.yml"><img src="https://github.com/NeilJustice/FileRevisor/actions/workflows/build.yml/badge.svg"></a>
 <a href="https://ci.appveyor.com/project/NeilJustice/FileRevisor"><img src="https://ci.appveyor.com/api/projects/status/fl8f0jle01k04nwp?svg=true"></a>
 <a href="https://codecov.io/gh/NeilJustice/FileRevisor"><img src="https://codecov.io/gh/NeilJustice/FileRevisor/branch/master/graph/badge.svg?token=KH1wxoYSdS"></a>
-<a href="https://sonarcloud.io/dashboard?id=NeilJustice_FileRevisor"><img src="https://sonarcloud.io/api/project_badges/measure?project=NeilJustice_FileRevisor&metric=alert_status"></a>
 <img src="Screenshots/Dependencies-0-brightgreen.svg" />
 </p>
 
 FileRevisor is a cross-platform C++ command line program for quickly deleting large directories in parallel, quickly renaming files or directories, and quickly replacing text in text files.
-
-FileRevisor's key feature is its extreme performance when deleting large folders in parallel on Windows. On Linux, directory deletions are quite a bit faster than on Windows, and so the parallel directory deletion peformance boost which FileRevisor provides is more modest on Linux relative to Windows. See below for Linux vs. Windows directory deletion performance graphs.
 
 * [FileRevisor command line usage](#filerevisor-command-line-usage)
 * [FileRevisor program modes](#filerevisor-program-modes)
@@ -22,8 +19,8 @@ FileRevisor's key feature is its extreme performance when deleting large folders
 * [Windows FileRevisor parallel folder deletion performance](#windows-filerevisor-parallel-folder-deletion-performance)
 * [FileRevisor code structure as it appears in Visual Studio Code on Linux](#filerevisor-code-structure-as-it-appears-in-visual-studio-code-on-linux)
 * [FileRevisor code structure as it appears in Visual Studio 2022 on Windows](#filerevisor-code-structure-as-it-appears-in-visual-studio-2022-on-windows)
-* [Linux Jenkins jobs](#linux-jenkins-jobs)
-* [Windows Jenkins jobs](#windows-jenkins-jobs)
+* [Linux Jenkins jobs which build and statically analyze FileRevisor](#linux-jenkins-jobs-which-build-and-statically-analyze-filerevisor)
+* [Windows Jenkins jobs which build and statically analyze FileRevisor](#windows-jenkins-jobs-which-build-and-statically-analyze-filerevisor)
 * [4 steps to build binary filerevisor from source on Linux with Clang](#4-steps-to-build-binary-filerevisor-from-source-on-linux-with-clang)
 * [4 steps to build executable FileRevisor.exe from source on Windows with Visual Studio 2022](#4-steps-to-build-executable-filerevisorexe-from-source-on-windows-with-visual-studio-2022)
 * [Thanks to](#thanks-to)
@@ -156,11 +153,11 @@ The OS, CPU, and storage hardware which generated the above performance numbers 
 
 ![FileRevisor Code Structure As It Appears In Visual Studio 2022 On Windows](Screenshots/Windows/FileRevisorCodeStructureInVisualStudio2022.png)
 
-### Linux Jenkins jobs
+### Linux Jenkins jobs which build and statically analyze FileRevisor
 
 ![Linux FileRevisor Jenkins Jobs](Screenshots/Linux/LinuxJenkinsJobs.png)
 
-### Windows Jenkins jobs
+### Windows Jenkins jobs which build and statically analyze FileRevisor
 
 ![Windows Jenkins Jobs](Screenshots/Windows/WindowsJenkinsJobs.png)
 
