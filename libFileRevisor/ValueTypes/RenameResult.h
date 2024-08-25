@@ -1,0 +1,26 @@
+#pragma once
+
+struct RenameResult
+{
+public:
+   bool didRenameFileOrDirectory;
+   fs::path originalFileOrFolderPath;
+   fs::path renamedFileOrFolderPath;
+
+   RenameResult();
+   RenameResult(
+      bool didRenameFileOrDirectory,
+      const fs::path& originalFileOrFolderPath,
+      const fs::path& renamedFileOrFolderPath);
+   static bool DidRenameFileOrDirectoryFieldIsTrue(const RenameResult& renameResult);
+};
+
+#ifdef _WIN32
+#ifdef _DEBUG
+static_assert(sizeof(RenameResult) == 88);
+#else
+static_assert(sizeof(RenameResult) == 72);
+#endif
+#else
+static_assert(sizeof(RenameResult) == 88);
+#endif

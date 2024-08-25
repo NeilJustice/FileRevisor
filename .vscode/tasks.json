@@ -1,0 +1,140 @@
+{
+   "version": "2.0.0",
+   "tasks": [
+      {
+         "label": "Ninja Build Debug",
+         "type": "shell",
+         "command": "ninja",
+         "args": [
+            "-v"
+         ],
+         "options": {
+            "cwd": "${workspaceRoot}/Debug"
+         },
+         "group": {
+            "kind": "build",
+            "isDefault": true
+         },
+         "problemMatcher": [
+            "$gcc"
+         ]
+      },
+      {
+         "label": "Ninja Build Release",
+         "type": "shell",
+         "command": "ninja",
+         "args": [
+            "-v"
+         ],
+         "options": {
+            "cwd": "${workspaceRoot}/Release"
+         }
+      },
+      {
+         "label": "Run Debug libFileRevisorTests",
+         "type": "shell",
+         "command": "./Debug/libFileRevisorTests/libFileRevisorTests",
+         "options": {
+            "cwd": "${workspaceRoot}"
+         },
+         "group": {
+            "kind": "test",
+            "isDefault": true
+         },
+         "presentation": {
+            "panel": "dedicated",
+            "showReuseMessage": false,
+            "clear": true
+         }
+      },
+      {
+         "label": "Run Release libFileRevisorTests",
+         "type": "shell",
+         "command": "./Release/libFileRevisorTests/libFileRevisorTests",
+         "options": {
+            "cwd": "${workspaceRoot}"
+         },
+         "presentation": {
+            "panel": "dedicated",
+            "showReuseMessage": false,
+            "clear": true
+         }
+      },
+      {
+         "label": "clang++ build active file",
+         "type": "shell",
+         "command": "/usr/bin/clang++",
+         "args": [
+            "-std=c++17",
+            "-g",
+            "-I${workspaceRoot}",
+            "-I${workspaceRoot}/libFileRevisor",
+            "-I${workspaceRoot}/libFileRevisorTests",
+            "-I/usr/local/include/ZenUnit",
+            "${file}",
+            "-o",
+            "${fileDirname}/${fileBasenameNoExtension}"
+         ],
+         "options": {
+            "cwd": "/bin"
+         },
+         "problemMatcher": [
+            "$gcc"
+         ]
+      },
+      {
+         "label": "Run Current Python File",
+         "type": "shell",
+         "command": "PYTHONPATH=. python ${file}",
+         "options": {
+            "cwd": "${workspaceRoot}"
+         },
+         "presentation": {
+            "panel": "dedicated",
+            "showReuseMessage": false,
+            "clear": true
+         }
+      },
+      {
+         "label": "Run All Python Tests",
+         "type": "shell",
+         "command": "PYTHONPATH=FileRevisorDevOpsPython python FileRevisorDevOpsPythonTests/RunAll.py",
+         "options": {
+            "cwd": "${workspaceRoot}"
+         },
+         "presentation": {
+            "panel": "dedicated",
+            "showReuseMessage": false,
+            "clear": true
+         }
+      },
+      {
+         "label": "Pylint Current File",
+         "type": "shell",
+         "command": "pylint --rcfile=.pylintrc --score=n --init-hook=\"sys.path.append('.')\" ${file}",
+         "options": {
+            "cwd": "${workspaceRoot}"
+         },
+         "presentation": {
+            "panel": "dedicated",
+            "showReuseMessage": false,
+            "clear": true
+         },
+         "problemMatcher": []
+      },
+      {
+         "label": "Pylint All Python Files",
+         "type": "shell",
+         "command": "ag -g \"\\.py$\" -0 | xargs -0 pylint --rcfile=.pylintrc --score=n --init-hook=\"sys.path.append('.')\"",
+         "options": {
+            "cwd": "${workspaceRoot}"
+         },
+         "presentation": {
+            "panel": "dedicated",
+            "showReuseMessage": false,
+            "clear": true
+         },
+         "problemMatcher": []
+      }
+   ]
+}

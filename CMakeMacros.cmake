@@ -1,0 +1,51 @@
+macro(folder_source_group folderName)
+   file(GLOB ${folderName}Files ${folderName}/*.*)
+   source_group(${folderName} FILES ${${folderName}Files})
+endmacro()
+
+macro(folder_source_group_subfolder folderName subfolderName)
+   file(GLOB ${folderName}${subfolderName}Files ${folderName}/${subfolderName}/*.*)
+   source_group(${folderName}\\${subfolderName} FILES ${${folderName}${subfolderName}Files})
+endmacro()
+
+macro(folder_source_group_subsubfolder folderName subfolderName subsubFolderName)
+   file(GLOB ${folderName}${subfolderName}${subsubFolderName}Files ${folderName}/${subfolderName}/${subsubFolderName}/*.*)
+   source_group(${folderName}\\${subfolderName}\\${subsubFolderName} FILES ${${folderName}${subfolderName}${subsubFolderName}Files})
+endmacro()
+
+macro(folder_source_group_subsubsubfolder folderName subfolderName subsubFolderName subsubsubFolderName)
+   file(GLOB ${folderName}${subfolderName}${subsubFolderName}${subsubsubFolderName}Files ${folderName}/${subfolderName}/${subsubFolderName}/${subsubsubFolderName}/*.*)
+   source_group(${folderName}\\${subfolderName}\\${subsubFolderName}\\${subsubsubFolderName} FILES ${${folderName}${subfolderName}${subsubFolderName}${subsubsubFolderName}Files})
+endmacro()
+
+macro(folder_source_group_subsubsubsubfolder folderName subfolderName subsubFolderName subsubsubFolderName subsubsubsubFolderName)
+   file(GLOB ${folderName}${subfolderName}${subsubFolderName}${subsubsubFolderName}${subsubsubsubFolderName}Files ${folderName}/${subfolderName}/${subsubFolderName}/${subsubsubFolderName}/${subsubsubsubFolderName}/*.*)
+   source_group(${folderName}\\${subfolderName}\\${subsubFolderName}\\${subsubsubFolderName}\\${subsubsubsubFolderName} FILES ${${folderName}${subfolderName}${subsubFolderName}${subsubsubFolderName}${subsubsubsubFolderName}Files})
+endmacro()
+
+macro(append variable value)
+   set(${variable} "${${variable}} ${value}")
+endmacro()
+
+macro(replace variable str replacement)
+   string(REPLACE "${str}" "${replacement}" ${variable} ${${variable}})
+endmacro()
+
+macro(IfMSVCEnablePrecompiledHeaders)
+   if(MSVC)
+      set_target_properties(${PROJECT_NAME} PROPERTIES COMPILE_FLAGS "/Yupch.h")
+      set_source_files_properties(pch.cpp PROPERTIES COMPILE_FLAGS "/Yc")
+   endif()
+endmacro()
+
+macro(IfMSVCAddRunTestsPostBuildStep)
+   if(MSVC)
+      add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD COMMAND if not defined JENKINS_HOME $(TargetPath) --random --always-exit-0)
+   endif()
+endmacro()
+
+if(UNIX)
+   set(ZenUnitAndMetalMockIncludeDirectory "/usr/local/include/ZenUnitAndMetalMock")
+elseif(MSVC)
+   set(ZenUnitAndMetalMockIncludeDirectory "X:\\include\\ZenUnitAndMetalMock")
+endif()

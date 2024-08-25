@@ -1,0 +1,26 @@
+#!/bin/bash
+set -eu
+
+osname="$(uname --operating-system)"
+if [[ "$osname" == *"Linux" ]]; then
+   ./JenkinsJobs/Linux/FileRevisor-Cppcheck.sh
+   ./JenkinsJobs/Linux/FileRevisorDevOpsPython-Mypy-Flake8-Pylint.sh
+   ./JenkinsJobs/Linux/FileRevisor-Debug-Clang.sh
+elif [ "$osname" == "Msys" ]; then
+   pwsh.exe JenkinsJobs/Windows/FileRevisor-Cppcheck.ps1
+   pwsh.exe JenkinsJobs/Windows/FileRevisorDevOpsPython-Mypy-Flake8-Pylint.ps1
+   pwsh.exe JenkinsJobs/Windows/FileRevisor-Debug.ps1 "OFF"
+fi
+jenkinsJobExitCode=$?
+if [ "$jenkinsJobExitCode" -ne 0 ]; then
+   echo ""
+   echo "<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>"
+   echo "githooks/pre-commit script: Git commit rejected. This Git repo's Debug Jenkins job failed to build successfully on this machine with exit code $jenkinsJobExitCode."
+   echo "<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>"
+   exit $jenkinsJobExitCode
+fi
+echo ""
+echo "**********************************************************************************************************************"
+echo "githooks/pre-commit script: Git commit accepted. This Git repo's Debug Jenkins job built successfully on this machine."
+echo "**********************************************************************************************************************"
+exit $jenkinsJobExitCode

@@ -1,0 +1,61 @@
+# CMake
+CMakeFiles/
+Debug/
+Release/
+*.cmake
+CMakeCache.txt
+install_manifest.txt
+!CMakeMacros.cmake
+
+# Python
+__pycache__/
+CodeCoverageHTMLReport/
+htmlcov/
+.coverage
+CoberturaCodeCoverageResults_FileRevisorDevOpsPythonTests.xml
+
+# Linux
+covhtml/
+coverage.profdata
+coverage.profraw
+
+# Windows
+.vs/
+x64/
+*.dir
+*.exe
+*.filters
+*.ilk
+*.ipch
+*.lib
+*.log
+*.opendb
+*.sln
+!FileRevisorDevOpsPython.sln
+*.suo
+*.obj
+*.pch
+*.pdb
+*.psess
+*.tlog
+*.tmp
+*.user
+*.vcxproj
+*.vspx
+!PyUtils.sln
+
+# IntegrationTests
+DirectoryIteratorIntegrationTests/
+FileSystemIntegrationTests/
+RecursiveFileDeleterIntegrationTests/
+
+# Cppcheck
+Cppcheck/files.txt
+*.a1
+*.a2
+*.a3
+*.a5
+*.s2
+*.s4
+*.s6
+cppcheck_results.txt

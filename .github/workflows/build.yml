@@ -1,0 +1,106 @@
+name: FileRevisor
+on: [push]
+
+jobs:
+  build:
+    strategy:
+      matrix:
+         cmake_build_type: [Debug, Release]
+         cxx: [g++-11]
+
+    runs-on: [ubuntu-latest]
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - uses: actions/cache@v4
+        with:
+          path: ${{ env.pythonLocation }}
+          key: ${{ env.pythonLocation }}-${{ hashFiles('setup.py') }}-${{ hashFiles('dev-requirements.txt') }}
+
+      - name: Install lld and ninja-build
+        run: sudo apt-get install lld ninja-build
+
+      - name: Install lcov Perl dependencies if g++-11 Release
+        run: sudo apt-get install libcapture-tiny-perl libdatetime-perl
+        if: ${{ matrix.cxx == 'g++-11' && matrix.cmake_build_type == 'Release' }}
+
+      - name: Download ZenUnit.h
+        run: |
+           curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/ZenUnit.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/ZenUnit.h"
+           curl https://raw.githubusercontent.com/NeilJustice/ZenUnitAndMetalMock/main/ZenUnitAndMetalMock/MetalMock.h --create-dirs -o "$GITHUB_WORKSPACE/ZenUnitAndMetalMock/MetalMock.h"
+
+      - name: Install pip packages
+        run: pip install --upgrade --upgrade-strategy eager -r dev-requirements.txt
+
+      - name: Mypy, Flake8, Pylint, then run unit tests with coverage and pytest if g++-11 Release
+        run: python FileRevisorDevOpsPython/MypyFlake8PylintThenRunTestsWithCoverage.py --run-tests-with-coverage-python-file=FileRevisorDevOpsPythonTests/RunAllWithCoverage.py
+        env:
+          PYTHONPATH: "."
+        if: ${{ matrix.cxx == 'g++-11' && matrix.cmake_build_type == 'Release' }}
+
+      - name: Upload Python code coverage if g++-11 Release
+        uses: codecov/codecov-action@v4
+        with:
+          files: FileRevisorDevOpsPythonTests/CoberturaCodeCoverageResults_FileRevisorDevOpsPythonTests.xml
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
+        if: ${{ matrix.cxx == 'g++-11' && matrix.cmake_build_type == 'Release' }}
+
+      - name: Run BuildAndInstallCPlusPlusProgram.py in non-code-coverage mode if clang++ Debug/Release or g++-11 Debug
+        run: |
+           python FileRevisorDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
+              --solution-name=FileRevisor \
+              --cmake-generator=Ninja \
+              --cmake-build-type="${{ matrix.cmake_build_type }}" \
+              --cmake-definitions="" \
+              --tests-project-name=libFileRevisorTests \
+              --no-install
+        env:
+          CXX: "/usr/bin/${{ matrix.cxx }}"
+          PYTHONPATH: "."
+        if: ${{ matrix.cxx == 'clang++' || (matrix.cxx == 'g++-11' && matrix.cmake_build_type == 'Debug') }}
+
+      - name: Run BuildAndInstallCPlusPlusProgram.py in code coverage mode if g++-11 Release
+        run: |
+           python FileRevisorDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
+              --solution-name=FileRevisor \
+              --cmake-generator=Ninja \
+              --cmake-build-type="${{ matrix.cmake_build_type }}" \
+              --cmake-definitions="-DLCovCodeCoverageMode=ON" \
+              --tests-project-name=libFileRevisorTests \
+              --no-install
+        env:
+          CXX: "/usr/bin/${{ matrix.cxx }}"
+          PYTHONPATH: "."
+        if: ${{ matrix.cxx == 'g++-11' && matrix.cmake_build_type == 'Release' }}
+
+      - name: Print .comment section of binary libFileRevisorTests to confirm it was linked with LLD
+        run: readelf --string-dump .comment "${{matrix.cmake_build_type}}/libFileRevisorTests/libFileRevisorTests"
+
+      - name: Install and run lcov 2.1 then upload to Codecov.io if g++-11 Release
+        run: |
+          mkdir -p lcov_2_1
+          wget https://github.com/linux-test-project/lcov/releases/download/v2.1/lcov-2.1.tar.gz --output-document="lcov_2_1/lcov-2.1.tar.gz"
+          tar xf "lcov_2_1/lcov-2.1.tar.gz" --strip-components=1 --directory lcov_2_1
+          lcov_2_1/bin/lcov --version
+          lcov_2_1/bin/lcov --directory . --capture --output-file coverage.info
+          lcov_2_1/bin/lcov --list coverage.info
+          bash <(curl -s https://codecov.io/bash) -f coverage.info -t ${{ secrets.CODECOV_TOKEN }} || echo "Codecov did not collect coverage reports"
+        if: ${{ matrix.cxx == 'g++-11' && matrix.cmake_build_type == 'Release' }}
+
+      - name: tree GITHUB_WORKSPACE
+        run: tree $GITHUB_WORKSPACE
+
+      - name: Archive binary filerevisor
+        uses: actions/upload-artifact@v3
+        with:
+          name: filerevisor
+          path: Release/FileRevisor/filerevisor
+        if: ${{ matrix.cxx == 'clang++' && matrix.cmake_build_type == 'Release' }}

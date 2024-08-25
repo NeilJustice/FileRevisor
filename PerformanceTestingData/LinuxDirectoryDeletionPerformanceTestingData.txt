@@ -1,0 +1,114 @@
+1 top-level subdirectory
+========================
+rm -rf > /dev/null:
+(0.178 + 0.178 + 0.179) / 3 = 0.18
+
+FileRevisor delete-directory:
+(0.176 + 0.177 + 0.177) / 3 = 0.18
+
+FileRevisor delete-directory --parallel:
+(0.180 + 0.177 + 0.176) / 3 = 0.18
+
+
+8 top-level subdirectories
+==========================
+rm -rf > /dev/null:
+(1.404 + 1.419 + 1.412) / 3 = 1.41
+
+FileRevisor delete-directory:
+(1.395 + 1.407 + 1.395) / 3 = 1.40
+
+FileRevisor delete-directory --parallel:
+(0.408 + 0.400 + 0.417) / 3 = 0.41
+
+
+16 top-level subdirectories
+===========================
+rm -rf > /dev/null:
+(3.181 + 3.275 + 3.191) / 3 = 3.22
+
+FileRevisor delete-directory:
+(3.048 + 3.075 + 3.156) / 3 = 3.09
+
+FileRevisor delete-directory --parallel:
+(0.984 + 0.991 + 1.005) / 3 = 0.99
+
+
+24 top-level subdirectories
+===========================
+rm -rf > /dev/null:
+(4.794 + 4.687 + 4.661) / 3 = 4.71
+
+FileRevisor delete-directory:
+(4.925 + 4.981 + 4.901) / 3 = 4.94
+
+FileRevisor delete-directory --parallel:
+(1.796 + 1.760 + 1.797) / 3 = 1.78
+
+
+32 top-level subdirectories
+===========================
+rm -rf > /dev/null:
+(8.179 + 8.213 + 8.221) / 3 = 8.20
+
+FileRevisor delete-directory:
+(8.480 + 8.474 + 8.343) / 3 = 8.43
+
+FileRevisor delete-directory --parallel:
+(3.839 + 3.823 + 3.923) / 3 = 3.86
+
+
+40 top-level subdirectories
+===========================
+rm -rf > /dev/null:
+(10.923 + 10.415 + 10.327) / 3 = 10.56
+
+FileRevisor delete-directory:
+(10.620 + 10.692 + 10.651) / 3 = 10.65
+
+FileRevisor delete-directory --parallel:
+(5.183 + 5.351 + 5.211) / 3 = 5.25
+
+48 top-level subdirectories
+===========================
+rm -rf > /dev/null:
+(12.644 + 12.680 + 12.662) / 3 = 12.66
+
+FileRevisor delete-directory:
+(12.788 + 12.681 + 12.785) / 3 = 12.75
+
+FileRevisor delete-directory --parallel:
+(6.676 + 6.713 + 6.797) / 3 = 6.73
+
+56 top-level subdirectories
+===========================
+rm -rf > /dev/null
+(15.430 + 15.556 + 15.608) / 3 = 15.53
+
+FileRevisor delete-directory:
+(15.428 + 15.861 + 15.278) / 3 = 15.52
+
+FileRevisor delete-directory --parallel:
+(8.858 + 9.043 + 8.841) / 3 = 8.82
+
+64 top-level subdirectories
+===========================
+rm -rf > /dev/null:
+(18.178 + 18.075 + 17.505) / 3 = 17.92
+
+FileRevisor delete-directory:
+(17.952 + 18.360 + 18.209) / 3 = 18.17
+
+FileRevisor delete-directory --parallel:
+(10.939 + 10.947 + 10.918) / 3 = 10.93
+
+72 top-level directories
+========================
+rm -rf > /dev/null:
+(20.077 + 21.873 + 23.832) / 3 = 21.93
+
+FileRevisor delete-directory:
+(20.763 + 21.054 + 23.763) / 3 = 21.86
+
+FileRevisor delete-directory --parallel:
+(14.378 + 14.891 + 14.791) / 3 = 14.69

@@ -1,0 +1,174 @@
+1 top-level subdirectory
+========================
+DEL /F/S/Q > NUL:
+(0.51 + 0.52 + 0.53) / 3 = 0.52
+
+Git Bash rm -rf > /dev/null:
+(0.365 + 0.390 + 0.389) / 3 = 0.38
+
+Remove-Item -Recurse:
+(0.308 + 0.308 + 0.312) / 3 = 0.31
+
+FileRevisor delete-directory:
+(0.273 + 0.277 + 0.282) / 3 = 0.28
+
+FileRevisor delete-directory --parallel:
+(0.285 + 0.295 + 0.304) / 3 = 0.29
+
+
+8 top-level subdirectories
+==========================
+DEL /F/S/Q > NUL:
+(4.30 + 4.23 + 4.27) / 3 = 4.27
+
+Git Bash rm -rf > /dev/null:
+(3.000 + 3.206 + 3.057) / 3 = 3.09
+
+Remove-Item -Recurse:
+(2.705 + 2.616 + 2.742) / 3 = 2.69
+
+FileRevisor delete-directory:
+(2.488 + 2.442 + 2.480) / 3 = 2.47
+
+FileRevisor delete-directory --parallel:
+(0.722 + 0.766 + 0.765) / 3 = 0.75
+
+
+16 top-level subdirectories
+===========================
+DEL /F/S/Q > NUL:
+(9.02 + 8.90 + 8.87) / 3 = 8.93
+
+Git Bash rm -rf > /dev/null:
+(6.265 + 6.486 + 6.174) / 3 = 6.31
+
+Remove-Item -Recurse:
+(5.63 + 5.70 + 5.47) / 3 = 5.60
+
+FileRevisor delete-directory:
+(5.388 + 5.053 + 5.193) / 3 = 5.21
+
+FileRevisor delete-directory --parallel:
+(1.620 + 1.546 + 1.642) / 3 = 1.60
+
+
+24 top-level subdirectories
+===========================
+DEL /F/S/Q > NUL:
+(13.41 + 13.56 + 13.52) / 3 = 13.50
+
+Git Bash rm -rf > /dev/null:
+(9.582 + 9.554 + 9.690) / 3 = 9.61
+
+Remove-Item -Recurse:
+(8.110 + 8.096 + 7.816) / 3 = 8.00
+
+FileRevisor delete-directory:
+(7.271 + 7.627 + 7.125) / 3 = 7.34
+
+FileRevisor delete-directory --parallel:
+(2.455 + 2.923 + 2.601) / 3 = 2.66
+
+
+32 top-level subdirectories
+===========================
+DEL /F/S/Q > NUL:
+(18.60 + 18.99 + 18.48) / 3 = 18.69
+
+Git Bash rm -rf > /dev/null:
+(12.924 + 12.767 + 12.863) / 3 = 12.85
+
+Remove-Item -Recurse:
+(11.322 + 11.151 + 11.145) / 3 = 11.21
+
+FileRevisor delete-directory:
+(10.656 + 10.232 + 10.937) / 3 = 10.61
+
+FileRevisor delete-directory --parallel:
+(3.436 + 3.305 + 3.776) / 3 = 3.51
+
+
+40 top-level subdirectories
+===========================
+DEL /F/S/Q > NUL:
+(22.70 + 22.97 + 22.92) / 3 = 22.86
+
+Git Bash rm -rf > /dev/null:
+(15.878 + 16.023 + 16.296) / 3 = 16.07
+
+Remove-Item -Recurse:
+(13.690 + 13.458 + 13.587) / 3 = 13.58
+
+FileRevisor delete-directory:
+(12.141 + 12.485 + 12.900) / 3 = 12.51
+
+FileRevisor delete-directory --parallel:
+(4.449 + 5.197 + 4.581) / 3 = 4.74
+
+48 top-level subdirectories
+===========================
+DEL /F/S/Q > NUL:
+(27.12 + 27.34 + 27.47) / 3 = 27.31
+
+Git Bash rm -rf > /dev/null:
+(19.579 + 19.709 + 18.902) / 3 = 19.40
+
+Remove-Item -Recurse:
+(16.308 + 16.829 + 16.428) / 3 = 16.52
+
+FileRevisor delete-directory:
+(15.037 + 14.713 + 15.236) / 3 = 15.00
+
+FileRevisor delete-directory --parallel:
+(5.095 + 5.988 + 5.699) / 3 = 5.59
+
+56 top-level subdirectories
+===========================
+DEL /F/S/Q > NUL:
+(31.62 + 31.38 + 31.48) / 3 = 31.49
+
+Git Bash rm -rf
+(22.476 + 22.925 + 23.132) / 3 = 22.84
+
+Remove-Item -Recurse:
+(19.046 + 19.013 + 18.931) / 3 = 19.00
+
+FileRevisor delete-directory:
+(17.693 + 18.326 + 17.872) / 3 = 17.96
+
+FileRevisor delete-directory --parallel:
+(6.815 + 6.489 + 6.901) / 3 = 6.74
+
+64 top-level subdirectories
+===========================
+DEL /F/S/Q > NUL:
+(36.91 + 37.00 + 36.91) / 3 = 36.94
+
+Git Bash rm -rf > /dev/null:
+(26.512 + 26.328 + 26.496) / 3 = 26.45
+
+Remove-Item -Recurse:
+(23.445 + 23.593 + 23.707) / 3 = 23.58
+
+FileRevisor delete-directory:
+(22.721 + 21.971 + 22.246) / 3 = 22.31
+
+FileRevisor delete-directory --parallel:
+(7.474 + 7.619 + 8.000) / 3 = 7.70
+
+72 top-level directories
+========================
+DEL /F/S/Q > NUL:
+(39.62 + 39.50 + 39.56) / 3 = 39.56
+
+Git Bash rm -rf > /dev/null:
+(29.717 + 30.574 + 30.234) / 3 = 30.18
+
+Remove-Item -Recurse:
+(25.362 + 26.091 + 25.318) / 3 = 25.59
+
+FileRevisor delete-directory:
+(23.732 + 23.250 + 23.659) / 3 = 23.55
+
+FileRevisor delete-directory --parallel:
+(9.196 + 9.289 + 8.453) / 3 = 8.98
