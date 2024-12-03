@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileRevisor/Components/Utility/Assertion/Asserter.h"
+#include "libFileRevisor/Components/Utility/Asserters/Asserter.h"
 
 void Asserter::ThrowIfIntsNotEqual(int expectedInt, int actualInt, string_view message) const
 {

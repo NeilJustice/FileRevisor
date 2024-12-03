@@ -1,5 +1,5 @@
 #pragma once
-#include "libFileRevisor/Components/Utility/Assertion/Asserter.h"
+#include "libFileRevisor/Components/Utility/Asserters/Asserter.h"
 
 class AsserterMock : public Metal::Mock<Asserter>
 {

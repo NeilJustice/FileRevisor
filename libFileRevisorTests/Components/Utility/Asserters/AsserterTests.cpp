@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileRevisor/Components/Utility/Assertion/Asserter.h"
+#include "libFileRevisor/Components/Utility/Asserters/Asserter.h"
 
 TESTS(AsserterTests)
 AFACT(ThrowIfIntsNotEqual_IntsAreEqual_DoesNotThrowException)
