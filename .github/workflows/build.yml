@@ -90,7 +90,7 @@ jobs:
           wget https://github.com/linux-test-project/lcov/releases/download/v2.2/lcov-2.2.tar.gz --output-document="lcov_2_2/lcov-2.2.tar.gz"
           tar xf "lcov_2_2/lcov-2.2.tar.gz" --strip-components=1 --directory lcov_2_2
           lcov_2_2/bin/lcov --version
-          lcov_2_2/bin/lcov --ignore-errors inconsistent --directory . --capture --output-file coverage.info
+          lcov_2_2/bin/lcov --directory . --capture --keep-going --output-file coverage.info
           lcov_2_2/bin/lcov --list coverage.info
           bash <(curl -s https://codecov.io/bash) -f coverage.info -t ${{ secrets.CODECOV_TOKEN }} || echo "Codecov did not collect coverage reports"
         if: ${{ matrix.cxx == 'g++-11' && matrix.cmake_build_type == 'Release' }}
