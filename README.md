@@ -1,9 +1,9 @@
-<p align="center"> 
+<p align="center">
 <img src="Screenshots/FileRevisorLogo.png" width="64%"><br>
 <img src="https://img.shields.io/badge/c%2B%2B-23-blue.svg"/>
 <a href="https://github.com/NeilJustice/FileRevisor/actions/workflows/build.yml"><img src="https://github.com/NeilJustice/FileRevisor/actions/workflows/build.yml/badge.svg"></a>
 <a href="https://ci.appveyor.com/project/NeilJustice/FileRevisor"><img src="https://ci.appveyor.com/api/projects/status/fl8f0jle01k04nwp?svg=true"></a>
-<a href="https://codecov.io/gh/NeilJustice/FileRevisor"><img src="https://codecov.io/gh/NeilJustice/FileRevisor/branch/master/graph/badge.svg?token=KH1wxoYSdS"></a>
+<a href="https://codecov.io/gh/NeilJustice/FileRevisor"><img src="https://codecov.io/gh/NeilJustice/FileRevisor/graph/badge.svg?token=goCObzAYXP"></a>
 </p>
 
 FileRevisor is a cross-platform C++ command line program for quickly deleting large directories in parallel, quickly renaming files or directories, and quickly replacing text in text files.
