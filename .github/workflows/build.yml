@@ -59,6 +59,14 @@ jobs:
           PYTHONPATH: "."
         if: ${{ matrix.cxx == 'clang++' || (matrix.cxx == 'g++-11' && matrix.cmake_build_type == 'Debug') }}
 
+      - name: Upload Python code coverage if g++-11 Release
+        uses: codecov/codecov-action@v5
+        with:
+          files: FileRevisorDevOpsPythonTests/CoberturaCodeCoverageResults_FileRevisorDevOpsPythonTests.xml
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
+        if: ${{ matrix.cxx == 'g++-11' && matrix.cmake_build_type == 'Release' }}
+
       - name: Run BuildAndInstallCPlusPlusProgram.py in code coverage mode if g++-11 Release
         run: |
            python FileRevisorDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
@@ -85,14 +93,6 @@ jobs:
           lcov_2_3/bin/lcov --directory . --capture --no-external --ignore-errors inconsistent --output-file coverage.info
           lcov_2_3/bin/lcov --list coverage.info
           bash <(curl -s https://codecov.io/bash) -f coverage.info -t ${{ secrets.CODECOV_TOKEN }} || echo "Codecov did not collect coverage reports"
-        if: ${{ matrix.cxx == 'g++-11' && matrix.cmake_build_type == 'Release' }}
-
-      - name: Upload Python code coverage if g++-11 Release
-        uses: codecov/codecov-action@v4
-        with:
-          files: FileRevisorDevOpsPythonTests/CoberturaCodeCoverageResults_FileRevisorDevOpsPythonTests.xml
-          fail_ci_if_error: true
-          token: ${{ secrets.CODECOV_TOKEN }}
         if: ${{ matrix.cxx == 'g++-11' && matrix.cmake_build_type == 'Release' }}
 
       - name: tree GITHUB_WORKSPACE
