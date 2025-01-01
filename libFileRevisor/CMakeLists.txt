@@ -44,14 +44,14 @@ source_group("" FILES ${Sources})
 
 add_library(libFileRevisor ${Sources})
 if(UNIX)
+   target_precompile_headers(libFileRevisor PRIVATE pch.h)
    set_target_properties(libFileRevisor PROPERTIES DEBUG_OUTPUT_NAME "FileRevisorDebug")
    set_target_properties(libFileRevisor PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "FileRevisorRelWithDebInfo")
 elseif(MSVC)
-   set_target_properties(libFileRevisor PROPERTIES DEBUG_OUTPUT_NAME "libFileRevisorDebug")
-   set_target_properties(libFileRevisor PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "libFileRevisorRelWithDebInfo")
-
    replace(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/Ob1" "/Ob2")
    append(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/Oi /Ot /GS- /arch:AVX2 /fp:fast")
+   set_target_properties(libFileRevisor PROPERTIES DEBUG_OUTPUT_NAME "libFileRevisorDebug")
+   set_target_properties(libFileRevisor PROPERTIES RELWITHDEBINFO_OUTPUT_NAME "libFileRevisorRelWithDebInfo")
 endif()
 
 IfMSVCEnablePrecompiledHeaders()
