@@ -75,21 +75,28 @@ source_group("" FILES ${Sources})
 
 add_executable(libFileRevisorTests ${Sources})
 target_link_libraries(libFileRevisorTests libFileRevisor)
-if(UNIX AND NOT APPLE)
+if(UNIX)
    target_precompile_headers(libFileRevisorTests PRIVATE pch.h)
+
+   set_target_properties(libFileRevisorTests PROPERTIES UNITY_BUILD ON)
+   set_target_properties(libFileRevisorTests PROPERTIES UNITY_BUILD_BATCH_SIZE 8)
+
    target_link_libraries(libFileRevisorTests stdc++fs)
-endif()
-if(MSVC)
+elseif(MSVC)
+   IfMSVCEnablePrecompiledHeaders()
    replace(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/O2" "/Od")
    replace(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/Ob2" "/Ob0")
    replace(CMAKE_EXE_LINKER_FLAGS_DEBUG "/debug" "/DEBUG:FASTLINK")
    replace(CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO "/debug" "")
+
+   set_target_properties(libFileRevisorTests PROPERTIES UNITY_BUILD ON)
+   set_target_properties(libFileRevisorTests PROPERTIES UNITY_BUILD_BATCH_SIZE 8)
+   append(CMAKE_CXX_FLAGS "/FIpch.h")
+
+   IfMSVCAddRunTestsPostBuildStep()
 endif()
 
-IfMSVCEnablePrecompiledHeaders()
-IfMSVCAddRunTestsPostBuildStep()
-
-if(UNIX AND NOT APPLE)
+if(UNIX)
    if(LCovCodeCoverageMode)
      target_link_libraries(libFileRevisorTests CodeCovLibraryInterface)
    endif()
