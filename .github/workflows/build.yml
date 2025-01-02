@@ -51,7 +51,7 @@ jobs:
               --solution-name=FileRevisor \
               --cmake-generator=Ninja \
               --cmake-build-type="${{ matrix.cmake_build_type }}" \
-              --cmake-definitions="-DFastLinuxDebugBuildMode=ON -DFastLinuxReleaseBuild=ON" \
+              --cmake-definitions="-DFastLinuxDebugBuildMode=ON -DFastLinuxReleaseBuildMode=ON" \
               --tests-project-name=libFileRevisorTests \
               --no-install
         env:
