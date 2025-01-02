@@ -21,6 +21,6 @@ static_assert(sizeof(RenameResult) == 88);
 #else
 static_assert(sizeof(RenameResult) == 72);
 #endif
-#else
+#elifdef __linux__
 static_assert(sizeof(RenameResult) == 88);
 #endif

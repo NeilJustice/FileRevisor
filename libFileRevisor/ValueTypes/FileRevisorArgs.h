@@ -23,6 +23,6 @@ static_assert(sizeof(FileRevisorArgs) == 176);
 #else
 static_assert(sizeof(FileRevisorArgs) == 144);
 #endif
-#else
+#elifdef __linux__
 static_assert(sizeof(FileRevisorArgs) == 152);
 #endif
