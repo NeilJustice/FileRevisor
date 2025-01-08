@@ -1,6 +1,6 @@
 """BuildAndInstallCPlusPlusProgram.py - Builds and installs a C++ program on Linux or Windows.
 
-Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-generator=<String> --cmake-build-type=<String> --tests-project-name=<String> [--cmake-definitions=<String>] (--install|--no-install)"""
+Usage: BuildAndInstallCPlusPlusProgram.py --solution-name=<String> --cmake-build-type=<String> --tests-project-name=<String> [--cmake-definitions=<String>] (--install|--no-install)"""
 import os
 import platform
 import sys
