@@ -3,9 +3,10 @@ set -ev
 
 export CXX=clang++
 export PYTHONPATH=.
+export UBSAN_OPTIONS=halt_on_error=true
 python -u FileRevisorDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
    --solution-name=FileRevisor \
-   --cmake-build-type=Release \
+   --cmake-build-type=RelWithDebInfo \
    --tests-project-name=libFileRevisorTests \
-   --cmake-definitions="-DCMAKE_INSTALL_PREFIX=/usr/local -DFastLinuxReleaseBuildMode=ON" \
-   --install
+   --cmake-definitions="-DClangUndefinedBehaviorSanitizerMode=ON -DFastLinuxRelWithDebInfoBuildMode=ON" \
+   --no-install

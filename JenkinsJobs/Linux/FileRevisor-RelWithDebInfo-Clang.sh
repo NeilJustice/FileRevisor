@@ -5,7 +5,7 @@ export CXX=clang++
 export PYTHONPATH=.
 python -u FileRevisorDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
    --solution-name=FileRevisor \
-   --cmake-build-type=Release \
+   --cmake-build-type=RelWithDebInfo \
    --tests-project-name=libFileRevisorTests \
-   --cmake-definitions="-DClangThreadSanitizerMode=ON -DFastLinuxReleaseBuildMode=ON" \
-   --no-install
+   --cmake-definitions="-DFastLinuxReleaseBuildMode=ON" \
+   --install
