@@ -1,7 +1,7 @@
 # CMake
 CMakeFiles/
 Debug/
-Release/
+RelWithDebInfo/
 *.cmake
 CMakeCache.txt
 install_manifest.txt
