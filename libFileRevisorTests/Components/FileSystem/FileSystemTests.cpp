@@ -537,7 +537,7 @@ TEST(RenameDirectory_RenamesDirectory_FilesystemRenameReturns0_ReturnsRenamedFol
    //
    const fs::path renamedFolderPath = _fileSystem.RenameDirectory(directoryPath, newDirectoryName);
    //
-   const fs::path expectedFolderPathMinusLeafDirectory = [&]()
+   const fs::path expectedFolderPathMinusLeafDirectory = [&]() // LCOV_EXCL_LINE
    {
       return fs::path(directoryPath).remove_filename();
    }();
@@ -563,7 +563,7 @@ TEST1X1(RenameDirectory_RenamesDirectory_FilesystemRenameReturnsNot0_ThrowsFileS
 
    const fs::path directoryPath = ZenUnit::Random<fs::path>();
    const string newDirectoryName = ZenUnit::Random<string>();
-   const fs::path expectedFolderPathMinusLeafDirectory = [&]()
+   const fs::path expectedFolderPathMinusLeafDirectory = [&]() // LCOV_EXCL_LINE
    {
       return fs::path(directoryPath).remove_filename();
    }();
