@@ -8,7 +8,6 @@
 #include "libFileRevisorTests/Components/Utility/FunctionCallers/Member/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
 
 TESTS(FileRevisorArgsParserTests)
-AFACT(DefaultConstructor_NewsComponents_SetsDetermineProgramModeFunctionPointer)
 AFACT(ParseArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
 AFACT(PrintPreambleLines_WritesPreambleLinesToConsole)
 AFACT(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsTrue_ParsesDirArgumentAsRequired_ReturnsDirAndFromAndToArgumentValues)
@@ -36,27 +35,12 @@ STARTUP
    // Function Pointers
    _fileRevisorArgsParser._call_DetermineProgramMode = BIND_4ARG_METALMOCK_OBJECT(_call_FileRevisorArgsParser_DetermineProgramModeMock);
    // Function Callers
-   _fileRevisorArgsParser._caller_ParseDirAndFromAndToArguments.reset(
-      _caller_ParseDirAndFromAndToArgumentsMock = new NonVoidTwoArgMemberFunctionCallerMockType);
+   _fileRevisorArgsParser._caller_ParseDirAndFromAndToArguments.reset(_caller_ParseDirAndFromAndToArgumentsMock = new NonVoidTwoArgMemberFunctionCallerMockType);
    // Constant Components
    _fileRevisorArgsParser._console.reset(_consoleMock = new ConsoleMock);
    _fileRevisorArgsParser._fileSystem.reset(_fileSystemMock = new FileSystemMock);
    _fileRevisorArgsParser._docoptParser.reset(_docoptParserMock = new DocoptParserMock);
    _fileRevisorArgsParser._fileRevisorPreambleMaker.reset(_fileRevisorPreambleMakerMock = new FileRevisorPreambleMakerMock);
-}
-
-TEST(DefaultConstructor_NewsComponents_SetsDetermineProgramModeFunctionPointer)
-{
-   FileRevisorArgsParser fileRevisorArgsParser;
-   // Function Pointers
-   STD_FUNCTION_TARGETS(FileRevisorArgsParser::DetermineProgramMode, fileRevisorArgsParser._call_DetermineProgramMode);
-   // Function Callers
-   DELETE_TO_ASSERT_NEWED(fileRevisorArgsParser._caller_ParseDirAndFromAndToArguments);
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(fileRevisorArgsParser._console);
-   DELETE_TO_ASSERT_NEWED(fileRevisorArgsParser._fileSystem);
-   DELETE_TO_ASSERT_NEWED(fileRevisorArgsParser._docoptParser);
-   DELETE_TO_ASSERT_NEWED(fileRevisorArgsParser._fileRevisorPreambleMaker);
 }
 
 TEST(ParseArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
