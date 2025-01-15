@@ -80,8 +80,6 @@ if(UNIX)
 
    set_target_properties(libFileRevisorTests PROPERTIES UNITY_BUILD ON)
    set_target_properties(libFileRevisorTests PROPERTIES UNITY_BUILD_BATCH_SIZE 8)
-
-   target_link_libraries(libFileRevisorTests stdc++fs)
 elseif(MSVC)
    IfMSVCEnablePrecompiledHeaders()
    replace(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/O2" "/Od")
