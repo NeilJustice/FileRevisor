@@ -216,7 +216,7 @@ fs::path FileSystem::RenameFile(const fs::path& filePath, string_view newFileNam
 
 fs::path FileSystem::RenameDirectory(const fs::path& directoryPath, string_view newDirectoryName) const
 {
-   const fs::path directoryPathMinusLeafDirectory = [&]()
+   const fs::path directoryPathMinusLeafDirectory = [&]() // LCOV_EXCL_LINE
    {
       return fs::path(directoryPath).remove_filename();
    }();
