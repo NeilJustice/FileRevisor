@@ -40,6 +40,12 @@ if(UNIX)
       add_library(CodeCovLibraryInterface INTERFACE)
       target_compile_options(CodeCovLibraryInterface INTERFACE -O0 -g --coverage)
       target_link_libraries(CodeCovLibraryInterface INTERFACE --coverage)
+   elseif(IncludeWhatYouUseMode)
+      set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE "/usr/bin/include-what-you-use"
+         "-Xiwyu" "--keep=*pch.h"
+         "-Xiwyu" "--cxx17ns"
+         "-Xiwyu" "--error_always=0")
+      message("IncludeWhatYouUseMode enabled: CMAKE_CXX_INCLUDE_WHAT_YOU_USE set to /usr/bin/include-what-you-use with precompiled headers and unity builds disabled")
    endif()
 elseif(MSVC)
    set_property(GLOBAL PROPERTY USE_FOLDERS ON)
