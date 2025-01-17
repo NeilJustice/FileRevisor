@@ -2,8 +2,6 @@
 #include "libFileRevisor/Components/Exceptions/FileSystemExceptionMaker.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Exceptions/FileSystemException.h"
-#include "libFileRevisorTests/Components/Utility/FunctionCallers/Member/MetalMock/NonVoidOneArgMemberFunctionCallerMock.h"
-#include "libFileRevisorTests/Components/Utility/Strings/MetalMock/ConstCharPointerGetterMock.h"
 
 TESTS(FileSystemIntegrationTests)
 AFACT(GetFilePathsInDirectory_RecurseIsFalse_ReturnsTopLevelFilePaths)

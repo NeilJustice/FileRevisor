@@ -5,9 +5,6 @@ class NonVoidOneArgMemberFunctionCaller;
 template<typename ReturnType, typename ClassType, typename Argument1Type, typename Argument2Type>
 class NonVoidTwoArgMemberFunctionCaller;
 
-template<typename ClassType, typename T, typename Arg2Type, typename Arg3Type>
-class ThreeArgMemberFunctionForEacher;
-
 namespace Utils
 {
    template<typename ClassType, typename T, typename Arg2Type, typename Arg3Type, typename Arg4Type>

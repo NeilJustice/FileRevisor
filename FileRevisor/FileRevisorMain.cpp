@@ -1,4 +1,4 @@
-#include "libFileRevisor/Compiler/IfWindowsIgnoreTheseWarningsGlobally.h"
+#include "libFileRevisor/Compiler/IfWindowsIgnoreTheseWarningsGlobally.h" // IWYU pragma: keep
 #include <functional>
 #include <memory>
 #include <string>

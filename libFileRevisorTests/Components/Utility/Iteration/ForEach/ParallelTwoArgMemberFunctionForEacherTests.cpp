@@ -1,6 +1,5 @@
 #include "pch.h"
-#include "libFileRevisor/Components/Utility/Iteration/ForEach/TwoArgMemberFunctionForEacher.h"
-#include "libFileRevisorTests/Components/Utility/Iteration/ForEach/MetalMock/ParallelTwoArgMemberFunctionForEacherMock.h"
+#include "libFileRevisor/Components/Utility/Iteration/ForEach/ParallelTwoArgMemberFunctionForEacher.h"
 
 template<typename T, typename Arg2Type>
 TEMPLATE_TESTS(ParallelTwoArgMemberFunctionForEacherTests, T, Arg2Type)

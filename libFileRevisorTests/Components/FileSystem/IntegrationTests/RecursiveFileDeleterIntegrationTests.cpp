@@ -1,8 +1,5 @@
 #include "pch.h"
-#include "libFileRevisor/Components/ErrorHandling/ErrorCodeTranslator.h"
-#include "libFileRevisor/Components/Exceptions/FileSystemExceptionMaker.h"
 #include "libFileRevisor/Components/FileSystem/RecursiveFileDeleter.h"
-#include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 #if defined __linux__|| defined __APPLE__
 #include <sys/stat.h>
 #endif

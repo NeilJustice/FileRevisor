@@ -3,7 +3,6 @@ namespace docopt
 {
    struct Value;
 }
-class DocoptParserTests;
 
 class DocoptParser
 {

@@ -4,7 +4,6 @@
 #include "libFileRevisorTests/Components/Utility/Console/MetalMock/ConsoleMock.h"
 #include "libFileRevisorTests/Components/Utility/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
 #include "libFileRevisorTests/Components/Utility/Iteration/Counter/MetalMock/PredicateCounterMock.h"
-#include "libFileRevisorTests/Components/Utility/Iteration/ForEach/MetalMock/TwoArgMemberFunctionForEacherMock.h"
 #include "libFileRevisorTests/Components/Utility/Iteration/Transform/MetalMock/OneExtraArgMemberFunctionTransformerMock.h"
 #include "libFileRevisorTests/Components/Utility/Strings/MetalMock/PluralizerMock.h"
 #include "libFileRevisorTests/Components/Utility/Strings/MetalMock/TextReplacerMock.h"

@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "libFileRevisor/Components/FileSystem/RecursiveFileDeleter.h"
-#include "libFileRevisorTests/Components/ErrorHandling/MetalMock/ErrorCodeTranslatorMock.h"
 #include "libFileRevisorTests/Components/Exceptions/MetalMock/FileSystemExceptionMakerMock.h"
 #include "libFileRevisorTests/Components/Utility/Console/MetalMock/ConsoleMock.h"
 
