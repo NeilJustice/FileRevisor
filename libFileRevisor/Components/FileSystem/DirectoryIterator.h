@@ -2,8 +2,6 @@
 class CharArray256Helper;
 class FileOpenerCloser;
 class FileReader;
-template<typename ReturnType, typename ClassType, typename Arg1Type, typename Arg2Type>
-class NonVoidTwoArgMemberFunctionCaller;
 
 class DirectoryIterator
 {

@@ -41,6 +41,7 @@ if(UNIX)
       target_compile_options(CodeCovLibraryInterface INTERFACE -O0 -g --coverage)
       target_link_libraries(CodeCovLibraryInterface INTERFACE --coverage)
    elseif(IncludeWhatYouUseMode)
+      replace(CMAKE_CXX_FLAGS_DEBUG "-g" "")
       set(CMAKE_CXX_INCLUDE_WHAT_YOU_USE "/usr/bin/include-what-you-use"
          "-Xiwyu" "--keep=*pch.h"
          "-Xiwyu" "--cxx17ns"

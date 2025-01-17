@@ -1,15 +1,4 @@
 #include "pch.h"
-#if defined __linux__ || defined __APPLE__
-#include "libFileRevisor/Components/FileSystem/DirectoryIterator.h"
-#include "libFileRevisor/Components/FileSystem/FileOpenerCloser.h"
-#include "libFileRevisor/Components/FileSystem/FileSystem.h"
-#include "libFileRevisor/Components/Utility/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
-#include "libFileRevisor/Components/Utility/Iteration/Counter/PredicateCounter.h"
-#include "libFileRevisor/Components/Utility/Iteration/Math/OneExtraArgMemberFunctionAccumulator.h"
-#include "libFileRevisor/Components/Utility/Iteration/Transform/OneExtraArgMemberFunctionTransformer.h"
-#include "libFileRevisor/Components/Utility/Strings/Pluralizer.h"
-#include "libFileRevisor/Components/Utility/Strings/TextReplacer.h"
-#endif
 #include "libFileRevisor/Components/SubPrograms/DeleteDirectorySubProgram.h"
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgramFactory.h"
 #include "libFileRevisor/Components/SubPrograms/RenameDirectoriesSubProgram.h"

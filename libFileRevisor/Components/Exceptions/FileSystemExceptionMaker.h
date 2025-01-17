@@ -1,5 +1,4 @@
 #pragma once
-#include "libFileRevisor/Enums/FileExceptionType.h"
 #include "libFileRevisor/Exceptions/FileSystemException.h"
 class ErrorCodeTranslator;
 

@@ -1,7 +1,6 @@
 #pragma once
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgram.h"
 
-class Console;
 class DirectoryIterator;
 template<
    typename ClassType,

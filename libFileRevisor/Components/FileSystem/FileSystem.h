@@ -1,6 +1,4 @@
 #pragma once
-class FileSystemTests;
-
 template<typename ReturnType, typename ClassType, typename ArgumentType>
 class NonVoidOneArgMemberFunctionCaller;
 
@@ -24,7 +22,6 @@ class VoidTwoArgMemberFunctionCaller;
 
 class Console;
 class ConstCharPointerGetter;
-class DirectoryIterator;
 class FileOpenerCloser;
 class FileSystemExceptionMaker;
 class RecursiveFileDeleter;

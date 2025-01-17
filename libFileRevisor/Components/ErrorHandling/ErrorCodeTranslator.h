@@ -1,5 +1,4 @@
 #pragma once
-class ErrorCodeTranslatorTests;
 
 #if defined __linux__|| defined __APPLE__
 int* GetLinuxErrno();

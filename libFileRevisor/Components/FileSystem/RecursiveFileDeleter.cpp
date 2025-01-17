@@ -1,5 +1,4 @@
 #include "pch.h"
-#include "libFileRevisor/Components/ErrorHandling/ErrorCodeTranslator.h"
 #include "libFileRevisor/Components/Exceptions/FileSystemExceptionMaker.h"
 #include "libFileRevisor/Components/FileSystem/RecursiveFileDeleter.h"
 #include "libFileRevisor/Components/Utility/Threading/ThreadIdGetter.h"

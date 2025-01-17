@@ -2,11 +2,9 @@
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Components/SubPrograms/DeleteDirectorySubProgram.h"
 #include "libFileRevisor/Components/Utility/FunctionCallers/Member/VoidOneArgMemberFunctionCaller.h"
-#include "libFileRevisor/Components/Utility/FunctionCallers/TryCatchCallers/NonVoidOneArgTryCatchCaller.h"
 #include "libFileRevisor/Components/Utility/FunctionCallers/TryCatchCallers/VoidTwoArgTryCatchCaller.h"
 #include "libFileRevisor/Components/Utility/Iteration/ForEach/ParallelTwoArgMemberFunctionForEacher.h"
 #include "libFileRevisor/Components/Utility/Iteration/ForEach/TwoArgMemberFunctionForEacher.h"
-#include "libFileRevisor/Components/Utility/Strings/Pluralizer.h"
 
 DeleteDirectorySubProgram::DeleteDirectorySubProgram()
    // Function Callers
