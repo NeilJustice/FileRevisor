@@ -17,7 +17,7 @@ void CreateIntegrationTestsDirectoryStructure()
   fileSystem.CreateTextFile(_rootFolderPath / "root.file1", "");
   const string file2Path = (_rootFolderPath / "root.file2").string();
   fileSystem.CreateTextFile(file2Path, "");
-#if defined __linux__|| defined __APPLE__
+#if defined __linux__
   const string symlinkPath = (_rootFolderPath / "root.symlink3").string();
   int symlinkResult = symlink(file2Path.c_str(), symlinkPath.c_str());
   release_assert(symlinkResult == 0);

@@ -8,7 +8,7 @@ EVIDENCE
 
 FileReader _fileReader;
 // Function Pointers
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 METALMOCK_NONVOID4_STATIC_OR_FREE(size_t, _call_fread, void*, size_t, size_t, FILE*)
 #elif defined _WIN32
 METALMOCK_NONVOID5_STATIC_OR_FREE(size_t, _call_fread_nolock_s, void*, size_t, size_t, size_t, FILE*)
@@ -17,7 +17,7 @@ METALMOCK_NONVOID5_STATIC_OR_FREE(size_t, _call_fread_nolock_s, void*, size_t, s
 STARTUP
 {
    // Function Pointers
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
    _fileReader._call_fread = BIND_4ARG_METALMOCK_OBJECT(_call_freadMock);
 #elif defined _WIN32
    _fileReader._call_fread_nolock_s = BIND_5ARG_METALMOCK_OBJECT(_call_fread_nolock_sMock);
@@ -28,14 +28,14 @@ TEST(DefaultConstructor_SetsFunctionPointers)
 {
    const FileReader fileReader;
    // Function Pointers
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
    STD_FUNCTION_TARGETS(fread, fileReader._call_fread);
 #elif defined _WIN32
    STD_FUNCTION_TARGETS(_fread_nolock_s, fileReader._call_fread_nolock_s);
 #endif
 }
 
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 
 struct _fread_CallHistoryValues
 {

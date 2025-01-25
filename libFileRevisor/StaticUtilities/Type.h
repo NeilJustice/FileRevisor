@@ -1,5 +1,5 @@
 #pragma once
-#if defined __linux__|| defined __APPLE__
+#if defined __linux__
 #include <cxxabi.h>
 #endif
 
@@ -26,7 +26,7 @@ public:
    Type() = delete;
 private:
    static const std::string* TypeInfoToTypeName(const std::type_info& typeInfo);
-#if defined __linux__|| defined __APPLE__
+#if defined __linux__
    static std::string Demangle(const char* mangledTypeName);
 #elif _WIN32
    static std::string Demangle(const char* mangledTypeName);

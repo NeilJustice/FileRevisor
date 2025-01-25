@@ -6,7 +6,7 @@
 FileOpenerCloser::FileOpenerCloser()
    // Function Pointers
    : _call_fclose(fclose)
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
    , _call_fopen(fopen)
 #elif _WIN32
    , _call_wfsopen(_wfsopen)
@@ -22,7 +22,7 @@ FileOpenerCloser::~FileOpenerCloser()
 
 shared_ptr<FILE> FileOpenerCloser::OpenReadModeBinaryFile(const fs::path& filePath, bool throwIfFileNotOpenable) const
 {
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
    shared_ptr<FILE> readModeBinaryFilePointer = OpenFileOnLinux(filePath, "rb", throwIfFileNotOpenable);
 #elif _WIN32
    shared_ptr<FILE> readModeBinaryFilePointer = OpenFileOnWindows(filePath, L"rb", throwIfFileNotOpenable);
@@ -44,7 +44,7 @@ void FileOpenerCloser::CloseFile(FILE* rawFilePointer, const fs::path& filePath)
 
 // Private Functions
 
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 
 shared_ptr<FILE> FileOpenerCloser::OpenFileOnLinux(const fs::path& filePath, const char* fileOpenMode, bool throwIfFileNotOpenable) const
 {

@@ -19,7 +19,7 @@ void ReleaseAssert(
    long lineNumber,
    const char* functionName)
 {
-#if defined __linux__|| defined __APPLE__
+#if defined __linux__
    if (UNLIKELY(!predicateExpressionResult))
 #elif _WIN32
    if (!predicateExpressionResult)

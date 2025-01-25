@@ -11,13 +11,13 @@
 #endif
 #include <filesystem>
 #include <regex>
-#if defined __linux__ || defined __APPLE__
-   #include <cstddef>
-   #include <ios>
-   #include <memory>
-   #include <mutex>
-   #include <string.h>
-   #include <thread>
+#if defined __linux__
+#include <cstddef>
+#include <ios>
+#include <memory>
+#include <mutex>
+#include <string.h>
+#include <thread>
 #endif
 namespace fs = std::filesystem;
 using namespace std;

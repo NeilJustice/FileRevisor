@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libFileRevisor/Components/FileSystem/RecursiveFileDeleter.h"
-#if defined __linux__|| defined __APPLE__
+#if defined __linux__
 #include <sys/stat.h>
 #endif
 
@@ -54,7 +54,7 @@ STARTUP
 
 CLEANUP
 {
-#if defined __linux__|| defined __APPLE__
+#if defined __linux__
   Chmod777Directory(_root_subdirectory5);
 #endif
    fs::remove_all(_rootFolderPath);
@@ -116,7 +116,7 @@ TEST(RecursivelyDeleteAllFilesInDirectory_DryRunIsFalse_RecursivelyPrintsWouldDe
   AssertExpectedEndingStateOfFileSystem();
 }
 
-#if defined __linux__|| defined __APPLE__
+#if defined __linux__
 // chmod 555 = "dr-xr-xr-x"
 static void Chmod555Directory(const fs::path& directoryPath)
 {

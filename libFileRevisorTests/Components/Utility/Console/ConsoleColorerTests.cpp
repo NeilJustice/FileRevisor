@@ -12,7 +12,7 @@ AFACT(UnsetTextColor_DidPreviouslySetTextColorIsTrue_CallsSetTextColorWhite)
 // Private Functions
 FACTS(ColorToLinuxColor_ReturnsLinuxColorStringForColor)
 FACTS(ColorToWindowsColor_ReturnsWindowsColorForColor)
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 AFACT(Linux__SetTextColor_CallsColorToLinuxColor_InsertionOperatorsLinuxColorToCout)
 #elif _WIN32
 AFACT(Windows__SetTextColor_CallsSetConsoleTextAttributeToWindowsColor)
@@ -157,7 +157,7 @@ TEST2X2(ColorToWindowsColor_ReturnsWindowsColorForColor,
    ARE_EQUAL(expectedReturnValue, windowsColor);
 }
 
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 
 TEST(Linux__SetTextColor_CallsColorToLinuxColor_InsertionOperatorsLinuxColorToCout)
 {

@@ -47,7 +47,7 @@ TEST(release_assert_IsFalse_FromOperatorParentheses_ThrowsLogicError)
    catch (const logic_error& ex)
    {
       const char* const exceptionMessage = ex.what();
-#if defined __linux__|| defined __APPLE__
+#if defined __linux__
       IS_TRUE(String::ContainsSubstring(exceptionMessage, "release_assert(false) failed in operator()()"));
 #elif _WIN32
       IS_TRUE(String::ContainsSubstring(exceptionMessage, "release_assert(false) failed in operator ()()"));

@@ -24,14 +24,14 @@ AFACT(DeleteFileOrDirectory_DryRunIsFalse_IgnoreFileDeleteErrorIsFalse_DeletesFi
 // Open File
 AFACT(OpenFile_FOpenReturnsNullFILEPointer_ThrowsFileSystemException)
 AFACT(OpenFile_FOpenReturnsNonNullFILEPointer_ReturnsFilePointer)
-#if defined __linux__|| defined __APPLE__
+#if defined __linux__
 AFACT(Linux__RemoveReadOnlyFlagsFromTopLevelFilesInDirectoryIfWindows_DoesNothing)
 #elif _WIN32
 AFACT(Windows__RemoveReadOnlyFlagsFromTopLevelFilesInDirectoryIfWindows_DryRunIsTrue_DoesNothing)
 AFACT(Windows__RemoveReadOnlyFlagsFromTopLevelFilesInDirectoryIfWindows_DryRunIsFalse_CallsRemoveReadonlyFlagOnAllTopLevelFilesInDirectory)
 #endif
 // Queries
-#if defined __linux__|| defined __APPLE__
+#if defined __linux__
 AFACT(Linux__GetAbsolutePath_ReturnsNonEmptyPath)
 #elif _WIN32
 AFACT(Windows__GetAbsolutePath_ReturnsResultOfCallingStdFilesystemAbsolute)
@@ -318,7 +318,7 @@ TEST(OpenFile_FOpenReturnsNonNullFILEPointer_ReturnsFilePointer)
    ARE_EQUAL(rawFilePointer, filePointer.get());
 }
 
-#if defined __linux__|| defined __APPLE__
+#if defined __linux__
 
 TEST(Linux__RemoveReadOnlyFlagsFromTopLevelFilesInDirectoryIfWindows_DoesNothing)
 {
@@ -373,7 +373,7 @@ TEST(Windows__RemoveReadOnlyFlagsFromTopLevelFilesInDirectoryIfWindows_DryRunIsF
 
 // Queries
 
-#if defined __linux__|| defined __APPLE__
+#if defined __linux__
 TEST(Linux__GetAbsolutePath_ReturnsNonEmptyPath)
 {
    const fs::path relativeFileOrFolderPath = ZenUnit::Random<fs::path>();

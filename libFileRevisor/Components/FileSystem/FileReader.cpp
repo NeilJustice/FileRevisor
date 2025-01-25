@@ -3,7 +3,7 @@
 
 FileReader::FileReader()
    // Function Pointers
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
    : _call_fread(fread)
 #elif defined _WIN32
    : _call_fread_nolock_s(_fread_nolock_s)
@@ -18,7 +18,7 @@ FileReader::~FileReader()
 pair<size_t, array<char, 256>> FileReader::ReadFirst256Bytes(FILE* rawFilePointer) const
 {
    pair<size_t, array<char, 256>> numberOfBytesReadAndFirst256FileBytes{};
-#if defined __linux__|| defined __APPLE__
+#if defined __linux__
    numberOfBytesReadAndFirst256FileBytes.first = _call_fread(
       numberOfBytesReadAndFirst256FileBytes.second.data(),
       1,

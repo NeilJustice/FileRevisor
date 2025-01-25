@@ -56,7 +56,7 @@ FileSystem::~FileSystem()
 
 fs::path FileSystem::GetAbsolutePath(const fs::path& fileOrFolderPath) const
 {
-#if defined __linux__|| defined __APPLE__
+#if defined __linux__
    fs::path absoluteFileOrFolderPath = fs::absolute(fileOrFolderPath);
    const fs::path absoluteFileOrFolderPathFileName = absoluteFileOrFolderPath.filename();
    if (absoluteFileOrFolderPathFileName == ".")
@@ -171,7 +171,7 @@ void FileSystem::CreateFileWithBytes(const fs::path& filePath, const char* bytes
    const fs::path parentFolderPath = filePath.parent_path();
    fs::create_directories(parentFolderPath);
    const shared_ptr<FILE> binaryOrTextFileOpenInWriteMode = OpenFile(filePath, "wb");
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
    const size_t numberOfBytesWritten = fwrite(bytes, 1, bytesLength, binaryOrTextFileOpenInWriteMode.get());
 #elif defined _WIN32
    const size_t numberOfBytesWritten = _fwrite_nolock(bytes, 1, bytesLength, binaryOrTextFileOpenInWriteMode.get());
@@ -252,7 +252,7 @@ void FileSystem::DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(
 
 void FileSystem::RemoveFile(const char* filePath, bool ignoreFileDeleteError) const
 {
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
    const int unlinkReturnValue = unlink(filePath);
 #elif _WIN32
    const int unlinkReturnValue = _unlink(filePath);

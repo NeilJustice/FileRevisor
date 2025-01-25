@@ -29,7 +29,7 @@ void RecursiveFileDeleter::PrintDeletedFileMessage(const char* filePath) const
    _console->ProgramNameThreadIdWriteLine(deletedFileMessage);
 }
 
-#if defined __linux__|| defined __APPLE__
+#if defined __linux__
 void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* directoryPath, const FileRevisorArgs& args) const
 {
    DIR* const dirPointer = opendir(directoryPath);

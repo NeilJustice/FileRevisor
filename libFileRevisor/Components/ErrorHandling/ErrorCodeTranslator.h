@@ -1,6 +1,6 @@
 #pragma once
 
-#if defined __linux__|| defined __APPLE__
+#if defined __linux__
 int* GetLinuxErrno();
 #endif
 
@@ -14,7 +14,7 @@ public:
 private:
    // Function Pointers
    function<int* ()> _call_errno;
-#if defined __linux__|| defined __APPLE__
+#if defined __linux__
    function<char* (int, char*, size_t)> _call_strerror_r;
 #elif _WIN32
    function<errno_t(char*, size_t, int)> _call_strerror_s;

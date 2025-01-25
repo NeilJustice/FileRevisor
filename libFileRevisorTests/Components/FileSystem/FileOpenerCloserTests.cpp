@@ -16,7 +16,7 @@ EVIDENCE
 FileOpenerCloser _fileOpenerCloser;
 // Function Pointers
 METALMOCK_NONVOID1_STATIC_OR_FREE(int, fclose, FILE*)
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
 METALMOCK_NONVOID2_STATIC_OR_FREE(FILE*, fopen, const char*, const char*)
 #elif _WIN32
 METALMOCK_NONVOID3_STATIC_OR_FREE(FILE*, _wfsopen, const wchar_t*, const wchar_t*, int)
@@ -28,7 +28,7 @@ STARTUP
 {
    // Function Pointers
    _fileOpenerCloser._call_fclose = BIND_1ARG_METALMOCK_OBJECT(fcloseMock);
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
    _fileOpenerCloser._call_fopen = BIND_2ARG_METALMOCK_OBJECT(fopenMock);
 #elif _WIN32
    _fileOpenerCloser._call_wfsopen = BIND_3ARG_METALMOCK_OBJECT(_wfsopenMock);
@@ -41,7 +41,7 @@ TEST(DefaultConstructor_SetsFunctionPointers)
 {
    const FileOpenerCloser fileOpenerCloser;
    STD_FUNCTION_TARGETS(::fclose, fileOpenerCloser._call_fclose);
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
    STD_FUNCTION_TARGETS(fopen, fileOpenerCloser._call_fopen);
 #elif _WIN32
    STD_FUNCTION_TARGETS(_wfsopen, fileOpenerCloser._call_wfsopen);
@@ -51,7 +51,7 @@ TEST(DefaultConstructor_SetsFunctionPointers)
 TEST(OpenReadModeBinaryFile_ReturnsFilePointerOpenedInBinaryReadMode)
 {
    FILE* const readModeBinaryRawFilePointer = tmpfile();
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
    fopenMock.Return(readModeBinaryRawFilePointer);
 #elif _WIN32
    _wfsopenMock.Return(readModeBinaryRawFilePointer);
@@ -61,7 +61,7 @@ TEST(OpenReadModeBinaryFile_ReturnsFilePointerOpenedInBinaryReadMode)
    //
    const shared_ptr<FILE> returnedReadModeBinaryFilePointer = _fileOpenerCloser.OpenReadModeBinaryFile(filePath, skipFilesInUse);
    //
-#if defined __linux__ || defined __APPLE__
+#if defined __linux__
    METALMOCK(fopenMock.CalledOnceWith(filePath.c_str(), "rb"));
 #elif _WIN32
    METALMOCK(_wfsopenMock.CalledOnceWith(filePath.c_str(), L"rb", _SH_DENYWR));

@@ -9,25 +9,25 @@
 #include <iostream>
 #include <map>
 #include <regex>
-#if defined __linux__ || defined __APPLE__
-   #include <cstddef>
-   #include <dirent.h>
-   #include <ios>
-   #include <memory>
-   #include <mutex>
-   #include <string.h>
-   #include <thread>
-   #include <unistd.h>
+#if defined __linux__
+#include <cstddef>
+#include <dirent.h>
+#include <ios>
+#include <memory>
+#include <mutex>
+#include <string.h>
+#include <thread>
+#include <unistd.h>
 #endif
 namespace fs = std::filesystem;
 using namespace std;
 
 #if defined _WIN32
-   #define WIN32_LEAN_AND_MEAN
-   #define NOGDI
-   #define NOMINMAX
-   #include <io.h> // _isatty()
-   #include "Windows.h"
+#define WIN32_LEAN_AND_MEAN
+#define NOGDI
+#define NOMINMAX
+#include <io.h> // _isatty()
+#include "Windows.h"
 #endif
 
 // libFileRevisor Constants
