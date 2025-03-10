@@ -10,4 +10,4 @@ python -u FileRevisorDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
    --cmake-definitions="-DClangCodeCoverageMode=ON" \
    --no-install
 
-python /code/CodeCovSidekick/CodeCovSidekick.py --solution=FileRevisor --tests-project=libFileRevisorTests
+LinuxCodeCoverageRunner measure-cplusplus-code-coverage --solution=FileRevisor --tests-project=libFileRevisorTests
