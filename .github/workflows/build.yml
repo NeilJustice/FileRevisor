@@ -95,11 +95,3 @@ jobs:
 
       - name: tree GITHUB_WORKSPACE
         run: tree $GITHUB_WORKSPACE
-
-      - name: Archive binary filerevisor
-        uses: actions/upload-artifact@v3
-        with:
-          name: filerevisor
-          path: Release/FileRevisor/filerevisor
-        if: ${{ matrix.cxx == 'clang++' && matrix.cmake_build_type == 'Release' }}
-
