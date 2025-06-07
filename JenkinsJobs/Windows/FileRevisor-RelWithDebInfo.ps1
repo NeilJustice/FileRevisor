@@ -1,5 +1,5 @@
-$env:PYTHONPATH="."
-python.exe -u FileRevisorDevOpsPython\BuildAndInstallCPlusPlusProgram.py `
+$env:PYTHONPATH="FileRevisorDevOpsPython"
+python.exe -u FileRevisorDevOpsPython\FileRevisorDevOpsPython\BuildAndInstallCPlusPlusProgram.py `
    --solution-name=FileRevisor `
    --cmake-build-type=RelWithDebInfo `
    --tests-project-name=libFileRevisorTests `
