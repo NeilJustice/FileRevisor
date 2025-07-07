@@ -3,11 +3,9 @@ set -eu
 
 osname="$(uname --operating-system)"
 if [[ "$osname" == *"Linux" ]]; then
-   ./JenkinsJobs/Linux/FileRevisor-Cppcheck.sh
    ./JenkinsJobs/Linux/FileRevisor-DevOpsPython.sh
    ./JenkinsJobs/Linux/FileRevisor-Debug-Clang.sh
 elif [ "$osname" == "Msys" ]; then
-   pwsh.exe JenkinsJobs/Windows/FileRevisor-Cppcheck.ps1
    pwsh.exe JenkinsJobs/Windows/FileRevisor-DevOpsPython.ps1
    pwsh.exe JenkinsJobs/Windows/FileRevisor-Debug.ps1 "OFF"
 fi
