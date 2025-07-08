@@ -1,7 +1,9 @@
 #include "pch.h"
 #include "libFileRevisor/StaticUtilities/StringUtil.h"
 
-TESTS(StringTests)
+TESTS(StringUtilTests)
+AFACT(ConcatStrings_ReturnsStringsConcatenatedIntoAString)
+AFACT(ConcatValues_ReturnsValuesConcatenatedIntoAString)
 FACTS(ContainsSubstring_ReturnsTrueIfStringContainsSubstring)
 FACTS(CaseInsensitiveContainsSubstring_ReturnsTrueIfStringCaseInsensitiveContainsSubstring)
 FACTS(ReplaceText_ReturnsReplacedString)
@@ -92,4 +94,4 @@ TEST4X4(ReplaceText_ReturnsReplacedString,
    ARE_EQUAL(expectedReturnValue, replacedString);
 }
 
-RUN_TESTS(StringTests)
+RUN_TESTS(StringUtilTests)
