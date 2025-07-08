@@ -117,13 +117,6 @@ TEST(RecursivelyDeleteAllFilesInDirectory_DryRunIsFalse_RecursivelyPrintsWouldDe
 }
 
 #if defined __linux__
-// chmod 555 = "dr-xr-xr-x"
-static void Chmod555Directory(const fs::path& directoryPath)
-{
-  const int userRead_groupRead_othersRead = S_IRUSR | S_IRGRP | S_IROTH;
-  const int chmodReturnValue = chmod(directoryPath.string().c_str(), userRead_groupRead_othersRead);
-  release_assert(chmodReturnValue == 0);
-}
 
 // chmod 777 = "drwxrwxrwx"
 static void Chmod777Directory(const fs::path& directoryPath)
@@ -131,6 +124,7 @@ static void Chmod777Directory(const fs::path& directoryPath)
   const int chmodReturnValue = chmod(directoryPath.string().c_str(), 0777);
   release_assert(chmodReturnValue == 0);
 }
+
 #endif
 
 RUN_TESTS(RecursiveFileDeleterIntegrationTests)

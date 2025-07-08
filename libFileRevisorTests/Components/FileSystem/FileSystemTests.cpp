@@ -506,24 +506,6 @@ void StdFileSystemRenameWithSettableErrorCode(
    outErrorCode = errorCode;
 }
 
-struct remove_all_CallHistory
-{
-   size_t numberOfCalls = 0;
-   unsigned long long returnValue = 0;
-   fs::path directoryPathArg;
-   error_code outErrorCodeArg;
-   error_code outErrorCodeReturnValue;
-} _remove_all_CallHistory;
-
-unsigned long long remove_all_CallInstead(const fs::path& directoryPath, error_code& outErrorCode)
-{
-   ++_remove_all_CallHistory.numberOfCalls;
-   _remove_all_CallHistory.directoryPathArg = directoryPath;
-   _remove_all_CallHistory.outErrorCodeArg = outErrorCode;
-   outErrorCode = _remove_all_CallHistory.outErrorCodeReturnValue;
-   return _remove_all_CallHistory.returnValue;
-}
-
 TEST(RenameDirectory_RenamesDirectory_FilesystemRenameReturns0_ReturnsRenamedFolderPath)
 {
    _stdFileSystemRenameErrorCodeValue = 0;
