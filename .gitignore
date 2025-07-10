@@ -16,6 +16,7 @@ CoberturaCodeCoverageResults_FileRevisorDevOpsPythonTests.xml
 
 # Linux
 covhtml/
+build.ninja
 coverage.profdata
 coverage.profraw
 
