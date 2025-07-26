@@ -3,6 +3,6 @@ python.exe -u FileRevisorDevOpsPython\FileRevisorDevOpsPython\BuildAndInstallCPl
    --solution-name=FileRevisor `
    --cmake-build-type=RelWithDebInfo `
    --tests-project-name=libFileRevisorTests `
-   --cmake-definitions="-DCMAKE_INSTALL_PREFIX=X:\" `
+   --cmake-definitions="-DCMAKE_INSTALL_PREFIX=C:\" `
    --install
 exit $LastExitCode
