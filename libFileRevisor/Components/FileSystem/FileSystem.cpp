@@ -6,12 +6,12 @@
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Components/FileSystem/RecursiveFileDeleter.h"
 #include "libFileRevisor/Exceptions/FileSystemException.h"
-#include "libFileRevisor/Components/Utility/FunctionCallers/Member/NonVoidOneArgMemberFunctionCaller.h"
-#include "libFileRevisor/Components/Utility/FunctionCallers/Member/NonVoidTwoArgMemberFunctionCaller.h"
-#include "libFileRevisor/Components/Utility/FunctionCallers/Member/VoidOneArgMemberFunctionCaller.h"
-#include "libFileRevisor/Components/Utility/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
-#include "libFileRevisor/Components/Utility/Iteration/ForEach/FourArgMemberFunctionForEacher.h"
-#include "libFileRevisor/Components/Utility/Strings/ConstCharPointerGetter.h"
+#include "libFileRevisor/Components/FunctionCallers/Member/NonVoidOneArgMemberFunctionCaller.h"
+#include "libFileRevisor/Components/FunctionCallers/Member/NonVoidTwoArgMemberFunctionCaller.h"
+#include "libFileRevisor/Components/FunctionCallers/Member/VoidOneArgMemberFunctionCaller.h"
+#include "libFileRevisor/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
+#include "libFileRevisor/Components/Iteration/ForEach/FourArgMemberFunctionForEacher.h"
+#include "libFileRevisor/Components/Strings/ConstCharPointerGetter.h"
 
 FileSystem::FileSystem()
    // Function Pointers

@@ -4,9 +4,9 @@
 #include "libFileRevisorTests/Components/FileRevisor/MetalMock/FileRevisorArgsParserMock.h"
 #include "libFileRevisorTests/Components/SubPrograms/MetalMock/FileRevisorSubProgramFactoryMock.h"
 #include "libFileRevisorTests/Components/SubPrograms/MetalMock/FileRevisorSubProgramMock.h"
-#include "libFileRevisorTests/Components/Utility/Console/MetalMock/ConsoleMock.h"
-#include "libFileRevisorTests/Components/Utility/FunctionCallers/TryCatchCallers/MetalMock/NonVoidOneArgTryCatchCallerMock.h"
-#include "libFileRevisorTests/Components/Utility/Time/MetalMock/StopwatchMock.h"
+#include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libFileRevisorTests/Components/FunctionCallers/TryCatchCallers/MetalMock/NonVoidOneArgTryCatchCallerMock.h"
+#include "libFileRevisorTests/Components/Time/MetalMock/StopwatchMock.h"
 
 TESTS(FileRevisorProgramTests)
 AFACT(DefaultConstructor_SetsFunctionPointers_NewsComponents)

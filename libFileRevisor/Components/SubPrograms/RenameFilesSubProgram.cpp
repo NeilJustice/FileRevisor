@@ -1,11 +1,11 @@
 #include "pch.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Components/SubPrograms/RenameFilesSubProgram.h"
-#include "libFileRevisor/Components/Utility/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
-#include "libFileRevisor/Components/Utility/Iteration/Counter/PredicateCounter.h"
-#include "libFileRevisor/Components/Utility/Iteration/Transform/OneExtraArgMemberFunctionTransformer.h"
-#include "libFileRevisor/Components/Utility/Strings/Pluralizer.h"
-#include "libFileRevisor/Components/Utility/Strings/TextReplacer.h"
+#include "libFileRevisor/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
+#include "libFileRevisor/Components/Iteration/Counter/PredicateCounter.h"
+#include "libFileRevisor/Components/Iteration/Transform/OneExtraArgMemberFunctionTransformer.h"
+#include "libFileRevisor/Components/Strings/Pluralizer.h"
+#include "libFileRevisor/Components/Strings/TextReplacer.h"
 
 RenameFilesSubProgram::RenameFilesSubProgram()
    // Function Callers

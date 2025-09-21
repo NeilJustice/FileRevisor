@@ -1,11 +1,11 @@
 #include "pch.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorArgsParser.h"
-#include "libFileRevisor/Components/Utility/Docopt/docopt.h"
+#include "libFileRevisor/Components/Docopt/docopt.h"
 #include "libFileRevisorTests/Components/FileRevisor/MetalMock/FileRevisorPreambleMakerMock.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
-#include "libFileRevisorTests/Components/Utility/Console/MetalMock/ConsoleMock.h"
-#include "libFileRevisorTests/Components/Utility/Docopt/MetalMock/DocoptParserMock.h"
-#include "libFileRevisorTests/Components/Utility/FunctionCallers/Member/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
+#include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libFileRevisorTests/Components/Docopt/MetalMock/DocoptParserMock.h"
+#include "libFileRevisorTests/Components/FunctionCallers/Member/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
 
 TESTS(FileRevisorArgsParserTests)
 AFACT(ParseArgs_ParsesEachArgument_ReturnsFileRevisorArgs)

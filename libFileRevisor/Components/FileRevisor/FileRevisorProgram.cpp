@@ -3,8 +3,8 @@
 #include "libFileRevisor/Components/FileRevisor/FileRevisorProgram.h"
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgram.h"
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgramFactory.h"
-#include "libFileRevisor/Components/Utility/FunctionCallers/TryCatchCallers/NonVoidOneArgTryCatchCaller.h"
-#include "libFileRevisor/Components/Utility/Time/Stopwatch.h"
+#include "libFileRevisor/Components/FunctionCallers/TryCatchCallers/NonVoidOneArgTryCatchCaller.h"
+#include "libFileRevisor/Components/Time/Stopwatch.h"
 
 FileRevisorProgram::FileRevisorProgram()
    // Function Pointers

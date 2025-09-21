@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libFileRevisor/Components/Exceptions/FileSystemExceptionMaker.h"
 #include "libFileRevisor/Components/FileSystem/RecursiveFileDeleter.h"
-#include "libFileRevisor/Components/Utility/Threading/ThreadIdGetter.h"
+#include "libFileRevisor/Components/Threading/ThreadIdGetter.h"
 
 RecursiveFileDeleter::RecursiveFileDeleter()
 #if defined __linux__

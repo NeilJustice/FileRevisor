@@ -35,7 +35,7 @@ using namespace std;
 #include "libFileRevisor/ValueTypes/FileRevisorArgs.h"
 #include "libFileRevisor/ValueTypes/RenameResult.h"
 // libFileRevisorTests Components
-#include "libFileRevisorTests/Components/Utility/Console/MetalMock/ConsoleMock.h"
+#include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
 // libFileRevisor StaticUtilities
 #include "libFileRevisor/StaticUtilities/ENUM_STRING_ARRAY.h"
 #include "libFileRevisor/StaticUtilities/Map.h"

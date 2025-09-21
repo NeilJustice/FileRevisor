@@ -1,12 +1,12 @@
 #include "pch.h"
 #include "libFileRevisor/Components/SubPrograms/DeleteDirectorySubProgram.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
-#include "libFileRevisorTests/Components/Utility/Console/MetalMock/ConsoleMock.h"
-#include "libFileRevisorTests/Components/Utility/FunctionCallers/Member/MetalMock/VoidOneArgMemberFunctionCallerMock.h"
-#include "libFileRevisorTests/Components/Utility/FunctionCallers/TryCatchCallers/MetalMock/VoidTwoArgTryCatchCallerMock.h"
-#include "libFileRevisorTests/Components/Utility/Iteration/ForEach/MetalMock/ParallelTwoArgMemberFunctionForEacherMock.h"
-#include "libFileRevisorTests/Components/Utility/Iteration/ForEach/MetalMock/TwoArgMemberFunctionForEacherMock.h"
-#include "libFileRevisorTests/Components/Utility/Strings/MetalMock/PluralizerMock.h"
+#include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libFileRevisorTests/Components/FunctionCallers/Member/MetalMock/VoidOneArgMemberFunctionCallerMock.h"
+#include "libFileRevisorTests/Components/FunctionCallers/TryCatchCallers/MetalMock/VoidTwoArgTryCatchCallerMock.h"
+#include "libFileRevisorTests/Components/Iteration/ForEach/MetalMock/ParallelTwoArgMemberFunctionForEacherMock.h"
+#include "libFileRevisorTests/Components/Iteration/ForEach/MetalMock/TwoArgMemberFunctionForEacherMock.h"
+#include "libFileRevisorTests/Components/Strings/MetalMock/PluralizerMock.h"
 
 TESTS(DeleteDirectorySubProgramTests)
 AFACT(DefaultConstructor_NewsComponents)

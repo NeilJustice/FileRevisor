@@ -2,10 +2,10 @@
 #include "libFileRevisor/Components/FileSystem/DirectoryIterator.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Components/SubPrograms/ReplaceTextInTextFilesSubProgram.h"
-#include "libFileRevisor/Components/Utility/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
-#include "libFileRevisor/Components/Utility/Iteration/Math/OneExtraArgMemberFunctionAccumulator.h"
-#include "libFileRevisor/Components/Utility/Strings/Pluralizer.h"
-#include "libFileRevisor/Components/Utility/Strings/TextReplacer.h"
+#include "libFileRevisor/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
+#include "libFileRevisor/Components/Iteration/Math/OneExtraArgMemberFunctionAccumulator.h"
+#include "libFileRevisor/Components/Strings/Pluralizer.h"
+#include "libFileRevisor/Components/Strings/TextReplacer.h"
 
 ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFilesSubProgram()
    // Function Pointers

@@ -2,11 +2,11 @@
 #include "libFileRevisor/Components/SubPrograms/ReplaceTextInTextFilesSubProgram.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/DirectoryIteratorMock.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
-#include "libFileRevisorTests/Components/Utility/Console/MetalMock/ConsoleMock.h"
-#include "libFileRevisorTests/Components/Utility/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
-#include "libFileRevisorTests/Components/Utility/Iteration/Math/MetalMock/OneExtraArgMemberFunctionAccumulatorMock.h"
-#include "libFileRevisorTests/Components/Utility/Strings/MetalMock/PluralizerMock.h"
-#include "libFileRevisorTests/Components/Utility/Strings/MetalMock/TextReplacerMock.h"
+#include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libFileRevisorTests/Components/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
+#include "libFileRevisorTests/Components/Iteration/Math/MetalMock/OneExtraArgMemberFunctionAccumulatorMock.h"
+#include "libFileRevisorTests/Components/Strings/MetalMock/PluralizerMock.h"
+#include "libFileRevisorTests/Components/Strings/MetalMock/TextReplacerMock.h"
 
 TESTS(ReplaceTextInTextFilesSubProgramTests)
 AFACT(DefaultConstructor_NewsFileSystem)

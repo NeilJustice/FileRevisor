@@ -37,7 +37,7 @@ using namespace std;
 #include "libFileRevisor/Enums/ProgramMode.h"
 #include "libFileRevisor/Enums/WindowsColor.h"
 // libFileRevisor Components
-#include "libFileRevisor/Components/Utility/Console/Console.h"
+#include "libFileRevisor/Components/Console/Console.h"
 // libFileRevisor StaticUtilities
 #include "libFileRevisor/StaticUtilities/ENUM_STRING_ARRAY.h"
 #include "libFileRevisor/StaticUtilities/ReleaseAssert.h"

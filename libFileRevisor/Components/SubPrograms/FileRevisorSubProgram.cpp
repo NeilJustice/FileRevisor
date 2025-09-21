@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Components/SubPrograms/FileRevisorSubProgram.h"
-#include "libFileRevisor/Components/Utility/Strings/Pluralizer.h"
+#include "libFileRevisor/Components/Strings/Pluralizer.h"
 
 FileRevisorSubProgram::~FileRevisorSubProgram()
 {
