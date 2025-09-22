@@ -28,7 +28,7 @@ private:
 public:
    FileRevisorArgsParser();
    virtual ~FileRevisorArgsParser();
-   virtual FileRevisorArgs ParseArgs(const vector<string>& stringArgs) const;
+   virtual FileRevisorArgs ParseStringArgs(const vector<string>& stringArgs) const;
    virtual void PrintPreambleLines(const FileRevisorArgs& args) const;
 private:
    static ProgramMode DetermineProgramMode(

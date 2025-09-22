@@ -23,7 +23,7 @@ FileRevisorArgsParser::~FileRevisorArgsParser()
 {
 }
 
-FileRevisorArgs FileRevisorArgsParser::ParseArgs(const vector<string>& stringArgs) const
+FileRevisorArgs FileRevisorArgsParser::ParseStringArgs(const vector<string>& stringArgs) const
 {
    const map<string, docopt::Value> docoptValues = _docoptParser->ParseArgs(FileRevisorArgs::CommandLineUsage, stringArgs);
    const bool isRenameFilesMode = _docoptParser->GetRequiredBool(docoptValues, "rename-files");

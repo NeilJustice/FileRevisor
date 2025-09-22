@@ -9,8 +9,7 @@
 
 ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFilesSubProgram()
    // Function Pointers
-   : _call_PrintReadingFileMessageIfVerboseMode(
-      make_unique<VoidTwoArgMemberFunctionCaller<ReplaceTextInTextFilesSubProgram, bool, const fs::path&>>())
+   : _call_PrintReadingFileMessageIfVerboseMode(make_unique<VoidTwoArgMemberFunctionCaller<ReplaceTextInTextFilesSubProgram, bool, const fs::path&>>())
    // Function Callers
    , _memberFunctionAccumulator_ReplaceTextInTextFile(make_unique<OneExtraArgMemberFunctionAccumulatorType>())
    // Constant Components

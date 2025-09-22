@@ -4,5 +4,5 @@
 class FileRevisorSubProgramFactoryMock : public Metal::Mock<FileRevisorSubProgramFactory>
 {
 public:
-   METALMOCK_NONVOID1_CONST(shared_ptr<FileRevisorSubProgram>, NewFileRevisorSubProgram, ProgramMode)
+   METALMOCK_NONVOID1_CONST(shared_ptr<FileRevisorSubProgram>, NewSubProgram, ProgramMode)
 };

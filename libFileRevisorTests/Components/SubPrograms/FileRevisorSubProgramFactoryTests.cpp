@@ -6,46 +6,29 @@
 #include "libFileRevisor/Components/SubPrograms/ReplaceTextInTextFilesSubProgram.h"
 
 TESTS(FileRevisorSubProgramFactoryTests)
-AFACT(NewFileRevisorSubProgram_ProgramModeIsRenameFiles_ReturnsRenameFilesSubProgram)
-AFACT(NewFileRevisorSubProgram_ProgramModeIsRenameDirectories_ReturnsRenameDirectoriesSubProgram)
-AFACT(NewFileRevisorSubProgram_ProgramModeIsReplaceFileText_ReturnsReplaceFileTextSubProgram)
-AFACT(NewFileRevisorSubProgram_ProgramModeIsDeleteDirectory_ReturnsDeleteDirectorySubProgram)
-FACTS(NewFileRevisorSubProgram_ProgramModeIsInvalid_ThrowsInvalidArgument)
+AFACT(NewSubProgram_ValidProgramMode_ReturnsSubProgram)
+FACTS(NewSubProgram_ProgramModeIsInvalid_ThrowsInvalidArgument)
 EVIDENCE
 
 FileRevisorSubProgramFactory _fileRevisorSubProgramFactory;
 
-TEST(NewFileRevisorSubProgram_ProgramModeIsRenameFiles_ReturnsRenameFilesSubProgram)
+TEST(NewSubProgram_ValidProgramMode_ReturnsSubProgram)
 {
-   const shared_ptr<FileRevisorSubProgram> renameFilesSubProgram = _fileRevisorSubProgramFactory.NewFileRevisorSubProgram(ProgramMode::RenameFiles);
-   POINTEE_IS_EXACT_TYPE(RenameFilesSubProgram, renameFilesSubProgram);
+   POINTEE_IS_EXACT_TYPE(RenameFilesSubProgram, _fileRevisorSubProgramFactory.NewSubProgram(ProgramMode::RenameFiles));
+   POINTEE_IS_EXACT_TYPE(RenameDirectoriesSubProgram, _fileRevisorSubProgramFactory.NewSubProgram(ProgramMode::RenameDirectories));
+   POINTEE_IS_EXACT_TYPE(ReplaceTextInTextFilesSubProgram, _fileRevisorSubProgramFactory.NewSubProgram(ProgramMode::ReplaceTextInTextFiles));
+   POINTEE_IS_EXACT_TYPE(DeleteDirectorySubProgram, _fileRevisorSubProgramFactory.NewSubProgram(ProgramMode::DeleteDirectory));
 }
 
-TEST(NewFileRevisorSubProgram_ProgramModeIsRenameDirectories_ReturnsRenameDirectoriesSubProgram)
-{
-   const shared_ptr<FileRevisorSubProgram> renameDirectoriesSubProgram = _fileRevisorSubProgramFactory.NewFileRevisorSubProgram(ProgramMode::RenameDirectories);
-   POINTEE_IS_EXACT_TYPE(RenameDirectoriesSubProgram, renameDirectoriesSubProgram);
-}
-
-TEST(NewFileRevisorSubProgram_ProgramModeIsReplaceFileText_ReturnsReplaceFileTextSubProgram)
-{
-   const shared_ptr<FileRevisorSubProgram> replaceTextInFilesSubProgram = _fileRevisorSubProgramFactory.NewFileRevisorSubProgram(ProgramMode::ReplaceTextInTextFiles);
-   POINTEE_IS_EXACT_TYPE(ReplaceTextInTextFilesSubProgram, replaceTextInFilesSubProgram);
-}
-
-TEST(NewFileRevisorSubProgram_ProgramModeIsDeleteDirectory_ReturnsDeleteDirectorySubProgram)
-{
-   const shared_ptr<FileRevisorSubProgram> deleteDirectorySubProgram = _fileRevisorSubProgramFactory.NewFileRevisorSubProgram(ProgramMode::DeleteDirectory);
-   POINTEE_IS_EXACT_TYPE(DeleteDirectorySubProgram, deleteDirectorySubProgram);
-}
-
-TEST1X1(NewFileRevisorSubProgram_ProgramModeIsInvalid_ThrowsInvalidArgument,
+TEST1X1(NewSubProgram_ProgramModeIsInvalid_ThrowsInvalidArgument,
    ProgramMode invalidProgramMode,
    ProgramMode::Unset,
    ProgramMode::MaxValue)
 {
-   THROWS_EXCEPTION(shared_ptr<FileRevisorSubProgram> fileRevisorSubProgram = _fileRevisorSubProgramFactory.NewFileRevisorSubProgram(invalidProgramMode),
-      invalid_argument, "[FileRevisor] Invalid ProgramMode: " + to_string(static_cast<int>(invalidProgramMode)));
+   const string expectedExceptionmessage = String::ConcatValues(
+      "FileRevisorSubProgramFactory::NewSubProgram called with invalid ProgramMode: ", static_cast<int>(invalidProgramMode));
+   THROWS_EXCEPTION(shared_ptr<FileRevisorSubProgram> fileRevisorSubProgram = _fileRevisorSubProgramFactory.NewSubProgram(invalidProgramMode),
+      invalid_argument, expectedExceptionmessage);
 }
 
 RUN_TESTS(FileRevisorSubProgramFactoryTests)

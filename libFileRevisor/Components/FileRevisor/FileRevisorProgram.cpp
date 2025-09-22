@@ -45,9 +45,9 @@ int FileRevisorProgram::Main(int argc, char* argv[])
 
 int FileRevisorProgram::Run(const vector<string>& stringArgs) const
 {
-   const FileRevisorArgs args = _argsParser->ParseArgs(stringArgs);
+   const FileRevisorArgs args = _argsParser->ParseStringArgs(stringArgs);
    _argsParser->PrintPreambleLines(args);
-   const shared_ptr<FileRevisorSubProgram> fileRevisorSubProgram = _fileRevisorSubProgramFactory->NewFileRevisorSubProgram(args.programMode);
+   const shared_ptr<FileRevisorSubProgram> fileRevisorSubProgram = _fileRevisorSubProgramFactory->NewSubProgram(args.programMode);
    int exitCode = fileRevisorSubProgram->Run(args);
    return exitCode;
 }

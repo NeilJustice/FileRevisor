@@ -8,7 +8,7 @@
 #include "libFileRevisorTests/Components/FunctionCallers/Member/MetalMock/NonVoidTwoArgMemberFunctionCallerMock.h"
 
 TESTS(FileRevisorArgsParserTests)
-AFACT(ParseArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
+AFACT(ParseStringArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
 AFACT(PrintPreambleLines_WritesPreambleLinesToConsole)
 AFACT(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsTrue_ParsesDirArgumentAsRequired_ReturnsDirAndFromAndToArgumentValues)
 AFACT(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsFalse_FromArgumentIsEmpty_ThrowsInvalidArgumentException)
@@ -43,7 +43,7 @@ STARTUP
    _fileRevisorArgsParser._fileRevisorPreambleMaker.reset(_fileRevisorPreambleMakerMock = new FileRevisorPreambleMakerMock);
 }
 
-TEST(ParseArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
+TEST(ParseStringArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
 {
    map<string, docopt::Value> docoptValues;
    docoptValues[ZenUnit::Random<string>()] = docopt::Value(ZenUnit::Random<string>());
@@ -77,7 +77,7 @@ TEST(ParseArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
 
    const vector<string> stringArgs = ZenUnit::RandomVector<string>();
    //
-   const FileRevisorArgs args = _fileRevisorArgsParser.ParseArgs(stringArgs);
+   const FileRevisorArgs args = _fileRevisorArgsParser.ParseStringArgs(stringArgs);
    //
    METALMOCK(_docoptParserMock->GetRequiredBoolMock.CalledNTimes(4));
    METALMOCK(_docoptParserMock->GetOptionalBoolMock.CalledNTimes(6));

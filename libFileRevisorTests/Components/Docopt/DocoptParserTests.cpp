@@ -5,8 +5,8 @@
 
 TESTS(DocoptParserTests)
 AFACT(DefaultConstructor_SetsDocoptFunctionPointer)
-AFACT(ParseArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
-AFACT(ParseArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
+AFACT(ParseStringArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
+AFACT(ParseStringArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
 AFACT(GetRequiredString_ArgNotInMap_ThrowsOutOfRange)
 AFACT(GetRequiredString_ArgInMap_ReturnsValue)
 AFACT(GetRequiredBool_ArgNotInMap_ThrowsOutOfRange)
@@ -47,7 +47,7 @@ TEST(DefaultConstructor_SetsDocoptFunctionPointer)
    STD_FUNCTION_TARGETS(docopt::docopt, docoptParser._call_docopt_docopt);
 }
 
-TEST(ParseArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
+TEST(ParseStringArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
 {
    const string usage = ZenUnit::Random<string>();
    const vector<string> emptyArgv;
@@ -55,7 +55,7 @@ TEST(ParseArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
    THROWS_EXCEPTION(const auto returnValue = _docoptParser.ParseArgs(usage, emptyArgv), invalid_argument, "argv cannot be empty");
 }
 
-TEST(ParseArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
+TEST(ParseStringArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
 {
    const map<string, docopt::Value> docoptReturnValue = ZenUnit::RandomOrderedMap<string, docopt::Value>();
    docoptMock.Return(docoptReturnValue);

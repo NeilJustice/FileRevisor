@@ -103,21 +103,21 @@ TEST(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTim
 
 TEST(Run_ParsesArgs_GetsAndRunsSubProgramSpecifiedByCommandLineArguments_ReturnsSubProgramExitCode)
 {
-   const FileRevisorArgs args = _argsParserMock->ParseArgsMock.ReturnRandom();
+   const FileRevisorArgs args = _argsParserMock->ParseStringArgsMock.ReturnRandom();
 
    _argsParserMock->PrintPreambleLinesMock.Expect();
 
    shared_ptr<FileRevisorSubProgramMock> fileRevisorSubProgramMock = make_shared<FileRevisorSubProgramMock>();
    const int runReturnValue = fileRevisorSubProgramMock->RunMock.ReturnRandom();
-   _fileRevisorSubProgramFactoryMock->NewFileRevisorSubProgramMock.Return(fileRevisorSubProgramMock);
+   _fileRevisorSubProgramFactoryMock->NewSubProgramMock.Return(fileRevisorSubProgramMock);
 
    const vector<string> stringArgs = ZenUnit::RandomVector<string>();
    //
    const int exitCode = _fileRevisorProgram.Run(stringArgs);
    //
-   METALMOCKTHEN(_argsParserMock->ParseArgsMock.CalledOnceWith(stringArgs)).Then(
+   METALMOCKTHEN(_argsParserMock->ParseStringArgsMock.CalledOnceWith(stringArgs)).Then(
    METALMOCKTHEN(_argsParserMock->PrintPreambleLinesMock.CalledOnceWith(args))).Then(
-   METALMOCKTHEN(_fileRevisorSubProgramFactoryMock->NewFileRevisorSubProgramMock.CalledOnceWith(args.programMode))).Then(
+   METALMOCKTHEN(_fileRevisorSubProgramFactoryMock->NewSubProgramMock.CalledOnceWith(args.programMode))).Then(
    METALMOCKTHEN(fileRevisorSubProgramMock->RunMock.CalledOnceWith(args)));
    ARE_EQUAL(runReturnValue, exitCode);
 }
