@@ -2,12 +2,12 @@
 #include "libFileRevisor/ValueTypes/RenameResult.h"
 
 TESTS(RenameResultTests)
-AFACT(DefaultConstructor_SetsFieldsToDefaults)
+AFACT(DefaultConstructor_SetsFieldsToDefaultValues)
 AFACT(ThreeArgConstructor_SetsFields)
 FACTS(DidRenameFileOrDirectoryFieldIsTrue_ReturnsTrueIfDidRenameFileOrDirectoryFieldIsTrue)
 EVIDENCE
 
-TEST(DefaultConstructor_SetsFieldsToDefaults)
+TEST(DefaultConstructor_SetsFieldsToDefaultValues)
 {
    const RenameResult defaultRenameResult;
    RenameResult expectedDefaultRenameResult;

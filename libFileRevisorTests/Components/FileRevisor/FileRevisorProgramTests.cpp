@@ -9,7 +9,7 @@
 #include "libFileRevisorTests/Components/Time/MetalMock/StopwatchMock.h"
 
 TESTS(FileRevisorProgramTests)
-AFACT(DefaultConstructor_SetsFunctionPointers_NewsComponents)
+AFACT(DefaultConstructor_SetsFieldsToDefaultValues)
 AFACT(Main_ArgcIs1_WritesCommandLineUsage_Returns0)
 AFACT(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTime_ReturnsTryCatchCallReturnValue)
 AFACT(Run_ParsesArgs_GetsAndRunsSubProgramSpecifiedByCommandLineArguments_ReturnsSubProgramExitCode)
@@ -43,19 +43,12 @@ STARTUP
    _fileRevisorProgram._stopwatch.reset(_stopwatchMock = new StopwatchMock);
 }
 
-TEST(DefaultConstructor_SetsFunctionPointers_NewsComponents)
+TEST(DefaultConstructor_SetsFieldsToDefaultValues)
 {
-   FileRevisorProgram fileRevisorProgram;
+   const FileRevisorProgram fileRevisorProgram;
    // Function Callers
    STD_FUNCTION_TARGETS(Vector::FromArgcArgv, fileRevisorProgram._call_Vector_FromArgcArgv);
    STD_FUNCTION_TARGETS(Type::GetExceptionClassNameAndMessage, fileRevisorProgram._call_Type_GetExceptionClassNameAndMessage);
-   // Components
-   DELETE_TO_ASSERT_NEWED(fileRevisorProgram._argsParser);
-   DELETE_TO_ASSERT_NEWED(fileRevisorProgram.p_console);
-   DELETE_TO_ASSERT_NEWED(fileRevisorProgram._fileRevisorSubProgramFactory);
-   DELETE_TO_ASSERT_NEWED(fileRevisorProgram._nonVoidOneArgTryCatchCaller);
-   // Mutable Components
-   DELETE_TO_ASSERT_NEWED(fileRevisorProgram._stopwatch);
 }
 
 TEST(Main_ArgcIs1_WritesCommandLineUsage_Returns0)

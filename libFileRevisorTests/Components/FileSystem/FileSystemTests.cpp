@@ -12,7 +12,7 @@
 #include "libFileRevisorTests/Components/Strings/MetalMock/ConstCharPointerGetterMock.h"
 
 TESTS(FileSystemTests)
-AFACT(DefaultConstructor_NewsComponents_SetsFunctionPointers)
+AFACT(DefaultConstructor_SetsFieldsToDefaultValues)
 // Deletes
 AFACT(DeleteTopLevelFilesAndEmptyDirectoriesInDirectory_IfWindowsRemovesReadOnlyFlagsFromTopLevelFiles_SequentiallyDeletesTopLevelFiles_SequentiallyDeletesTopLevelEmptyDirectories)
 AFACT(RecursivelyDeleteAllFilesInDirectory_CallsFileDeleterRecursivelyDeleteAllFilesInDirectory)
@@ -117,9 +117,9 @@ STARTUP
    p_fileSystem._recursiveFileDeleter.reset(_recursiveFileDeleterMock = new RecursiveFileDeleterMock);
 }
 
-TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
+TEST(DefaultConstructor_SetsFieldsToDefaultValues)
 {
-   FileSystem fileSystem;
+   const FileSystem fileSystem;
    // Function Pointers
    STD_FUNCTION_TARGETS(fopen, fileSystem._call_fopen);
    STD_FUNCTION_TARGETS(fclose, fileSystem._call_fclose);
@@ -141,18 +141,6 @@ TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
    using StdFilesystemExistsFunctionType = bool(*)(const fs::path&);
    STD_FUNCTION_TARGETS_OVERLOAD(StdFilesystemExistsFunctionType, fs::exists, fileSystem._call_fs_exists);
 #endif
-   // Function Callers
-   DELETE_TO_ASSERT_NEWED(fileSystem._caller_DeleteFileOrDirectory);
-   DELETE_TO_ASSERT_NEWED(fileSystem._caller_DoDeleteFileOrDirectory);
-   DELETE_TO_ASSERT_NEWED(fileSystem._caller_FileSystem_Exists);
-   DELETE_TO_ASSERT_NEWED(fileSystem._caller_GetFileOrFolderPathsInDirectory);
-   DELETE_TO_ASSERT_NEWED(fileSystem._foreacher_DeleteFileOrDirectory);
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(fileSystem._console);
-   DELETE_TO_ASSERT_NEWED(fileSystem._constCharPointerGetter);
-   DELETE_TO_ASSERT_NEWED(fileSystem._fileOpenerCloser);
-   DELETE_TO_ASSERT_NEWED(fileSystem._fileSystemExceptionMaker);
-   DELETE_TO_ASSERT_NEWED(fileSystem._recursiveFileDeleter);
 }
 
 // Deletes

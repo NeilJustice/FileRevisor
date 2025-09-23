@@ -11,7 +11,7 @@ ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFilesSubProgram()
    // Function Pointers
    : _call_PrintReadingFileMessageIfVerboseMode(make_unique<_call_PrintReadingFileMessageIfVerboseModeType>())
    // Function Callers
-   , _memberFunctionAccumulator_ReplaceTextInTextFile(make_unique<OneExtraArgMemberFunctionAccumulatorType>())
+   , _memberFunctionAccumulator_ReplaceTextInTextFile(make_unique<_memberFunctionAccumulator_ReplaceTextInTextFileType>())
    // Constant Components
    , _textReplacer(make_unique<TextReplacer>())
    // Mutable Components

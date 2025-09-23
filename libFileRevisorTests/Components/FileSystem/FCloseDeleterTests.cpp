@@ -2,7 +2,7 @@
 #include "libFileRevisor/Components/FileSystem/FCloseDeleter.h"
 
 TESTS(FCloseDeleterTests)
-AFACT(DefaultConstructor_SetsFCloseFunctionPointer)
+AFACT(DefaultConstructor_SetsFieldsToDefaultValues)
 AFACT(CallOperator_RawFilePointerIsNullptr_DoesNothing)
 AFACT(CallOperator_RawFilePointerIsNotNullptr_FClosesFileWhichReturns0_DoesNotThrowException)
 AFACT(CallOperator_RawFilePointerIsNotNullptr_FClosesFileWhichReturnsNon0_ThrowsRuntimeError)
@@ -18,9 +18,9 @@ STARTUP
    _fcloseDeleter._call_fclose = BIND_1ARG_METALMOCK_OBJECT(_call_fcloseMock);
 }
 
-TEST(DefaultConstructor_SetsFCloseFunctionPointer)
+TEST(DefaultConstructor_SetsFieldsToDefaultValues)
 {
-   FCloseDeleter fcloseDeleter;
+   const FCloseDeleter fcloseDeleter;
    // Function Pointers
    STD_FUNCTION_TARGETS(fclose, fcloseDeleter._call_fclose);
 }

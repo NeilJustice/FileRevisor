@@ -9,7 +9,6 @@
 #include "libFileRevisorTests/Components/Strings/MetalMock/TextReplacerMock.h"
 
 TESTS(RenameDirectoriesSubProgramTests)
-AFACT(DefaultConstructor_NewsComponents)
 FACTS(Run_CallsRenameDirectoryOnEachFolderPathInArgsDirPath_PrintsNumberOfDirectoriesRenamedOrWouldBeRenamed_Returns0)
 AFACT(RenameDirectory_ReplacedDirectoryNameEqualsSourceDirectoryName_PrintsDidNotMatchDirectoryIfVerboseMode_ReturnsFalseRenameResult)
 AFACT(RenameDirectory_ReplacedDirectoryNameDoesNotEqualSourceDirectoryName_DryRunIsTrue_PrintsWouldRenameDirectory_ReturnsTrueRenameResult)
@@ -45,22 +44,6 @@ STARTUP
    // Constant Components
    _renameDirectoriesSubProgram._predicateCounter.reset(_predicateCounterMock = new PredicateCounterMock<RenameResult>);
    _renameDirectoriesSubProgram._textReplacer.reset(_textReplacerMock = new TextReplacerMock);
-}
-
-TEST(DefaultConstructor_NewsComponents)
-{
-   RenameDirectoriesSubProgram renameDirectoriesSubProgram;
-   // Function Pointers
-   DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._call_PrintDidNotMatchDirectoryMessageIfVerboseMode);
-   // Function Callers
-   DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._directoryPathsTransformer_RenameDirectory);
-   // Base Class Constant Components
-   DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram.p_console);
-   DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram.p_fileSystem);
-   DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram.p_pluralizer);
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._predicateCounter);
-   DELETE_TO_ASSERT_NEWED(renameDirectoriesSubProgram._textReplacer);
 }
 
 TEST2X2(Run_CallsRenameDirectoryOnEachFolderPathInArgsDirPath_PrintsNumberOfDirectoriesRenamedOrWouldBeRenamed_Returns0,

@@ -5,7 +5,7 @@
 #include "libFileRevisorTests/Components/DataStructures/MetalMock/CharArray256HelperMock.h"
 
 TESTS(DirectoryIteratorTests)
-AFACT(DefaultConstructor_NewsComponents_SetsFieldsToDefaultValues)
+AFACT(DefaultConstructor_SetsFieldsToDefaultValues)
 AFACT(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsEndIterationMarker_ReturnsEmptyVector)
 AFACT(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsNotEndIterationMarker_FileIsSkippableType_DoesNotAddToTextFilePaths_ReturnsEmptyVector)
 AFACT(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsNotEndIterationMarker_FileIsNotSkippableType_AddsToTextFilePaths_ReturnsTextFilePaths)
@@ -41,14 +41,9 @@ STARTUP
    _directoryIterator._fileReader.reset(_fileReaderMock = new FileReaderMock);
 }
 
-TEST(DefaultConstructor_NewsComponents_SetsFieldsToDefaultValues)
+TEST(DefaultConstructor_SetsFieldsToDefaultValues)
 {
-   DirectoryIterator directoryIterator;
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(directoryIterator._charArray256Helper);
-   DELETE_TO_ASSERT_NEWED(directoryIterator.p_console);
-   DELETE_TO_ASSERT_NEWED(directoryIterator._fileOpenerCloser);
-   DELETE_TO_ASSERT_NEWED(directoryIterator._fileReader);
+   const DirectoryIterator directoryIterator;
    // Mutable Fields
    ARE_EQUAL(fs::directory_iterator(), directoryIterator._directoryIterator);
    ARE_EQUAL(fs::recursive_directory_iterator(), directoryIterator._recursiveDirectoryIterator);

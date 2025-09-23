@@ -3,7 +3,7 @@
 
 TESTS(FileRevisorArgsTests)
 AFACT(CommandLineUsage_IsExpectedString)
-AFACT(DefaultConstructor_SetsFieldsTo0)
+AFACT(DefaultConstructor_SetsFieldsToDefaultValues)
 EVIDENCE
 
 TEST(CommandLineUsage_IsExpectedString)
@@ -18,7 +18,7 @@ Usage:
 )", FileRevisorArgs::CommandLineUsage);
 }
 
-TEST(DefaultConstructor_SetsFieldsTo0)
+TEST(DefaultConstructor_SetsFieldsToDefaultValues)
 {
    const FileRevisorArgs defaultFileRevisorArgs;
    FileRevisorArgs expectedDefaultFileRevisorArgs;

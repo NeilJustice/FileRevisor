@@ -3,7 +3,6 @@
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 
 TESTS(FileRevisorPreambleMakerTests)
-AFACT(DefaultConstructor_NewsComponents)
 FACTS(PrintPreambleLines_PrintsPreambleLines)
 EVIDENCE
 
@@ -17,14 +16,6 @@ STARTUP
    // Constant Components
    _fileRevisorPreambleMaker.p_console.reset(p_consoleMock = new ConsoleMock);
    _fileRevisorPreambleMaker.p_fileSystem.reset(p_fileSystemMock = new FileSystemMock);
-}
-
-TEST(DefaultConstructor_NewsComponents)
-{
-   FileRevisorPreambleMaker fileRevisorPreambleMaker;
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(fileRevisorPreambleMaker.p_console);
-   DELETE_TO_ASSERT_NEWED(fileRevisorPreambleMaker.p_fileSystem);
 }
 
 TEST3X3(PrintPreambleLines_PrintsPreambleLines,

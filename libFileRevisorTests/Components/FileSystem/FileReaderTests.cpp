@@ -2,7 +2,7 @@
 #include "libFileRevisor/Components/FileSystem/FileReader.h"
 
 TESTS(FileReaderTests)
-AFACT(DefaultConstructor_SetsFunctionPointers)
+AFACT(DefaultConstructor_SetsFieldsToDefaultValues)
 AFACT(ReadFirst256Bytes_ReadsFirst256Bytes_ReturnsPairOfNumberOfBytesReadAnd256ByteCharArray)
 EVIDENCE
 
@@ -24,7 +24,7 @@ STARTUP
 #endif
 }
 
-TEST(DefaultConstructor_SetsFunctionPointers)
+TEST(DefaultConstructor_SetsFieldsToDefaultValues)
 {
    const FileReader fileReader;
    // Function Pointers

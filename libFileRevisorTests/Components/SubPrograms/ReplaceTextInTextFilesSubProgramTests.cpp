@@ -9,7 +9,6 @@
 #include "libFileRevisorTests/Components/Strings/MetalMock/TextReplacerMock.h"
 
 TESTS(ReplaceTextInTextFilesSubProgramTests)
-AFACT(DefaultConstructor_NewsFileSystem)
 FACTS(Run_ReadsTextFilesInWorkingDirectory_CallsReplaceTextInTextFileOnEachTextFilePath_Returns0)
 AFACT(ReplaceTextInTextFile_DryRunIsTrueOrFalse_ReplacedFileTextEqualsOriginalFileText_DoesNothing_Returns0)
 AFACT(ReplaceTextInTextFile_DryRunIsTrue_ReplacedFileTextDiffersFromOriginalFileText_DoesNotModifyFile_PrintsWouldReplaceTextInFileMessage_Returns1)
@@ -23,12 +22,9 @@ ReplaceTextInTextFilesSubProgram _replaceTextInTextFilesSubProgram;
 using _call_PrintReadingFileMessageIfVerboseModeMockType = VoidTwoArgMemberFunctionCallerMock<ReplaceTextInTextFilesSubProgram, bool, const fs::path&>;
 _call_PrintReadingFileMessageIfVerboseModeMockType* _call_PrintReadingFileMessageIfVerboseModeMock = nullptr;
 // Function Callers
-using OneExtraArgMemberFunctionAccumulatorMockType = OneExtraArgMemberFunctionAccumulatorMock<
-   ReplaceTextInTextFilesSubProgram,
-   size_t,
-   fs::path,
-   const FileRevisorArgs&>;
-OneExtraArgMemberFunctionAccumulatorMockType* _memberFunctionAccumulator_ReplaceTextInTextFileMock = nullptr;
+using _memberFunctionAccumulator_ReplaceTextInTextFileMockType = OneExtraArgMemberFunctionAccumulatorMock<
+   ReplaceTextInTextFilesSubProgram, size_t, fs::path, const FileRevisorArgs&>;
+_memberFunctionAccumulator_ReplaceTextInTextFileMockType* _memberFunctionAccumulator_ReplaceTextInTextFileMock = nullptr;
 // Base Class Constant Components
 ConsoleMock* p_consoleMock = nullptr;
 FileSystemMock* p_fileSystemMock = nullptr;
@@ -43,7 +39,7 @@ STARTUP
    // Function Pointers
    _replaceTextInTextFilesSubProgram._call_PrintReadingFileMessageIfVerboseMode.reset(_call_PrintReadingFileMessageIfVerboseModeMock = new _call_PrintReadingFileMessageIfVerboseModeMockType);
    // Function Callers
-   _replaceTextInTextFilesSubProgram._memberFunctionAccumulator_ReplaceTextInTextFile.reset(_memberFunctionAccumulator_ReplaceTextInTextFileMock = new OneExtraArgMemberFunctionAccumulatorMockType);
+   _replaceTextInTextFilesSubProgram._memberFunctionAccumulator_ReplaceTextInTextFile.reset(_memberFunctionAccumulator_ReplaceTextInTextFileMock = new _memberFunctionAccumulator_ReplaceTextInTextFileMockType);
    // Base Class Constant Components
    _replaceTextInTextFilesSubProgram.p_console.reset(p_consoleMock = new ConsoleMock);
    _replaceTextInTextFilesSubProgram.p_fileSystem.reset(p_fileSystemMock = new FileSystemMock);
@@ -52,23 +48,6 @@ STARTUP
    _replaceTextInTextFilesSubProgram._textReplacer.reset(_textReplacerMock = new TextReplacerMock);
    // Mutable Components
    _replaceTextInTextFilesSubProgram._directoryIterator.reset(_directoryIteratorMock = new DirectoryIteratorMock);
-}
-
-TEST(DefaultConstructor_NewsFileSystem)
-{
-   ReplaceTextInTextFilesSubProgram replaceTextInTextFilesSubProgram;
-   // Function Pointers
-   DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._call_PrintReadingFileMessageIfVerboseMode);
-   // Function Callers
-   DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._memberFunctionAccumulator_ReplaceTextInTextFile);
-   // Base Class Constant Components
-   DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram.p_console);
-   DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram.p_fileSystem);
-   DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram.p_pluralizer);
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._textReplacer);
-   // Mutable Components
-   DELETE_TO_ASSERT_NEWED(replaceTextInTextFilesSubProgram._directoryIterator);
 }
 
 TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsReplaceTextInTextFileOnEachTextFilePath_Returns0,

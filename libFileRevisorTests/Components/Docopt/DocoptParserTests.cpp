@@ -4,7 +4,7 @@
 #include "libFileRevisorTests/Components/Docopt/ZenUnit/docoptvalueRandom.h"
 
 TESTS(DocoptParserTests)
-AFACT(DefaultConstructor_SetsDocoptFunctionPointer)
+AFACT(DefaultConstructor_SetsFieldsToDefaultValues)
 AFACT(ParseStringArgs_ArgvVectorEmpty_ThrowsInvalidArgument)
 AFACT(ParseStringArgs_ArgvVectorNotEmpty_ReturnsMapResultFromCallingDocopt)
 AFACT(GetRequiredString_ArgNotInMap_ThrowsOutOfRange)
@@ -40,7 +40,7 @@ STARTUP
    _expectedKeyNotFoundWhat = "Error: Key not found in map: [" + _argName + "]";
 }
 
-TEST(DefaultConstructor_SetsDocoptFunctionPointer)
+TEST(DefaultConstructor_SetsFieldsToDefaultValues)
 {
    const DocoptParser docoptParser{};
    // Function Pointers

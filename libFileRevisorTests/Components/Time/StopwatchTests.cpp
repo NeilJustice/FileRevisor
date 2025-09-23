@@ -2,7 +2,7 @@
 #include "libFileRevisor/Components/Time/Stopwatch.h"
 
 TESTS(StopwatchTests)
-AFACT(DefaultConstructor_SetsNowFunctionPointer)
+AFACT(DefaultConstructor_SetsFieldsToDefaultValues)
 AFACT(Start_SetsStartTimeToNow)
 FACTS(StopAndGetElapsedSeconds_StartPreviouslyCalled_SetsStartTimeBackToDefault_ReturnsElapsedSecondsWithMillisecondResolution)
 EVIDENCE
@@ -17,7 +17,7 @@ STARTUP
    _stopwatch._call_now = BIND_0ARG_METALMOCK_OBJECT(_call_high_resolution_clock_nowMock);
 }
 
-TEST(DefaultConstructor_SetsNowFunctionPointer)
+TEST(DefaultConstructor_SetsFieldsToDefaultValues)
 {
    const Stopwatch stopwatch;
    // Function Pointers

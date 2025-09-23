@@ -3,7 +3,7 @@
 #include "libFileRevisorTests/Components/ErrorHandling/MetalMock/ErrorCodeTranslatorMock.h"
 
 TESTS(FileOpenerCloserTests)
-AFACT(DefaultConstructor_SetsFunctionPointers)
+AFACT(DefaultConstructor_SetsFieldsToDefaultValues)
 AFACT(OpenReadModeBinaryFile_ReturnsFilePointerOpenedInBinaryReadMode)
 AFACT(CloseFile_CallsFCloseOnFilePointerWhichReturns0_Returns)
 AFACT(CloseFile_CallsFCloseOnFilePointerWhichReturnsNon0_ThrowsRuntimeError)
@@ -37,7 +37,7 @@ STARTUP
    _fileOpenerCloser._errorCodeTranslator.reset(_errorCodeTranslatorMock = new ErrorCodeTranslatorMock);
 }
 
-TEST(DefaultConstructor_SetsFunctionPointers)
+TEST(DefaultConstructor_SetsFieldsToDefaultValues)
 {
    const FileOpenerCloser fileOpenerCloser;
    STD_FUNCTION_TARGETS(::fclose, fileOpenerCloser._call_fclose);

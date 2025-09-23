@@ -6,7 +6,7 @@ TESTS(ErrorCodeTranslatorTests)
 AFACT(GetLinuxErrno_ReturnsAddressOfErrno)
 #endif
 
-AFACT(DefaultConstructor_SetsFunctionPointers)
+AFACT(DefaultConstructor_SetsFieldsToDefaultValues)
 AFACT(GetErrnoValue_ReturnsResultOfCallingErrnoFunction)
 AFACT(GetErrnoWithDescription_ReturnsErrnoValueWithDescription)
 
@@ -54,7 +54,7 @@ TEST(GetLinuxErrno_ReturnsAddressOfErrno)
 }
 #endif
 
-TEST(DefaultConstructor_SetsFunctionPointers)
+TEST(DefaultConstructor_SetsFieldsToDefaultValues)
 {
    const ErrorCodeTranslator errorCodeTranslator;
    // Function Pointers

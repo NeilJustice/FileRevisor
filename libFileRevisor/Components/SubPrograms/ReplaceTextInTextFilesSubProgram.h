@@ -18,12 +18,13 @@ class ReplaceTextInTextFilesSubProgram : public FileRevisorSubProgram
    friend class ReplaceTextInTextFilesSubProgramTests;
 private:
    // Function Pointers
-   using _call_PrintReadingFileMessageIfVerboseModeType = VoidTwoArgMemberFunctionCaller<ReplaceTextInTextFilesSubProgram, bool, const fs::path&>;
+   using _call_PrintReadingFileMessageIfVerboseModeType =
+      VoidTwoArgMemberFunctionCaller<ReplaceTextInTextFilesSubProgram, bool, const fs::path&>;
    unique_ptr<const _call_PrintReadingFileMessageIfVerboseModeType> _call_PrintReadingFileMessageIfVerboseMode;
    // Function Callers
-   using OneExtraArgMemberFunctionAccumulatorType = OneExtraArgMemberFunctionAccumulator<
+   using _memberFunctionAccumulator_ReplaceTextInTextFileType = OneExtraArgMemberFunctionAccumulator<
       ReplaceTextInTextFilesSubProgram, size_t, fs::path, const FileRevisorArgs&>;
-   unique_ptr<const OneExtraArgMemberFunctionAccumulatorType> _memberFunctionAccumulator_ReplaceTextInTextFile;
+   unique_ptr<const _memberFunctionAccumulator_ReplaceTextInTextFileType> _memberFunctionAccumulator_ReplaceTextInTextFile;
    // Constant Components
    unique_ptr<const TextReplacer> _textReplacer;
    // Mutable Components

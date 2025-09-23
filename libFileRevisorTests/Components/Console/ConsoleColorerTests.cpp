@@ -3,7 +3,7 @@
 #include "libFileRevisorTests/Components/Asserters/MetalMock/AsserterMock.h"
 
 TESTS(ConsoleColorerTests)
-AFACT(DefaultConstructor_SetsFunctionPointers_SetsBoolFieldsToFalse)
+AFACT(DefaultConstructor_SetsFieldsToDefaultValues)
 AFACT(SetTextColor_ColorIsWhite_ReturnsFalse)
 FACTS(SetTextColor_ColorIsNotWhite_CallsSetSupportsColorIfUnset_DoesNotSupportColor_ReturnsFalse)
 FACTS(SetTextColor_ColorIsNotWhite_ConsoleSupportsColorIsTrue_SetsTextColor_ReturnsTrue)
@@ -38,9 +38,9 @@ STARTUP
    p_consoleColorer._asserter.reset(_asserterMock = new AsserterMock);
 }
 
-TEST(DefaultConstructor_SetsFunctionPointers_SetsBoolFieldsToFalse)
+TEST(DefaultConstructor_SetsFieldsToDefaultValues)
 {
-   ConsoleColorer consoleColorer;
+   const ConsoleColorer consoleColorer;
    //
    // Function Pointers
 #ifdef _WIN32
@@ -52,8 +52,6 @@ TEST(DefaultConstructor_SetsFunctionPointers_SetsBoolFieldsToFalse)
    STD_FUNCTION_TARGETS(fileno, consoleColorer._call_fileno);
    STD_FUNCTION_TARGETS(isatty, consoleColorer._call_isatty);
 #endif
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(consoleColorer._asserter);
    // Mutable Fields
    IS_FALSE(consoleColorer._supportsColor);
    IS_FALSE(consoleColorer._supportsColorHasBeenSet);
