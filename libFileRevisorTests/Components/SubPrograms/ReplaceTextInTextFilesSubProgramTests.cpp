@@ -82,7 +82,7 @@ TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsReplaceTextInTextFileOnEachTex
       ".git",
       ".mypy_cache",
       ".p7s",
-      ".vs",
+      ".vs\\",
       "CMakeFiles",
       "CoberturaCodeCoverageResults_",
       "ReportGenerator_"

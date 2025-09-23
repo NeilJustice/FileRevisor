@@ -31,7 +31,7 @@ int ReplaceTextInTextFilesSubProgram::Run() const
       ".git",
       ".mypy_cache",
       ".p7s",
-      ".vs",
+      ".vs\\",
       "CMakeFiles",
       "CoberturaCodeCoverageResults_",
       "ReportGenerator_"
