@@ -18,17 +18,21 @@ class DeleteDirectorySubProgram : public FileRevisorSubProgram
    friend class DeleteDirectorySubProgramTests;
 private:
    // Function Callers
-   using _caller_DeleteTargetDirectoryIfNotCurrentDirectoryType = VoidOneArgMemberFunctionCaller<DeleteDirectorySubProgram, const FileRevisorArgs&>;
+   using _caller_DeleteTargetDirectoryIfNotCurrentDirectoryType =
+      VoidOneArgMemberFunctionCaller<DeleteDirectorySubProgram, const FileRevisorArgs&>;
    unique_ptr<const _caller_DeleteTargetDirectoryIfNotCurrentDirectoryType> _caller_DeleteTargetDirectoryIfNotCurrentDirectory;
 
-   using TwoArgMemberFunctionForEacherType = TwoArgMemberFunctionForEacher<DeleteDirectorySubProgram, string, const FileRevisorArgs&>;
-   unique_ptr<const TwoArgMemberFunctionForEacherType> _oneExtraArgMemberForEacher_DeleteDirectory;
+   using  _oneExtraArgMemberForEacher_DeleteDirectoryType =
+      TwoArgMemberFunctionForEacher<DeleteDirectorySubProgram, string, const FileRevisorArgs&>;
+   unique_ptr<const _oneExtraArgMemberForEacher_DeleteDirectoryType> _oneExtraArgMemberForEacher_DeleteDirectory;
 
-   using ParallelTwoArgMemberFunctionForEacherType = ParallelTwoArgMemberFunctionForEacher<DeleteDirectorySubProgram, string, const FileRevisorArgs&>;
-   unique_ptr<const ParallelTwoArgMemberFunctionForEacherType> _parallelTwoArgMemberFunctionForEacher_DeleteDirectory;
+   using _parallelTwoArgMemberFunctionForEacher_DeleteDirectoryType =
+      ParallelTwoArgMemberFunctionForEacher<DeleteDirectorySubProgram, string, const FileRevisorArgs&>;
+   unique_ptr<const _parallelTwoArgMemberFunctionForEacher_DeleteDirectoryType> _parallelTwoArgMemberFunctionForEacher_DeleteDirectory;
 
-   using _voidTwoArgTryCatchCallerType = VoidTwoArgTryCatchCaller<DeleteDirectorySubProgram, const string&, const FileRevisorArgs&>;
-   unique_ptr<const _voidTwoArgTryCatchCallerType> _voidTwoArgTryCatchCaller;
+   using _tryCatchCaller_DeleteDirectoryType =
+      VoidTwoArgTryCatchCaller<DeleteDirectorySubProgram, const string&, const FileRevisorArgs&>;
+   unique_ptr<const _tryCatchCaller_DeleteDirectoryType> _tryCatchCaller_DeleteDirectory;
 public:
    DeleteDirectorySubProgram();
    ~DeleteDirectorySubProgram() override;

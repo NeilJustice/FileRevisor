@@ -9,9 +9,9 @@
 DeleteDirectorySubProgram::DeleteDirectorySubProgram()
    // Function Callers
    : _caller_DeleteTargetDirectoryIfNotCurrentDirectory(make_unique<_caller_DeleteTargetDirectoryIfNotCurrentDirectoryType>())
-   , _oneExtraArgMemberForEacher_DeleteDirectory(make_unique<TwoArgMemberFunctionForEacherType>())
-   , _parallelTwoArgMemberFunctionForEacher_DeleteDirectory(make_unique<ParallelTwoArgMemberFunctionForEacherType>())
-   , _voidTwoArgTryCatchCaller(make_unique<_voidTwoArgTryCatchCallerType>())
+   , _oneExtraArgMemberForEacher_DeleteDirectory(make_unique<_oneExtraArgMemberForEacher_DeleteDirectoryType>())
+   , _parallelTwoArgMemberFunctionForEacher_DeleteDirectory(make_unique<_parallelTwoArgMemberFunctionForEacher_DeleteDirectoryType>())
+   , _tryCatchCaller_DeleteDirectory(make_unique<_tryCatchCaller_DeleteDirectoryType>())
 {
 }
 
@@ -65,8 +65,9 @@ void DeleteDirectorySubProgram::DeleteTargetDirectoryIfNotCurrentDirectory(const
 
 void DeleteDirectorySubProgram::TryCatchCallDeleteDirectory(const string& directoryPath, const FileRevisorArgs& args) const
 {
-   _voidTwoArgTryCatchCaller->TryCatchCallConstMemberFunction(
-      this, &DeleteDirectorySubProgram::DeleteDirectory, directoryPath, args, &DeleteDirectorySubProgram::ParallelExceptionHandler);
+   _tryCatchCaller_DeleteDirectory->TryCatchCallConstMemberFunction(
+      this, &DeleteDirectorySubProgram::DeleteDirectory, directoryPath, args,
+      &DeleteDirectorySubProgram::ParallelExceptionHandler);
 }
 
 void DeleteDirectorySubProgram::ParallelExceptionHandler(string_view exceptionClassNameAndMessage) const

@@ -9,7 +9,6 @@
 #include "libFileRevisorTests/Components/Strings/MetalMock/PluralizerMock.h"
 
 TESTS(DeleteDirectorySubProgramTests)
-AFACT(DefaultConstructor_NewsComponents)
 AFACT(Run_TargetDirectoryDoesNotExist_WritesDirectoryDoesNotExistInformationalMessage_Returns0)
 AFACT(Run_TargetDirectoryExists_ParallelIsFalse_WritesDeletingSequentiallyMessage_RecursivelyDeletesAllTopLevelDirectoriesInTargetDirectorySequentiallyThenDeletesTargetDirectory_Returns0)
 AFACT(Run_TargetDirectoryExists_ParallelIsTrue_WritesDeletingInParallelMessage_RecursivelyDeletesAllTopLevelDirectoriesInTargetDirectoryInParallelThenDeletesTargetDirectory_Returns0)
@@ -27,17 +26,21 @@ ConsoleMock* p_consoleMock = nullptr;
 FileSystemMock* p_fileSystemMock = nullptr;
 PluralizerMock* p_pluralizerMock = nullptr;
 // Function Callers
-using _caller_DeleteTargetDirectoryIfNotCurrentDirectoryMockType = VoidOneArgMemberFunctionCallerMock<DeleteDirectorySubProgram, const FileRevisorArgs&>;
+using _caller_DeleteTargetDirectoryIfNotCurrentDirectoryMockType =
+   VoidOneArgMemberFunctionCallerMock<DeleteDirectorySubProgram, const FileRevisorArgs&>;
 _caller_DeleteTargetDirectoryIfNotCurrentDirectoryMockType* _caller_DeleteTargetDirectoryIfNotCurrentDirectoryMock = nullptr;
 
-using TwoArgMemberFunctionForEacherMockType = TwoArgMemberFunctionForEacherMock<DeleteDirectorySubProgram, string, const FileRevisorArgs&>;
-TwoArgMemberFunctionForEacherMockType* _oneExtraArgMemberForEacher_DeleteDirectoryMock = nullptr;
+using  _oneExtraArgMemberForEacher_DeleteDirectoryMockType =
+   TwoArgMemberFunctionForEacherMock<DeleteDirectorySubProgram, string, const FileRevisorArgs&>;
+_oneExtraArgMemberForEacher_DeleteDirectoryMockType* _oneExtraArgMemberForEacher_DeleteDirectoryMock = nullptr;
 
-using ParallelTwoArgMemberFunctionForEacherMockType = ParallelTwoArgMemberFunctionForEacherMock<DeleteDirectorySubProgram, string, const FileRevisorArgs&>;
-ParallelTwoArgMemberFunctionForEacherMockType* _parallelTwoArgMemberFunctionForEacher_DeleteDirectoryMock = nullptr;
+using _parallelTwoArgMemberFunctionForEacher_DeleteDirectoryMockType =
+   ParallelTwoArgMemberFunctionForEacherMock<DeleteDirectorySubProgram, string, const FileRevisorArgs&>;
+_parallelTwoArgMemberFunctionForEacher_DeleteDirectoryMockType* _parallelTwoArgMemberFunctionForEacher_DeleteDirectoryMock = nullptr;
 
-using _voidTwoArgTryCatchCallerMockType = VoidTwoArgTryCatchCallerMock<DeleteDirectorySubProgram, const string&, const FileRevisorArgs&>;
-_voidTwoArgTryCatchCallerMockType* _voidTwoArgTryCatchCallerMock = nullptr;
+using _tryCatchCaller_DeleteDirectoryMockType =
+   VoidTwoArgTryCatchCallerMock<DeleteDirectorySubProgram, const string&, const FileRevisorArgs&>;
+_tryCatchCaller_DeleteDirectoryMockType* _tryCatchCaller_DeleteDirectoryMock = nullptr;
 
 STARTUP
 {
@@ -47,23 +50,9 @@ STARTUP
    _deleteDirectorySubProgram.p_pluralizer.reset(p_pluralizerMock = new PluralizerMock);
    // Function Callers
    _deleteDirectorySubProgram._caller_DeleteTargetDirectoryIfNotCurrentDirectory.reset(_caller_DeleteTargetDirectoryIfNotCurrentDirectoryMock = new _caller_DeleteTargetDirectoryIfNotCurrentDirectoryMockType);
-   _deleteDirectorySubProgram._oneExtraArgMemberForEacher_DeleteDirectory.reset(_oneExtraArgMemberForEacher_DeleteDirectoryMock = new TwoArgMemberFunctionForEacherMockType);
-   _deleteDirectorySubProgram._parallelTwoArgMemberFunctionForEacher_DeleteDirectory.reset(_parallelTwoArgMemberFunctionForEacher_DeleteDirectoryMock = new ParallelTwoArgMemberFunctionForEacherMockType);
-   _deleteDirectorySubProgram._voidTwoArgTryCatchCaller.reset(_voidTwoArgTryCatchCallerMock = new _voidTwoArgTryCatchCallerMockType);
-}
-
-TEST(DefaultConstructor_NewsComponents)
-{
-   DeleteDirectorySubProgram deleteDirectorySubProgram;
-   // Base Class Constant Components
-   DELETE_TO_ASSERT_NEWED(deleteDirectorySubProgram.p_console);
-   DELETE_TO_ASSERT_NEWED(deleteDirectorySubProgram.p_fileSystem);
-   DELETE_TO_ASSERT_NEWED(deleteDirectorySubProgram.p_pluralizer);
-   // Function Callers
-   DELETE_TO_ASSERT_NEWED(deleteDirectorySubProgram._caller_DeleteTargetDirectoryIfNotCurrentDirectory);
-   DELETE_TO_ASSERT_NEWED(deleteDirectorySubProgram._oneExtraArgMemberForEacher_DeleteDirectory);
-   DELETE_TO_ASSERT_NEWED(deleteDirectorySubProgram._parallelTwoArgMemberFunctionForEacher_DeleteDirectory);
-   DELETE_TO_ASSERT_NEWED(deleteDirectorySubProgram._voidTwoArgTryCatchCaller);
+   _deleteDirectorySubProgram._oneExtraArgMemberForEacher_DeleteDirectory.reset(_oneExtraArgMemberForEacher_DeleteDirectoryMock = new _oneExtraArgMemberForEacher_DeleteDirectoryMockType);
+   _deleteDirectorySubProgram._parallelTwoArgMemberFunctionForEacher_DeleteDirectory.reset(_parallelTwoArgMemberFunctionForEacher_DeleteDirectoryMock = new _parallelTwoArgMemberFunctionForEacher_DeleteDirectoryMockType);
+   _deleteDirectorySubProgram._tryCatchCaller_DeleteDirectory.reset(_tryCatchCaller_DeleteDirectoryMock = new _tryCatchCaller_DeleteDirectoryMockType);
 }
 
 TEST(Run_TargetDirectoryDoesNotExist_WritesDirectoryDoesNotExistInformationalMessage_Returns0)
@@ -178,14 +167,15 @@ TEST(DeleteTargetDirectoryIfNotCurrentDirectory_CurrentFolderPathIsNotTargetFold
 
 TEST(TryCatchCallDeleteDirectory_TryCatchCallsDeleteDirectoryWithParallelExceptionHandler)
 {
-   _voidTwoArgTryCatchCallerMock->TryCatchCallConstMemberFunctionMock.Expect();
+   _tryCatchCaller_DeleteDirectoryMock->TryCatchCallConstMemberFunctionMock.Expect();
    const string directoryPath = ZenUnit::Random<string>();
    const FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    //
    _deleteDirectorySubProgram.TryCatchCallDeleteDirectory(directoryPath, args);
    //
-   METALMOCK(_voidTwoArgTryCatchCallerMock->TryCatchCallConstMemberFunctionMock.CalledOnceWith(
-      &_deleteDirectorySubProgram, &DeleteDirectorySubProgram::DeleteDirectory, directoryPath, args, &DeleteDirectorySubProgram::ParallelExceptionHandler));
+   METALMOCK(_tryCatchCaller_DeleteDirectoryMock->TryCatchCallConstMemberFunctionMock.CalledOnceWith(
+      &_deleteDirectorySubProgram, &DeleteDirectorySubProgram::DeleteDirectory, directoryPath, args,
+      &DeleteDirectorySubProgram::ParallelExceptionHandler));
 }
 
 TEST(ParallelExceptionHandler_WritesExceptionMessageWithThreadIdAndRedText)

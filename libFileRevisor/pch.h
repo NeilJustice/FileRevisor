@@ -1,6 +1,5 @@
 #pragma once
 #include "libFileRevisor/Compiler/IfWindowsIgnoreTheseWarningsGlobally.h"
-
 #include <array>
 #include <execution>
 #include <filesystem>
