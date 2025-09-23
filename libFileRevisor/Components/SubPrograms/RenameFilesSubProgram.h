@@ -16,12 +16,13 @@ class RenameFilesSubProgram : public FileRevisorSubProgram
    friend class RenameFilesSubProgramTests;
 private:
    // Function Callers
-   unique_ptr<const VoidTwoArgMemberFunctionCaller<
-      RenameFilesSubProgram, bool, const fs::path& >> _caller_PrintDidNotMatchFileMessageIfVerboseMode;
+   using _caller_PrintDidNotMatchFileMessageIfVerboseModeType =
+      VoidTwoArgMemberFunctionCaller<RenameFilesSubProgram, bool, const fs::path&>;
+   unique_ptr<const _caller_PrintDidNotMatchFileMessageIfVerboseModeType> _caller_PrintDidNotMatchFileMessageIfVerboseMode;
 
-   using OneExtraArgMemberFunctionTransformerType = OneExtraArgMemberFunctionTransformer<
-      RenameFilesSubProgram, fs::path, RenameResult, const FileRevisorArgs&>;
-   unique_ptr<const OneExtraArgMemberFunctionTransformerType> _transformer_RenameFileIfFileNameMatchesFromPattern;
+   using _transformer_RenameFileIfFileNameMatchesFromPatternType =
+      OneExtraArgMemberFunctionTransformer<RenameFilesSubProgram, fs::path, RenameResult, const FileRevisorArgs&>;
+   unique_ptr<const _transformer_RenameFileIfFileNameMatchesFromPatternType> _transformer_RenameFileIfFileNameMatchesFromPattern;
    // Constant Components
    unique_ptr<const PredicateCounter<RenameResult>> _predicateCounter;
    unique_ptr<const TextReplacer> _textReplacer;

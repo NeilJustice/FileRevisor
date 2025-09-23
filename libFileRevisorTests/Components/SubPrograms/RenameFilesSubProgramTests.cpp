@@ -9,7 +9,6 @@
 #include "libFileRevisorTests/Components/Strings/MetalMock/TextReplacerMock.h"
 
 TESTS(RenameFilesSubProgramTests)
-AFACT(DefaultConstructor_NewsComponents)
 FACTS(Run_CallsRenameFileOnEachFilePathInArgsDirPath_PrintsNumberOfFilesThatWereRenamedOrWouldBeRenamedDependingOnDryRunTrueOrFalse_Returns0)
 FACTS(DidRenameFileIsTrue_ReturnsTrueIfDidRenameFileIsTrue)
 AFACT(RenameFileIfFileNameMatchesFromPattern_ReplacedFileNameEqualsSourceFileName_PrintsDidNotMatchFileMessageIfVerboseMode_ReturnsFalseRenameResult)
@@ -21,44 +20,32 @@ EVIDENCE
 
 RenameFilesSubProgram _renameFilesSubProgram;
 // Function Callers
-using OneExtraArgMemberFunctionTransformerMockType = OneExtraArgMemberFunctionTransformerMock<RenameFilesSubProgram, fs::path, RenameResult, const FileRevisorArgs&>;
-OneExtraArgMemberFunctionTransformerMockType* _transformer_RenameFileIfFileNameMatchesFromPatternMock = nullptr;
-const VoidTwoArgMemberFunctionCallerMock<RenameFilesSubProgram, bool, const fs::path&>* _caller_PrintDidNotMatchFileMessageIfVerboseModeMock = nullptr;
+using _caller_PrintDidNotMatchFileMessageIfVerboseModeMockType = VoidTwoArgMemberFunctionCallerMock<RenameFilesSubProgram, bool, const fs::path&>;
+_caller_PrintDidNotMatchFileMessageIfVerboseModeMockType* _caller_PrintDidNotMatchFileMessageIfVerboseModeMock = nullptr;
+
+using _transformer_RenameFileIfFileNameMatchesFromPatternMockType =
+   OneExtraArgMemberFunctionTransformerMock<RenameFilesSubProgram, fs::path, RenameResult, const FileRevisorArgs&>;
+_transformer_RenameFileIfFileNameMatchesFromPatternMockType* _transformer_RenameFileIfFileNameMatchesFromPatternMock = nullptr;
 // Base Class Constant Components
 ConsoleMock* p_consoleMock = nullptr;
 FileSystemMock* p_fileSystemMock = nullptr;
-// Constant Components
 PluralizerMock* p_pluralizerMock = nullptr;
+// Constant Components
 PredicateCounterMock<RenameResult>* _predicateCounterMock = nullptr;
 TextReplacerMock* _textReplacerMock = nullptr;
 
 STARTUP
 {
    // Function Callers
-   _renameFilesSubProgram._caller_PrintDidNotMatchFileMessageIfVerboseMode.reset(_caller_PrintDidNotMatchFileMessageIfVerboseModeMock = new VoidTwoArgMemberFunctionCallerMock<RenameFilesSubProgram, bool, const fs::path&>);
-   _renameFilesSubProgram._transformer_RenameFileIfFileNameMatchesFromPattern.reset(_transformer_RenameFileIfFileNameMatchesFromPatternMock = new OneExtraArgMemberFunctionTransformerMockType);
+   _renameFilesSubProgram._caller_PrintDidNotMatchFileMessageIfVerboseMode.reset(_caller_PrintDidNotMatchFileMessageIfVerboseModeMock = new _caller_PrintDidNotMatchFileMessageIfVerboseModeMockType);
+   _renameFilesSubProgram._transformer_RenameFileIfFileNameMatchesFromPattern.reset(_transformer_RenameFileIfFileNameMatchesFromPatternMock = new _transformer_RenameFileIfFileNameMatchesFromPatternMockType);
    // Base Class Constant Components
    _renameFilesSubProgram.p_console.reset(p_consoleMock = new ConsoleMock);
    _renameFilesSubProgram.p_fileSystem.reset(p_fileSystemMock = new FileSystemMock);
-   // Constant Components
    _renameFilesSubProgram.p_pluralizer.reset(p_pluralizerMock = new PluralizerMock);
+   // Constant Components
    _renameFilesSubProgram._predicateCounter.reset(_predicateCounterMock = new PredicateCounterMock<RenameResult>);
    _renameFilesSubProgram._textReplacer.reset(_textReplacerMock = new TextReplacerMock);
-}
-
-TEST(DefaultConstructor_NewsComponents)
-{
-   RenameFilesSubProgram renameFilesSubProgram;
-   // Function Callers
-   DELETE_TO_ASSERT_NEWED(renameFilesSubProgram._caller_PrintDidNotMatchFileMessageIfVerboseMode);
-   DELETE_TO_ASSERT_NEWED(renameFilesSubProgram._transformer_RenameFileIfFileNameMatchesFromPattern);
-   // Base Class Constant Components
-   DELETE_TO_ASSERT_NEWED(renameFilesSubProgram.p_console);
-   DELETE_TO_ASSERT_NEWED(renameFilesSubProgram.p_fileSystem);
-   DELETE_TO_ASSERT_NEWED(renameFilesSubProgram.p_pluralizer);
-   // Constant Components
-   DELETE_TO_ASSERT_NEWED(renameFilesSubProgram._predicateCounter);
-   DELETE_TO_ASSERT_NEWED(renameFilesSubProgram._textReplacer);
 }
 
 TEST2X2(Run_CallsRenameFileOnEachFilePathInArgsDirPath_PrintsNumberOfFilesThatWereRenamedOrWouldBeRenamedDependingOnDryRunTrueOrFalse_Returns0,

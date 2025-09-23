@@ -9,8 +9,8 @@
 
 RenameDirectoriesSubProgram::RenameDirectoriesSubProgram()
    // Function Callers
-   : _call_PrintDidNotMatchDirectoryMessageIfVerboseMode(make_unique<VoidTwoArgMemberFunctionCaller<RenameDirectoriesSubProgram, bool, const fs::path& >>())
-   , _directoryPathsTransformer_RenameDirectory(make_unique<OneExtraArgMemberFunctionTransformerType>())
+   : _call_PrintDidNotMatchDirectoryMessageIfVerboseMode(make_unique<_call_PrintDidNotMatchDirectoryMessageIfVerboseModeType>())
+   , _directoryPathsTransformer_RenameDirectory(make_unique<_directoryPathsTransformer_RenameDirectoryType>())
    // Constant Components
    , _predicateCounter(make_unique<PredicateCounter<RenameResult>>())
    , _textReplacer(make_unique<TextReplacer>())
