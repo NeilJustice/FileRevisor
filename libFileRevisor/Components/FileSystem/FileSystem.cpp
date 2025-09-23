@@ -28,13 +28,13 @@ FileSystem::FileSystem()
    , _call_fs_exists_as_assignable_function_pointer(fs::exists)
    , _call_fs_rename_with_error_code_as_assignable_function_pointer(fs::rename)
    // Function Callers
+   , _caller_DeleteFileOrDirectory(make_unique<_caller_DeleteFileOrDirectoryType>())
    , _caller_DoDeleteFileOrDirectory(make_unique<_caller_DoDeleteFileOrDirectoryType>())
-   , _caller_DeleteFileOrDirectory(make_unique<VoidTwoArgMemberFunctionCaller<FileSystem, const fs::path&, bool>>())
-   , _caller_Exists(make_unique<NonVoidOneArgMemberFunctionCaller<bool, FileSystem, const fs::path&>>())
+   , _caller_FileSystem_Exists(make_unique<_caller_FileSystem_ExistsType>())
    , _caller_GetFileOrFolderPathsInDirectory(make_unique<_caller_GetFileOrFolderPathsInDirectoryType>())
    , _foreacher_DeleteFileOrDirectory(make_unique<_foreacher_DeleteFileOrDirectoryType>())
    // Constant Components
-   , p_console(make_unique<Console>())
+   , _console(make_unique<Console>())
    , _constCharPointerGetter(make_unique<ConstCharPointerGetter>())
    , _fileOpenerCloser(make_unique<FileOpenerCloser>())
    , _fileSystemExceptionMaker(make_unique<FileSystemExceptionMaker>())
@@ -181,7 +181,7 @@ void FileSystem::CreateFileWithBytes(const fs::path& filePath, const char* bytes
 
 fs::path FileSystem::RenameFile(const fs::path& filePath, string_view newFileName) const
 {
-   const bool filePathExists = _caller_Exists->CallConstMemberFunction(this, &FileSystem::FileOrDirectoryExists, filePath);
+   const bool filePathExists = _caller_FileSystem_Exists->CallConstMemberFunction(this, &FileSystem::FileOrDirectoryExists, filePath);
    if (!filePathExists)
    {
       const string exceptionMessage = String::ConcatStrings(
@@ -190,7 +190,7 @@ fs::path FileSystem::RenameFile(const fs::path& filePath, string_view newFileNam
    }
    const fs::path sourceFolderPath = filePath.parent_path();
    fs::path renamedFilePath = sourceFolderPath / newFileName;
-   const bool destinationFilePathExists = _caller_Exists->CallConstMemberFunction(this, &FileSystem::FileOrDirectoryExists, renamedFilePath);
+   const bool destinationFilePathExists = _caller_FileSystem_Exists->CallConstMemberFunction(this, &FileSystem::FileOrDirectoryExists, renamedFilePath);
    if (destinationFilePathExists)
    {
       const string exceptionMessage = String::ConcatStrings(
@@ -272,7 +272,7 @@ void FileSystem::DeleteFileOrDirectory(const fs::path& fileOrFolderPath, bool ig
    if (dryRun)
    {
       const string wouldDeleteMessage = "DryRun: Would delete " + fileOrFolderPath.string();
-      p_console->ProgramNameThreadIdWriteLine(wouldDeleteMessage);
+      _console->ProgramNameThreadIdWriteLine(wouldDeleteMessage);
    }
    else
    {
@@ -282,7 +282,7 @@ void FileSystem::DeleteFileOrDirectory(const fs::path& fileOrFolderPath, bool ig
          if (!quietMode)
          {
             const string deletedMessage = "Deleted " + fileOrFolderPath.string();
-            p_console->ProgramNameThreadIdWriteLine(deletedMessage);
+            _console->ProgramNameThreadIdWriteLine(deletedMessage);
          }
       }
       catch (const exception& ex)
@@ -291,7 +291,7 @@ void FileSystem::DeleteFileOrDirectory(const fs::path& fileOrFolderPath, bool ig
          {
             const string exceptionClassNameAndMessage = Type::GetExceptionClassNameAndMessage(&ex);
             const string message = "Ignoring exception because --skip-files-in-use: " + exceptionClassNameAndMessage;
-            p_console->ProgramNameThreadIdWriteLineColor(message, Color::Yellow);
+            _console->ProgramNameThreadIdWriteLineColor(message, Color::Yellow);
          }
          else
          {

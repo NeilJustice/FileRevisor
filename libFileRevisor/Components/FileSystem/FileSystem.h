@@ -50,12 +50,14 @@ private:
    function<void(const fs::path&, const fs::path&, std::error_code&)> _call_fs_rename_with_error_code;
 
    // Function Callers
+   using _caller_DeleteFileOrDirectoryType = VoidTwoArgMemberFunctionCaller<FileSystem, const fs::path&, bool>;
+   unique_ptr<const _caller_DeleteFileOrDirectoryType> _caller_DeleteFileOrDirectory;
+
    using _caller_DoDeleteFileOrDirectoryType = VoidOneArgMemberFunctionCaller<FileSystem, const fs::path&>;
    unique_ptr<const _caller_DoDeleteFileOrDirectoryType> _caller_DoDeleteFileOrDirectory;
 
-   unique_ptr<const VoidTwoArgMemberFunctionCaller<FileSystem, const fs::path&, bool>> _caller_DeleteFileOrDirectory;
-
-   unique_ptr<const NonVoidOneArgMemberFunctionCaller<bool, FileSystem, const fs::path&>> _caller_Exists;
+   using _caller_FileSystem_ExistsType = NonVoidOneArgMemberFunctionCaller<bool, FileSystem, const fs::path&>;
+   unique_ptr<const _caller_FileSystem_ExistsType> _caller_FileSystem_Exists;
 
    using _caller_GetFileOrFolderPathsInDirectoryType = NonVoidTwoArgMemberFunctionCaller<vector<fs::path>, FileSystem, const fs::path&, bool>;
    unique_ptr<const _caller_GetFileOrFolderPathsInDirectoryType> _caller_GetFileOrFolderPathsInDirectory;
@@ -63,7 +65,7 @@ private:
    using _foreacher_DeleteFileOrDirectoryType = Utils::FourArgMemberFunctionForEacher<FileSystem, fs::path, bool, bool, bool>;
    unique_ptr<const _foreacher_DeleteFileOrDirectoryType> _foreacher_DeleteFileOrDirectory;
    // Constant Components
-   unique_ptr<const Console> p_console;
+   unique_ptr<const Console> _console;
    unique_ptr<const ConstCharPointerGetter> _constCharPointerGetter;
    unique_ptr<const FileOpenerCloser> _fileOpenerCloser;
    unique_ptr<const FileSystemExceptionMaker> _fileSystemExceptionMaker;
