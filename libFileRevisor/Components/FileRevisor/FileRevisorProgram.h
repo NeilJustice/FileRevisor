@@ -15,7 +15,7 @@ private:
    function<vector<string>(int, char**)> _call_Vector_FromArgcArgv;
    // Constant Components
    unique_ptr<const FileRevisorArgsParser> _argsParser;
-   unique_ptr<const Console> p_console;
+   unique_ptr<const Console> _console;
    unique_ptr<const FileRevisorSubProgramFactory> _fileRevisorSubProgramFactory;
    using _nonVoidOneArgTryCatchCallerType = NonVoidOneArgTryCatchCaller<int, FileRevisorProgram, const vector<string>&>;
    unique_ptr<const _nonVoidOneArgTryCatchCallerType> _nonVoidOneArgTryCatchCaller;

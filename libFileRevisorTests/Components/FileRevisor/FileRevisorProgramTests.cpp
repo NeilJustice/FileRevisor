@@ -22,7 +22,7 @@ METALMOCK_NONVOID2_STATIC_OR_FREE(vector<string>, _call_Vector_FromArgcArgv, int
 METALMOCK_NONVOID1_STATIC_OR_FREE(string, _call_Type_GetExceptionClassNameAndMessage, const exception*)
 // Constant Components
 FileRevisorArgsParserMock* _argsParserMock = nullptr;
-ConsoleMock* p_consoleMock = nullptr;
+ConsoleMock* _consoleMock = nullptr;
 FileRevisorSubProgramFactoryMock* _fileRevisorSubProgramFactoryMock = nullptr;
 using _nonVoidOneArgTryCatchCallerMockType = NonVoidOneArgTryCatchCallerMock<int, FileRevisorProgram, const vector<string>&>;
 _nonVoidOneArgTryCatchCallerMockType* _nonVoidOneArgTryCatchCallerMock = nullptr;
@@ -35,7 +35,7 @@ STARTUP
    _fileRevisorProgram._call_Vector_FromArgcArgv = BIND_2ARG_METALMOCK_OBJECT(_call_Vector_FromArgcArgvMock);
    _fileRevisorProgram._call_Type_GetExceptionClassNameAndMessage = BIND_1ARG_METALMOCK_OBJECT(_call_Type_GetExceptionClassNameAndMessageMock);
    // Components
-   _fileRevisorProgram.p_console.reset(p_consoleMock = new ConsoleMock);
+   _fileRevisorProgram._console.reset(_consoleMock = new ConsoleMock);
    _fileRevisorProgram._argsParser.reset(_argsParserMock = new FileRevisorArgsParserMock);
    _fileRevisorProgram._fileRevisorSubProgramFactory.reset(_fileRevisorSubProgramFactoryMock = new FileRevisorSubProgramFactoryMock);
    _fileRevisorProgram._nonVoidOneArgTryCatchCaller.reset(_nonVoidOneArgTryCatchCallerMock = new _nonVoidOneArgTryCatchCallerMockType);
@@ -53,11 +53,11 @@ TEST(DefaultConstructor_SetsFieldsToDefaultValues)
 
 TEST(Main_ArgcIs1_WritesCommandLineUsage_Returns0)
 {
-   p_consoleMock->WriteLineMock.Expect();
+   _consoleMock->WriteLineMock.Expect();
    //
-   int exitCode = _fileRevisorProgram.Main(1, nullptr);
+   const int exitCode = _fileRevisorProgram.Main(1, nullptr);
    //
-   METALMOCK(p_consoleMock->WriteLineMock.CalledOnceWith(FileRevisorArgs::CommandLineUsage));
+   METALMOCK(_consoleMock->WriteLineMock.CalledOnceWith(FileRevisorArgs::CommandLineUsage));
    IS_ZERO(exitCode);
 }
 
@@ -73,7 +73,7 @@ TEST(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTim
 
    const string elapsedSeconds = _stopwatchMock->StopAndGetElapsedSecondsMock.ReturnRandom();
 
-   p_consoleMock->ProgramNameThreadIdWriteLineMock.Expect();
+   _consoleMock->ProgramNameThreadIdWriteLineMock.Expect();
 
    const int argc = ZenUnit::RandomBetween<int>(2, 5);
    const string exePath = ZenUnit::Random<string>();
@@ -82,7 +82,7 @@ TEST(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTim
    //
    const int exitCode = _fileRevisorProgram.Main(argc, const_cast<char**>(argv));
    //
-   METALMOCK(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledNTimes(2));
+   METALMOCK(_consoleMock->ProgramNameThreadIdWriteLineMock.CalledNTimes(2));
    const string expectedDurationLine = "Duration: " + elapsedSeconds + " seconds";
    const string expectedExitCodeLine = "ExitCode: " + to_string(exitCode);
    METALMOCKTHEN(_stopwatchMock->StartMock.CalledOnce()).Then(
@@ -90,8 +90,8 @@ TEST(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTim
    METALMOCKTHEN(_nonVoidOneArgTryCatchCallerMock->TryCatchCallConstMemberFunctionMock.CalledOnceWith(
       &_fileRevisorProgram, &FileRevisorProgram::Run, vectorArgs, &FileRevisorProgram::ExceptionHandler))).Then(
    METALMOCKTHEN(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce())).Then(
-   METALMOCKTHEN(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledWith(expectedDurationLine))).Then(
-   METALMOCKTHEN(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledWith(expectedExitCodeLine)));
+   METALMOCKTHEN(_consoleMock->ProgramNameThreadIdWriteLineMock.CalledWith(expectedDurationLine))).Then(
+   METALMOCKTHEN(_consoleMock->ProgramNameThreadIdWriteLineMock.CalledWith(expectedExitCodeLine)));
    ARE_EQUAL(tryCatchCallReturnValue, exitCode);
 }
 
@@ -123,15 +123,15 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndWhat_Returns1)
    const string exceptionTypeNameAndMessage = ZenUnit::Random<string>();
    _call_Type_GetExceptionClassNameAndMessageMock.Return(exceptionTypeNameAndMessage);
 
-   p_consoleMock->ProgramNameThreadIdWriteLineColorMock.Expect();
+   _consoleMock->ProgramNameThreadIdWriteLineColorMock.Expect();
 
    const exception ex;
    //
-   int exitCode = _fileRevisorProgram.ExceptionHandler(ex);
+   const int exitCode = _fileRevisorProgram.ExceptionHandler(ex);
    //
    const string expectedExceptionMessage = "Error: Exception thrown: " + exceptionTypeNameAndMessage;
    METALMOCK(_call_Type_GetExceptionClassNameAndMessageMock.CalledOnceWith(&ex));
-   METALMOCK(p_consoleMock->ProgramNameThreadIdWriteLineColorMock.CalledOnceWith(expectedExceptionMessage, Color::Red));
+   METALMOCK(_consoleMock->ProgramNameThreadIdWriteLineColorMock.CalledOnceWith(expectedExceptionMessage, Color::Red));
    ARE_EQUAL(1, exitCode);
 }
 

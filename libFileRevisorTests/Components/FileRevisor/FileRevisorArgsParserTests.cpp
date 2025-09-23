@@ -141,7 +141,7 @@ TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsTrue_ParsesDirArgum
    //
    METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptValues, "--target"));
    METALMOCK(p_fileSystemMock->GetAbsolutePathMock.CalledOnceWith(targetFolderPathString));
-   tuple<fs::path, string, string> expected_targetFolderPath_fromRegexPattern_toRegexPattern(targetFolderPath, "", "");
+   const tuple<fs::path, string, string> expected_targetFolderPath_fromRegexPattern_toRegexPattern(targetFolderPath, "", "");
    ARE_EQUAL(expected_targetFolderPath_fromRegexPattern_toRegexPattern, targetFolderPath_fromRegexPattern_toRegexPattern);
 }
 
