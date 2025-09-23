@@ -34,7 +34,7 @@ FileSystem::FileSystem()
    , _caller_GetFileOrFolderPathsInDirectory(make_unique<_caller_GetFileOrFolderPathsInDirectoryType>())
    , _foreacher_DeleteFileOrDirectory(make_unique<_foreacher_DeleteFileOrDirectoryType>())
    // Constant Components
-   , _console(make_unique<Console>())
+   , p_console(make_unique<Console>())
    , _constCharPointerGetter(make_unique<ConstCharPointerGetter>())
    , _fileOpenerCloser(make_unique<FileOpenerCloser>())
    , _fileSystemExceptionMaker(make_unique<FileSystemExceptionMaker>())
@@ -272,7 +272,7 @@ void FileSystem::DeleteFileOrDirectory(const fs::path& fileOrFolderPath, bool ig
    if (dryRun)
    {
       const string wouldDeleteMessage = "DryRun: Would delete " + fileOrFolderPath.string();
-      _console->ProgramNameThreadIdWriteLine(wouldDeleteMessage);
+      p_console->ProgramNameThreadIdWriteLine(wouldDeleteMessage);
    }
    else
    {
@@ -282,7 +282,7 @@ void FileSystem::DeleteFileOrDirectory(const fs::path& fileOrFolderPath, bool ig
          if (!quietMode)
          {
             const string deletedMessage = "Deleted " + fileOrFolderPath.string();
-            _console->ProgramNameThreadIdWriteLine(deletedMessage);
+            p_console->ProgramNameThreadIdWriteLine(deletedMessage);
          }
       }
       catch (const exception& ex)
@@ -291,7 +291,7 @@ void FileSystem::DeleteFileOrDirectory(const fs::path& fileOrFolderPath, bool ig
          {
             const string exceptionClassNameAndMessage = Type::GetExceptionClassNameAndMessage(&ex);
             const string message = "Ignoring exception because --skip-files-in-use: " + exceptionClassNameAndMessage;
-            _console->ProgramNameThreadIdWriteLineColor(message, Color::Yellow);
+            p_console->ProgramNameThreadIdWriteLineColor(message, Color::Yellow);
          }
          else
          {

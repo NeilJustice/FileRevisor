@@ -4,6 +4,8 @@ template<typename ClassType, typename Arg1Type, typename Arg2Type>
 class VoidTwoArgTryCatchCaller
 {
 public:
+   virtual ~VoidTwoArgTryCatchCaller() = default;
+
    virtual void TryCatchCallConstMemberFunction(
       const ClassType* constClassPointer,
       void (ClassType::* constMemberFunction)(Arg1Type, Arg2Type) const,
@@ -37,6 +39,4 @@ public:
          (nonConstClassPointer->*exceptionHandlerFunction)(exceptionClassNameAndMessage);
       }
    }
-
-   virtual ~VoidTwoArgTryCatchCaller() = default;
 };

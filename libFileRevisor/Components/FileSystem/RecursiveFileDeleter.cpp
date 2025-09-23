@@ -6,13 +6,13 @@
 RecursiveFileDeleter::RecursiveFileDeleter()
 #if defined __linux__
    // Constant Components
-   : _console(make_unique<Console>())
+   : p_console(make_unique<Console>())
 #elif defined _WIN32
    // Function Pointers
    : _call_GetFileAttributesA(::GetFileAttributesA)
    , _call_SetFileAttributesA(::SetFileAttributesA)
    // Constant Components
-   , _console(make_unique<Console>())
+   , p_console(make_unique<Console>())
 #endif
    , _fileSystemExceptionMaker(make_unique<FileSystemExceptionMaker>())
    , _threadIdGetter(make_unique<ThreadIdGetter>())
@@ -26,7 +26,7 @@ RecursiveFileDeleter::~RecursiveFileDeleter()
 void RecursiveFileDeleter::PrintDeletedFileMessage(const char* filePath) const
 {
    const string deletedFileMessage = String::ConcatStrings("Deleted ", filePath);
-   _console->ProgramNameThreadIdWriteLine(deletedFileMessage);
+   p_console->ProgramNameThreadIdWriteLine(deletedFileMessage);
 }
 
 #if defined __linux__
@@ -59,7 +59,7 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* dire
             if (args.dryrun)
             {
                const string wouldDeleteFileMessage = String::ConcatStrings("DryRun: Would delete file ", filePath);
-               _console->ProgramNameThreadIdWriteLine(wouldDeleteFileMessage);
+               p_console->ProgramNameThreadIdWriteLine(wouldDeleteFileMessage);
             }
             else
             {
@@ -115,7 +115,7 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* dire
             if (args.dryrun)
             {
                const string wouldDeleteFileMessage = String::ConcatStrings("DryRun: Would delete file ", filePath);
-               _console->ProgramNameThreadIdWriteLine(wouldDeleteFileMessage);
+               p_console->ProgramNameThreadIdWriteLine(wouldDeleteFileMessage);
             }
             else
             {
@@ -156,7 +156,7 @@ void RecursiveFileDeleter::ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueA
       {
          const string skippingFileMessage = String::ConcatStrings(
             "Skipped file: \"", filePath, "\" because of error 13 (permission denied) when attempting to delete it");
-         _console->ProgramNameThreadIdWriteLine(skippingFileMessage);
+         p_console->ProgramNameThreadIdWriteLine(skippingFileMessage);
          return;
       }
    }

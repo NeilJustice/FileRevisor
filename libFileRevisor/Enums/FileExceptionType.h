@@ -1,7 +1,7 @@
 #pragma once
 #include "libFileRevisor/StaticUtilities/ENUM_STRING_ARRAY.h"
 
-enum class FileExceptionType : unsigned char
+enum struct FileExceptionType : unsigned char
 {
    Unset,
    FailedToOpenFile,

@@ -12,8 +12,8 @@ FileRevisorArgsParser::FileRevisorArgsParser()
    // Function Callers
    , _caller_ParseDirAndFromAndToArguments(make_unique<NonVoidTwoArgMemberFunctionCallerType>())
    // Constant Components
-   , _console(make_unique<Console>())
-   , _fileSystem(make_unique<FileSystem>())
+   , p_console(make_unique<Console>())
+   , p_fileSystem(make_unique<FileSystem>())
    , _docoptParser(make_unique<DocoptParser>())
    , _fileRevisorPreambleMaker(make_unique<FileRevisorPreambleMaker>())
 {
@@ -73,7 +73,7 @@ tuple<fs::path, string, string> FileRevisorArgsParser::ParseTargetAndFromAndToAr
       }
       toRegexPattern = _docoptParser->GetRequiredString(docoptValues, "--to");
    }
-   fs::path targetFolderPath = _fileSystem->GetAbsolutePath(targetFolderPathString);
+   fs::path targetFolderPath = p_fileSystem->GetAbsolutePath(targetFolderPathString);
    tuple<fs::path, string, string> targetFolderPath_fromRegexPattern_toRegexPattern(targetFolderPath, fromRegexPattern, toRegexPattern);
    return targetFolderPath_fromRegexPattern_toRegexPattern;
 }

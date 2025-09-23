@@ -17,11 +17,11 @@ class RenameDirectoriesSubProgram : public FileRevisorSubProgram
    friend class RenameDirectoriesSubProgramTests;
 private:
    // Function Pointers
-   unique_ptr<const VoidTwoArgMemberFunctionCaller<
-      RenameDirectoriesSubProgram, bool, const fs::path& >> _call_PrintDidNotMatchDirectoryMessageIfVerboseMode;
+   unique_ptr<const VoidTwoArgMemberFunctionCaller<RenameDirectoriesSubProgram, bool, const fs::path& >>
+      _call_PrintDidNotMatchDirectoryMessageIfVerboseMode;
+   // Function Callers
    using OneExtraArgMemberFunctionTransformerType = OneExtraArgMemberFunctionTransformer<
       RenameDirectoriesSubProgram, fs::path, RenameResult, const FileRevisorArgs&>;
-   // Function Callers
    unique_ptr<const OneExtraArgMemberFunctionTransformerType> _directoryPathsTransformer_RenameDirectory;
    // Constant Components
    unique_ptr<const PredicateCounter<RenameResult>> _predicateCounter;

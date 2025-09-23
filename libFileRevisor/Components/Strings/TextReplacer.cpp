@@ -1,7 +1,10 @@
 #include "pch.h"
 #include "libFileRevisor/Components/Strings/TextReplacer.h"
 
-string TextReplacer::ReplaceText(string_view str, string_view substring, const string& replacement) const
+string TextReplacer::ReplaceText(
+   string_view str,
+   string_view substring,
+   const string& replacement) const
 {
    const regex escapedSubstring = EscapeRegexPattern(substring);
    const regex escapedReplacement = EscapeRegexPattern(replacement);

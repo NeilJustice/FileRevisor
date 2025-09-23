@@ -12,9 +12,9 @@ FileRevisorProgram::FileRevisorProgram()
    , _call_Vector_FromArgcArgv(Vector::FromArgcArgv)
    // Constant Components
    , _argsParser(make_unique<FileRevisorArgsParser>())
-   , _console(make_unique<Console>())
+   , p_console(make_unique<Console>())
    , _fileRevisorSubProgramFactory(make_unique<FileRevisorSubProgramFactory>())
-   , _nonVoidOneArgTryCatchCaller(make_unique<NonVoidOneArgTryCatchCaller<int, FileRevisorProgram, const vector<string>&>>())
+   , _nonVoidOneArgTryCatchCaller(make_unique<_nonVoidOneArgTryCatchCallerType>())
    // Mutable Components
    , _stopwatch(make_unique<Stopwatch>())
 {
@@ -28,7 +28,7 @@ int FileRevisorProgram::Main(int argc, char* argv[])
 {
    if (argc == 1)
    {
-      _console->WriteLine(FileRevisorArgs::CommandLineUsage);
+      p_console->WriteLine(FileRevisorArgs::CommandLineUsage);
       return 0;
    }
    _stopwatch->Start();
@@ -37,9 +37,9 @@ int FileRevisorProgram::Main(int argc, char* argv[])
       this, &FileRevisorProgram::Run, stringArgs, &FileRevisorProgram::ExceptionHandler);
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    const string durationLine = "Duration: " + elapsedSeconds + " seconds";
-   _console->ProgramNameThreadIdWriteLine(durationLine);
+   p_console->ProgramNameThreadIdWriteLine(durationLine);
    const string exitCodeLine = "ExitCode: " + to_string(exitCode);
-   _console->ProgramNameThreadIdWriteLine(exitCodeLine);
+   p_console->ProgramNameThreadIdWriteLine(exitCodeLine);
    return exitCode;
 }
 
@@ -56,6 +56,6 @@ int FileRevisorProgram::ExceptionHandler(const exception& ex) const
 {
    const string exceptionClassNameAndMessage = _call_Type_GetExceptionClassNameAndMessage(&ex);
    const string exceptionMessage = "Error: Exception thrown: " + exceptionClassNameAndMessage;
-   _console->ProgramNameThreadIdWriteLineColor(exceptionMessage, Color::Red);
+   p_console->ProgramNameThreadIdWriteLineColor(exceptionMessage, Color::Red);
    return 1;
 }

@@ -9,8 +9,7 @@
 
 RenameFilesSubProgram::RenameFilesSubProgram()
    // Function Callers
-   : _caller_PrintDidNotMatchFileMessageIfVerboseMode(make_unique<VoidTwoArgMemberFunctionCaller<
-      RenameFilesSubProgram, bool, const fs::path& >>())
+   : _caller_PrintDidNotMatchFileMessageIfVerboseMode(make_unique<VoidTwoArgMemberFunctionCaller<RenameFilesSubProgram, bool, const fs::path& >>())
    , _transformer_RenameFileIfFileNameMatchesFromPattern(make_unique<OneExtraArgMemberFunctionTransformerType>())
    // Constant Components
    , _predicateCounter(make_unique<PredicateCounter<RenameResult>>())
@@ -25,12 +24,12 @@ RenameFilesSubProgram::~RenameFilesSubProgram()
 int RenameFilesSubProgram::Run(const FileRevisorArgs& args) const
 {
    const vector<fs::path> filePathsInAndPossiblyBelowDirectory =
-      _fileSystem->GetFilePathsInDirectory(args.targetFolderPath, args.recurse);
+      p_fileSystem->GetFilePathsInDirectory(args.targetFolderPath, args.recurse);
    const vector<RenameResult> fileRenameResults = _transformer_RenameFileIfFileNameMatchesFromPattern->Transform(
       filePathsInAndPossiblyBelowDirectory, this, &RenameFilesSubProgram::RenameFileIfFileNameMatchesFromPattern, args);
    const size_t numberOfRenamedFiles = _predicateCounter->CountWhere(fileRenameResults, DidRenameFileIsTrue);
    string renamedFilesMessage;
-   const string fileOrFiles = _pluralizer->PotentiallyPluralizeWord(numberOfRenamedFiles, "file", "files");
+   const string fileOrFiles = p_pluralizer->PotentiallyPluralizeWord(numberOfRenamedFiles, "file", "files");
    if (args.dryrun)
    {
       renamedFilesMessage = String::ConcatValues("Result: Would rename ", numberOfRenamedFiles, ' ', fileOrFiles);
@@ -39,7 +38,7 @@ int RenameFilesSubProgram::Run(const FileRevisorArgs& args) const
    {
       renamedFilesMessage = String::ConcatValues("Result: Renamed ", numberOfRenamedFiles, ' ', fileOrFiles);
    }
-   _console->ProgramNameThreadIdWriteLine(renamedFilesMessage);
+   p_console->ProgramNameThreadIdWriteLine(renamedFilesMessage);
    return 0;
 }
 
@@ -61,14 +60,14 @@ RenameResult RenameFilesSubProgram::RenameFileIfFileNameMatchesFromPattern(const
    if (args.dryrun)
    {
       const string wouldRenameMessage = String::ConcatStrings("DryRun: Would rename file ", filePath.string(), " to ", regexReplacedFileName);
-      _console->ProgramNameThreadIdWriteLine(wouldRenameMessage);
+      p_console->ProgramNameThreadIdWriteLine(wouldRenameMessage);
       const fs::path sourceFolderPath = filePath.parent_path();
       const fs::path renamedFilePath = sourceFolderPath / regexReplacedFileName;
       return RenameResult(true, filePath, renamedFilePath);
    }
-   const fs::path renamedFilePath = _fileSystem->RenameFile(filePath, regexReplacedFileName);
+   const fs::path renamedFilePath = p_fileSystem->RenameFile(filePath, regexReplacedFileName);
    const string renamedFileMessage = String::ConcatStrings("Renamed file ", filePath.string(), " to ", regexReplacedFileName);
-   _console->ProgramNameThreadIdWriteLine(renamedFileMessage);
+   p_console->ProgramNameThreadIdWriteLine(renamedFileMessage);
    return RenameResult(true, filePath, renamedFilePath);
 }
 
@@ -77,6 +76,6 @@ void RenameFilesSubProgram::PrintDidNotMatchFileMessageIfVerboseMode(bool verbos
    if (verbose)
    {
       const string didNotMatchFileMessage = "Verbose: Did not match " + filePath.string();
-      _console->ProgramNameThreadIdWriteLine(didNotMatchFileMessage);
+      p_console->ProgramNameThreadIdWriteLine(didNotMatchFileMessage);
    }
 }

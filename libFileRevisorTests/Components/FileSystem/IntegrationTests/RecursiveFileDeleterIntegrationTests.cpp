@@ -10,7 +10,7 @@ AFACT(RecursivelyDeleteAllFilesInDirectory_DryRunIsFalse_RecursivelyPrintsWouldD
 EVIDENCE
 
 RecursiveFileDeleter _recursiveFileDeleter;
-FileSystem _fileSystem;
+FileSystem p_fileSystem;
 
 string _rootFolderPathString;
 fs::path _rootFolderPath;
@@ -34,22 +34,22 @@ STARTUP
 
   fs::remove_all(_rootFolderPath);
 
-  _fileSystem.CreateTextFile(_root_file1 = _rootFolderPath / "file1.ext", ZenUnit::Random<string>());
-  _fileSystem.CreateTextFile(_root_file2 = _rootFolderPath / ".gitignore", ZenUnit::Random<string>());
+  p_fileSystem.CreateTextFile(_root_file1 = _rootFolderPath / "file1.ext", ZenUnit::Random<string>());
+  p_fileSystem.CreateTextFile(_root_file2 = _rootFolderPath / ".gitignore", ZenUnit::Random<string>());
 
-  _fileSystem.CreateDirectories(_root_subdirectory1 = _rootFolderPath / "subdirectory1");
-  _fileSystem.CreateTextFile(_root_subdirectory1_file1 = _rootFolderPath / "subdirectory1" / "file1.ext", ZenUnit::Random<string>());
-  _fileSystem.CreateTextFile(_root_subdirectory1_file2 = _rootFolderPath / "subdirectory1" / "file2.ext", ZenUnit::Random<string>());
+  p_fileSystem.CreateDirectories(_root_subdirectory1 = _rootFolderPath / "subdirectory1");
+  p_fileSystem.CreateTextFile(_root_subdirectory1_file1 = _rootFolderPath / "subdirectory1" / "file1.ext", ZenUnit::Random<string>());
+  p_fileSystem.CreateTextFile(_root_subdirectory1_file2 = _rootFolderPath / "subdirectory1" / "file2.ext", ZenUnit::Random<string>());
 
-  _fileSystem.CreateDirectories(_root_subdirectory2 = _rootFolderPath / "subdirectory2");
-  _fileSystem.CreateDirectories(_root_subdirectory2_subdirectory3 = _rootFolderPath / "subdirectory2" / "subdirectory3");
-  _fileSystem.CreateTextFile(_root_subdirectory2_subdirectory3_file1 = _rootFolderPath / "subdirectory2" / "subdirectory3" / "file1.ext", ZenUnit::Random<string>());
-  _fileSystem.CreateTextFile(_root_subdirectory2_subdirectory3_file2 = _rootFolderPath / "subdirectory2" / "subdirectory3" / "file2.ext", ZenUnit::Random<string>());
+  p_fileSystem.CreateDirectories(_root_subdirectory2 = _rootFolderPath / "subdirectory2");
+  p_fileSystem.CreateDirectories(_root_subdirectory2_subdirectory3 = _rootFolderPath / "subdirectory2" / "subdirectory3");
+  p_fileSystem.CreateTextFile(_root_subdirectory2_subdirectory3_file1 = _rootFolderPath / "subdirectory2" / "subdirectory3" / "file1.ext", ZenUnit::Random<string>());
+  p_fileSystem.CreateTextFile(_root_subdirectory2_subdirectory3_file2 = _rootFolderPath / "subdirectory2" / "subdirectory3" / "file2.ext", ZenUnit::Random<string>());
 
-  _fileSystem.CreateDirectories(_root_subdirectory4 = _rootFolderPath / "subdirectory4");
+  p_fileSystem.CreateDirectories(_root_subdirectory4 = _rootFolderPath / "subdirectory4");
 
-  _fileSystem.CreateDirectories(_root_subdirectory5 = _rootFolderPath / "subdirectory5");
-  _fileSystem.CreateTextFile(_root_subdirectory5_file1 = _rootFolderPath / "subdirectory5" / "file1.ext", ZenUnit::Random<string>());
+  p_fileSystem.CreateDirectories(_root_subdirectory5 = _rootFolderPath / "subdirectory5");
+  p_fileSystem.CreateTextFile(_root_subdirectory5_file1 = _rootFolderPath / "subdirectory5" / "file1.ext", ZenUnit::Random<string>());
 }
 
 CLEANUP
@@ -62,36 +62,36 @@ CLEANUP
 
 void AssertExpectedStartingStateOfFileSystem() const
 {
-  IS_TRUE(_fileSystem.FileOrDirectoryExists(_rootFolderPath));
-  IS_TRUE(_fileSystem.FileOrDirectoryExists(_root_file1));
-  IS_TRUE(_fileSystem.FileOrDirectoryExists(_root_file2));
-  IS_TRUE(_fileSystem.FileOrDirectoryExists(_root_subdirectory1));
-  IS_TRUE(_fileSystem.FileOrDirectoryExists(_root_subdirectory1_file1));
-  IS_TRUE(_fileSystem.FileOrDirectoryExists(_root_subdirectory1_file2));
-  IS_TRUE(_fileSystem.FileOrDirectoryExists(_root_subdirectory2));
-  IS_TRUE(_fileSystem.FileOrDirectoryExists(_root_subdirectory2_subdirectory3));
-  IS_TRUE(_fileSystem.FileOrDirectoryExists(_root_subdirectory2_subdirectory3_file1));
-  IS_TRUE(_fileSystem.FileOrDirectoryExists(_root_subdirectory2_subdirectory3_file2));
-  IS_TRUE(_fileSystem.FileOrDirectoryExists(_root_subdirectory4));
-  IS_TRUE(_fileSystem.FileOrDirectoryExists(_root_subdirectory5));
-  IS_TRUE(_fileSystem.FileOrDirectoryExists(_root_subdirectory5_file1));
+  IS_TRUE(p_fileSystem.FileOrDirectoryExists(_rootFolderPath));
+  IS_TRUE(p_fileSystem.FileOrDirectoryExists(_root_file1));
+  IS_TRUE(p_fileSystem.FileOrDirectoryExists(_root_file2));
+  IS_TRUE(p_fileSystem.FileOrDirectoryExists(_root_subdirectory1));
+  IS_TRUE(p_fileSystem.FileOrDirectoryExists(_root_subdirectory1_file1));
+  IS_TRUE(p_fileSystem.FileOrDirectoryExists(_root_subdirectory1_file2));
+  IS_TRUE(p_fileSystem.FileOrDirectoryExists(_root_subdirectory2));
+  IS_TRUE(p_fileSystem.FileOrDirectoryExists(_root_subdirectory2_subdirectory3));
+  IS_TRUE(p_fileSystem.FileOrDirectoryExists(_root_subdirectory2_subdirectory3_file1));
+  IS_TRUE(p_fileSystem.FileOrDirectoryExists(_root_subdirectory2_subdirectory3_file2));
+  IS_TRUE(p_fileSystem.FileOrDirectoryExists(_root_subdirectory4));
+  IS_TRUE(p_fileSystem.FileOrDirectoryExists(_root_subdirectory5));
+  IS_TRUE(p_fileSystem.FileOrDirectoryExists(_root_subdirectory5_file1));
 }
 
 void AssertExpectedEndingStateOfFileSystem() const
 {
-  IS_TRUE(_fileSystem.FileOrDirectoryExists(_rootFolderPath));
-  IS_FALSE(_fileSystem.FileOrDirectoryExists(_root_file1));
-  IS_FALSE(_fileSystem.FileOrDirectoryExists(_root_file2));
-  IS_TRUE(_fileSystem.FileOrDirectoryExists(_root_subdirectory1));
-  IS_FALSE(_fileSystem.FileOrDirectoryExists(_root_subdirectory1_file1));
-  IS_FALSE(_fileSystem.FileOrDirectoryExists(_root_subdirectory1_file2));
-  IS_TRUE(_fileSystem.FileOrDirectoryExists(_root_subdirectory2));
-  IS_TRUE(_fileSystem.FileOrDirectoryExists(_root_subdirectory2_subdirectory3));
-  IS_FALSE(_fileSystem.FileOrDirectoryExists(_root_subdirectory2_subdirectory3_file1));
-  IS_FALSE(_fileSystem.FileOrDirectoryExists(_root_subdirectory2_subdirectory3_file2));
-  IS_TRUE(_fileSystem.FileOrDirectoryExists(_root_subdirectory4));
-  IS_TRUE(_fileSystem.FileOrDirectoryExists(_root_subdirectory5));
-  IS_FALSE(_fileSystem.FileOrDirectoryExists(_root_subdirectory5_file1));
+  IS_TRUE(p_fileSystem.FileOrDirectoryExists(_rootFolderPath));
+  IS_FALSE(p_fileSystem.FileOrDirectoryExists(_root_file1));
+  IS_FALSE(p_fileSystem.FileOrDirectoryExists(_root_file2));
+  IS_TRUE(p_fileSystem.FileOrDirectoryExists(_root_subdirectory1));
+  IS_FALSE(p_fileSystem.FileOrDirectoryExists(_root_subdirectory1_file1));
+  IS_FALSE(p_fileSystem.FileOrDirectoryExists(_root_subdirectory1_file2));
+  IS_TRUE(p_fileSystem.FileOrDirectoryExists(_root_subdirectory2));
+  IS_TRUE(p_fileSystem.FileOrDirectoryExists(_root_subdirectory2_subdirectory3));
+  IS_FALSE(p_fileSystem.FileOrDirectoryExists(_root_subdirectory2_subdirectory3_file1));
+  IS_FALSE(p_fileSystem.FileOrDirectoryExists(_root_subdirectory2_subdirectory3_file2));
+  IS_TRUE(p_fileSystem.FileOrDirectoryExists(_root_subdirectory4));
+  IS_TRUE(p_fileSystem.FileOrDirectoryExists(_root_subdirectory5));
+  IS_FALSE(p_fileSystem.FileOrDirectoryExists(_root_subdirectory5_file1));
 }
 
 TEST(RecursivelyDeleteAllFilesInDirectory_DryRunIsTrue_RecursivelyPrintsWouldDeleteFile)

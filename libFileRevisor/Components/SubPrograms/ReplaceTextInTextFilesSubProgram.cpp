@@ -9,7 +9,7 @@
 
 ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFilesSubProgram()
    // Function Pointers
-   : _call_PrintReadingFileMessageIfVerboseMode(make_unique<VoidTwoArgMemberFunctionCaller<ReplaceTextInTextFilesSubProgram, bool, const fs::path&>>())
+   : _call_PrintReadingFileMessageIfVerboseMode(make_unique<_call_PrintReadingFileMessageIfVerboseModeType>())
    // Function Callers
    , _memberFunctionAccumulator_ReplaceTextInTextFile(make_unique<OneExtraArgMemberFunctionAccumulatorType>())
    // Constant Components
@@ -46,16 +46,16 @@ int ReplaceTextInTextFilesSubProgram::Run(const FileRevisorArgs& args) const
    const vector<fs::path> nonEmptyNonIgnoredTextFilePathsInTargetDirectory = _directoryIterator->GetNonEmptyNonIgnoredTextFilePaths();
    const size_t numberOfFilesThatWereOrWouldBeModified = _memberFunctionAccumulator_ReplaceTextInTextFile->SumElementsWithFunction(
       this, nonEmptyNonIgnoredTextFilePathsInTargetDirectory, &ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFile, args);
-   const string fileOrFiles = _pluralizer->PotentiallyPluralizeWord(numberOfFilesThatWereOrWouldBeModified, "file", "files");
+   const string fileOrFiles = p_pluralizer->PotentiallyPluralizeWord(numberOfFilesThatWereOrWouldBeModified, "file", "files");
    if (args.dryrun)
    {
       const string message = String::ConcatValues("DryRun: Would replace text in ", numberOfFilesThatWereOrWouldBeModified, " ", fileOrFiles);
-      _console->ProgramNameThreadIdWriteLine(message);
+      p_console->ProgramNameThreadIdWriteLine(message);
    }
    else
    {
       const string message = String::ConcatValues("Result: Replaced text in ", numberOfFilesThatWereOrWouldBeModified, " ", fileOrFiles);
-      _console->ProgramNameThreadIdWriteLine(message);
+      p_console->ProgramNameThreadIdWriteLine(message);
    }
    return 0;
 }
@@ -64,19 +64,19 @@ size_t ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFile(const fs::path& t
 {
    _call_PrintReadingFileMessageIfVerboseMode->CallConstMemberFunction(
       this, &ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue, args.verbose, textFilePath);
-   const string textFileText = _fileSystem->ReadText(textFilePath);
+   const string textFileText = p_fileSystem->ReadText(textFilePath);
    const string replacedTextFileText = _textReplacer->ReplaceText(textFileText, args.fromRegexPattern, args.toRegexPattern);
    if (replacedTextFileText != textFileText)
    {
       if (args.dryrun)
       {
          const string wouldReplaceTextInFileMessage = "DryRun: Would replace text in file " + textFilePath.string();
-         _console->ProgramNameThreadIdWriteLine(wouldReplaceTextInFileMessage);
+         p_console->ProgramNameThreadIdWriteLine(wouldReplaceTextInFileMessage);
          return 1;
       }
-      _fileSystem->CreateTextFile(textFilePath, replacedTextFileText);
+      p_fileSystem->CreateTextFile(textFilePath, replacedTextFileText);
       const string replacedTextInFileMessage = "Replaced text in file " + textFilePath.string();
-      _console->ProgramNameThreadIdWriteLine(replacedTextInFileMessage);
+      p_console->ProgramNameThreadIdWriteLine(replacedTextInFileMessage);
       return 1;
    }
    return 0;
@@ -87,6 +87,6 @@ void ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue(bo
    if (verbose)
    {
       const string readingFileMessage = "Verbose: Reading file " + textFilePath.string();
-      _console->ProgramNameThreadIdWriteLine(readingFileMessage);
+      p_console->ProgramNameThreadIdWriteLine(readingFileMessage);
    }
 }

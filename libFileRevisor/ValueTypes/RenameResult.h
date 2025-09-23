@@ -2,7 +2,6 @@
 
 struct RenameResult
 {
-public:
    bool didRenameFileOrDirectory;
    fs::path originalFileOrFolderPath;
    fs::path renamedFileOrFolderPath;

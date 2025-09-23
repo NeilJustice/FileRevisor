@@ -4,6 +4,8 @@ template<typename T>
 class PredicateCounter
 {
 public:
+   virtual ~PredicateCounter() = default;
+
    using PredicateFunctionPointerType = bool(*)(const T&);
 
    virtual size_t CountWhere(const vector<T>& elements, PredicateFunctionPointerType predicateFunction) const
@@ -18,6 +20,4 @@ public:
       }
       return numberOfElementsMatchingPredicate;
    }
-
-   virtual ~PredicateCounter() = default;
 };

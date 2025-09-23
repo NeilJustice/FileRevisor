@@ -1,7 +1,7 @@
 #pragma once
 #include "libFileRevisor/StaticUtilities/ENUM_STRING_ARRAY.h"
 
-enum struct ProgramMode
+enum struct ProgramMode : unsigned char
 {
    Unset,
    RenameFiles,

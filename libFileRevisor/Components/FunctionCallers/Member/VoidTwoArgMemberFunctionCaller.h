@@ -4,6 +4,8 @@ template<typename ClassType, typename Arg1Type, typename Arg2Type>
 class VoidTwoArgMemberFunctionCaller
 {
 public:
+   virtual ~VoidTwoArgMemberFunctionCaller() = default;
+
    virtual void CallConstMemberFunction(
       const ClassType* classInstance,
       void (ClassType::* constMemberFunction)(Arg1Type, Arg2Type) const,
@@ -19,6 +21,4 @@ public:
    {
       (classInstance->*nonConstMemberFunction)(arg1, arg2);
    }
-
-   virtual ~VoidTwoArgMemberFunctionCaller() = default;
 };

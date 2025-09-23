@@ -49,7 +49,7 @@ AFACT(DoDeleteFileOrDirectory_FileOrFolderPathIsFolderPath_CallsRemoveAll)
 AFACT(DoDeleteFileOrDirectory_FileOrFolderPathIsFilePath_CallsRemove)
 EVIDENCE
 
-FileSystem _fileSystem;
+FileSystem p_fileSystem;
 // Function Pointers
 METALMOCK_NONVOID1_STATIC_OR_FREE(int, _call_fclose, FILE*)
 METALMOCK_NONVOID2_STATIC_OR_FREE(FILE*, _call_fopen, const char*, const char*)
@@ -81,7 +81,7 @@ _foreacher_DeleteFileOrDirectoryMockType* _foreacher_DeleteFileOrDirectoryMock =
 using _parallelForeacher_DeleteFileOrDirectoryMockType = ParallelThreeArgMemberFunctionForEacherMock<FileSystem, fs::path, bool, bool>;
 _parallelForeacher_DeleteFileOrDirectoryMockType* _parallelForeacher_DeleteFileOrDirectoryMock = nullptr;
 // Constant Components
-ConsoleMock* _consoleMock = nullptr;
+ConsoleMock* p_consoleMock = nullptr;
 ConstCharPointerGetterMock* _constCharPointerGetterMock = nullptr;
 FileOpenerCloserMock* _fileOpenerCloserMock = nullptr;
 FileSystemExceptionMakerMock* _fileSystemExceptionMakerMock = nullptr;
@@ -90,30 +90,30 @@ RecursiveFileDeleterMock* _recursiveFileDeleterMock = nullptr;
 STARTUP
 {
    // Function Pointers
-   _fileSystem._call_fclose = BIND_1ARG_METALMOCK_OBJECT(_call_fcloseMock);
-   _fileSystem._call_fopen = BIND_2ARG_METALMOCK_OBJECT(_call_fopenMock);
-   _fileSystem._call_fs_is_directory = BIND_1ARG_METALMOCK_OBJECT(_call_fs_is_directoryMock);
-   _fileSystem._call_fs_remove = BIND_1ARG_METALMOCK_OBJECT(_call_fs_removeMock);
-   _fileSystem._call_fs_remove_all = BIND_1ARG_METALMOCK_OBJECT(_call_fs_remove_allMock);
+   p_fileSystem._call_fclose = BIND_1ARG_METALMOCK_OBJECT(_call_fcloseMock);
+   p_fileSystem._call_fopen = BIND_2ARG_METALMOCK_OBJECT(_call_fopenMock);
+   p_fileSystem._call_fs_is_directory = BIND_1ARG_METALMOCK_OBJECT(_call_fs_is_directoryMock);
+   p_fileSystem._call_fs_remove = BIND_1ARG_METALMOCK_OBJECT(_call_fs_removeMock);
+   p_fileSystem._call_fs_remove_all = BIND_1ARG_METALMOCK_OBJECT(_call_fs_remove_allMock);
 #ifdef _WIN32
-   _fileSystem._call_fs_absolute = BIND_1ARG_METALMOCK_OBJECT(_call_fs_absoluteMock);
+   p_fileSystem._call_fs_absolute = BIND_1ARG_METALMOCK_OBJECT(_call_fs_absoluteMock);
 #endif
-   _fileSystem._call_std_rename = BIND_2ARG_METALMOCK_OBJECT(_call_std_renameMock);
-   _fileSystem._call_fs_rename_with_error_code = BIND_3ARG_METALMOCK_OBJECT(_call_fs_rename_with_error_codeMock);
-   _fileSystem._call_fs_current_path = BIND_0ARG_METALMOCK_OBJECT(_call_fs_current_pathMock);
-   _fileSystem._call_fs_exists = BIND_1ARG_METALMOCK_OBJECT(_call_fs_existsMock);
+   p_fileSystem._call_std_rename = BIND_2ARG_METALMOCK_OBJECT(_call_std_renameMock);
+   p_fileSystem._call_fs_rename_with_error_code = BIND_3ARG_METALMOCK_OBJECT(_call_fs_rename_with_error_codeMock);
+   p_fileSystem._call_fs_current_path = BIND_0ARG_METALMOCK_OBJECT(_call_fs_current_pathMock);
+   p_fileSystem._call_fs_exists = BIND_1ARG_METALMOCK_OBJECT(_call_fs_existsMock);
    // Function Callers
-   _fileSystem._caller_DeleteFileOrDirectory.reset(_caller_DeleteFileOrDirectoryMock = new _caller_DeleteFileOrDirectoryMockType);
-   _fileSystem._caller_DoDeleteFileOrDirectory.reset(_caller_DoDeleteFileOrDirectoryMock = new _caller_DoDeleteFileOrDirectoryMockType);
-   _fileSystem._caller_Exists.reset(_caller_ExistsMock = new NonVoidOneArgMemberFunctionCallerMock<bool, FileSystem, const fs::path&>);
-   _fileSystem._caller_GetFileOrFolderPathsInDirectory.reset(_caller_GetFileOrFolderPathsInDirectoryMock = new _caller_GetFileOrFolderPathsInDirectoryMockType);
-   _fileSystem._foreacher_DeleteFileOrDirectory.reset(_foreacher_DeleteFileOrDirectoryMock = new _foreacher_DeleteFileOrDirectoryMockType);
+   p_fileSystem._caller_DeleteFileOrDirectory.reset(_caller_DeleteFileOrDirectoryMock = new _caller_DeleteFileOrDirectoryMockType);
+   p_fileSystem._caller_DoDeleteFileOrDirectory.reset(_caller_DoDeleteFileOrDirectoryMock = new _caller_DoDeleteFileOrDirectoryMockType);
+   p_fileSystem._caller_Exists.reset(_caller_ExistsMock = new NonVoidOneArgMemberFunctionCallerMock<bool, FileSystem, const fs::path&>);
+   p_fileSystem._caller_GetFileOrFolderPathsInDirectory.reset(_caller_GetFileOrFolderPathsInDirectoryMock = new _caller_GetFileOrFolderPathsInDirectoryMockType);
+   p_fileSystem._foreacher_DeleteFileOrDirectory.reset(_foreacher_DeleteFileOrDirectoryMock = new _foreacher_DeleteFileOrDirectoryMockType);
    // Constant Components
-   _fileSystem._console.reset(_consoleMock = new ConsoleMock);
-   _fileSystem._constCharPointerGetter.reset(_constCharPointerGetterMock = new ConstCharPointerGetterMock);
-   _fileSystem._fileOpenerCloser.reset(_fileOpenerCloserMock = new FileOpenerCloserMock);
-   _fileSystem._fileSystemExceptionMaker.reset(_fileSystemExceptionMakerMock = new FileSystemExceptionMakerMock);
-   _fileSystem._recursiveFileDeleter.reset(_recursiveFileDeleterMock = new RecursiveFileDeleterMock);
+   p_fileSystem.p_console.reset(p_consoleMock = new ConsoleMock);
+   p_fileSystem._constCharPointerGetter.reset(_constCharPointerGetterMock = new ConstCharPointerGetterMock);
+   p_fileSystem._fileOpenerCloser.reset(_fileOpenerCloserMock = new FileOpenerCloserMock);
+   p_fileSystem._fileSystemExceptionMaker.reset(_fileSystemExceptionMakerMock = new FileSystemExceptionMakerMock);
+   p_fileSystem._recursiveFileDeleter.reset(_recursiveFileDeleterMock = new RecursiveFileDeleterMock);
 }
 
 TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
@@ -147,7 +147,7 @@ TEST(DefaultConstructor_NewsComponents_SetsFunctionPointers)
    DELETE_TO_ASSERT_NEWED(fileSystem._caller_GetFileOrFolderPathsInDirectory);
    DELETE_TO_ASSERT_NEWED(fileSystem._foreacher_DeleteFileOrDirectory);
    // Constant Components
-   DELETE_TO_ASSERT_NEWED(fileSystem._console);
+   DELETE_TO_ASSERT_NEWED(fileSystem.p_console);
    DELETE_TO_ASSERT_NEWED(fileSystem._constCharPointerGetter);
    DELETE_TO_ASSERT_NEWED(fileSystem._fileOpenerCloser);
    DELETE_TO_ASSERT_NEWED(fileSystem._fileSystemExceptionMaker);
@@ -171,24 +171,24 @@ TEST(DeleteTopLevelFilesAndEmptyDirectoriesInDirectory_IfWindowsRemovesReadOnlyF
    const bool dryRun = ZenUnit::Random<bool>();
    const bool quietMode = ZenUnit::Random<bool>();
    //
-   _fileSystem.DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(directoryPath, skipFilesInUse, dryRun, quietMode);
+   p_fileSystem.DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(directoryPath, skipFilesInUse, dryRun, quietMode);
    //
    METALMOCK(_caller_GetFileOrFolderPathsInDirectoryMock->CallConstMemberFunctionMock.CalledNTimes(2));
    METALMOCK(_foreacher_DeleteFileOrDirectoryMock->CallConstMemberFunctionWithEachElementMock.CalledNTimes(2));
 
-   METALMOCKTHEN(_caller_DeleteFileOrDirectoryMock->CallConstMemberFunctionMock.CalledOnceWith(&_fileSystem, &FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows, directoryPath, dryRun)).Then(
+   METALMOCKTHEN(_caller_DeleteFileOrDirectoryMock->CallConstMemberFunctionMock.CalledOnceWith(&p_fileSystem, &FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows, directoryPath, dryRun)).Then(
 
    METALMOCKTHEN(_caller_GetFileOrFolderPathsInDirectoryMock->CallConstMemberFunctionMock.CalledWith(
-      &_fileSystem, &FileSystem::GetFolderPathsInDirectory, directoryPath, false))).Then(
+      &p_fileSystem, &FileSystem::GetFolderPathsInDirectory, directoryPath, false))).Then(
 
    METALMOCKTHEN(_caller_GetFileOrFolderPathsInDirectoryMock->CallConstMemberFunctionMock.CalledWith(
-      &_fileSystem, &FileSystem::GetFilePathsInDirectory, directoryPath, false))).Then(
+      &p_fileSystem, &FileSystem::GetFilePathsInDirectory, directoryPath, false))).Then(
 
    METALMOCKTHEN(_foreacher_DeleteFileOrDirectoryMock->CallConstMemberFunctionWithEachElementMock.CalledWith(
-      topLevelFolderPaths, &_fileSystem, &FileSystem::DeleteFileOrDirectory, skipFilesInUse, dryRun, quietMode))).Then(
+      topLevelFolderPaths, &p_fileSystem, &FileSystem::DeleteFileOrDirectory, skipFilesInUse, dryRun, quietMode))).Then(
 
    METALMOCKTHEN(_foreacher_DeleteFileOrDirectoryMock->CallConstMemberFunctionWithEachElementMock.CalledWith(
-      topLevelFilePaths, &_fileSystem, &FileSystem::DeleteFileOrDirectory, skipFilesInUse, dryRun, quietMode)));
+      topLevelFilePaths, &p_fileSystem, &FileSystem::DeleteFileOrDirectory, skipFilesInUse, dryRun, quietMode)));
 }
 
 TEST(RecursivelyDeleteAllFilesInDirectory_CallsFileDeleterRecursivelyDeleteAllFilesInDirectory)
@@ -197,40 +197,40 @@ TEST(RecursivelyDeleteAllFilesInDirectory_CallsFileDeleterRecursivelyDeleteAllFi
    const string directoryPath = ZenUnit::Random<string>();
    const FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    //
-   _fileSystem.RecursivelyDeleteAllFilesInDirectory(directoryPath, args);
+   p_fileSystem.RecursivelyDeleteAllFilesInDirectory(directoryPath, args);
    //
    METALMOCK(_recursiveFileDeleterMock->RecursivelyDeleteAllFilesInDirectoryMock.CalledOnceWith(directoryPath.c_str(), args));
 }
 
 TEST(DeleteFileOrDirectory_DryRunIsTrue_WritesWouldDeleteFilePathMessage_DoesNotDeleteFile)
 {
-   _consoleMock->ProgramNameThreadIdWriteLineMock.Expect();
+   p_consoleMock->ProgramNameThreadIdWriteLineMock.Expect();
    const fs::path fileOrFolderPath = ZenUnit::Random<fs::path>();
    const bool ignoreFileDeleteError = ZenUnit::Random<bool>();
    const bool dryRun = true;
    const bool quietMode = ZenUnit::Random<bool>();
    //
-   _fileSystem.DeleteFileOrDirectory(fileOrFolderPath, ignoreFileDeleteError, dryRun, quietMode);
+   p_fileSystem.DeleteFileOrDirectory(fileOrFolderPath, ignoreFileDeleteError, dryRun, quietMode);
    //
    const string expectedWouldDeleteMessage = "DryRun: Would delete " + fileOrFolderPath.string();
-   METALMOCK(_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(expectedWouldDeleteMessage));
+   METALMOCK(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(expectedWouldDeleteMessage));
 }
 
 TEST(DeleteFileOrDirectory_DryRunIsFalse_QuietModeIsFalse_DeletesFileWhichDoesNotThrow_WritesDeletedFileMessage)
 {
    _caller_DoDeleteFileOrDirectoryMock->CallConstMemberFunctionMock.Expect();
-   _consoleMock->ProgramNameThreadIdWriteLineMock.Expect();
+   p_consoleMock->ProgramNameThreadIdWriteLineMock.Expect();
    const fs::path fileOrFolderPath = ZenUnit::Random<fs::path>();
    const bool ignoreFileDeleteError = ZenUnit::Random<bool>();
    const bool dryRun = false;
    const bool quietMode = false;
    //
-   _fileSystem.DeleteFileOrDirectory(fileOrFolderPath, ignoreFileDeleteError, dryRun, quietMode);
+   p_fileSystem.DeleteFileOrDirectory(fileOrFolderPath, ignoreFileDeleteError, dryRun, quietMode);
    //
    const string expectedDeletedMessage = "Deleted " + fileOrFolderPath.string();
    METALMOCKTHEN(_caller_DoDeleteFileOrDirectoryMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &_fileSystem, &FileSystem::DoDeleteFileOrDirectory, fileOrFolderPath)).Then(
-   METALMOCKTHEN(_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(expectedDeletedMessage)));
+      &p_fileSystem, &FileSystem::DoDeleteFileOrDirectory, fileOrFolderPath)).Then(
+   METALMOCKTHEN(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(expectedDeletedMessage)));
 }
 
 TEST(DeleteFileOrDirectory_DryRunIsFalse_QuietModeIsTrue_DeletesFileWhichDoesNotThrow_DoesNotWriteDeletedFileMessage)
@@ -241,29 +241,29 @@ TEST(DeleteFileOrDirectory_DryRunIsFalse_QuietModeIsTrue_DeletesFileWhichDoesNot
    const bool dryRun = false;
    const bool quietMode = true;
    //
-   _fileSystem.DeleteFileOrDirectory(fileOrFolderPath, ignoreFileDeleteError, dryRun, quietMode);
+   p_fileSystem.DeleteFileOrDirectory(fileOrFolderPath, ignoreFileDeleteError, dryRun, quietMode);
    //
    METALMOCKTHEN(_caller_DoDeleteFileOrDirectoryMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &_fileSystem, &FileSystem::DoDeleteFileOrDirectory, fileOrFolderPath));
+      &p_fileSystem, &FileSystem::DoDeleteFileOrDirectory, fileOrFolderPath));
 }
 
 TEST(DeleteFileOrDirectory_DryRunIsFalse_IgnoreFileDeleteErrorIsTrue_DeletesFileWhichThrows_WritesExceptionMessage_Returns)
 {
    const string exceptionMessage = ZenUnit::Random<string>();
    _caller_DoDeleteFileOrDirectoryMock->CallConstMemberFunctionMock.ThrowExceptionWhenCalled<runtime_error>(exceptionMessage);
-   _consoleMock->ProgramNameThreadIdWriteLineColorMock.Expect();
+   p_consoleMock->ProgramNameThreadIdWriteLineColorMock.Expect();
    const fs::path fileOrFolderPath = ZenUnit::Random<fs::path>();
    const bool ignoreFileDeleteError = true;
    const bool dryRun = false;
    const bool quietMode = ZenUnit::Random<bool>();
    //
-   _fileSystem.DeleteFileOrDirectory(fileOrFolderPath, ignoreFileDeleteError, dryRun, quietMode);
+   p_fileSystem.DeleteFileOrDirectory(fileOrFolderPath, ignoreFileDeleteError, dryRun, quietMode);
    //
    const string expectedExceptionClassNameAndMessage = "std::runtime_error: " + exceptionMessage;
    const string expectedIgnoringExceptionMessage = "Ignoring exception because --skip-files-in-use: " + expectedExceptionClassNameAndMessage;
    METALMOCKTHEN(_caller_DoDeleteFileOrDirectoryMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &_fileSystem, &FileSystem::DoDeleteFileOrDirectory, fileOrFolderPath)).Then(
-   METALMOCKTHEN(_consoleMock->ProgramNameThreadIdWriteLineColorMock.CalledOnceWith(expectedIgnoringExceptionMessage, Color::Yellow)));
+      &p_fileSystem, &FileSystem::DoDeleteFileOrDirectory, fileOrFolderPath)).Then(
+   METALMOCKTHEN(p_consoleMock->ProgramNameThreadIdWriteLineColorMock.CalledOnceWith(expectedIgnoringExceptionMessage, Color::Yellow)));
 }
 
 TEST(DeleteFileOrDirectory_DryRunIsFalse_IgnoreFileDeleteErrorIsFalse_DeletesFileWhichThrows_RethrowsException)
@@ -273,11 +273,11 @@ TEST(DeleteFileOrDirectory_DryRunIsFalse_IgnoreFileDeleteErrorIsFalse_DeletesFil
    const fs::path fileOrFolderPath = ZenUnit::Random<fs::path>();
    const bool quietMode = ZenUnit::Random<bool>();
    //
-   THROWS_EXCEPTION(_fileSystem.DeleteFileOrDirectory(fileOrFolderPath, false, false, quietMode),
+   THROWS_EXCEPTION(p_fileSystem.DeleteFileOrDirectory(fileOrFolderPath, false, false, quietMode),
       runtime_error, exceptionMessage);
    //
    METALMOCKTHEN(_caller_DoDeleteFileOrDirectoryMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &_fileSystem, &FileSystem::DoDeleteFileOrDirectory, fileOrFolderPath));
+      &p_fileSystem, &FileSystem::DoDeleteFileOrDirectory, fileOrFolderPath));
 }
 
 // Open File
@@ -293,7 +293,7 @@ TEST(OpenFile_FOpenReturnsNullFILEPointer_ThrowsFileSystemException)
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const string fileOpenMode = ZenUnit::Random<string>();
    //
-   THROWS_EXCEPTION(_fileSystem.OpenFile(filePath, fileOpenMode.c_str()),
+   THROWS_EXCEPTION(p_fileSystem.OpenFile(filePath, fileOpenMode.c_str()),
       FileSystemException, fileSystemException.what());
    //
    const vector<pair<string, string>> expected_fopen_Arguments = { { filePath.string(), fileOpenMode } };
@@ -311,7 +311,7 @@ TEST(OpenFile_FOpenReturnsNonNullFILEPointer_ReturnsFilePointer)
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const string fileOpenMode = ZenUnit::Random<string>();
    //
-   const shared_ptr<FILE> filePointer = _fileSystem.OpenFile(filePath, fileOpenMode.c_str());
+   const shared_ptr<FILE> filePointer = p_fileSystem.OpenFile(filePath, fileOpenMode.c_str());
    //
    const vector<pair<string, string>> expected_fopen_Arguments = { { filePath.string(), fileOpenMode } };
    ARE_EQUAL(expected_fopen_Arguments, _fopen_Arguments);
@@ -324,7 +324,7 @@ TEST(Linux__RemoveReadOnlyFlagsFromTopLevelFilesInDirectoryIfWindows_DoesNothing
 {
    const fs::path directoryPath = ZenUnit::Random<fs::path>();
    const bool dryRun = ZenUnit::Random<bool>();
-   _fileSystem.RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows(directoryPath, dryRun);
+   p_fileSystem.RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows(directoryPath, dryRun);
 }
 
 #elif _WIN32
@@ -332,7 +332,7 @@ TEST(Linux__RemoveReadOnlyFlagsFromTopLevelFilesInDirectoryIfWindows_DoesNothing
 TEST(Windows__RemoveReadOnlyFlagsFromTopLevelFilesInDirectoryIfWindows_DryRunIsTrue_DoesNothing)
 {
    const fs::path directoryPath = ZenUnit::Random<fs::path>();
-   _fileSystem.RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows(directoryPath, true);
+   p_fileSystem.RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows(directoryPath, true);
 }
 
 TEST(Windows__RemoveReadOnlyFlagsFromTopLevelFilesInDirectoryIfWindows_DryRunIsFalse_CallsRemoveReadonlyFlagOnAllTopLevelFilesInDirectory)
@@ -377,9 +377,9 @@ TEST(Windows__RemoveReadOnlyFlagsFromTopLevelFilesInDirectoryIfWindows_DryRunIsF
 TEST(Linux__GetAbsolutePath_ReturnsNonEmptyPath)
 {
    const fs::path relativeFileOrFolderPath = ZenUnit::Random<fs::path>();
-   _fileSystem.GetAbsolutePath(relativeFileOrFolderPath);
+   p_fileSystem.GetAbsolutePath(relativeFileOrFolderPath);
 
-   _fileSystem.GetAbsolutePath(".");
+   p_fileSystem.GetAbsolutePath(".");
 }
 #elif _WIN32
 TEST(Windows__GetAbsolutePath_ReturnsResultOfCallingStdFilesystemAbsolute)
@@ -387,7 +387,7 @@ TEST(Windows__GetAbsolutePath_ReturnsResultOfCallingStdFilesystemAbsolute)
    const fs::path absoluteFileOrFolderPath = _call_fs_absoluteMock.ReturnRandom();
    const fs::path relativeFileOrFolderPath = ZenUnit::Random<fs::path>();
    //
-   const fs::path returnedAbsoluteFileOrFolderPath = _fileSystem.GetAbsolutePath(relativeFileOrFolderPath);
+   const fs::path returnedAbsoluteFileOrFolderPath = p_fileSystem.GetAbsolutePath(relativeFileOrFolderPath);
    //
    METALMOCK(_call_fs_absoluteMock.CalledOnceWith(relativeFileOrFolderPath));
 }
@@ -397,7 +397,7 @@ TEST(CurrentFolderPath_ReturnsResultOfCallingFilesystemCurrentPath)
 {
    const fs::path currentPathReturnValue = _call_fs_current_pathMock.ReturnRandom();
    //
-   const fs::path currentFolderPath = _fileSystem.CurrentFolderPath();
+   const fs::path currentFolderPath = p_fileSystem.CurrentFolderPath();
    //
    METALMOCK(_call_fs_current_pathMock.CalledOnce());
    ARE_EQUAL(currentPathReturnValue, currentFolderPath);
@@ -408,7 +408,7 @@ TEST(FileOrDirectoryExists_ReturnsResultOfCallingStdFilesystemExists)
    const bool existsReturnValue = _call_fs_existsMock.ReturnRandom();
    const fs::path fileOrFolderPath = ZenUnit::Random<fs::path>();
    //
-   const bool fileOrFolderPathExists = _fileSystem.FileOrDirectoryExists(fileOrFolderPath);
+   const bool fileOrFolderPathExists = p_fileSystem.FileOrDirectoryExists(fileOrFolderPath);
    //
    METALMOCK(_call_fs_existsMock.CalledOnceWith(fileOrFolderPath));
    ARE_EQUAL(existsReturnValue, fileOrFolderPathExists);
@@ -424,11 +424,11 @@ TEST(RenameFile_FilePathDoesNotExist_ThrowsRuntimeError)
    //
    const string expectedExceptionMessage =
       "FileSystem::RenameFile(const fs::path& filePath, string_view newFileName) error: filePath does not exist: " + filePath.string();
-   THROWS_EXCEPTION(const fs::path renamedFilePath = _fileSystem.RenameFile(filePath, newFileName),
+   THROWS_EXCEPTION(const fs::path renamedFilePath = p_fileSystem.RenameFile(filePath, newFileName),
       runtime_error, expectedExceptionMessage);
    //
    METALMOCK(_caller_ExistsMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &_fileSystem, &FileSystem::FileOrDirectoryExists, filePath));
+      &p_fileSystem, &FileSystem::FileOrDirectoryExists, filePath));
 }
 
 TEST(RenameFile_FilePathExists_DestinationFilePathExists_ThrowsRuntimeError)
@@ -441,14 +441,14 @@ TEST(RenameFile_FilePathExists_DestinationFilePathExists_ThrowsRuntimeError)
    const fs::path expectedDestinationFilePath = expectedSourceFolderPath / newFileName;
    const string expectedExceptionMessage =
       "FileSystem::RenameFile(const fs::path& filePath, string_view newFileName) error: renamedFilePath already exists: " + expectedDestinationFilePath.string();
-   THROWS_EXCEPTION(const fs::path renamedFilePath = _fileSystem.RenameFile(filePath, newFileName),
+   THROWS_EXCEPTION(const fs::path renamedFilePath = p_fileSystem.RenameFile(filePath, newFileName),
       runtime_error, expectedExceptionMessage);
    //
    METALMOCK(_caller_ExistsMock->CallConstMemberFunctionMock.CalledNTimes(2));
    METALMOCKTHEN(_caller_ExistsMock->CallConstMemberFunctionMock.CalledWith(
-      &_fileSystem, &FileSystem::FileOrDirectoryExists, filePath)).Then(
+      &p_fileSystem, &FileSystem::FileOrDirectoryExists, filePath)).Then(
    METALMOCKTHEN(_caller_ExistsMock->CallConstMemberFunctionMock.CalledWith(
-      &_fileSystem, &FileSystem::FileOrDirectoryExists, expectedDestinationFilePath)));
+      &p_fileSystem, &FileSystem::FileOrDirectoryExists, expectedDestinationFilePath)));
 }
 
 TEST2X2(RenameFile_FilePathExists_DestinationFilePathDoesNotExist_RenamesFile_ThrowsIfRenameReturnsNon0_OtherwiseReturns,
@@ -480,18 +480,18 @@ TEST2X2(RenameFile_FilePathExists_DestinationFilePathDoesNotExist_RenamesFile_Th
       const string expectedExceptionMessage = String::ConcatValues(
          "FileSystem::RenameFile(const fs::path& filePath, string_view newFileName) error: std::rename(\"",
          filePathString, "\", \"", expectedRenamedFilePathString, "\") returned a non-0 value: ", renameReturnValue);
-      THROWS_EXCEPTION(const fs::path renamedFilePath = _fileSystem.RenameFile(filePath, newFileName), runtime_error, expectedExceptionMessage);
+      THROWS_EXCEPTION(const fs::path renamedFilePath = p_fileSystem.RenameFile(filePath, newFileName), runtime_error, expectedExceptionMessage);
    }
    else
    {
-      const fs::path renamedFilePath = _fileSystem.RenameFile(filePath, newFileName);
+      const fs::path renamedFilePath = p_fileSystem.RenameFile(filePath, newFileName);
       ARE_EQUAL(expectedRenamedFilePath, renamedFilePath);
    }
    //
    METALMOCK(_caller_ExistsMock->CallConstMemberFunctionMock.CalledNTimes(2));
    METALMOCK(_constCharPointerGetterMock->GetStringConstCharPointerMock.CalledNTimes(2));
-   METALMOCKTHEN(_caller_ExistsMock->CallConstMemberFunctionMock.CalledWith(&_fileSystem, &FileSystem::FileOrDirectoryExists, filePath)).Then(
-   METALMOCKTHEN(_caller_ExistsMock->CallConstMemberFunctionMock.CalledWith(&_fileSystem, &FileSystem::FileOrDirectoryExists, expectedRenamedFilePath))).Then(
+   METALMOCKTHEN(_caller_ExistsMock->CallConstMemberFunctionMock.CalledWith(&p_fileSystem, &FileSystem::FileOrDirectoryExists, filePath)).Then(
+   METALMOCKTHEN(_caller_ExistsMock->CallConstMemberFunctionMock.CalledWith(&p_fileSystem, &FileSystem::FileOrDirectoryExists, expectedRenamedFilePath))).Then(
    METALMOCKTHEN(_constCharPointerGetterMock->GetStringConstCharPointerMock.CalledWith(expectedFilePathString))).Then(
    METALMOCKTHEN(_constCharPointerGetterMock->GetStringConstCharPointerMock.CalledWith(expectedRenamedFilePathString))).Then(
    METALMOCKTHEN(_call_std_renameMock.CalledOnceWith(filePathStringCCP, destinationFilePathStringCCP)));
@@ -514,7 +514,7 @@ TEST(RenameDirectory_RenamesDirectory_FilesystemRenameReturns0_ReturnsRenamedFol
    const fs::path directoryPath = ZenUnit::Random<fs::path>();
    const string newDirectoryName = ZenUnit::Random<string>();
    //
-   const fs::path renamedFolderPath = _fileSystem.RenameDirectory(directoryPath, newDirectoryName);
+   const fs::path renamedFolderPath = p_fileSystem.RenameDirectory(directoryPath, newDirectoryName);
    //
    const fs::path expectedFolderPathMinusLeafDirectory = [&]() // LCOV_EXCL_LINE
    {
@@ -548,7 +548,7 @@ TEST1X1(RenameDirectory_RenamesDirectory_FilesystemRenameReturnsNot0_ThrowsFileS
    }();
    const fs::path expectedRenamedFolderPath = expectedFolderPathMinusLeafDirectory / newDirectoryName;
    //
-   THROWS_EXCEPTION(const fs::path renamedFolderPath = _fileSystem.RenameDirectory(directoryPath, newDirectoryName),
+   THROWS_EXCEPTION(const fs::path renamedFolderPath = p_fileSystem.RenameDirectory(directoryPath, newDirectoryName),
       FileSystemException, fileSystemException.what());
    //
    error_code expectedRenameArgumentErrorCode;
@@ -575,7 +575,7 @@ TEST(DoDeleteFileOrDirectory_FileOrFolderPathIsFolderPath_CallsRemoveAll)
    _call_fs_remove_allMock.ReturnRandom();
    const fs::path fileOrFolderPath = ZenUnit::Random<fs::path>();
    //
-   _fileSystem.DoDeleteFileOrDirectory(fileOrFolderPath);
+   p_fileSystem.DoDeleteFileOrDirectory(fileOrFolderPath);
    //
    METALMOCK(_call_fs_is_directoryMock.CalledOnceWith(fileOrFolderPath));
    METALMOCK(_call_fs_remove_allMock.CalledOnceWith(fileOrFolderPath));
@@ -587,7 +587,7 @@ TEST(DoDeleteFileOrDirectory_FileOrFolderPathIsFilePath_CallsRemove)
    _call_fs_removeMock.ReturnRandom();
    const fs::path fileOrFolderPath = ZenUnit::Random<fs::path>();
    //
-   _fileSystem.DoDeleteFileOrDirectory(fileOrFolderPath);
+   p_fileSystem.DoDeleteFileOrDirectory(fileOrFolderPath);
    //
    METALMOCK(_call_fs_is_directoryMock.CalledOnceWith(fileOrFolderPath));
    METALMOCK(_call_fs_removeMock.CalledOnceWith(fileOrFolderPath));

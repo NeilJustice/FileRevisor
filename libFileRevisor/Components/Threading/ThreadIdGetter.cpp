@@ -3,6 +3,6 @@
 
 thread::id ThreadIdGetter::GetThreadId() const
 {
-   const thread::id threadId = this_thread::get_id();
+   thread::id threadId = this_thread::get_id();
    return threadId;
 }

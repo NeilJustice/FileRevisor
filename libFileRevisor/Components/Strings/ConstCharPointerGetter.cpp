@@ -3,6 +3,6 @@
 
 const char* ConstCharPointerGetter::GetStringConstCharPointer(const string& str) const
 {
-   const char* const constCharPointer = str.c_str();
+   const char* constCharPointer = str.c_str();
    return constCharPointer;
 }

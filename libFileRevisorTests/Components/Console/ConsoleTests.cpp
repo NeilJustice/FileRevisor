@@ -9,44 +9,44 @@ AFACT(ProgramNameThreadIdWriteLine_CodeCoverage)
 AFACT(ProgramNameThreadIdWriteLineColor_SetsConsoleTextColor_WritesMessageThenNewline_UnsetsColor)
 EVIDENCE
 
-Console _console;
+Console p_console;
 // Mutable Components
-ConsoleColorerMock* _consoleColorerMock = nullptr;
+ConsoleColorerMock* p_consoleColorerMock = nullptr;
 
 STARTUP
 {
    // Mutable Components
-   _console._consoleColorer.reset(_consoleColorerMock = new ConsoleColorerMock);
+   p_console.p_consoleColorer.reset(p_consoleColorerMock = new ConsoleColorerMock);
 }
 
 TEST(DefaultConstructor_NewsConsoleColorer)
 {
    Console console;
    // Function Pointers
-   DELETE_TO_ASSERT_NEWED(console._consoleColorer);
+   DELETE_TO_ASSERT_NEWED(console.p_consoleColorer);
 }
 
 TEST(WriteLine_CodeCoverage)
 {
-   _console.WriteLine(ZenUnit::Random<string>());
+   p_console.WriteLine(ZenUnit::Random<string>());
 }
 
 TEST(ProgramNameThreadIdWriteLine_CodeCoverage)
 {
-   _console.ProgramNameThreadIdWriteLine(ZenUnit::Random<string>());
+   p_console.ProgramNameThreadIdWriteLine(ZenUnit::Random<string>());
 }
 
 TEST(ProgramNameThreadIdWriteLineColor_SetsConsoleTextColor_WritesMessageThenNewline_UnsetsColor)
 {
-   const bool didSetTextColor = _consoleColorerMock->SetTextColorMock.ReturnRandom();
-   _consoleColorerMock->UnsetTextColorMock.Expect();
+   const bool didSetTextColor = p_consoleColorerMock->SetTextColorMock.ReturnRandom();
+   p_consoleColorerMock->UnsetTextColorMock.Expect();
    const string message = ZenUnit::Random<string>();
    const Color color = ZenUnit::RandomEnum<Color>();
    //
-   _console.ProgramNameThreadIdWriteLineColor(message, color);
+   p_console.ProgramNameThreadIdWriteLineColor(message, color);
    //
-   METALMOCK(_consoleColorerMock->SetTextColorMock.CalledOnceWith(color));
-   METALMOCK(_consoleColorerMock->UnsetTextColorMock.CalledOnceWith(didSetTextColor));
+   METALMOCK(p_consoleColorerMock->SetTextColorMock.CalledOnceWith(color));
+   METALMOCK(p_consoleColorerMock->UnsetTextColorMock.CalledOnceWith(didSetTextColor));
 }
 
 RUN_TESTS(ConsoleTests)

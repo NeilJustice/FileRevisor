@@ -4,6 +4,8 @@ template<typename ReturnType, typename ClassType, typename ArgumentType>
 class NonVoidOneArgTryCatchCaller
 {
 public:
+   virtual ~NonVoidOneArgTryCatchCaller() = default;
+
    virtual ReturnType TryCatchCallConstMemberFunction(
       const ClassType* constClassPointer,
       ReturnType (ClassType::* constMemberFunction)(ArgumentType) const,
@@ -21,6 +23,4 @@ public:
          return returnValue;
       }
    }
-
-   virtual ~NonVoidOneArgTryCatchCaller() = default;
 };

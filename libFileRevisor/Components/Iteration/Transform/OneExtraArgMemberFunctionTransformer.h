@@ -4,6 +4,8 @@ template<typename ClassType, typename ElementType, typename TransformedElementTy
 class OneExtraArgMemberFunctionTransformer
 {
 public:
+   virtual ~OneExtraArgMemberFunctionTransformer() = default;
+
    virtual vector<TransformedElementType> Transform(
       const vector<ElementType>& elements,
       const ClassType* classInstance,
@@ -19,6 +21,4 @@ public:
       }
       return transformedElements;
    }
-
-   virtual ~OneExtraArgMemberFunctionTransformer() = default;
 };

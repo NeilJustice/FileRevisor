@@ -4,7 +4,7 @@
 
 Console::Console()
    // Mutable Components
-   : _consoleColorer(make_unique<ConsoleColorer>())
+   : p_consoleColorer(make_unique<ConsoleColorer>())
 {
 }
 
@@ -29,9 +29,9 @@ void Console::ProgramNameThreadIdWriteLineColor(string_view message, Color color
 {
    const string threadIdMessage = MakeThreadIdMessage(message);
    scoped_lock<mutex> coutLock(_coutMutex);
-   const bool didSetTextColor = _consoleColorer->SetTextColor(color);
+   const bool didSetTextColor = p_consoleColorer->SetTextColor(color);
    cout << threadIdMessage;
-   _consoleColorer->UnsetTextColor(didSetTextColor);
+   p_consoleColorer->UnsetTextColor(didSetTextColor);
 }
 
 // Private Functions

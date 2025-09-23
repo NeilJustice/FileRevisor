@@ -4,7 +4,7 @@ template<typename ClassType>
 class VoidZeroArgMemberFunctionCaller
 {
 public:
-   VoidZeroArgMemberFunctionCaller() {}
+   virtual ~VoidZeroArgMemberFunctionCaller() = default;
 
    virtual void CallConstMemberFunction(const ClassType* classInstance, void (ClassType::* constMemberFunction)() const) const
    {
@@ -15,6 +15,4 @@ public:
    {
       (classInstance->*nonConstMemberFunction)();
    }
-
-   virtual ~VoidZeroArgMemberFunctionCaller() = default;
 };

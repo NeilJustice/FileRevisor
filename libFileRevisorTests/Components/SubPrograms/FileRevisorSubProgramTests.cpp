@@ -10,9 +10,9 @@ TEST(DefaultConstructor_NewsComponents)
 {
    FileRevisorSubProgram fileRevisorSubProgram;
    // Base Class Constant Components
-   DELETE_TO_ASSERT_NEWED(fileRevisorSubProgram._console);
-   DELETE_TO_ASSERT_NEWED(fileRevisorSubProgram._fileSystem);
-   DELETE_TO_ASSERT_NEWED(fileRevisorSubProgram._pluralizer);
+   DELETE_TO_ASSERT_NEWED(fileRevisorSubProgram.p_console);
+   DELETE_TO_ASSERT_NEWED(fileRevisorSubProgram.p_fileSystem);
+   DELETE_TO_ASSERT_NEWED(fileRevisorSubProgram.p_pluralizer);
 }
 
 TEST(Run_Returns0)

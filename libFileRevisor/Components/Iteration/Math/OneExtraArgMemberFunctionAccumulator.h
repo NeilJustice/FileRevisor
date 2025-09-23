@@ -8,6 +8,8 @@ template<
    class OneExtraArgMemberFunctionAccumulator
 {
 public:
+   virtual ~OneExtraArgMemberFunctionAccumulator() = default;
+
    virtual SumType SumElementsWithFunction(
       const ClassType* classInstance,
       const vector<ElementType>& elements,
@@ -22,6 +24,4 @@ public:
       }
       return sum;
    }
-
-   virtual ~OneExtraArgMemberFunctionAccumulator() = default;
 };

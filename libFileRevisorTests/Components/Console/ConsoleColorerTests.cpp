@@ -22,7 +22,7 @@ AFACT(SetSupportsColorIfUnset_SupportsColorBeenSetIsFalse_SetsSupportsColorToRes
 FACTS(SupportsColor_CallsFileno_CallsIsAtty_ReturnsTrueIfIsAttyReturnValueIsNot0)
 EVIDENCE
 
-ConsoleColorer _consoleColorer;
+ConsoleColorer p_consoleColorer;
 // Function Pointers
 METALMOCK_NONVOID1_STATIC_OR_FREE(int, fileno, FILE*)
 METALMOCK_NONVOID1_STATIC_OR_FREE(int, isatty, int)
@@ -32,10 +32,10 @@ AsserterMock* _asserterMock = nullptr;
 STARTUP
 {
    // Function Pointers
-   _consoleColorer._call_fileno = BIND_1ARG_METALMOCK_OBJECT(filenoMock);
-   _consoleColorer._call_isatty = BIND_1ARG_METALMOCK_OBJECT(isattyMock);
+   p_consoleColorer._call_fileno = BIND_1ARG_METALMOCK_OBJECT(filenoMock);
+   p_consoleColorer._call_isatty = BIND_1ARG_METALMOCK_OBJECT(isattyMock);
    // Constant Components
-   _consoleColorer._asserter.reset(_asserterMock = new AsserterMock);
+   p_consoleColorer._asserter.reset(_asserterMock = new AsserterMock);
 }
 
 TEST(DefaultConstructor_SetsFunctionPointers_SetsBoolFieldsToFalse)
@@ -63,7 +63,7 @@ TEST(SetTextColor_ColorIsWhite_ReturnsFalse)
 {
    const Color color = Color::White;
    //
-   const bool didSetColor = _consoleColorer.SetTextColor(color);
+   const bool didSetColor = p_consoleColorer.SetTextColor(color);
    //
    IS_FALSE(didSetColor);
 }
@@ -111,7 +111,7 @@ TEST1X1(SetTextColor_ColorIsNotWhite_ConsoleSupportsColorIsTrue_SetsTextColor_Re
 
 TEST(UnsetTextColor_DidPreviouslySetTextColorIsFalse_DoesNothing)
 {
-   _consoleColorer.UnsetTextColor(false);
+   p_consoleColorer.UnsetTextColor(false);
 }
 
 TEST(UnsetTextColor_DidPreviouslySetTextColorIsTrue_CallsSetTextColorWhite)
@@ -139,7 +139,7 @@ TEST2X2(ColorToLinuxColor_ReturnsLinuxColorStringForColor,
    Color::Yellow, "\033[33m",
    Color::Unset, "\033[0m")
 {
-   const char* const linuxColor = _consoleColorer.ColorToLinuxColor(color);
+   const char* const linuxColor = p_consoleColorer.ColorToLinuxColor(color);
    ARE_EQUAL(expectedReturnValue, linuxColor);
 }
 
@@ -153,7 +153,7 @@ TEST2X2(ColorToWindowsColor_ReturnsWindowsColorForColor,
    Color::Unset, WindowsColor::White,
    Color::MaxValue, WindowsColor::White)
 {
-   const WindowsColor windowsColor = _consoleColorer.ColorToWindowsColor(color);
+   const WindowsColor windowsColor = p_consoleColorer.ColorToWindowsColor(color);
    ARE_EQUAL(expectedReturnValue, windowsColor);
 }
 
@@ -218,9 +218,9 @@ TEST(Windows__SetTextColor_CallsSetConsoleTextAttributeToWindowsColor)
 
 TEST(SetSupportsColorIfUnset_SupportsColorBeenSetIsTrue_DoesNothing)
 {
-   _consoleColorer._supportsColorHasBeenSet = true;
+   p_consoleColorer._supportsColorHasBeenSet = true;
    //
-   _consoleColorer.SetSupportsColorIfUnset();
+   p_consoleColorer.SetSupportsColorIfUnset();
 }
 
 TEST(SetSupportsColorIfUnset_SupportsColorBeenSetIsFalse_SetsSupportsColorToResultOfCallingSupportsColor_SetsSupportsColorHasBeenSetToTrue)
@@ -250,7 +250,7 @@ TEST2X2(SupportsColor_CallsFileno_CallsIsAtty_ReturnsTrueIfIsAttyReturnValueIsNo
    const int stdoutFileHandle = filenoMock.ReturnRandom();
    isattyMock.Return(isattyReturnValue);
    //
-   const bool supportsColor = _consoleColorer.SupportsColor();
+   const bool supportsColor = p_consoleColorer.SupportsColor();
    //
    METALMOCK(filenoMock.CalledOnceWith(stdout));
    METALMOCK(isattyMock.CalledOnceWith(stdoutFileHandle));

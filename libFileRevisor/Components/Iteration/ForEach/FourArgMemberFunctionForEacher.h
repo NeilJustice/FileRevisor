@@ -6,10 +6,10 @@ namespace Utils
    class FourArgMemberFunctionForEacher
    {
    public:
-      FourArgMemberFunctionForEacher() noexcept {}
       virtual ~FourArgMemberFunctionForEacher() = default;
 
       using ConstMemberFunctionType = void(ClassType::*)(const T&, Arg2Type, Arg3Type, Arg4Type) const;
+      using NonConstMemberFunctionType = void(ClassType::*)(const T&, Arg2Type, Arg3Type, Arg4Type);
 
       virtual void CallConstMemberFunctionWithEachElement(
          const vector<T>& elements,
@@ -24,8 +24,6 @@ namespace Utils
             (constClassPointer->*constMemberFunction)(element, arg2, arg3, arg4);
          }
       }
-
-      using NonConstMemberFunctionType = void(ClassType::*)(const T&, Arg2Type, Arg3Type, Arg4Type);
 
       virtual void CallNonConstMemberFunctionWithEachElement(
          const vector<T>& elements,

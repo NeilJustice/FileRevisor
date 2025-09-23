@@ -9,22 +9,22 @@ EVIDENCE
 
 FileRevisorPreambleMaker _fileRevisorPreambleMaker;
 // Constant Components
-ConsoleMock* _consoleMock = nullptr;
-FileSystemMock* _fileSystemMock = nullptr;
+ConsoleMock* p_consoleMock = nullptr;
+FileSystemMock* p_fileSystemMock = nullptr;
 
 STARTUP
 {
    // Constant Components
-   _fileRevisorPreambleMaker._console.reset(_consoleMock = new ConsoleMock);
-   _fileRevisorPreambleMaker._fileSystem.reset(_fileSystemMock = new FileSystemMock);
+   _fileRevisorPreambleMaker.p_console.reset(p_consoleMock = new ConsoleMock);
+   _fileRevisorPreambleMaker.p_fileSystem.reset(p_fileSystemMock = new FileSystemMock);
 }
 
 TEST(DefaultConstructor_NewsComponents)
 {
    FileRevisorPreambleMaker fileRevisorPreambleMaker;
    // Constant Components
-   DELETE_TO_ASSERT_NEWED(fileRevisorPreambleMaker._console);
-   DELETE_TO_ASSERT_NEWED(fileRevisorPreambleMaker._fileSystem);
+   DELETE_TO_ASSERT_NEWED(fileRevisorPreambleMaker.p_console);
+   DELETE_TO_ASSERT_NEWED(fileRevisorPreambleMaker.p_fileSystem);
 }
 
 TEST3X3(PrintPreambleLines_PrintsPreambleLines,
@@ -34,25 +34,25 @@ TEST3X3(PrintPreambleLines_PrintsPreambleLines,
    false, true, " Verbose",
    true, true, " DryRun Verbose")
 {
-   const fs::path currentFolderPath = _fileSystemMock->CurrentFolderPathMock.ReturnRandom();
-   _consoleMock->ProgramNameThreadIdWriteLineMock.Expect();
+   const fs::path currentFolderPath = p_fileSystemMock->CurrentFolderPathMock.ReturnRandom();
+   p_consoleMock->ProgramNameThreadIdWriteLineMock.Expect();
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    args.verbose = verbose;
    args.dryrun = dryrun;
    //
    _fileRevisorPreambleMaker.PrintPreambleLines(args);
    //
-   METALMOCK(_fileSystemMock->CurrentFolderPathMock.CalledOnce());
+   METALMOCK(p_fileSystemMock->CurrentFolderPathMock.CalledOnce());
    const string expectedRunningLine = String::ConcatStrings("Running: ", args.commandLine);
    const string expectedProgramModeString = ENUM_AS_STRING(ProgramMode, args.programMode);
    const string expectedProgramModeLine = String::ConcatValues("ProgramMode: ", expectedProgramModeString, expectedActionSuffix);
    const string expectedWorkingDirectoryLine = String::ConcatStrings("WorkingDirectory: ", currentFolderPath.string());
    const string expectedTargetDirectoryLine = String::ConcatStrings(" TargetDirectory: ", args.targetFolderPath.string());
-   METALMOCK(_consoleMock->ProgramNameThreadIdWriteLineMock.CalledNTimes(4));
-   METALMOCKTHEN(_consoleMock->ProgramNameThreadIdWriteLineMock.CalledWith(expectedRunningLine)).Then(
-   METALMOCKTHEN(_consoleMock->ProgramNameThreadIdWriteLineMock.CalledWith(expectedProgramModeLine))).Then(
-   METALMOCKTHEN(_consoleMock->ProgramNameThreadIdWriteLineMock.CalledWith(expectedWorkingDirectoryLine))).Then(
-   METALMOCKTHEN(_consoleMock->ProgramNameThreadIdWriteLineMock.CalledWith(expectedTargetDirectoryLine)));
+   METALMOCK(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledNTimes(4));
+   METALMOCKTHEN(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledWith(expectedRunningLine)).Then(
+   METALMOCKTHEN(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledWith(expectedProgramModeLine))).Then(
+   METALMOCKTHEN(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledWith(expectedWorkingDirectoryLine))).Then(
+   METALMOCKTHEN(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledWith(expectedTargetDirectoryLine)));
 }
 
 RUN_TESTS(FileRevisorPreambleMakerTests)

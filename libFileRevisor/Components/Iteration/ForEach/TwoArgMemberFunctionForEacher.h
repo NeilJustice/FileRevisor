@@ -4,7 +4,6 @@ template<typename ClassType, typename T, typename Arg2Type>
 class TwoArgMemberFunctionForEacher
 {
 public:
-   TwoArgMemberFunctionForEacher() noexcept {}
    virtual ~TwoArgMemberFunctionForEacher() = default;
 
    using ConstMemberFunctionType = void(ClassType::*)(const T&, Arg2Type) const;

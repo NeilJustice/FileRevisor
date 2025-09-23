@@ -20,7 +20,7 @@ EVIDENCE
 DirectoryIterator _directoryIterator;
 // Constant Components
 CharArray256HelperMock* _charArray256HelperMock = nullptr;
-ConsoleMock* _consoleMock = nullptr;
+ConsoleMock* p_consoleMock = nullptr;
 FileOpenerCloserMock* _fileOpenerCloserMock = nullptr;
 FileReaderMock* _fileReaderMock = nullptr;
 
@@ -36,7 +36,7 @@ STARTUP
 {
    // Constant Components
    _directoryIterator._charArray256Helper.reset(_charArray256HelperMock = new CharArray256HelperMock);
-   _directoryIterator._console.reset(_consoleMock = new ConsoleMock);
+   _directoryIterator.p_console.reset(p_consoleMock = new ConsoleMock);
    _directoryIterator._fileOpenerCloser.reset(_fileOpenerCloserMock = new FileOpenerCloserMock);
    _directoryIterator._fileReader.reset(_fileReaderMock = new FileReaderMock);
 }
@@ -46,7 +46,7 @@ TEST(DefaultConstructor_NewsComponents_SetsFieldsToDefaultValues)
    DirectoryIterator directoryIterator;
    // Constant Components
    DELETE_TO_ASSERT_NEWED(directoryIterator._charArray256Helper);
-   DELETE_TO_ASSERT_NEWED(directoryIterator._console);
+   DELETE_TO_ASSERT_NEWED(directoryIterator.p_console);
    DELETE_TO_ASSERT_NEWED(directoryIterator._fileOpenerCloser);
    DELETE_TO_ASSERT_NEWED(directoryIterator._fileReader);
    // Mutable Fields
@@ -113,14 +113,14 @@ TEST(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsNotEndIterationM
 TEST(IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable_OpenReadModeBinaryFileReturnsNullptr_WritesYellowNoteMessage_ReturnsTrue)
 {
    _fileOpenerCloserMock->OpenReadModeBinaryFileMock.Return(nullptr);
-   _consoleMock->ProgramNameThreadIdWriteLineColorMock.Expect();
+   p_consoleMock->ProgramNameThreadIdWriteLineColorMock.Expect();
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
    const bool isFileEmptyOrBinaryOrNotAnsiOrNotOpenable = _directoryIterator.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(filePath);
    //
    const string expectedUnableToOpenFileMessage = String::ConcatStrings("Note: Unable to open file ", filePath.string());
    METALMOCKTHEN(_fileOpenerCloserMock->OpenReadModeBinaryFileMock.CalledOnceWith(filePath, false)).Then(
-   METALMOCKTHEN(_consoleMock->ProgramNameThreadIdWriteLineColorMock.CalledOnceWith(expectedUnableToOpenFileMessage, Color::Yellow)));
+   METALMOCKTHEN(p_consoleMock->ProgramNameThreadIdWriteLineColorMock.CalledOnceWith(expectedUnableToOpenFileMessage, Color::Yellow)));
    IS_TRUE(isFileEmptyOrBinaryOrNotAnsiOrNotOpenable);
 }
 

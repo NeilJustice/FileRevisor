@@ -18,6 +18,7 @@ private:
    // Function Callers
    unique_ptr<const VoidTwoArgMemberFunctionCaller<
       RenameFilesSubProgram, bool, const fs::path& >> _caller_PrintDidNotMatchFileMessageIfVerboseMode;
+
    using OneExtraArgMemberFunctionTransformerType = OneExtraArgMemberFunctionTransformer<
       RenameFilesSubProgram, fs::path, RenameResult, const FileRevisorArgs&>;
    unique_ptr<const OneExtraArgMemberFunctionTransformerType> _transformer_RenameFileIfFileNameMatchesFromPattern;

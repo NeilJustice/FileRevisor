@@ -8,9 +8,9 @@ class FileRevisorSubProgram
    friend class FileRevisorSubProgramTests;
 protected:
    // Base Class Constant Components
-   unique_ptr<const Console> _console;
-   unique_ptr<const FileSystem> _fileSystem;
-   unique_ptr<const Pluralizer> _pluralizer;
+   unique_ptr<const Console> p_console;
+   unique_ptr<const FileSystem> p_fileSystem;
+   unique_ptr<const Pluralizer> p_pluralizer;
 public:
    FileRevisorSubProgram();
    virtual ~FileRevisorSubProgram();

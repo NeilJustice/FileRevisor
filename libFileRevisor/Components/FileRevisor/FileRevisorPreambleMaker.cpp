@@ -4,8 +4,8 @@
 
 FileRevisorPreambleMaker::FileRevisorPreambleMaker()
    // Constant Components
-   : _console(make_unique<Console>())
-   , _fileSystem(make_unique<FileSystem>())
+   : p_console(make_unique<Console>())
+   , p_fileSystem(make_unique<FileSystem>())
 {
 }
 
@@ -15,7 +15,7 @@ FileRevisorPreambleMaker::~FileRevisorPreambleMaker()
 
 void FileRevisorPreambleMaker::PrintPreambleLines(const FileRevisorArgs& args) const
 {
-   const fs::path currentFolderPath = _fileSystem->CurrentFolderPath();
+   const fs::path currentFolderPath = p_fileSystem->CurrentFolderPath();
    const string programModeString = ENUM_AS_STRING(ProgramMode, args.programMode);
    const string dryRunOrEmptyString = args.dryrun ? " DryRun" : "";
    const string verboseOrEmptyString = args.verbose ? " Verbose" : "";
@@ -25,8 +25,8 @@ void FileRevisorPreambleMaker::PrintPreambleLines(const FileRevisorArgs& args) c
    const string workingDirectoryLine = String::ConcatStrings("WorkingDirectory: ", currentFolderPath.string());
    const string targetDirectoryLine = String::ConcatStrings(" TargetDirectory: ", args.targetFolderPath.string());
 
-   _console->ProgramNameThreadIdWriteLine(runningLine);
-   _console->ProgramNameThreadIdWriteLine(programModeLine);
-   _console->ProgramNameThreadIdWriteLine(workingDirectoryLine);
-   _console->ProgramNameThreadIdWriteLine(targetDirectoryLine);
+   p_console->ProgramNameThreadIdWriteLine(runningLine);
+   p_console->ProgramNameThreadIdWriteLine(programModeLine);
+   p_console->ProgramNameThreadIdWriteLine(workingDirectoryLine);
+   p_console->ProgramNameThreadIdWriteLine(targetDirectoryLine);
 }

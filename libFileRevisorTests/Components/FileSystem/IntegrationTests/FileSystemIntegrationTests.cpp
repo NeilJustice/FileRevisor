@@ -18,7 +18,7 @@ AFACT(RemoveFile_FileDoesNotExist_IgnoreFileDeleteErrorIsFalse_ThrowsFileSystemE
 AFACT(RemoveFile_FileDoesNotExist_IgnoreFileDeleteErrorIsTrue_DoesNotThrowException)
 EVIDENCE
 
-FileSystem _fileSystem;
+FileSystem p_fileSystem;
 const fs::path _rootFolderPath = "FileSystemIntegrationTests";
 
 void CreateIntegrationTestsDirectoryStructure()
@@ -57,7 +57,7 @@ CLEANUP
 
 TEST(GetFilePathsInDirectory_RecurseIsFalse_ReturnsTopLevelFilePaths)
 {
-  const vector<fs::path> topLevelFilePathsInDirectory = _fileSystem.GetFilePathsInDirectory(_rootFolderPath, false);
+  const vector<fs::path> topLevelFilePathsInDirectory = p_fileSystem.GetFilePathsInDirectory(_rootFolderPath, false);
   //
   const vector<fs::path> expectedTopLevelFilePathsInDirectory =
   {
@@ -71,7 +71,7 @@ TEST(GetFilePathsInDirectory_RecurseIsFalse_ReturnsTopLevelFilePaths)
 
 TEST(GetFilePathsInDirectory_RecurseIsTrue_ReturnsFilePathsInAndBelowFolderPath)
 {
-  const vector<fs::path> filePathsInAndBelowDirectory = _fileSystem.GetFilePathsInDirectory(_rootFolderPath, true);
+  const vector<fs::path> filePathsInAndBelowDirectory = p_fileSystem.GetFilePathsInDirectory(_rootFolderPath, true);
   //
   const vector<fs::path> expectedFilePathsInAndBelowDirectory =
   {
@@ -94,7 +94,7 @@ TEST(GetFilePathsInDirectory_RecurseIsTrue_ReturnsFilePathsInAndBelowFolderPath)
 
 TEST(GetFolderPathsInDirectory_RecurseIsFalse_ReturnsTopLevelFolderPaths)
 {
-  const vector<fs::path> topLevelFolderPathsInDirectory = _fileSystem.GetFolderPathsInDirectory(_rootFolderPath, false);
+  const vector<fs::path> topLevelFolderPathsInDirectory = p_fileSystem.GetFolderPathsInDirectory(_rootFolderPath, false);
   //
   const vector<fs::path> expectedTopLevelFolderPathsInDirectory =
   {
@@ -108,7 +108,7 @@ TEST(GetFolderPathsInDirectory_RecurseIsFalse_ReturnsTopLevelFolderPaths)
 
 TEST(GetFolderPathsInDirectory_RecurseIsTrue_ReturnsFolderPathsInAndBelowFolderPath)
 {
-  const vector<fs::path> directoryPathsInAndBelowDirectory = _fileSystem.GetFolderPathsInDirectory(_rootFolderPath, true);
+  const vector<fs::path> directoryPathsInAndBelowDirectory = p_fileSystem.GetFolderPathsInDirectory(_rootFolderPath, true);
   //
   const vector<fs::path> expectedFolderPathsInAndBelowDirectory =
   {
@@ -125,7 +125,7 @@ TEST(GetFolderPathsInDirectory_RecurseIsTrue_ReturnsFolderPathsInAndBelowFolderP
 
 TEST(GetStringFolderPathsInDirectory_RecurseIsFalse_ReturnsTopLevelFolderPaths)
 {
-  const vector<string> topLevelFolderPathsInDirectory = _fileSystem.GetStringFolderPathsInDirectory(_rootFolderPath, false);
+  const vector<string> topLevelFolderPathsInDirectory = p_fileSystem.GetStringFolderPathsInDirectory(_rootFolderPath, false);
   //
   const vector<string> expectedTopLevelFolderPathsInDirectory =
   {
@@ -139,7 +139,7 @@ TEST(GetStringFolderPathsInDirectory_RecurseIsFalse_ReturnsTopLevelFolderPaths)
 
 TEST(GetStringFolderPathsInDirectory_RecurseIsTrue_ReturnsFolderPathsInAndBelowFolderPath)
 {
-  const vector<string> directoryPathsInAndBelowDirectory = _fileSystem.GetStringFolderPathsInDirectory(_rootFolderPath, true);
+  const vector<string> directoryPathsInAndBelowDirectory = p_fileSystem.GetStringFolderPathsInDirectory(_rootFolderPath, true);
   //
   const vector<string> expectedFolderPathsInAndBelowDirectory =
   {
@@ -161,16 +161,16 @@ TEST(ReadText_FileDoesNotExist_ThrowsFileSystemException)
   const FileSystemException expectedFileSystemException =
      fileSystemExceptionThrower.MakeFileSystemExceptionForFailedToOpenFileWithFStream(textFilePathThatDoesNotExist);
   //
-  THROWS_EXCEPTION(const string fileText = _fileSystem.ReadText(textFilePathThatDoesNotExist),
+  THROWS_EXCEPTION(const string fileText = p_fileSystem.ReadText(textFilePathThatDoesNotExist),
      FileSystemException, expectedFileSystemException.what());
 }
 
 TEST(ReadText_FileExists_FileIsEmpty_ReturnsEmptyString)
 {
   const fs::path textFilePath = _rootFolderPath / "ReadTextTest.txt";
-  _fileSystem.CreateTextFile(textFilePath, "");
+  p_fileSystem.CreateTextFile(textFilePath, "");
   //
-  const string fileText = _fileSystem.ReadText(textFilePath);
+  const string fileText = p_fileSystem.ReadText(textFilePath);
   //
   IS_EMPTY_STRING(fileText);
 }
@@ -179,9 +179,9 @@ TEST(ReadText_FileExists_FileIsNotEmptyAndContainsTrailingBinaryZeros_ReturnsFil
 {
   const fs::path textFilePath = _rootFolderPath / "ReadTextTest.txt";
   const char fileBytes[] = { 'a', 'b', '\n', 'c', 0, 0 };
-  _fileSystem.CreateFileWithBytes(textFilePath, fileBytes, sizeof(fileBytes));
+  p_fileSystem.CreateFileWithBytes(textFilePath, fileBytes, sizeof(fileBytes));
   //
-  const string fileText = _fileSystem.ReadText(textFilePath);
+  const string fileText = p_fileSystem.ReadText(textFilePath);
   //
   const string expectedFileText = String::ConcatStrings("a", "b", "\n", "c");
   ARE_EQUAL(expectedFileText, fileText);
@@ -190,32 +190,32 @@ TEST(ReadText_FileExists_FileIsNotEmptyAndContainsTrailingBinaryZeros_ReturnsFil
 TEST(RemoveFile_FileExistsAndIsDeletable_IgnoreFileDeleteErrorIsEitherTrueOrFalse_DeletesTheFile)
 {
   const string filePathThatExists = (_rootFolderPath / "DeleteFileTest.txt").string();
-  _fileSystem.CreateTextFile(filePathThatExists, ZenUnit::Random<string>());
-  IS_TRUE(_fileSystem.FileOrDirectoryExists(filePathThatExists));
+  p_fileSystem.CreateTextFile(filePathThatExists, ZenUnit::Random<string>());
+  IS_TRUE(p_fileSystem.FileOrDirectoryExists(filePathThatExists));
   const bool skipFilesInUse = ZenUnit::Random<bool>();
   //
-  _fileSystem.RemoveFile(filePathThatExists.c_str(), skipFilesInUse);
+  p_fileSystem.RemoveFile(filePathThatExists.c_str(), skipFilesInUse);
   //
-  IS_FALSE(_fileSystem.FileOrDirectoryExists(filePathThatExists));
+  IS_FALSE(p_fileSystem.FileOrDirectoryExists(filePathThatExists));
 }
 
 TEST(RemoveFile_FileDoesNotExist_IgnoreFileDeleteErrorIsFalse_ThrowsFileSystemException)
 {
   const string filePathThatDoesNotExist = ZenUnit::Random<string>();
-  IS_FALSE(_fileSystem.FileOrDirectoryExists(filePathThatDoesNotExist));
+  IS_FALSE(p_fileSystem.FileOrDirectoryExists(filePathThatDoesNotExist));
   //
   const string expectedExceptionMessage = String::ConcatStrings(
      "FailedToDeleteFile: unlink(\"", filePathThatDoesNotExist, "\") failed with errno 2 (No such file or directory)");
-  THROWS_EXCEPTION(_fileSystem.RemoveFile(filePathThatDoesNotExist.c_str(), false),
+  THROWS_EXCEPTION(p_fileSystem.RemoveFile(filePathThatDoesNotExist.c_str(), false),
      FileSystemException, expectedExceptionMessage);
 }
 
 TEST(RemoveFile_FileDoesNotExist_IgnoreFileDeleteErrorIsTrue_DoesNotThrowException)
 {
   const string filePathThatDoesNotExist = ZenUnit::Random<string>();
-  IS_FALSE(_fileSystem.FileOrDirectoryExists(filePathThatDoesNotExist));
+  IS_FALSE(p_fileSystem.FileOrDirectoryExists(filePathThatDoesNotExist));
   //
-  _fileSystem.RemoveFile(filePathThatDoesNotExist.c_str(), true);
+  p_fileSystem.RemoveFile(filePathThatDoesNotExist.c_str(), true);
 }
 
 RUN_TESTS(FileSystemIntegrationTests)

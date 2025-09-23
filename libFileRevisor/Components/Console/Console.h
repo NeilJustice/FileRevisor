@@ -6,7 +6,7 @@ class Console
    friend class ConsoleTests;
 private:
    // Mutable Components
-   unique_ptr<ConsoleColorer> _consoleColorer;
+   unique_ptr<ConsoleColorer> p_consoleColorer;
    // Mutable Fields
    mutable mutex _coutMutex;
 public:

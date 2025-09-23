@@ -13,7 +13,7 @@ private:
    function<BOOL(const char*, DWORD)> _call_SetFileAttributesA;
 #endif
    // Constant Components
-   unique_ptr<const Console> _console;
+   unique_ptr<const Console> p_console;
    unique_ptr<const FileSystemExceptionMaker> _fileSystemExceptionMaker;
    unique_ptr<const ThreadIdGetter> _threadIdGetter;
 public:

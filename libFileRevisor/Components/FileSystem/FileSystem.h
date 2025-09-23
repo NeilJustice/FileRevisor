@@ -62,9 +62,8 @@ private:
 
    using _foreacher_DeleteFileOrDirectoryType = Utils::FourArgMemberFunctionForEacher<FileSystem, fs::path, bool, bool, bool>;
    unique_ptr<const _foreacher_DeleteFileOrDirectoryType> _foreacher_DeleteFileOrDirectory;
-
    // Constant Components
-   unique_ptr<const Console> _console;
+   unique_ptr<const Console> p_console;
    unique_ptr<const ConstCharPointerGetter> _constCharPointerGetter;
    unique_ptr<const FileOpenerCloser> _fileOpenerCloser;
    unique_ptr<const FileSystemExceptionMaker> _fileSystemExceptionMaker;
