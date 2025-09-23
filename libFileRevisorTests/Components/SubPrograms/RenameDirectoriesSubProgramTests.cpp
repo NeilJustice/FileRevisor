@@ -103,12 +103,12 @@ TEST(RenameDirectory_ReplacedDirectoryNameEqualsSourceDirectoryName_PrintsDidNot
    //
    const RenameResult renameResult = _renameDirectoriesSubProgram.RenameDirectory(directoryPath);
    //
-   METALMOCK(_textReplacerMock->ReplaceTextMock.CalledOnceWith(
-      directoryName, p_args.fromRegexPattern, p_args.toRegexPattern));
+   METALMOCKTHEN(_textReplacerMock->ReplaceTextMock.CalledOnceWith(
+      directoryName, p_args.fromRegexPattern, p_args.toRegexPattern)).Then(
 
-   METALMOCK(_call_PrintDidNotMatchDirectoryMessageIfVerboseModeMock->CallConstMemberFunctionMock.CalledOnceWith(
+   METALMOCKTHEN(_call_PrintDidNotMatchDirectoryMessageIfVerboseModeMock->CallConstMemberFunctionMock.CalledOnceWith(
       &_renameDirectoriesSubProgram, &RenameDirectoriesSubProgram::PrintDidNotMatchDirectoryMessageIfVerboseMode,
-      p_args.verbose, directoryPath));
+      p_args.verbose, directoryPath)));
 
    const RenameResult expectedRenameResult(false, directoryPath, directoryPath);
    ARE_EQUAL(expectedRenameResult, renameResult);
@@ -129,8 +129,9 @@ TEST(RenameDirectory_ReplacedDirectoryNameDoesNotEqualSourceDirectoryName_DryRun
    const fs::path expectedRenamedFolderPath = directoryPath.parent_path() / regexReplacedDirectoryName;
    const string expectedFileRenamedMessage = "DryRun: Would rename directory " + directoryPath.string() + " to " + regexReplacedDirectoryName;
 
-   METALMOCK(_textReplacerMock->ReplaceTextMock.CalledOnceWith(originalDirectoryName, p_args.fromRegexPattern, p_args.toRegexPattern));
-   METALMOCK(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(expectedFileRenamedMessage));
+   METALMOCKTHEN(_textReplacerMock->ReplaceTextMock.CalledOnceWith(
+      originalDirectoryName, p_args.fromRegexPattern, p_args.toRegexPattern)).Then(
+   METALMOCKTHEN(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(expectedFileRenamedMessage)));
 
    const RenameResult expectedRenameResult(true, directoryPath, expectedRenamedFolderPath);
    ARE_EQUAL(expectedRenameResult, renameResult);
@@ -152,14 +153,14 @@ TEST(RenameDirectory_ReplacedDirectoryNameDoesNotEqualSourceDirectoryName_DryRun
    const string originalDirectoryName = directoryPath.filename().string();
    const string expectedRenamedDirectoryMessage = "Renamed directory " + directoryPath.string() + " to " + regexReplacedDirectoryName;
 
-   METALMOCK(_textReplacerMock->ReplaceTextMock.CalledOnceWith(
-      originalDirectoryName, p_args.fromRegexPattern, p_args.toRegexPattern));
+   METALMOCKTHEN(_textReplacerMock->ReplaceTextMock.CalledOnceWith(
+      originalDirectoryName, p_args.fromRegexPattern, p_args.toRegexPattern)).Then(
 
-   METALMOCK(p_fileSystemMock->RenameDirectoryMock.CalledOnceWith(
-      directoryPath, regexReplacedDirectoryName));
+   METALMOCKTHEN(p_fileSystemMock->RenameDirectoryMock.CalledOnceWith(
+      directoryPath, regexReplacedDirectoryName))).Then(
 
-   METALMOCK(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(
-      expectedRenamedDirectoryMessage));
+   METALMOCKTHEN(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(
+      expectedRenamedDirectoryMessage)));
 
    const RenameResult expectedRenameResult(true, directoryPath, renamedFolderPath);
    ARE_EQUAL(expectedRenameResult, renameResult);

@@ -95,22 +95,22 @@ TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsReplaceTextInTextFileOnEachTex
    };
    const string expectedMessage = expectedMessagePrefix + to_string(numberOfFilesThatWereOrWouldBeModified) + " " + fileOrFiles;
 
-   METALMOCK(_directoryIteratorMock->SetDirectoryIteratorMock.CalledOnceWith(p_args.targetFolderPath, p_args.recurse));
+   METALMOCKTHEN(_directoryIteratorMock->SetDirectoryIteratorMock.CalledOnceWith(p_args.targetFolderPath, p_args.recurse)).Then(
 
-   METALMOCK(_directoryIteratorMock->SetFileAndFolderPathIgnoreSubstringsMock.CalledOnceWith(
-      expectedFileAndFolderPathIgnoreSubstrings));
+   METALMOCKTHEN(_directoryIteratorMock->SetFileAndFolderPathIgnoreSubstringsMock.CalledOnceWith(
+      expectedFileAndFolderPathIgnoreSubstrings))).Then(
 
-   METALMOCK(_directoryIteratorMock->GetNonEmptyNonIgnoredTextFilePathsMock.CalledOnce());
+   METALMOCKTHEN(_directoryIteratorMock->GetNonEmptyNonIgnoredTextFilePathsMock.CalledOnce())).Then(
 
-   METALMOCK(_memberFunctionAccumulator_ReplaceTextInTextFileMock->SumElementsWithFunctionMock.CalledOnceWith(
+   METALMOCKTHEN(_memberFunctionAccumulator_ReplaceTextInTextFileMock->SumElementsWithFunctionMock.CalledOnceWith(
       nonEmptyNonIgnoredTextFilePathsInTargetDirectory,
-      &_replaceTextInTextFilesSubProgram, &ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFile));
+      &_replaceTextInTextFilesSubProgram, &ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFile))).Then(
 
-   METALMOCK(p_pluralizerMock->PotentiallyPluralizeWordMock.CalledOnceWith(
-      numberOfFilesThatWereOrWouldBeModified, "file", "files"));
+   METALMOCKTHEN(p_pluralizerMock->PotentiallyPluralizeWordMock.CalledOnceWith(
+      numberOfFilesThatWereOrWouldBeModified, "file", "files"))).Then(
 
-   METALMOCK(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(
-      expectedMessage));
+   METALMOCKTHEN(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(
+      expectedMessage)));
 
    IS_ZERO(exitCode);
 }

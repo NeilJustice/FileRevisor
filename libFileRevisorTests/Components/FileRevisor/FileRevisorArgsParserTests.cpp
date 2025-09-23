@@ -139,8 +139,8 @@ TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsTrue_ParsesDirArgum
    tuple<fs::path, string, string> targetFolderPath_fromRegexPattern_toRegexPattern =
       _fileRevisorArgsParser.ParseTargetAndFromAndToArguments(docoptValues, true);
    //
-   METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptValues, "--target"));
-   METALMOCK(p_fileSystemMock->GetAbsolutePathMock.CalledOnceWith(targetFolderPathString));
+   METALMOCKTHEN(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptValues, "--target")).Then(
+   METALMOCKTHEN(p_fileSystemMock->GetAbsolutePathMock.CalledOnceWith(targetFolderPathString)));
    const tuple<fs::path, string, string> expected_targetFolderPath_fromRegexPattern_toRegexPattern(targetFolderPath, "", "");
    ARE_EQUAL(expected_targetFolderPath_fromRegexPattern_toRegexPattern, targetFolderPath_fromRegexPattern_toRegexPattern);
 }
@@ -160,8 +160,8 @@ TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsFalse_FromArgumentI
       _fileRevisorArgsParser.ParseTargetAndFromAndToArguments(docoptValues, false),
       invalid_argument, "--from value cannot be empty");
    //
-   METALMOCK(_docoptParserMock->GetOptionalStringWithDefaultValueMock.CalledOnceWith(docoptValues, "--target", "."));
-   METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptValues, "--from"));
+   METALMOCKTHEN(_docoptParserMock->GetOptionalStringWithDefaultValueMock.CalledOnceWith(docoptValues, "--target", ".")).Then(
+   METALMOCKTHEN(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptValues, "--from")));
 }
 
 TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsFalse_FromArgumentIsNotEmpty_ParsesDirArgumentAsOptional_ReturnsDirAndFromAndToArgumentValues)

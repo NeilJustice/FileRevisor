@@ -130,8 +130,8 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndWhat_Returns1)
    const int exitCode = _fileRevisorProgram.ExceptionHandler(ex);
    //
    const string expectedExceptionMessage = "Error: Exception thrown: " + exceptionTypeNameAndMessage;
-   METALMOCK(_call_Type_GetExceptionClassNameAndMessageMock.CalledOnceWith(&ex));
-   METALMOCK(_consoleMock->ProgramNameThreadIdWriteLineColorMock.CalledOnceWith(expectedExceptionMessage, Color::Red));
+   METALMOCKTHEN(_call_Type_GetExceptionClassNameAndMessageMock.CalledOnceWith(&ex)).Then(
+   METALMOCKTHEN(_consoleMock->ProgramNameThreadIdWriteLineColorMock.CalledOnceWith(expectedExceptionMessage, Color::Red)));
    ARE_EQUAL(1, exitCode);
 }
 

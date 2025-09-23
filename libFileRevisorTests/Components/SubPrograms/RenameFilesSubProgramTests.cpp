@@ -76,21 +76,21 @@ TEST2X2(Run_CallsRenameFileOnEachFilePathInArgsDirPath_PrintsNumberOfFilesThatWe
    //
    const string expectedRenamedXNumberOfFilesMessage = String::ConcatValues(expectedRenamedFilesMessagePrefix, numberOfRenamedFiles, ' ', fileOrFiles);
 
-   METALMOCK(p_fileSystemMock->GetFilePathsInDirectoryMock.CalledOnceWith(
-      p_args.targetFolderPath, p_args.recurse));
+   METALMOCKTHEN(p_fileSystemMock->GetFilePathsInDirectoryMock.CalledOnceWith(
+      p_args.targetFolderPath, p_args.recurse)).Then(
 
-   METALMOCK(_transformer_RenameFileIfFileNameMatchesFromPatternMock->TransformMock.CalledOnceWith(
+   METALMOCKTHEN(_transformer_RenameFileIfFileNameMatchesFromPatternMock->TransformMock.CalledOnceWith(
       filePathsInAndPossiblyBelowDirectory,
-      &_renameFilesSubProgram, &RenameFilesSubProgram::RenameFileIfFileNameMatchesFromPattern));
+      &_renameFilesSubProgram, &RenameFilesSubProgram::RenameFileIfFileNameMatchesFromPattern))).Then(
 
-   METALMOCK(_predicateCounterMock->CountWhereMock.CalledOnceWith(
-      fileRenameResults, RenameFilesSubProgram::DidRenameFileIsTrue));
+   METALMOCKTHEN(_predicateCounterMock->CountWhereMock.CalledOnceWith(
+      fileRenameResults, RenameFilesSubProgram::DidRenameFileIsTrue))).Then(
 
-   METALMOCK(p_pluralizerMock->PotentiallyPluralizeWordMock.CalledOnceWith(
-      numberOfRenamedFiles, "file", "files"));
+   METALMOCKTHEN(p_pluralizerMock->PotentiallyPluralizeWordMock.CalledOnceWith(
+      numberOfRenamedFiles, "file", "files"))).Then(
 
-   METALMOCK(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(
-      expectedRenamedXNumberOfFilesMessage));
+   METALMOCKTHEN(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(
+      expectedRenamedXNumberOfFilesMessage)));
 
    IS_ZERO(exitCode);
 }
