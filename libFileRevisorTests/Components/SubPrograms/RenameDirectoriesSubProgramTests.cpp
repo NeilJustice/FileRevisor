@@ -4,7 +4,7 @@
 #include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
 #include "libFileRevisorTests/Components/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
 #include "libFileRevisorTests/Components/Iteration/Counter/MetalMock/PredicateCounterMock.h"
-#include "libFileRevisorTests/Components/Iteration/Transform/MetalMock/OneExtraArgMemberFunctionTransformerMock.h"
+#include "libFileRevisorTests/Components/Iteration/Transform/MetalMock/OneArgMemberFunctionTransformerMock.h"
 #include "libFileRevisorTests/Components/Strings/MetalMock/PluralizerMock.h"
 #include "libFileRevisorTests/Components/Strings/MetalMock/TextReplacerMock.h"
 
@@ -19,10 +19,13 @@ EVIDENCE
 
 RenameDirectoriesSubProgram _renameDirectoriesSubProgram;
 // Function Pointers
-const VoidTwoArgMemberFunctionCallerMock<RenameDirectoriesSubProgram, bool, const fs::path&>* _call_PrintDidNotMatchDirectoryMessageIfVerboseModeMock = nullptr;
+using _call_PrintDidNotMatchDirectoryMessageIfVerboseModeMockType =
+   VoidTwoArgMemberFunctionCallerMock<RenameDirectoriesSubProgram, bool, const fs::path&>;
+_call_PrintDidNotMatchDirectoryMessageIfVerboseModeMockType* _call_PrintDidNotMatchDirectoryMessageIfVerboseModeMock = nullptr;
 // Function Callers
-using OneExtraArgMemberFunctionTransformerMockType = OneExtraArgMemberFunctionTransformerMock<RenameDirectoriesSubProgram, fs::path, RenameResult, const FileRevisorArgs&>;
-OneExtraArgMemberFunctionTransformerMockType* _directoryPathsTransformer_RenameDirectoryMock = nullptr;
+using OneArgMemberFunctionTransformerMockType =
+   OneArgMemberFunctionTransformerMock<RenameDirectoriesSubProgram, fs::path, RenameResult>;
+OneArgMemberFunctionTransformerMockType* _directoryPathsTransformer_RenameDirectoryMock = nullptr;
 // Base Class Constant Components
 ConsoleMock* p_consoleMock = nullptr;
 FileSystemMock* p_fileSystemMock = nullptr;
@@ -30,13 +33,15 @@ PluralizerMock* p_pluralizerMock = nullptr;
 // Constant Components
 PredicateCounterMock<RenameResult>* _predicateCounterMock = nullptr;
 TextReplacerMock* _textReplacerMock = nullptr;
+// Mutable Fields
+FileRevisorArgs p_args;
 
 STARTUP
 {
    // Function Pointers
-   _renameDirectoriesSubProgram._call_PrintDidNotMatchDirectoryMessageIfVerboseMode.reset(_call_PrintDidNotMatchDirectoryMessageIfVerboseModeMock = new VoidTwoArgMemberFunctionCallerMock<RenameDirectoriesSubProgram, bool, const fs::path&>);
+   _renameDirectoriesSubProgram._call_PrintDidNotMatchDirectoryMessageIfVerboseMode.reset(_call_PrintDidNotMatchDirectoryMessageIfVerboseModeMock = new _call_PrintDidNotMatchDirectoryMessageIfVerboseModeMockType);
    // Function Callers
-   _renameDirectoriesSubProgram._directoryPathsTransformer_RenameDirectory.reset(_directoryPathsTransformer_RenameDirectoryMock = new OneExtraArgMemberFunctionTransformerMockType);
+   _renameDirectoriesSubProgram._directoryPathsTransformer_RenameDirectory.reset(_directoryPathsTransformer_RenameDirectoryMock = new OneArgMemberFunctionTransformerMockType);
    // Base Class Constant Components
    _renameDirectoriesSubProgram.p_console.reset(p_consoleMock = new ConsoleMock);
    _renameDirectoriesSubProgram.p_fileSystem.reset(p_fileSystemMock = new FileSystemMock);
@@ -44,6 +49,8 @@ STARTUP
    // Constant Components
    _renameDirectoriesSubProgram._predicateCounter.reset(_predicateCounterMock = new PredicateCounterMock<RenameResult>);
    _renameDirectoriesSubProgram._textReplacer.reset(_textReplacerMock = new TextReplacerMock);
+   // Mutable Fields
+   _renameDirectoriesSubProgram.p_args = p_args = ZenUnit::Random<FileRevisorArgs>();
 }
 
 TEST2X2(Run_CallsRenameDirectoryOnEachFolderPathInArgsDirPath_PrintsNumberOfDirectoriesRenamedOrWouldBeRenamed_Returns0,
@@ -61,19 +68,28 @@ TEST2X2(Run_CallsRenameDirectoryOnEachFolderPathInArgsDirPath_PrintsNumberOfDire
 
    p_consoleMock->ProgramNameThreadIdWriteLineMock.Expect();
 
-   FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
-   args.dryrun = dryrun;
+   _renameDirectoriesSubProgram.p_args.dryrun = dryrun;
    //
-   const int exitCode = _renameDirectoriesSubProgram.Run(args);
+   const int exitCode = _renameDirectoriesSubProgram.Run();
    //
    const string expectedNumberOfDirectoriesMessage = String::ConcatValues(
       expectedNumberOfDirectoriesMessagePrefix, numberOfRenamedDirectories, ' ', directoryOrDirectories);
-   METALMOCKTHEN(p_fileSystemMock->GetFolderPathsInDirectoryMock.CalledOnceWith(args.targetFolderPath, args.recurse)).Then(
+
+   METALMOCKTHEN(p_fileSystemMock->GetFolderPathsInDirectoryMock.CalledOnceWith(
+      p_args.targetFolderPath, p_args.recurse)).Then(
+
    METALMOCKTHEN(_directoryPathsTransformer_RenameDirectoryMock->TransformMock.CalledOnceWith(
-      directoryPathsInDirectory, &_renameDirectoriesSubProgram, &RenameDirectoriesSubProgram::RenameDirectory, args))).Then(
-   METALMOCKTHEN(_predicateCounterMock->CountWhereMock.CalledOnceWith(directoryRenameResults, RenameResult::DidRenameFileOrDirectoryFieldIsTrue))).Then(
-   METALMOCKTHEN(p_pluralizerMock->PotentiallyPluralizeWordMock.CalledOnceWith(numberOfRenamedDirectories, "directory", "directories"))).Then(
-   METALMOCKTHEN(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(expectedNumberOfDirectoriesMessage)));
+      directoryPathsInDirectory, &_renameDirectoriesSubProgram, &RenameDirectoriesSubProgram::RenameDirectory))).Then(
+
+   METALMOCKTHEN(_predicateCounterMock->CountWhereMock.CalledOnceWith(
+      directoryRenameResults, RenameResult::DidRenameFileOrDirectoryFieldIsTrue))).Then(
+
+   METALMOCKTHEN(p_pluralizerMock->PotentiallyPluralizeWordMock.CalledOnceWith(
+      numberOfRenamedDirectories, "directory", "directories"))).Then(
+
+   METALMOCKTHEN(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(
+      expectedNumberOfDirectoriesMessage)));
+
    IS_ZERO(exitCode);
 }
 
@@ -84,14 +100,16 @@ TEST(RenameDirectory_ReplacedDirectoryNameEqualsSourceDirectoryName_PrintsDidNot
    _textReplacerMock->ReplaceTextMock.Return(directoryName);
 
    _call_PrintDidNotMatchDirectoryMessageIfVerboseModeMock->CallConstMemberFunctionMock.Expect();
+   //
+   const RenameResult renameResult = _renameDirectoriesSubProgram.RenameDirectory(directoryPath);
+   //
+   METALMOCK(_textReplacerMock->ReplaceTextMock.CalledOnceWith(
+      directoryName, p_args.fromRegexPattern, p_args.toRegexPattern));
 
-   const FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
-   //
-   const RenameResult renameResult = _renameDirectoriesSubProgram.RenameDirectory(directoryPath, args);
-   //
-   METALMOCK(_textReplacerMock->ReplaceTextMock.CalledOnceWith(directoryName, args.fromRegexPattern, args.toRegexPattern));
    METALMOCK(_call_PrintDidNotMatchDirectoryMessageIfVerboseModeMock->CallConstMemberFunctionMock.CalledOnceWith(
-      &_renameDirectoriesSubProgram, &RenameDirectoriesSubProgram::PrintDidNotMatchDirectoryMessageIfVerboseMode, args.verbose, directoryPath));
+      &_renameDirectoriesSubProgram, &RenameDirectoriesSubProgram::PrintDidNotMatchDirectoryMessageIfVerboseMode,
+      p_args.verbose, directoryPath));
+
    const RenameResult expectedRenameResult(false, directoryPath, directoryPath);
    ARE_EQUAL(expectedRenameResult, renameResult);
 }
@@ -103,16 +121,17 @@ TEST(RenameDirectory_ReplacedDirectoryNameDoesNotEqualSourceDirectoryName_DryRun
    p_consoleMock->ProgramNameThreadIdWriteLineMock.Expect();
 
    const fs::path directoryPath = ZenUnit::RandomNotEqualTo<string>(regexReplacedDirectoryName);
-   FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
-   args.dryrun = true;
+   _renameDirectoriesSubProgram.p_args.dryrun = true;
    //
-   const RenameResult renameResult = _renameDirectoriesSubProgram.RenameDirectory(directoryPath, args);
+   const RenameResult renameResult = _renameDirectoriesSubProgram.RenameDirectory(directoryPath);
    //
    const string originalDirectoryName = directoryPath.filename().string();
-   METALMOCK(_textReplacerMock->ReplaceTextMock.CalledOnceWith(originalDirectoryName, args.fromRegexPattern, args.toRegexPattern));
    const fs::path expectedRenamedFolderPath = directoryPath.parent_path() / regexReplacedDirectoryName;
    const string expectedFileRenamedMessage = "DryRun: Would rename directory " + directoryPath.string() + " to " + regexReplacedDirectoryName;
+
+   METALMOCK(_textReplacerMock->ReplaceTextMock.CalledOnceWith(originalDirectoryName, p_args.fromRegexPattern, p_args.toRegexPattern));
    METALMOCK(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(expectedFileRenamedMessage));
+
    const RenameResult expectedRenameResult(true, directoryPath, expectedRenamedFolderPath);
    ARE_EQUAL(expectedRenameResult, renameResult);
 }
@@ -126,16 +145,22 @@ TEST(RenameDirectory_ReplacedDirectoryNameDoesNotEqualSourceDirectoryName_DryRun
    p_consoleMock->ProgramNameThreadIdWriteLineMock.Expect();
 
    const fs::path directoryPath = ZenUnit::RandomNotEqualTo<string>(regexReplacedDirectoryName);
-   FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
-   args.dryrun = false;
+   _renameDirectoriesSubProgram.p_args.dryrun = false;
    //
-   const RenameResult renameResult = _renameDirectoriesSubProgram.RenameDirectory(directoryPath, args);
+   const RenameResult renameResult = _renameDirectoriesSubProgram.RenameDirectory(directoryPath);
    //
    const string originalDirectoryName = directoryPath.filename().string();
-   METALMOCK(_textReplacerMock->ReplaceTextMock.CalledOnceWith(originalDirectoryName, args.fromRegexPattern, args.toRegexPattern));
-   METALMOCK(p_fileSystemMock->RenameDirectoryMock.CalledOnceWith(directoryPath, regexReplacedDirectoryName));
    const string expectedRenamedDirectoryMessage = "Renamed directory " + directoryPath.string() + " to " + regexReplacedDirectoryName;
-   METALMOCK(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(expectedRenamedDirectoryMessage));
+
+   METALMOCK(_textReplacerMock->ReplaceTextMock.CalledOnceWith(
+      originalDirectoryName, p_args.fromRegexPattern, p_args.toRegexPattern));
+
+   METALMOCK(p_fileSystemMock->RenameDirectoryMock.CalledOnceWith(
+      directoryPath, regexReplacedDirectoryName));
+
+   METALMOCK(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(
+      expectedRenamedDirectoryMessage));
+
    const RenameResult expectedRenameResult(true, directoryPath, renamedFolderPath);
    ARE_EQUAL(expectedRenameResult, renameResult);
 }

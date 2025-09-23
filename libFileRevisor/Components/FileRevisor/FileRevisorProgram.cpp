@@ -48,7 +48,8 @@ int FileRevisorProgram::Run(const vector<string>& stringArgs) const
    const FileRevisorArgs args = _argsParser->ParseStringArgs(stringArgs);
    _argsParser->PrintPreambleLines(args);
    const shared_ptr<FileRevisorSubProgram> fileRevisorSubProgram = _fileRevisorSubProgramFactory->NewSubProgram(args.programMode);
-   int exitCode = fileRevisorSubProgram->Run(args);
+   fileRevisorSubProgram->Initialize(args);
+   int exitCode = fileRevisorSubProgram->Run();
    return exitCode;
 }
 

@@ -15,7 +15,14 @@ FileRevisorSubProgram::FileRevisorSubProgram()
 {
 }
 
-int FileRevisorSubProgram::Run(const FileRevisorArgs& /*args*/) const
+void FileRevisorSubProgram::Initialize(const FileRevisorArgs& args)
+{
+   p_args = args;
+}
+
+// Actions
+
+int FileRevisorSubProgram::Run() const
 {
    return 0;
 }

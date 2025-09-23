@@ -4,5 +4,7 @@
 class FileRevisorSubProgramMock : public Metal::Mock<FileRevisorSubProgram>
 {
 public:
-   METALMOCK_NONVOID1_CONST(int, Run, const FileRevisorArgs&)
+   METALMOCK_VOID1(Initialize, const FileRevisorArgs&)
+   // Actions
+   METALMOCK_NONVOID0_CONST(int, Run)
 };

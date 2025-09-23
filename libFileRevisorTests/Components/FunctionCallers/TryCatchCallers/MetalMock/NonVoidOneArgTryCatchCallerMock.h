@@ -1,12 +1,13 @@
 #pragma once
 #include "libFileRevisor/Components/FunctionCallers/TryCatchCallers/NonVoidOneArgTryCatchCaller.h"
 
-template<typename ReturnType, typename ClassType, typename ArgumentType>
-class NonVoidOneArgTryCatchCallerMock : public Metal::Mock<NonVoidOneArgTryCatchCaller<ReturnType, ClassType, ArgumentType>>
+template<typename ReturnType, typename ClassType, typename ArgType>
+class NonVoidOneArgTryCatchCallerMock : public Metal::Mock<NonVoidOneArgTryCatchCaller<ReturnType, ClassType, ArgType>>
 {
 public:
-   using ConstMemberFunctionType = ReturnType (ClassType::*)(ArgumentType) const;
+   using ConstMemberFunctionType = ReturnType (ClassType::*)(ArgType) const;
    using ExceptionHandlerFunctionType = ReturnType (ClassType::*)(const exception&) const;
+
    METALMOCK_NONVOID4_CONST(ReturnType, TryCatchCallConstMemberFunction,
-      const ClassType*, ConstMemberFunctionType, ArgumentType, ExceptionHandlerFunctionType)
+      const ClassType*, ConstMemberFunctionType, ArgType, ExceptionHandlerFunctionType)
 };

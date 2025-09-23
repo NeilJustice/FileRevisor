@@ -1,22 +1,23 @@
 #pragma once
 
-template<typename ClassType, typename ElementType, typename TransformedElementType, typename ExtraArgType>
-class OneExtraArgMemberFunctionTransformer
+template<typename ClassType, typename ElementType, typename TransformedElementType>
+class OneArgMemberFunctionTransformer
 {
 public:
-   virtual ~OneExtraArgMemberFunctionTransformer() = default;
+   virtual ~OneArgMemberFunctionTransformer() = default;
+
+   using ConstMemberTransformFunctionType = TransformedElementType(ClassType::*)(const ElementType&) const;
 
    virtual vector<TransformedElementType> Transform(
       const vector<ElementType>& elements,
       const ClassType* classInstance,
-      TransformedElementType(ClassType::* transformer)(const ElementType&, ExtraArgType) const,
-      ExtraArgType extraArg) const
+      ConstMemberTransformFunctionType transformFunction) const
    {
       vector<TransformedElementType> transformedElements;
       transformedElements.reserve(elements.size());
       for (const ElementType& element : elements)
       {
-         TransformedElementType transformedElement = (classInstance->*transformer)(element, extraArg);
+         TransformedElementType transformedElement = (classInstance->*transformFunction)(element);
          transformedElements.emplace_back(std::move(transformedElement));
       }
       return transformedElements;

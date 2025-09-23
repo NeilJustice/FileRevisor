@@ -3,8 +3,8 @@
 template<typename T>
 class PredicateCounter;
 
-template<typename ClassType, typename ElementType, typename TransformedElementType, typename ExtraArgType>
-class OneExtraArgMemberFunctionTransformer;
+template<typename ClassType, typename ElementType, typename TransformedElementType>
+class OneArgMemberFunctionTransformer;
 
 class TextReplacer;
 
@@ -21,7 +21,7 @@ private:
    unique_ptr<const _caller_PrintDidNotMatchFileMessageIfVerboseModeType> _caller_PrintDidNotMatchFileMessageIfVerboseMode;
 
    using _transformer_RenameFileIfFileNameMatchesFromPatternType =
-      OneExtraArgMemberFunctionTransformer<RenameFilesSubProgram, fs::path, RenameResult, const FileRevisorArgs&>;
+      OneArgMemberFunctionTransformer<RenameFilesSubProgram, fs::path, RenameResult>;
    unique_ptr<const _transformer_RenameFileIfFileNameMatchesFromPatternType> _transformer_RenameFileIfFileNameMatchesFromPattern;
    // Constant Components
    unique_ptr<const PredicateCounter<RenameResult>> _predicateCounter;
@@ -29,9 +29,9 @@ private:
 public:
    RenameFilesSubProgram();
    ~RenameFilesSubProgram() override;
-   int Run(const FileRevisorArgs& args) const override;
+   int Run() const override;
 private:
    static bool DidRenameFileIsTrue(const RenameResult& fileRenameResult);
-   RenameResult RenameFileIfFileNameMatchesFromPattern(const fs::path& filePath, const FileRevisorArgs& args) const;
+   RenameResult RenameFileIfFileNameMatchesFromPattern(const fs::path& filePath) const;
    void PrintDidNotMatchFileMessageIfVerboseMode(bool verbose, const fs::path& filePath) const;
 };

@@ -102,6 +102,7 @@ TEST(Run_ParsesArgs_GetsAndRunsSubProgramSpecifiedByCommandLineArguments_Returns
    _argsParserMock->PrintPreambleLinesMock.Expect();
 
    shared_ptr<FileRevisorSubProgramMock> fileRevisorSubProgramMock = make_shared<FileRevisorSubProgramMock>();
+   fileRevisorSubProgramMock->InitializeMock.Expect();
    const int runReturnValue = fileRevisorSubProgramMock->RunMock.ReturnRandom();
    _fileRevisorSubProgramFactoryMock->NewSubProgramMock.Return(fileRevisorSubProgramMock);
 
@@ -112,7 +113,8 @@ TEST(Run_ParsesArgs_GetsAndRunsSubProgramSpecifiedByCommandLineArguments_Returns
    METALMOCKTHEN(_argsParserMock->ParseStringArgsMock.CalledOnceWith(stringArgs)).Then(
    METALMOCKTHEN(_argsParserMock->PrintPreambleLinesMock.CalledOnceWith(args))).Then(
    METALMOCKTHEN(_fileRevisorSubProgramFactoryMock->NewSubProgramMock.CalledOnceWith(args.programMode))).Then(
-   METALMOCKTHEN(fileRevisorSubProgramMock->RunMock.CalledOnceWith(args)));
+   METALMOCKTHEN(fileRevisorSubProgramMock->InitializeMock.CalledOnceWith(args))).Then(
+   METALMOCKTHEN(fileRevisorSubProgramMock->RunMock.CalledOnce()));
    ARE_EQUAL(runReturnValue, exitCode);
 }
 
@@ -127,8 +129,8 @@ TEST(ExceptionHandler_PrintsExceptionClassNameAndWhat_Returns1)
    //
    int exitCode = _fileRevisorProgram.ExceptionHandler(ex);
    //
-   METALMOCK(_call_Type_GetExceptionClassNameAndMessageMock.CalledOnceWith(&ex));
    const string expectedExceptionMessage = "Error: Exception thrown: " + exceptionTypeNameAndMessage;
+   METALMOCK(_call_Type_GetExceptionClassNameAndMessageMock.CalledOnceWith(&ex));
    METALMOCK(p_consoleMock->ProgramNameThreadIdWriteLineColorMock.CalledOnceWith(expectedExceptionMessage, Color::Red));
    ARE_EQUAL(1, exitCode);
 }

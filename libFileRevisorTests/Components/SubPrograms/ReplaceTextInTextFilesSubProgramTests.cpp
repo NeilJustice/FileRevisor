@@ -4,7 +4,7 @@
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
 #include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
 #include "libFileRevisorTests/Components/FunctionCallers/Member/MetalMock/VoidTwoArgMemberFunctionCallerMock.h"
-#include "libFileRevisorTests/Components/Iteration/Math/MetalMock/OneExtraArgMemberFunctionAccumulatorMock.h"
+#include "libFileRevisorTests/Components/Iteration/Math/MetalMock/OneArgMemberFunctionAccumulatorMock.h"
 #include "libFileRevisorTests/Components/Strings/MetalMock/PluralizerMock.h"
 #include "libFileRevisorTests/Components/Strings/MetalMock/TextReplacerMock.h"
 
@@ -22,8 +22,8 @@ ReplaceTextInTextFilesSubProgram _replaceTextInTextFilesSubProgram;
 using _call_PrintReadingFileMessageIfVerboseModeMockType = VoidTwoArgMemberFunctionCallerMock<ReplaceTextInTextFilesSubProgram, bool, const fs::path&>;
 _call_PrintReadingFileMessageIfVerboseModeMockType* _call_PrintReadingFileMessageIfVerboseModeMock = nullptr;
 // Function Callers
-using _memberFunctionAccumulator_ReplaceTextInTextFileMockType = OneExtraArgMemberFunctionAccumulatorMock<
-   ReplaceTextInTextFilesSubProgram, size_t, fs::path, const FileRevisorArgs&>;
+using _memberFunctionAccumulator_ReplaceTextInTextFileMockType = OneArgMemberFunctionAccumulatorMock<
+   ReplaceTextInTextFilesSubProgram, size_t, fs::path>;
 _memberFunctionAccumulator_ReplaceTextInTextFileMockType* _memberFunctionAccumulator_ReplaceTextInTextFileMock = nullptr;
 // Base Class Constant Components
 ConsoleMock* p_consoleMock = nullptr;
@@ -33,6 +33,8 @@ PluralizerMock* p_pluralizerMock = nullptr;
 TextReplacerMock* _textReplacerMock = nullptr;
 // Mutable Components
 DirectoryIteratorMock* _directoryIteratorMock = nullptr;
+// Mutable Fields
+FileRevisorArgs p_args;
 
 STARTUP
 {
@@ -48,6 +50,8 @@ STARTUP
    _replaceTextInTextFilesSubProgram._textReplacer.reset(_textReplacerMock = new TextReplacerMock);
    // Mutable Components
    _replaceTextInTextFilesSubProgram._directoryIterator.reset(_directoryIteratorMock = new DirectoryIteratorMock);
+   // Mutable Fields
+   _replaceTextInTextFilesSubProgram.p_args = p_args = ZenUnit::Random<FileRevisorArgs>();
 }
 
 TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsReplaceTextInTextFileOnEachTextFilePath_Returns0,
@@ -69,12 +73,10 @@ TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsReplaceTextInTextFileOnEachTex
 
    p_consoleMock->ProgramNameThreadIdWriteLineMock.Expect();
 
-   FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
-   args.dryrun = dryRun;
+   _replaceTextInTextFilesSubProgram.p_args.dryrun = dryRun;
    //
-   const int exitCode = _replaceTextInTextFilesSubProgram.Run(args);
+   const int exitCode = _replaceTextInTextFilesSubProgram.Run();
    //
-   METALMOCK(_directoryIteratorMock->SetDirectoryIteratorMock.CalledOnceWith(args.targetFolderPath, args.recurse));
    static const vector<string> expectedFileAndFolderPathIgnoreSubstrings =
    {
       ".git",
@@ -91,15 +93,25 @@ TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsReplaceTextInTextFileOnEachTex
       "\\Release\\",
       "\\RelWithDebInfo\\"
    };
+   const string expectedMessage = expectedMessagePrefix + to_string(numberOfFilesThatWereOrWouldBeModified) + " " + fileOrFiles;
+
+   METALMOCK(_directoryIteratorMock->SetDirectoryIteratorMock.CalledOnceWith(p_args.targetFolderPath, p_args.recurse));
+
    METALMOCK(_directoryIteratorMock->SetFileAndFolderPathIgnoreSubstringsMock.CalledOnceWith(
       expectedFileAndFolderPathIgnoreSubstrings));
+
    METALMOCK(_directoryIteratorMock->GetNonEmptyNonIgnoredTextFilePathsMock.CalledOnce());
+
    METALMOCK(_memberFunctionAccumulator_ReplaceTextInTextFileMock->SumElementsWithFunctionMock.CalledOnceWith(
       nonEmptyNonIgnoredTextFilePathsInTargetDirectory,
-      &_replaceTextInTextFilesSubProgram, &ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFile, args));
-   METALMOCK(p_pluralizerMock->PotentiallyPluralizeWordMock.CalledOnceWith(numberOfFilesThatWereOrWouldBeModified, "file", "files"));
-   const string expectedMessage = expectedMessagePrefix + to_string(numberOfFilesThatWereOrWouldBeModified) + " " + fileOrFiles;
-   METALMOCK(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(expectedMessage));
+      &_replaceTextInTextFilesSubProgram, &ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFile));
+
+   METALMOCK(p_pluralizerMock->PotentiallyPluralizeWordMock.CalledOnceWith(
+      numberOfFilesThatWereOrWouldBeModified, "file", "files"));
+
+   METALMOCK(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(
+      expectedMessage));
+
    IS_ZERO(exitCode);
 }
 
@@ -112,13 +124,20 @@ TEST(ReplaceTextInTextFile_DryRunIsTrueOrFalse_ReplacedFileTextEqualsOriginalFil
    _textReplacerMock->ReplaceTextMock.Return(textFileText);
 
    const fs::path textFilePath = ZenUnit::Random<string>();
-   FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    //
-   const size_t numberOfFilesThatWereOrWouldBeModified = _replaceTextInTextFilesSubProgram.ReplaceTextInTextFile(textFilePath, args);
+   const size_t numberOfFilesThatWereOrWouldBeModified = _replaceTextInTextFilesSubProgram.ReplaceTextInTextFile(textFilePath);
    //
-   METALMOCKTHEN(_call_PrintReadingFileMessageIfVerboseModeMock->CallConstMemberFunctionMock.CalledOnceWith(&_replaceTextInTextFilesSubProgram, &ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue, args.verbose, textFilePath)).Then(
+   METALMOCKTHEN(_call_PrintReadingFileMessageIfVerboseModeMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &_replaceTextInTextFilesSubProgram,
+      &ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue, p_args.verbose, textFilePath)).Then(
+
    METALMOCKTHEN(p_fileSystemMock->ReadTextMock.CalledOnceWith(textFilePath))).Then(
-   METALMOCKTHEN(_textReplacerMock->ReplaceTextMock.CalledOnceWith(textFileText, args.fromRegexPattern, args.toRegexPattern)));
+
+   METALMOCKTHEN(_textReplacerMock->ReplaceTextMock.CalledOnceWith(
+      textFileText,
+      p_args.fromRegexPattern,
+      p_args.toRegexPattern)));
+
    IS_ZERO(numberOfFilesThatWereOrWouldBeModified);
 }
 
@@ -133,16 +152,15 @@ TEST(ReplaceTextInTextFile_DryRunIsTrue_ReplacedFileTextDiffersFromOriginalFileT
 
    p_consoleMock->ProgramNameThreadIdWriteLineMock.Expect();
 
+   _replaceTextInTextFilesSubProgram.p_args.dryrun = true;
    const fs::path textFilePath = ZenUnit::Random<string>();
-   FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
-   args.dryrun = true;
    //
-   const size_t numberOfFilesThatWereOrWouldBeModified = _replaceTextInTextFilesSubProgram.ReplaceTextInTextFile(textFilePath, args);
+   const size_t numberOfFilesThatWereOrWouldBeModified = _replaceTextInTextFilesSubProgram.ReplaceTextInTextFile(textFilePath);
    //
    const string expectedReplacedTextMessage = "DryRun: Would replace text in file " + textFilePath.string();;
-   METALMOCKTHEN(_call_PrintReadingFileMessageIfVerboseModeMock->CallConstMemberFunctionMock.CalledOnceWith(&_replaceTextInTextFilesSubProgram, &ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue, args.verbose, textFilePath)).Then(
+   METALMOCKTHEN(_call_PrintReadingFileMessageIfVerboseModeMock->CallConstMemberFunctionMock.CalledOnceWith(&_replaceTextInTextFilesSubProgram, &ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue, p_args.verbose, textFilePath)).Then(
    METALMOCKTHEN(p_fileSystemMock->ReadTextMock.CalledOnceWith(textFilePath))).Then(
-   METALMOCKTHEN(_textReplacerMock->ReplaceTextMock.CalledOnceWith(textFileText, args.fromRegexPattern, args.toRegexPattern))).Then(
+   METALMOCKTHEN(_textReplacerMock->ReplaceTextMock.CalledOnceWith(textFileText, p_args.fromRegexPattern, p_args.toRegexPattern))).Then(
    METALMOCKTHEN(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(expectedReplacedTextMessage)));
    ARE_EQUAL(1, numberOfFilesThatWereOrWouldBeModified);
 }
@@ -161,17 +179,26 @@ TEST(ReplaceTextInTextFile_DryRunIsFalse_ReplacedFileTextDiffersFromOriginalFile
    p_consoleMock->ProgramNameThreadIdWriteLineMock.Expect();
 
    const fs::path textFilePath = ZenUnit::Random<string>();
-   FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
-   args.dryrun = false;
+   _replaceTextInTextFilesSubProgram.p_args.dryrun = false;
    //
-   const size_t numberOfFilesThatWereOrWouldBeModified = _replaceTextInTextFilesSubProgram.ReplaceTextInTextFile(textFilePath, args);
+   const size_t numberOfFilesThatWereOrWouldBeModified = _replaceTextInTextFilesSubProgram.ReplaceTextInTextFile(textFilePath);
    //
    const string expectedReplacedTextMessage = "Replaced text in file " + textFilePath.string();;
-   METALMOCKTHEN(_call_PrintReadingFileMessageIfVerboseModeMock->CallConstMemberFunctionMock.CalledOnceWith(&_replaceTextInTextFilesSubProgram, &ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue, args.verbose, textFilePath)).Then(
+   METALMOCKTHEN(_call_PrintReadingFileMessageIfVerboseModeMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &_replaceTextInTextFilesSubProgram,
+      &ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue, p_args.verbose, textFilePath)).Then(
+
    METALMOCKTHEN(p_fileSystemMock->ReadTextMock.CalledOnceWith(textFilePath))).Then(
-   METALMOCKTHEN(_textReplacerMock->ReplaceTextMock.CalledOnceWith(textFileText, args.fromRegexPattern, args.toRegexPattern))).Then(
-   METALMOCKTHEN(p_fileSystemMock->CreateTextFileMock.CalledOnceWith(textFilePath, replacedTextFileText))).Then(
-   METALMOCKTHEN(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(expectedReplacedTextMessage)));
+
+   METALMOCKTHEN(_textReplacerMock->ReplaceTextMock.CalledOnceWith(
+      textFileText, p_args.fromRegexPattern, p_args.toRegexPattern))).Then(
+
+   METALMOCKTHEN(p_fileSystemMock->CreateTextFileMock.CalledOnceWith(
+      textFilePath, replacedTextFileText))).Then(
+
+   METALMOCKTHEN(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(
+      expectedReplacedTextMessage)));
+
    ARE_EQUAL(1, numberOfFilesThatWereOrWouldBeModified);
 }
 

@@ -3,7 +3,7 @@
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Components/SubPrograms/ReplaceTextInTextFilesSubProgram.h"
 #include "libFileRevisor/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
-#include "libFileRevisor/Components/Iteration/Math/OneExtraArgMemberFunctionAccumulator.h"
+#include "libFileRevisor/Components/Iteration/Math/OneArgMemberFunctionAccumulator.h"
 #include "libFileRevisor/Components/Strings/Pluralizer.h"
 #include "libFileRevisor/Components/Strings/TextReplacer.h"
 
@@ -23,9 +23,9 @@ ReplaceTextInTextFilesSubProgram::~ReplaceTextInTextFilesSubProgram()
 {
 }
 
-int ReplaceTextInTextFilesSubProgram::Run(const FileRevisorArgs& args) const
+int ReplaceTextInTextFilesSubProgram::Run() const
 {
-   _directoryIterator->SetDirectoryIterator(args.targetFolderPath, args.recurse);
+   _directoryIterator->SetDirectoryIterator(p_args.targetFolderPath, p_args.recurse);
    static const vector<string> fileAndFolderPathIgnoreSubstrings =
    {
       ".git",
@@ -47,10 +47,10 @@ int ReplaceTextInTextFilesSubProgram::Run(const FileRevisorArgs& args) const
    const vector<fs::path> nonEmptyNonIgnoredTextFilePathsInTargetDirectory = _directoryIterator->GetNonEmptyNonIgnoredTextFilePaths();
 
    const size_t numberOfFilesThatWereOrWouldBeModified = _memberFunctionAccumulator_ReplaceTextInTextFile->SumElementsWithFunction(
-      nonEmptyNonIgnoredTextFilePathsInTargetDirectory, this, &ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFile, args);
+      nonEmptyNonIgnoredTextFilePathsInTargetDirectory, this, &ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFile);
 
    const string fileOrFiles = p_pluralizer->PotentiallyPluralizeWord(numberOfFilesThatWereOrWouldBeModified, "file", "files");
-   if (args.dryrun)
+   if (p_args.dryrun)
    {
       const string message = String::ConcatValues("DryRun: Would replace text in ", numberOfFilesThatWereOrWouldBeModified, " ", fileOrFiles);
       p_console->ProgramNameThreadIdWriteLine(message);
@@ -63,15 +63,15 @@ int ReplaceTextInTextFilesSubProgram::Run(const FileRevisorArgs& args) const
    return 0;
 }
 
-size_t ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFile(const fs::path& textFilePath, const FileRevisorArgs& args) const
+size_t ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFile(const fs::path& textFilePath) const
 {
    _call_PrintReadingFileMessageIfVerboseMode->CallConstMemberFunction(
-      this, &ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue, args.verbose, textFilePath);
+      this, &ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue, p_args.verbose, textFilePath);
    const string textFileText = p_fileSystem->ReadText(textFilePath);
-   const string replacedTextFileText = _textReplacer->ReplaceText(textFileText, args.fromRegexPattern, args.toRegexPattern);
+   const string replacedTextFileText = _textReplacer->ReplaceText(textFileText, p_args.fromRegexPattern, p_args.toRegexPattern);
    if (replacedTextFileText != textFileText)
    {
-      if (args.dryrun)
+      if (p_args.dryrun)
       {
          const string wouldReplaceTextInFileMessage = "DryRun: Would replace text in file " + textFilePath.string();
          p_console->ProgramNameThreadIdWriteLine(wouldReplaceTextInFileMessage);

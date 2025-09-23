@@ -3,7 +3,7 @@
 #include "libFileRevisor/Components/SubPrograms/RenameFilesSubProgram.h"
 #include "libFileRevisor/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
 #include "libFileRevisor/Components/Iteration/Counter/PredicateCounter.h"
-#include "libFileRevisor/Components/Iteration/Transform/OneExtraArgMemberFunctionTransformer.h"
+#include "libFileRevisor/Components/Iteration/Transform/OneArgMemberFunctionTransformer.h"
 #include "libFileRevisor/Components/Strings/Pluralizer.h"
 #include "libFileRevisor/Components/Strings/TextReplacer.h"
 
@@ -21,16 +21,16 @@ RenameFilesSubProgram::~RenameFilesSubProgram()
 {
 }
 
-int RenameFilesSubProgram::Run(const FileRevisorArgs& args) const
+int RenameFilesSubProgram::Run() const
 {
    const vector<fs::path> filePathsInAndPossiblyBelowDirectory =
-      p_fileSystem->GetFilePathsInDirectory(args.targetFolderPath, args.recurse);
+      p_fileSystem->GetFilePathsInDirectory(p_args.targetFolderPath, p_args.recurse);
    const vector<RenameResult> fileRenameResults = _transformer_RenameFileIfFileNameMatchesFromPattern->Transform(
-      filePathsInAndPossiblyBelowDirectory, this, &RenameFilesSubProgram::RenameFileIfFileNameMatchesFromPattern, args);
+      filePathsInAndPossiblyBelowDirectory, this, &RenameFilesSubProgram::RenameFileIfFileNameMatchesFromPattern);
    const size_t numberOfRenamedFiles = _predicateCounter->CountWhere(fileRenameResults, DidRenameFileIsTrue);
    string renamedFilesMessage;
    const string fileOrFiles = p_pluralizer->PotentiallyPluralizeWord(numberOfRenamedFiles, "file", "files");
-   if (args.dryrun)
+   if (p_args.dryrun)
    {
       renamedFilesMessage = String::ConcatValues("Result: Would rename ", numberOfRenamedFiles, ' ', fileOrFiles);
    }
@@ -47,17 +47,17 @@ bool RenameFilesSubProgram::DidRenameFileIsTrue(const RenameResult& fileRenameRe
    return fileRenameResult.didRenameFileOrDirectory;
 }
 
-RenameResult RenameFilesSubProgram::RenameFileIfFileNameMatchesFromPattern(const fs::path& filePath, const FileRevisorArgs& args) const
+RenameResult RenameFilesSubProgram::RenameFileIfFileNameMatchesFromPattern(const fs::path& filePath) const
 {
    const string fileName = filePath.filename().string();
-   const string regexReplacedFileName = _textReplacer->ReplaceText(fileName, args.fromRegexPattern, args.toRegexPattern);
+   const string regexReplacedFileName = _textReplacer->ReplaceText(fileName, p_args.fromRegexPattern, p_args.toRegexPattern);
    if (regexReplacedFileName == fileName)
    {
       _caller_PrintDidNotMatchFileMessageIfVerboseMode->CallConstMemberFunction(
-         this, &RenameFilesSubProgram::PrintDidNotMatchFileMessageIfVerboseMode, args.verbose, filePath);
+         this, &RenameFilesSubProgram::PrintDidNotMatchFileMessageIfVerboseMode, p_args.verbose, filePath);
       return RenameResult(false, filePath, filePath);
    }
-   if (args.dryrun)
+   if (p_args.dryrun)
    {
       const string wouldRenameMessage = String::ConcatStrings("DryRun: Would rename file ", filePath.string(), " to ", regexReplacedFileName);
       p_console->ProgramNameThreadIdWriteLine(wouldRenameMessage);

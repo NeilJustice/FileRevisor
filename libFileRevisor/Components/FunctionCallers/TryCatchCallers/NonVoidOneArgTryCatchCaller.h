@@ -1,6 +1,6 @@
 #pragma once
 
-template<typename ReturnType, typename ClassType, typename ArgumentType>
+template<typename ReturnType, typename ClassType, typename ArgType>
 class NonVoidOneArgTryCatchCaller
 {
 public:
@@ -8,8 +8,8 @@ public:
 
    virtual ReturnType TryCatchCallConstMemberFunction(
       const ClassType* constClassPointer,
-      ReturnType (ClassType::* constMemberFunction)(ArgumentType) const,
-      ArgumentType argument,
+      ReturnType (ClassType::* constMemberFunction)(ArgType) const,
+      ArgType argument,
       ReturnType (ClassType::* exceptionHandlerFunction)(const exception&) const) const
    {
       try
