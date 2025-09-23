@@ -36,7 +36,7 @@ TEST(SumElementsWithFunction_ElementsAreEmpty_DoesNotCallMemberFunction_ReturnsD
    const ExtraArgType extraArg = ZenUnit::Random<ExtraArgType>();
    //
    const SumType sum = _oneExtraArgMemberFunctionAccumulator.SumElementsWithFunction(
-      &_sumatorTestClass, emptyElements, &AccumulatorTestClass::SumationFunction, extraArg);
+      emptyElements, &_sumatorTestClass, &AccumulatorTestClass::SumationFunction, extraArg);
    //
    ARE_EQUAL(0, _sumatorTestClass._numberOfFunctionCalls);
    IS_EMPTY(_sumatorTestClass._elementArgs);
@@ -53,7 +53,7 @@ TEST(SumElementsWithFunction_CallsMemberFunctionElementsNumberOfTimes_ReturnsSum
    const ExtraArgType extraArg = ZenUnit::Random<ExtraArgType>();
    //
    const SumType sum = _oneExtraArgMemberFunctionAccumulator.SumElementsWithFunction(
-      &_sumatorTestClass, elements, &AccumulatorTestClass::SumationFunction, extraArg);
+      elements, &_sumatorTestClass, &AccumulatorTestClass::SumationFunction, extraArg);
    //
    ARE_EQUAL(2, _sumatorTestClass._numberOfFunctionCalls);
 

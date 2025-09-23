@@ -11,9 +11,9 @@ public:
    virtual ~OneExtraArgMemberFunctionAccumulator() = default;
 
    virtual SumType SumElementsWithFunction(
-      const ClassType* classInstance,
       const vector<ElementType>& elements,
-      SumType(ClassType::* sumationFunction)(const ElementType&, const ExtraArgType&) const,
+      const ClassType* classInstance,
+      SumType(ClassType::*sumationFunction)(const ElementType&, const ExtraArgType&) const,
       const ExtraArgType& extraArg) const
    {
       SumType sum{};

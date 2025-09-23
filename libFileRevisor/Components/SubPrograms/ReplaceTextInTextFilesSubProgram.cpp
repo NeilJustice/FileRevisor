@@ -43,9 +43,12 @@ int ReplaceTextInTextFilesSubProgram::Run(const FileRevisorArgs& args) const
       "\\RelWithDebInfo\\",
    };
    _directoryIterator->SetFileAndFolderPathIgnoreSubstrings(fileAndFolderPathIgnoreSubstrings);
+
    const vector<fs::path> nonEmptyNonIgnoredTextFilePathsInTargetDirectory = _directoryIterator->GetNonEmptyNonIgnoredTextFilePaths();
+
    const size_t numberOfFilesThatWereOrWouldBeModified = _memberFunctionAccumulator_ReplaceTextInTextFile->SumElementsWithFunction(
-      this, nonEmptyNonIgnoredTextFilePathsInTargetDirectory, &ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFile, args);
+      nonEmptyNonIgnoredTextFilePathsInTargetDirectory, this, &ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFile, args);
+
    const string fileOrFiles = p_pluralizer->PotentiallyPluralizeWord(numberOfFilesThatWereOrWouldBeModified, "file", "files");
    if (args.dryrun)
    {

@@ -95,8 +95,8 @@ TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsReplaceTextInTextFileOnEachTex
       expectedFileAndFolderPathIgnoreSubstrings));
    METALMOCK(_directoryIteratorMock->GetNonEmptyNonIgnoredTextFilePathsMock.CalledOnce());
    METALMOCK(_memberFunctionAccumulator_ReplaceTextInTextFileMock->SumElementsWithFunctionMock.CalledOnceWith(
-      &_replaceTextInTextFilesSubProgram, nonEmptyNonIgnoredTextFilePathsInTargetDirectory,
-      &ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFile, args));
+      nonEmptyNonIgnoredTextFilePathsInTargetDirectory,
+      &_replaceTextInTextFilesSubProgram, &ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFile, args));
    METALMOCK(p_pluralizerMock->PotentiallyPluralizeWordMock.CalledOnceWith(numberOfFilesThatWereOrWouldBeModified, "file", "files"));
    const string expectedMessage = expectedMessagePrefix + to_string(numberOfFilesThatWereOrWouldBeModified) + " " + fileOrFiles;
    METALMOCK(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(expectedMessage));

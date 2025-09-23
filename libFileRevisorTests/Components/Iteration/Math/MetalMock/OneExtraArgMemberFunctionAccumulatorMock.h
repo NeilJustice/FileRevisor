@@ -10,5 +10,9 @@ class OneExtraArgMemberFunctionAccumulatorMock : public Metal::Mock<OneExtraArgM
 {
 public:
    using MemberFunctionType = SumType(ClassType::*)(const ElementType&, const ExtraArgType&) const;
-   METALMOCK_NONVOID4_CONST(SumType, SumElementsWithFunction, const ClassType*, const vector<ElementType>&, MemberFunctionType, const ExtraArgType&)
+   METALMOCK_NONVOID4_CONST(SumType, SumElementsWithFunction,
+      const vector<ElementType>&,
+      const ClassType*,
+      MemberFunctionType,
+      const ExtraArgType&)
 };
