@@ -79,7 +79,8 @@ TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsReplaceTextInTextFileOnEachTex
    //
    static const vector<string> expectedFileAndFolderPathIgnoreSubstrings =
    {
-      ".git",
+      ".git/",
+      ".git\\",
       ".mypy_cache",
       ".p7s",
       ".vs\\",

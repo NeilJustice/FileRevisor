@@ -28,7 +28,8 @@ int ReplaceTextInTextFilesSubProgram::Run() const
    _directoryIterator->SetDirectoryIterator(p_args.targetFolderPath, p_args.recurse);
    static const vector<string> fileAndFolderPathIgnoreSubstrings =
    {
-      ".git",
+      ".git/",
+      ".git\\",
       ".mypy_cache",
       ".p7s",
       ".vs\\",
