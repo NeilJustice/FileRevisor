@@ -1,7 +1,7 @@
 #include "pch.h"
-#include "libFileRevisor/StaticUtilities/Map.h"
-#include "libFileRevisor/Components/Docopt/DocoptParser.h"
 #include "libFileRevisor/Components/Docopt/docopt.h"
+#include "libFileRevisor/Components/Docopt/DocoptParser.h"
+#include "libFileRevisor/StaticUtilities/Map.h"
 
 DocoptParser::DocoptParser()
    // Function Pointers

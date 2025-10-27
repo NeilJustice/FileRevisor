@@ -1,9 +1,9 @@
 #include "pch.h"
+#include "libFileRevisor/Components/Docopt/docopt.h"
+#include "libFileRevisor/Components/Docopt/DocoptParser.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorArgsParser.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorPreambleMaker.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
-#include "libFileRevisor/Components/Docopt/DocoptParser.h"
-#include "libFileRevisor/Components/Docopt/docopt.h"
 #include "libFileRevisor/Components/FunctionCallers/Member/NonVoidTwoArgMemberFunctionCaller.h"
 
 FileRevisorArgsParser::FileRevisorArgsParser()

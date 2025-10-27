@@ -1,8 +1,8 @@
 #include "pch.h"
+#include "libFileRevisor/Components/DataStructures/CharArray256Helper.h"
 #include "libFileRevisor/Components/FileSystem/DirectoryIterator.h"
 #include "libFileRevisor/Components/FileSystem/FileOpenerCloser.h"
 #include "libFileRevisor/Components/FileSystem/FileReader.h"
-#include "libFileRevisor/Components/DataStructures/CharArray256Helper.h"
 
 DirectoryIterator::DirectoryIterator() noexcept
    // Constant Components

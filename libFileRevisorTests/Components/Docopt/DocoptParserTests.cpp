@@ -1,6 +1,6 @@
 #include "pch.h"
-#include "libFileRevisor/Components/Docopt/DocoptParser.h"
 #include "libFileRevisor/Components/Docopt/docopt.h"
+#include "libFileRevisor/Components/Docopt/DocoptParser.h"
 #include "libFileRevisorTests/Components/Docopt/ZenUnit/docoptvalueRandom.h"
 
 TESTS(DocoptParserTests)

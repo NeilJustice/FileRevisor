@@ -1,11 +1,11 @@
 #include "pch.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorArgsParser.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorProgram.h"
+#include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
 #include "libFileRevisorTests/Components/FileRevisor/MetalMock/FileRevisorArgsParserMock.h"
+#include "libFileRevisorTests/Components/FunctionCallers/TryCatchCallers/MetalMock/NonVoidOneArgTryCatchCallerMock.h"
 #include "libFileRevisorTests/Components/SubPrograms/MetalMock/FileRevisorSubProgramFactoryMock.h"
 #include "libFileRevisorTests/Components/SubPrograms/MetalMock/FileRevisorSubProgramMock.h"
-#include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
-#include "libFileRevisorTests/Components/FunctionCallers/TryCatchCallers/MetalMock/NonVoidOneArgTryCatchCallerMock.h"
 #include "libFileRevisorTests/Components/Time/MetalMock/StopwatchMock.h"
 
 TESTS(FileRevisorProgramTests)
