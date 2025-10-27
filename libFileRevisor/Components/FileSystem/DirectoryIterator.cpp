@@ -7,7 +7,7 @@
 DirectoryIterator::DirectoryIterator() noexcept
    // Constant Components
    : _charArray256Helper(make_unique<CharArray256Helper>())
-   , p_console(make_unique<Console>())
+   , _console(make_unique<Console>())
    , _fileOpenerCloser(make_unique<FileOpenerCloser>())
    , _fileReader(make_unique<FileReader>())
    // Mutable Fields
@@ -94,7 +94,7 @@ bool DirectoryIterator::IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(const fs::path
    if (fileOpenInBinaryReadMode == nullptr)
    {
       const string unableToOpenFileMessage = String::ConcatStrings("Note: Unable to open file ", filePath.string());
-      p_console->ProgramNameThreadIdWriteLineColor(unableToOpenFileMessage, Color::Yellow);
+      _console->ProgramNameThreadIdWriteLineColor(unableToOpenFileMessage, Color::Yellow);
       return true;
    }
    const pair<size_t, array<char, 256>> fileIsEmptyAndFirst256Bytes = _fileReader->ReadFirst256Bytes(fileOpenInBinaryReadMode.get());

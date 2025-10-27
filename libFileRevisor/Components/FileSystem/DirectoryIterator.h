@@ -9,7 +9,7 @@ class DirectoryIterator
 private:
    // Constant Components
    unique_ptr<const CharArray256Helper> _charArray256Helper;
-   unique_ptr<const Console> p_console;
+   unique_ptr<const Console> _console;
    unique_ptr<const FileOpenerCloser> _fileOpenerCloser;
    unique_ptr<const FileReader> _fileReader;
    // Mutable Fields
