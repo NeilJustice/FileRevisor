@@ -18,6 +18,9 @@ AFACT(DetermineProgramMode_AllFourProgramModeBoolsAreFalse_ThrowsInvalidArgument
 EVIDENCE
 
 FileRevisorArgsParser _fileRevisorArgsParser;
+// Base Constant Components
+ConsoleMock* p_consoleMock = nullptr;
+FileSystemMock* p_fileSystemMock = nullptr;
 // Function Pointers
 METALMOCK_NONVOID4_STATIC_OR_FREE(ProgramMode, _call_FileRevisorArgsParser_DetermineProgramMode, bool, bool, bool, bool)
 using NonVoidTwoArgMemberFunctionCallerMockType = NonVoidTwoArgMemberFunctionCallerMock<
@@ -25,20 +28,19 @@ using NonVoidTwoArgMemberFunctionCallerMockType = NonVoidTwoArgMemberFunctionCal
 // Function Callers
 NonVoidTwoArgMemberFunctionCallerMockType* _caller_ParseDirAndFromAndToArgumentsMock = nullptr;
 // Constant Components
-ConsoleMock* p_consoleMock = nullptr;
-FileSystemMock* p_fileSystemMock = nullptr;
 DocoptParserMock* _docoptParserMock = nullptr;
 FileRevisorPreambleMakerMock* _fileRevisorPreambleMakerMock = nullptr;
 
 STARTUP
 {
+   // Base Constant Components
+   _fileRevisorArgsParser.p_console.reset(p_consoleMock = new ConsoleMock);
+   _fileRevisorArgsParser.p_fileSystem.reset(p_fileSystemMock = new FileSystemMock);
    // Function Pointers
    _fileRevisorArgsParser._call_DetermineProgramMode = BIND_4ARG_METALMOCK_OBJECT(_call_FileRevisorArgsParser_DetermineProgramModeMock);
    // Function Callers
    _fileRevisorArgsParser._caller_ParseDirAndFromAndToArguments.reset(_caller_ParseDirAndFromAndToArgumentsMock = new NonVoidTwoArgMemberFunctionCallerMockType);
    // Constant Components
-   _fileRevisorArgsParser.p_console.reset(p_consoleMock = new ConsoleMock);
-   _fileRevisorArgsParser.p_fileSystem.reset(p_fileSystemMock = new FileSystemMock);
    _fileRevisorArgsParser._docoptParser.reset(_docoptParserMock = new DocoptParserMock);
    _fileRevisorArgsParser._fileRevisorPreambleMaker.reset(_fileRevisorPreambleMakerMock = new FileRevisorPreambleMakerMock);
 }
@@ -136,7 +138,7 @@ TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsTrue_ParsesDirArgum
    map<string, docopt::Value> docoptValues;
    docoptValues[ZenUnit::Random<string>()] = docopt::Value(ZenUnit::Random<string>());
    //
-   tuple<fs::path, string, string> targetFolderPath_fromRegexPattern_toRegexPattern =
+   const tuple<fs::path, string, string> targetFolderPath_fromRegexPattern_toRegexPattern =
       _fileRevisorArgsParser.ParseTargetAndFromAndToArguments(docoptValues, true);
    //
    METALMOCKTHEN(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(docoptValues, "--target")).Then(
@@ -177,7 +179,7 @@ TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsFalse_FromArgumentI
    map<string, docopt::Value> docoptValues;
    docoptValues[ZenUnit::Random<string>()] = docopt::Value(ZenUnit::Random<string>());
    //
-   tuple<fs::path, string, string> targetFolderPath_fromRegexPattern_toRegexPattern =
+   const tuple<fs::path, string, string> targetFolderPath_fromRegexPattern_toRegexPattern =
       _fileRevisorArgsParser.ParseTargetAndFromAndToArguments(docoptValues, false);
    //
    METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledNTimes(2));
@@ -185,7 +187,7 @@ TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsFalse_FromArgumentI
    METALMOCKTHEN(_docoptParserMock->GetRequiredStringMock.CalledWith(docoptValues, "--from"))).Then(
    METALMOCKTHEN(_docoptParserMock->GetRequiredStringMock.CalledWith(docoptValues, "--to"))).Then(
    METALMOCKTHEN(p_fileSystemMock->GetAbsolutePathMock.CalledOnceWith(targetFolderPathString)));
-   tuple<fs::path, string, string> expected_targetFolderPath_fromRegexPattern_toRegexPattern(
+   const tuple<fs::path, string, string> expected_targetFolderPath_fromRegexPattern_toRegexPattern(
       targetFolderPath, fromRegexPattern, toRegexPattern);
    ARE_EQUAL(expected_targetFolderPath_fromRegexPattern_toRegexPattern, targetFolderPath_fromRegexPattern_toRegexPattern);
 }

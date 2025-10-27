@@ -32,13 +32,20 @@ FileRevisorArgs FileRevisorArgsParser::ParseStringArgs(const vector<string>& str
    const bool isDeleteDirectoryMode = _docoptParser->GetRequiredBool(docoptValues, "delete-directory");
    FileRevisorArgs args;
    args.commandLine = Vector::Join(stringArgs, ' ');
-   args.programMode = _call_DetermineProgramMode(isRenameFilesMode, isRenameDirectoriesMode, isReplaceTextInTextFilesMode, isDeleteDirectoryMode);
-   tuple<fs::path, string, string> targetDirectory_fromRegexPattern_toRegexPattern =
+   args.programMode = _call_DetermineProgramMode(
+      isRenameFilesMode,
+      isRenameDirectoriesMode,
+      isReplaceTextInTextFilesMode,
+      isDeleteDirectoryMode);
+
+   const tuple<fs::path, string, string> targetDirectory_fromRegexPattern_toRegexPattern =
       _caller_ParseDirAndFromAndToArguments->CallConstMemberFunction(
-         this, &FileRevisorArgsParser::ParseTargetAndFromAndToArguments, docoptValues, isDeleteDirectoryMode);
+         this, &FileRevisorArgsParser::ParseTargetAndFromAndToArguments,
+         docoptValues, isDeleteDirectoryMode);
    args.targetFolderPath = get<0>(targetDirectory_fromRegexPattern_toRegexPattern);
    args.fromRegexPattern = get<1>(targetDirectory_fromRegexPattern_toRegexPattern);
    args.toRegexPattern = get<2>(targetDirectory_fromRegexPattern_toRegexPattern);
+
    args.recurse = _docoptParser->GetOptionalBool(docoptValues, "--recurse");
    args.parallel = _docoptParser->GetOptionalBool(docoptValues, "--parallel");
    args.skipFilesInUse = _docoptParser->GetOptionalBool(docoptValues, "--skip-files-in-use");
