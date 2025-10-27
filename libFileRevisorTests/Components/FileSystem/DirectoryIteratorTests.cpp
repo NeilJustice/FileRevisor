@@ -65,7 +65,7 @@ TEST(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsEndIterationMark
 TEST(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsNotEndIterationMarker_FileIsSkippableType_DoesNotAddToTextFilePaths_ReturnsEmptyVector)
 {
    const fs::path firstFilePath = ZenUnit::Random<fs::path>();
-   const fs::path endIterationMarker{};
+   const fs::path endIterationMarker;
    _directoryIteratorSelfMocked.NextNonIgnoredFilePathMock.ReturnValues(firstFilePath, endIterationMarker);
    _directoryIteratorSelfMocked.IsFileEmptyOrBinaryOrNotAnsiOrNotOpenableMock.Return(true);
    //
@@ -81,7 +81,7 @@ TEST(GetNonEmptyNonIgnoredTextFilePaths_NextNonIgnoredFilePathIsNotEndIterationM
    const fs::path firstFilePath = ZenUnit::Random<fs::path>();
    const fs::path secondFilePath = ZenUnit::Random<fs::path>();
    const fs::path thirdFilePath = ZenUnit::Random<fs::path>();
-   const fs::path endIterationMarker{};
+   const fs::path endIterationMarker;
    _directoryIteratorSelfMocked.NextNonIgnoredFilePathMock.ReturnValues(
       firstFilePath,
       secondFilePath,

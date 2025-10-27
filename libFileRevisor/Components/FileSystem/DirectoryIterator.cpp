@@ -25,7 +25,7 @@ vector<fs::path> DirectoryIterator::GetNonEmptyNonIgnoredTextFilePaths()
    while (true)
    {
       fs::path nextNonIgnoredFilePath = NextNonIgnoredFilePath();
-      static const fs::path endIterationMarker{};
+      static const fs::path endIterationMarker;
       if (nextNonIgnoredFilePath == endIterationMarker)
       {
          break;
@@ -115,7 +115,7 @@ bool DirectoryIterator::IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(const fs::path
 template<typename DirectoryIteratorType>
 fs::path DirectoryIterator::NextNonIgnoredPath(DirectoryIteratorType& iter, fs::file_type requiredFileType)
 {
-   static const DirectoryIteratorType noMorePathsMarker{};
+   static const DirectoryIteratorType noMorePathsMarker;
    while (true)
    {
       if (iter == noMorePathsMarker)

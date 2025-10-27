@@ -91,7 +91,7 @@ vector<fs::path> FileSystem::GetFolderPathsInDirectory(const fs::path& directory
    while (true)
    {
       fs::path nonIgnoredFolderPath = directoryIterator.NextNonIgnoredFolderPath();
-      static const fs::path endIterationMarker{};
+      static const fs::path endIterationMarker;
       if (nonIgnoredFolderPath == endIterationMarker)
       {
          break;
@@ -106,7 +106,7 @@ vector<fs::path> FileSystem::GetFilePathsInDirectory(const fs::path& directoryPa
    vector<fs::path> filePaths;
    DirectoryIterator directoryIterator;
    directoryIterator.SetDirectoryIterator(directoryPath, recurse);
-   static const fs::path endIterationMarker{};
+   static const fs::path endIterationMarker;
    while (true)
    {
       fs::path nextNonIgnoredFilePath = directoryIterator.NextNonIgnoredFilePath();

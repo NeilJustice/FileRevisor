@@ -25,14 +25,14 @@ TEST(FromArgcArgv_ReturnsArgsVector)
 
 TEST(Join_EmptyIntVector_ReturnsEmptyStringRegardlessOfSeparator)
 {
-   const vector<int> emptyIntVector = {};
+   const vector<int> emptyIntVector;
    IS_EMPTY_STRING(Vector::Join(emptyIntVector, ' '));
    IS_EMPTY_STRING(Vector::Join(emptyIntVector, ','));
 }
 
 TEST(Join_1ElementIntVector_ReturnsFirstElementRegardlessOfSeparator)
 {
-   const vector<int> intVector = { 1 };
+   const vector<int> intVector{ 1 };
    ARE_EQUAL("1", Vector::Join(intVector, ' '));
    ARE_EQUAL("1", Vector::Join(intVector, ','));
 }

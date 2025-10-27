@@ -17,7 +17,7 @@ FileReader::~FileReader()
 
 pair<size_t, array<char, 256>> FileReader::ReadFirst256Bytes(FILE* rawFilePointer) const
 {
-   pair<size_t, array<char, 256>> numberOfBytesReadAndFirst256FileBytes{};
+   pair<size_t, array<char, 256>> numberOfBytesReadAndFirst256FileBytes;
 #if defined __linux__
    numberOfBytesReadAndFirst256FileBytes.first = _call_fread(
       numberOfBytesReadAndFirst256FileBytes.second.data(),

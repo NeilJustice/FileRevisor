@@ -42,7 +42,7 @@ STARTUP
 
 TEST(DefaultConstructor_SetsFieldsToDefaultValues)
 {
-   const DocoptParser docoptParser{};
+   const DocoptParser docoptParser;
    // Function Pointers
    STD_FUNCTION_TARGETS(docopt::docopt, docoptParser._call_docopt_docopt);
 }
