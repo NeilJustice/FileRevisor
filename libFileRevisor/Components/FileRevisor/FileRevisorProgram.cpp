@@ -33,7 +33,7 @@ int FileRevisorProgram::Main(int argc, char* argv[])
    }
    _stopwatch->Start();
    const vector<string> stringArgs = _call_Vector_FromArgcArgv(argc, argv);
-   const int exitCode = _nonVoidOneArgTryCatchCaller->TryCatchCallConstMemberFunction(
+   int exitCode = _nonVoidOneArgTryCatchCaller->TryCatchCallConstMemberFunction(
       this, &FileRevisorProgram::Run, stringArgs, &FileRevisorProgram::ExceptionHandler);
    const string elapsedSeconds = _stopwatch->StopAndGetElapsedSeconds();
    const string durationLine = "Duration: " + elapsedSeconds + " seconds";
