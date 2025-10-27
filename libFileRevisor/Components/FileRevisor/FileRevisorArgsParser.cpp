@@ -30,7 +30,7 @@ FileRevisorArgs FileRevisorArgsParser::ParseStringArgs(const vector<string>& str
    const bool isRenameDirectoriesMode = _docoptParser->GetRequiredBool(docoptValues, "rename-directories");
    const bool isReplaceTextInTextFilesMode = _docoptParser->GetRequiredBool(docoptValues, "replace-text");
    const bool isDeleteDirectoryMode = _docoptParser->GetRequiredBool(docoptValues, "delete-directory");
-   FileRevisorArgs args{};
+   FileRevisorArgs args;
    args.commandLine = Vector::Join(stringArgs, ' ');
    args.programMode = _call_DetermineProgramMode(isRenameFilesMode, isRenameDirectoriesMode, isReplaceTextInTextFilesMode, isDeleteDirectoryMode);
    tuple<fs::path, string, string> targetDirectory_fromRegexPattern_toRegexPattern =

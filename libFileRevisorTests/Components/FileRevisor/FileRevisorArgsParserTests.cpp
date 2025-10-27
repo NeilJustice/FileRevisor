@@ -102,7 +102,7 @@ TEST(ParseStringArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
    METALMOCKTHEN(_docoptParserMock->GetOptionalBoolMock.CalledWith(docoptValues, "--quiet"))).Then(
    METALMOCKTHEN(_docoptParserMock->GetOptionalBoolMock.CalledWith(docoptValues, "--verbose")));
 
-   FileRevisorArgs expectedArgs{};
+   FileRevisorArgs expectedArgs;
    expectedArgs.commandLine = Vector::Join(stringArgs, ' ');
    expectedArgs.programMode = programMode;
    expectedArgs.targetFolderPath = get<0>(targetDirectory_fromRegexPattern_toRegexPattern);
