@@ -103,7 +103,7 @@ TEST(ConstAndNonConstFourArgFunction_CodeCoverage)
    ClassType classType{};
    classType.ConstFourArgFunction(ElementType{}, Arg2Type{}, Arg3Type{}, Arg4Type{});
    classType.NonConstFourArgFunction(ElementType{}, Arg2Type{}, Arg3Type{}, Arg4Type{});
-};
+}
 
 RUN_TEMPLATE_TESTS(FourArgMemberFunctionForEacherTests, int, int, int, int)
 THEN_RUN_TEMPLATE_TESTS(FourArgMemberFunctionForEacherTests, double, int, unsigned, unsigned long long)

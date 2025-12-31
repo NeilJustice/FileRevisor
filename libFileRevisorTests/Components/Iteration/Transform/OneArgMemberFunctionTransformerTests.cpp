@@ -12,7 +12,7 @@ class Class
 public:
    mutable vector<ElementType> calls;
 
-   TransformedElementType ConstMemberFunctionThatThrowsIfCalled(const ElementType& /*element*/) const
+   [[noreturn]] TransformedElementType ConstMemberFunctionThatThrowsIfCalled(const ElementType& /*element*/) const
    {
       throw runtime_error("Expected call to ConstMemberFunctionThatThrows()");
    }

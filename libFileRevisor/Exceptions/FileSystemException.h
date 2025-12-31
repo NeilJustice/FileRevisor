@@ -7,6 +7,7 @@ private:
    const string _exceptionMessage;
 public:
    FileSystemException(FileExceptionType fileExceptionType, string_view exceptionMessage);
-   virtual ~FileSystemException() = default;
+   virtual ~FileSystemException() override = default;
+   
    const char* what() const noexcept override;
 };

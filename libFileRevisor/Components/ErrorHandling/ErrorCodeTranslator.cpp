@@ -93,7 +93,7 @@ string ErrorCodeTranslator::GetErrnoDescription(int errnoValue) const
 
 string ErrorCodeTranslator::GetSystemErrorDescription(int systemErrorValue) const
 {
-#if _WIN32
+#ifdef _WIN32
    switch (systemErrorValue)
    {
    case ERROR_ACCESS_DENIED: return "Access is denied";
