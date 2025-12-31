@@ -1,5 +1,5 @@
 <p align="center">
-<img src="Screenshots/FileRevisorLogo.png" width="64%"><br>
+<img src="Screenshots/FileRevisorLogo.png" width="50%"><br>
 </p>
 
 FileRevisor is a cross-platform C++23 command line program for quickly deleting large directories in parallel, renaming files and directories, and replacing text in text files.
