@@ -8,7 +8,7 @@ FileRevisor is a cross-platform C++23 command line program for quickly deleting 
 |----------|------------|
 |GitHub Actions Clang 18 and GCC 13|<a href="https://github.com/NeilJustice/FileRevisor/actions/workflows/build.yml"><img src="https://github.com/NeilJustice/FileRevisor/actions/workflows/build.yml/badge.svg"></a>|
 |AppVeyor Visual Studio 2022|<a href="https://ci.appveyor.com/project/NeilJustice/FileRevisor"><img src="https://ci.appveyor.com/api/projects/status/fl8f0jle01k04nwp?svg=true"></a>
-|Codecov.io Clang Code Coverage|<a href="https://codecov.io/gh/NeilJustice/FileRevisor"><img src="https://codecov.io/gh/NeilJustice/FileRevisor/branch/master/graph/badge.svg?token=goCObzAYXP"></a>
+|Codecov.io GCC lcov code coverage|<a href="https://codecov.io/gh/NeilJustice/FileRevisor"><img src="https://codecov.io/gh/NeilJustice/FileRevisor/branch/master/graph/badge.svg?token=goCObzAYXP"></a>
 
 * [FileRevisor command line usage](#filerevisor-command-line-usage)
 * [FileRevisor program modes](#filerevisor-program-modes)
@@ -25,7 +25,7 @@ FileRevisor is a cross-platform C++23 command line program for quickly deleting 
 ## FileRevisor command line usage
 
 ```ini
-FileRevisor v1.1.0 - Quickly delete directories, rename files or directories, or replace text in files.
+FileRevisor v1.1.0
 
 Usage:
    filerevisor delete-directory
