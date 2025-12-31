@@ -151,10 +151,6 @@ CXX=clang++ cmake .. -DCMAKE_BUILD_TYPE=Release
 sudo cmake --build . --target install
 ```
 
-Resulting binary `/usr/local/bin/filerevisor`:
-
-![Linux filerevisor binary in /usr/local/bin](Screenshots/LinuxFileRevisorBinaryInUsrLocalBin.png)
-
 ## Steps to build executable FileRevisor.exe from source on Windows with Visual Studio 2022
 
 ```powershell
@@ -163,10 +159,6 @@ cd FileRevisor
 cmake . -G"Visual Studio 17 2022" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
 cmake --build . --config Release --target install
 ```
-
-Resulting executable `C:\bin\FileRevisor.exe`:
-
-![Windows FileRevisor.exe](Screenshots/WindowsFileRevisorDotExe.png)
 
 ## Thanks to
 
