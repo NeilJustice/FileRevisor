@@ -18,12 +18,8 @@ FileRevisor is a cross-platform C++23 command line program for quickly deleting 
   * [replace-text](#replace-text)
 * [Linux FileRevisor parallel directory deletion performance](#linux-filerevisor-parallel-directory-deletion-performance)
 * [Windows FileRevisor parallel folder deletion performance](#windows-filerevisor-parallel-folder-deletion-performance)
-* [FileRevisor code structure as it appears in Visual Studio Code on Linux](#filerevisor-code-structure-as-it-appears-in-visual-studio-code-on-linux)
-* [FileRevisor code structure as it appears in Visual Studio 2022 on Windows](#filerevisor-code-structure-as-it-appears-in-visual-studio-2022-on-windows)
-* [Linux Jenkins jobs which build and statically analyze FileRevisor](#linux-jenkins-jobs-which-build-and-statically-analyze-filerevisor)
-* [Windows Jenkins jobs which build and statically analyze FileRevisor](#windows-jenkins-jobs-which-build-and-statically-analyze-filerevisor)
-* [4 steps to build binary filerevisor from source on Linux with Clang](#4-steps-to-build-binary-filerevisor-from-source-on-linux-with-clang)
-* [4 steps to build executable FileRevisor.exe from source on Windows with Visual Studio 2022](#4-steps-to-build-executable-filerevisorexe-from-source-on-windows-with-visual-studio-2022)
+* [Steps to build binary filerevisor from source on Linux with Clang](#steps-to-build-binary-filerevisor-from-source-on-linux-with-clang)
+* [Steps to build executable FileRevisor.exe from source on Windows with Visual Studio 2022](#steps-to-build-executable-filerevisorexe-from-source-on-windows-with-visual-studio-2022)
 * [Thanks to](#thanks-to)
 
 ## FileRevisor command line usage
@@ -146,23 +142,7 @@ As you can see from the above two graphs, Linux file deletions are quite a bit f
 
 The OS, CPU, and storage hardware which generated the above performance numbers is Fedora 33 / Windows 10, 32-core 64-thread AMD Threadripper 2990WX, and a 512 GB Samsung 970 PRO NVMe drive.
 
-### FileRevisor code structure as it appears in Visual Studio Code on Linux
-
-![FileRevisor Code Structure As It Appears In Visual Studio Code On Linux](Screenshots/Linux/VisualStudioCode.png)
-
-### FileRevisor code structure as it appears in Visual Studio 2022 on Windows
-
-![FileRevisor Code Structure As It Appears In Visual Studio 2022 On Windows](Screenshots/Windows/FileRevisorCodeStructureInVisualStudio2022.png)
-
-### Linux Jenkins jobs which build and statically analyze FileRevisor
-
-![Linux FileRevisor Jenkins Jobs](Screenshots/Linux/LinuxJenkinsJobs.png)
-
-### Windows Jenkins jobs which build and statically analyze FileRevisor
-
-![Windows Jenkins Jobs](Screenshots/Windows/WindowsJenkinsJobs.png)
-
-## 4 steps to build binary filerevisor from source on Linux with Clang
+## Steps to build binary filerevisor from source on Linux with Clang
 
 ```bash
 git clone https://github.com/NeilJustice/FileRevisor
@@ -175,7 +155,7 @@ Resulting binary `/usr/local/bin/filerevisor`:
 
 ![Linux filerevisor binary in /usr/local/bin](Screenshots/LinuxFileRevisorBinaryInUsrLocalBin.png)
 
-## 4 steps to build executable FileRevisor.exe from source on Windows with Visual Studio 2022
+## Steps to build executable FileRevisor.exe from source on Windows with Visual Studio 2022
 
 ```powershell
 git clone https://github.com/NeilJustice/FileRevisor
@@ -191,3 +171,4 @@ Resulting executable `C:\bin\FileRevisor.exe`:
 ## Thanks to
 
 <a href="https://brandmark.io">brandmark.io</a> for FileRevisor's logo
+
