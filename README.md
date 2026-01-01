@@ -6,7 +6,7 @@
 |----------|------------|
 |Clang 18 and GCC 13 on ubuntu-latest|<a href="https://github.com/NeilJustice/FileRevisor/actions/workflows/linux_build.yml"><img src="https://github.com/NeilJustice/FileRevisor/actions/workflows/linux_build.yml/badge.svg"></a>|
 |VS2022 on windows-latest|<a href="https://github.com/NeilJustice/FileRevisor/actions/workflows/windows_build.yml"><img src="https://github.com/NeilJustice/FileRevisor/actions/workflows/windows_build.yml/badge.svg"></a>|
-|GCC lcov code coverage|<a href="https://codecov.io/gh/NeilJustice/FileRevisor"><img src="https://codecov.io/gh/NeilJustice/FileRevisor/branch/master/graph/badge.svg?token=goCObzAYXP"></a>|
+|GCC lcov code coverage|<a href="https://codecov.io/gh/NeilJustice/FileRevisor"><img src="https://codecov.io/gh/NeilJustice/FileRevisor/graph/badge.svg?token=goCObzAYXP"></a>|
 
 FileRevisor is a C++23 command line program for quickly deleting large directories in parallel, renaming files and directories, and replacing text in text files.
 
