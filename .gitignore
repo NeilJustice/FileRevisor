@@ -17,8 +17,6 @@ CoberturaCodeCoverageResults_FileRevisorDevOpsPythonTests.xml
 # Linux
 covhtml/
 build.ninja
-coverage.profdata
-coverage.profraw
 
 # Windows
 .vs/
@@ -32,7 +30,6 @@ x64/
 *.log
 *.opendb
 *.sln
-!FileRevisorDevOpsPython.sln
 *.suo
 *.obj
 *.pch
@@ -43,9 +40,10 @@ x64/
 *.user
 *.vcxproj
 *.vspx
-!PyUtils.sln
+!FileRevisorDevOpsPython.sln
 
 # IntegrationTests
 DirectoryIteratorIntegrationTests/
 FileSystemIntegrationTests/
 RecursiveFileDeleterIntegrationTests/
+
