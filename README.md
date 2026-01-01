@@ -4,11 +4,11 @@
 
 |Build Type|Build Status|
 |----------|------------|
-|GitHub Actions Clang 18 and GCC 13|<a href="https://github.com/NeilJustice/FileRevisor/actions/workflows/build.yml"><img src="https://github.com/NeilJustice/FileRevisor/actions/workflows/build.yml/badge.svg"></a>|
-|AppVeyor Visual Studio 2022|<a href="https://ci.appveyor.com/project/NeilJustice/FileRevisor"><img src="https://ci.appveyor.com/api/projects/status/fl8f0jle01k04nwp"></a>
-|Codecov.io GCC lcov code coverage|<a href="https://codecov.io/gh/NeilJustice/FileRevisor"><img src="https://codecov.io/gh/NeilJustice/FileRevisor/branch/master/graph/badge.svg?token=goCObzAYXP"></a>
+|Clang 18 and GCC 13 on ubuntu-latest|<a href="https://github.com/NeilJustice/FileRevisor/actions/workflows/linux_build.yml"><img src="https://github.com/NeilJustice/FileRevisor/actions/workflows/linux_build.yml/badge.svg"></a>|
+|VS2022 on windows-latest|<a href="https://github.com/NeilJustice/FileRevisor/actions/workflows/windows_build.yml"><img src="https://github.com/NeilJustice/FileRevisor/actions/workflows/windows_build.yml/badge.svg"></a>|
+|GCC lcov code coverage|<a href="https://codecov.io/gh/NeilJustice/FileRevisor"><img src="https://codecov.io/gh/NeilJustice/FileRevisor/branch/master/graph/badge.svg?token=goCObzAYXP"></a>|
 
-FileRevisor is a cross-platform C++23 command line program for quickly deleting large directories in parallel, renaming files and directories, and replacing text in text files.
+FileRevisor is a C++23 command line program for quickly deleting large directories in parallel, renaming files and directories, and replacing text in text files.
 
 * [FileRevisor command line usage](#filerevisor-command-line-usage)
 * [FileRevisor program modes](#filerevisor-program-modes)
