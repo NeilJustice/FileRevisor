@@ -1,5 +1,5 @@
 <p align="center">
-<img src="Screenshots/FileRevisorLogo.png" width="50%"><br>
+<img src="Screenshots/FileRevisorLogo.png" width="64%"><br>
 </p>
 
 |Build Type|Build Status|
