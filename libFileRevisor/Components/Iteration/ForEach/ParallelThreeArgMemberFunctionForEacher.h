@@ -16,6 +16,10 @@ public:
       Arg3Type arg3) const
    {
       const auto boundMemberFunction = std::bind(constMemberFunction, constClassPointer, std::placeholders::_1, arg2, arg3);
+#ifdef _LIBCPP_VERSION
+      std::for_each(elements.cbegin(), elements.cend(), boundMemberFunction);
+#else
       std::for_each(std::execution::par_unseq, elements.cbegin(), elements.cend(), boundMemberFunction);
+#endif      
    }
 };

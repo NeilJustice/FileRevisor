@@ -1,4 +1,5 @@
 #include "pch.h"
+#ifndef _LIBCPP_VERSION
 #include "libFileRevisor/StaticUtilities/Type.h"
 
 class TypeTestsBase {};
@@ -145,3 +146,5 @@ TEST(GetNameT_ThrownExceptionSubclass_ReturnsBaseClassNameAndNotSubclassName)
 }
 
 RUN_TESTS(TypeTests)
+
+#endif

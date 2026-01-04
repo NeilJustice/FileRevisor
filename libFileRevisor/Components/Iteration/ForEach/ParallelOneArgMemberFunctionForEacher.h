@@ -13,7 +13,11 @@ public:
       const ClassType* constClassPointer,
       ConstMemberFunctionType constMemberFunction) const
    {
-      const auto boundMemberFunction = std::bind(constMemberFunction, constClassPointer, std::placeholders::_1);
-      std::for_each(std::execution::par_unseq, elements.cbegin(), elements.cend(), boundMemberFunction);
+      const auto boundConstMemberFunction = std::bind(constMemberFunction, constClassPointer, std::placeholders::_1);
+#ifdef _LIBCPP_VERSION
+      std::for_each(elements.cbegin(), elements.cend(), boundConstMemberFunction);
+#else
+      std::for_each(std::execution::par_unseq, elements.cbegin(), elements.cend(), boundConstMemberFunction);
+#endif
    }
 };

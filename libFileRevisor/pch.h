@@ -9,14 +9,18 @@
 #include <map>
 #include <regex>
 #if defined __linux__
-#include <cstddef>
-#include <dirent.h>
-#include <ios>
-#include <memory>
-#include <mutex>
-#include <string.h>
-#include <thread>
-#include <unistd.h>
+   #include <cstddef>
+   #include <dirent.h>
+   #include <ios>
+   #include <memory>
+   #include <mutex>
+   #include <string.h>
+   #include <thread>
+   #include <unistd.h>
+   #ifdef _LIBCPP_VERSION
+      #include <algorithm>
+      #include <type_traits>
+   #endif
 #endif
 namespace fs = std::filesystem;
 using namespace std;

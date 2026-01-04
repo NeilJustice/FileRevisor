@@ -15,11 +15,15 @@ struct RenameResult
 };
 
 #ifdef _WIN32
-#ifdef _DEBUG
-static_assert(sizeof(RenameResult) == 88);
-#else
-static_assert(sizeof(RenameResult) == 72);
-#endif
+   #ifdef _DEBUG
+      static_assert(sizeof(RenameResult) == 88);
+   #else
+      static_assert(sizeof(RenameResult) == 72);
+   #endif
 #elifdef __linux__
-static_assert(sizeof(RenameResult) == 88);
+   #ifdef _LIBCPP_VERSION
+      static_assert(sizeof(RenameResult) == 56);
+   #else
+      static_assert(sizeof(RenameResult) == 88);
+   #endif
 #endif

@@ -11,12 +11,16 @@
 #include <filesystem>
 #include <regex>
 #if defined __linux__
-#include <cstddef>
-#include <ios>
-#include <memory>
-#include <mutex>
-#include <string.h>
-#include <thread>
+   #include <cstddef>
+   #include <ios>
+   #include <memory>
+   #include <mutex>
+   #include <string.h>
+   #include <thread>
+   #ifdef _LIBCPP_VERSION
+      #include <algorithm>
+      #include <type_traits>
+   #endif
 #endif
 namespace fs = std::filesystem;
 using namespace std;
