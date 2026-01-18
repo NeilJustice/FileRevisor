@@ -35,7 +35,7 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* dire
    DIR* const dirPointer = opendir(directoryPath);
    release_assert(dirPointer != nullptr);
    const dirent* directoryEntry = nullptr;
-   char filePathOrSubdirectoryPathChars[PATH_MAX];
+   array<char, PATH_MAX> filePathOrSubdirectoryPathChars{};
    while ((directoryEntry = readdir(dirPointer)) != nullptr)
    {
       const char* const fileNameOrSubdirectoryName = directoryEntry->d_name;
@@ -44,18 +44,18 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* dire
          strcmp(fileNameOrSubdirectoryName, "..") == 0;
       if (!isDotOrDotDot)
       {
-         char* writePointer = stpcpy(filePathOrSubdirectoryPathChars, directoryPath);
+         char* writePointer = stpcpy(filePathOrSubdirectoryPathChars.data(), directoryPath);
          *writePointer++ = '/';
          writePointer = stpcpy(writePointer, fileNameOrSubdirectoryName);
          *writePointer = 0;
          if (directoryEntry->d_type == DT_DIR)
          {
-            const char* const subdirectoryPath = filePathOrSubdirectoryPathChars;
+            const char* const subdirectoryPath = filePathOrSubdirectoryPathChars.data();
             RecursivelyDeleteAllFilesInDirectory(subdirectoryPath, args);
          }
          else
          {
-            const char* const filePath = filePathOrSubdirectoryPathChars;
+            const char* const filePath = filePathOrSubdirectoryPathChars.data();
             if (args.dryrun)
             {
                const string wouldDeleteFileMessage = String::ConcatStrings("DryRun: Would delete file ", filePath);

@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "libFileRevisor/Components/FileSystem/DirectoryIterator.h"
+#include "libFileRevisor/Components/FileSystem/FileSystem.h"
 
 TESTS(DirectoryIteratorIntegrationTests)
 AFACT(IntegrationTest_DirectoryIterator_RecursiveTrue_NextNonIgnoredFolderPathReturnsExpectedFolderPaths)

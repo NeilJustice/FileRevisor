@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "libFileRevisor/Components/FileSystem/FCloseDeleter.h"
 #include "libFileRevisor/Components/FileSystem/FileOpenerCloser.h"
 #include "libFileRevisorTests/Components/ErrorHandling/MetalMock/ErrorCodeTranslatorMock.h"
 
@@ -125,11 +126,11 @@ TEST(ThrowFileOpenExceptionIfFileOpenFailed_FilePointerIsNullptr_ThrowIfFileNotO
 
 TEST(ThrowFileOpenExceptionIfFileOpenFailed_FilePointerIsNotNullptr_ThrowIfFileNotOpenableIsTrueOrFalse_DoesNothing)
 {
-   FILE* const nonNullRawFilePointer = tmpfile();
+   const shared_ptr<FILE> nonNullRawFilePointer(tmpfile(), FCloseDeleter());
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const bool throwIfFileNotOpenable = ZenUnit::Random<bool>();
    //
-   _fileOpenerCloser.ThrowFileOpenExceptionIfFileOpenFailed(nonNullRawFilePointer, filePath, throwIfFileNotOpenable);
+   _fileOpenerCloser.ThrowFileOpenExceptionIfFileOpenFailed(nonNullRawFilePointer.get(), filePath, throwIfFileNotOpenable);
 }
 
 RUN_TESTS(FileOpenerCloserTests)

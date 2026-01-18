@@ -15,6 +15,8 @@ if(UNIX)
          -Wno-exit-time-destructors \
          -Wno-extra-semi-stmt \
          -Wno-global-constructors \
+         -Wno-gnu-zero-variadic-macro-arguments \
+         -Wno-header-hygiene \
          -Wno-missing-variable-declarations \
          -Wno-padded \
          -Wno-reserved-identifier \
@@ -22,6 +24,7 @@ if(UNIX)
          -Wno-switch-enum \
          -Wno-thread-safety-negative \
          -Wno-unsafe-buffer-usage \
+         -Wno-unused-template \
          -Wno-weak-vtables")
       if (CMAKE_CXX_COMPILER_VERSION VERSION_GREATER 21.0.0)
          append(CMAKE_CXX_FLAGS "-Wno-nrvo")
@@ -39,7 +42,12 @@ if(UNIX)
    endif()
    if(ClangTidyMode)
       set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-      message("ClangTidyMode enabled: CMAKE_EXPORT_COMPILE_COMMANDS set to ON")
+      message("[SharedCMakeMacros.cmake] ClangTidyMode enabled: CMAKE_EXPORT_COMPILE_COMMANDS set to ON")
+      include(ProcessorCount)
+      ProcessorCount(NumberOfCores)
+      add_custom_target(clang-tidy COMMAND
+         find -name "*.cpp" -not -path "*/CMakeFiles/*" -print0 | xargs -0 -n 1 -P ${NumberOfCores} -t clang-tidy -p ${CMAKE_BUILD_TYPE} -config-file=/code/CMakeUtils/clang-tidy-config.txt -extra-arg=-std=c++2b -extra-arg=-Wno-unknown-warning-option
+         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} VERBATIM USES_TERMINAL)
    elseif(ClangUndefinedBehaviorSanitizerMode)
       replace(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-g" "")
       replace(CMAKE_CXX_FLAGS_RELWITHDEBINFO "-O2" "")
@@ -79,10 +87,3 @@ add_subdirectory(libFileRevisorTests)
 
 set(CMAKE_CONFIGURATION_TYPES "Debug;RelWithDebInfo")
 
-if(UNIX)
-   include(ProcessorCount)
-   ProcessorCount(NumberOfCores)
-   add_custom_target(clang-tidy COMMAND
-      find -name "*.cpp" -print0 | xargs -0 -n 1 -P ${NumberOfCores} -t clang-tidy -p ${CMAKE_BUILD_TYPE}
-      WORKING_DIRECTORY ${CMAKE_SOURCE_DIR} VERBATIM USES_TERMINAL)
-endif()
