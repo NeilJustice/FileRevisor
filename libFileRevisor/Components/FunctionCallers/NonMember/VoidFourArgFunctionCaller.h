@@ -4,7 +4,9 @@ template<typename Arg1Type, typename Arg2Type, typename Arg3Type, typename Arg4T
 class VoidFourArgFunctionCaller
 {
 public:
-   virtual ~VoidFourArgFunctionCaller() = default;
+   virtual ~VoidFourArgFunctionCaller()
+   {
+   }
 
    using VoidFourArgFunctionType = void(*)(Arg1Type, Arg2Type, Arg3Type, Arg4Type);
 
