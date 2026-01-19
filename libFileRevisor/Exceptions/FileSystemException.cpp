@@ -8,6 +8,10 @@ FileSystemException::FileSystemException(FileExceptionType fileExceptionType, st
 {
 }
 
+FileSystemException::~FileSystemException()
+{
+}
+
 const char* FileSystemException::what() const noexcept
 {
    return _exceptionMessage.c_str();
