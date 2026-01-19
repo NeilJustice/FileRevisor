@@ -1,4 +1,5 @@
 #include "pch.h"
+#include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Components/FileSystem/RecursiveFileDeleter.h"
 #if defined __linux__
 #include <sys/stat.h>

@@ -78,7 +78,7 @@ TEST(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTim
    const int argc = ZenUnit::RandomBetween<int>(2, 5);
    const string exePath = ZenUnit::Random<string>();
    const string secondArg = ZenUnit::Random<string>();
-   const char* argv[] = { exePath.c_str(), secondArg.c_str() };
+   const char* argv[] = { exePath.c_str(), secondArg.c_str() }; // NOLINT
    //
    const int exitCode = _fileRevisorProgram.Main(argc, const_cast<char**>(argv));
    //
@@ -86,7 +86,7 @@ TEST(Main_ArgcIsNot1_CallsTryCatchCallRunWithStringVectorOfArgs_PrintsElapsedTim
    const string expectedDurationLine = "Duration: " + elapsedSeconds + " seconds";
    const string expectedExitCodeLine = "ExitCode: " + to_string(exitCode);
    METALMOCKTHEN(_stopwatchMock->StartMock.CalledOnce()).Then(
-   METALMOCKTHEN(_call_Vector_FromArgcArgvMock.CalledOnceWith(argc, const_cast<char**>(argv)))).Then(
+   METALMOCKTHEN(_call_Vector_FromArgcArgvMock.CalledOnceWith(argc, const_cast<char**>(argv)))).Then( // NOLINT
    METALMOCKTHEN(_nonVoidOneArgTryCatchCallerMock->TryCatchCallConstMemberFunctionMock.CalledOnceWith(
       &_fileRevisorProgram, &FileRevisorProgram::Run, vectorArgs, &FileRevisorProgram::ExceptionHandler))).Then(
    METALMOCKTHEN(_stopwatchMock->StopAndGetElapsedSecondsMock.CalledOnce())).Then(

@@ -26,7 +26,7 @@ public:
 };
 
 OneArgMemberFunctionTransformer<Class, ElementType, TransformedElementType> _oneArgMemberFunctionTransformer;
-const Class _classInstance;
+Class _classInstance;
 
 TEST(Transform_ElementsEmpty_DoesNotCallTransformFunction_ReturnsEmptyVector)
 {

@@ -23,10 +23,14 @@ FileSystem::FileSystem()
    , _call_std_rename(std::rename)
 #ifdef _WIN32
    , _call_fs_absolute_as_assignable_function_pointer(fs::absolute)
+   , _call_fs_absolute(_call_fs_absolute_as_assignable_function_pointer)
 #endif
    , _call_fs_current_path_as_assignable_function_pointer(fs::current_path)
+   , _call_fs_current_path(_call_fs_current_path_as_assignable_function_pointer)
    , _call_fs_exists_as_assignable_function_pointer(fs::exists)
+   , _call_fs_exists(_call_fs_exists_as_assignable_function_pointer)
    , _call_fs_rename_with_error_code_as_assignable_function_pointer(fs::rename)
+   , _call_fs_rename_with_error_code(_call_fs_rename_with_error_code_as_assignable_function_pointer)
    // Function Callers
    , _caller_DeleteFileOrDirectory(make_unique<_caller_DeleteFileOrDirectoryType>())
    , _caller_DoDeleteFileOrDirectory(make_unique<_caller_DoDeleteFileOrDirectoryType>())
@@ -40,12 +44,6 @@ FileSystem::FileSystem()
    , _fileSystemExceptionMaker(make_unique<FileSystemExceptionMaker>())
    , _recursiveFileDeleter(make_unique<RecursiveFileDeleter>())
 {
-#ifdef _WIN32
-   _call_fs_absolute = _call_fs_absolute_as_assignable_function_pointer;
-#endif
-   _call_fs_current_path = _call_fs_current_path_as_assignable_function_pointer;
-   _call_fs_exists = _call_fs_exists_as_assignable_function_pointer;
-   _call_fs_rename_with_error_code = _call_fs_rename_with_error_code_as_assignable_function_pointer;
 }
 
 FileSystem::~FileSystem()

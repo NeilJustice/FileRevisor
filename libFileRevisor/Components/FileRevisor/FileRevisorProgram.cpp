@@ -24,7 +24,7 @@ FileRevisorProgram::~FileRevisorProgram()
 {
 }
 
-int FileRevisorProgram::Main(int argc, char* argv[])
+int FileRevisorProgram::Main(int argc, char* argv[]) // NOLINT
 {
    if (argc == 1)
    {

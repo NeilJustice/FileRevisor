@@ -24,22 +24,22 @@ const fs::path _rootFolderPath = "FileSystemIntegrationTests";
 void CreateIntegrationTestsDirectoryStructure()
 {
   FileSystem fileSystem;
-  const char bytesContaining0A[] = { 1, 0 };
-  const char bytesContaining0B[] = { 1, 2, 0, 3 };
+  const array<char, 2> bytesContaining0A { 1, 0 };
+  const array<char, 4> bytesContaining0B { 1, 2, 0, 3 };
   fileSystem.CreateTextFile(_rootFolderPath / ".git/gitfile1", "");
   fileSystem.CreateTextFile(_rootFolderPath / ".git/gitfile2", "");
   fileSystem.CreateTextFile(_rootFolderPath / ".git/gitfile3", "");
   fileSystem.CreateTextFile(_rootFolderPath / "root.emptyFile1", "");
   fileSystem.CreateTextFile(_rootFolderPath / "root.textFile1", "abc");
-  fileSystem.CreateFileWithBytes(_rootFolderPath / "root.binaryFile1", bytesContaining0A, sizeof(bytesContaining0A));
+  fileSystem.CreateFileWithBytes(_rootFolderPath / "root.binaryFile1", bytesContaining0A.data(), sizeof(bytesContaining0A));
   fileSystem.CreateTextFile(_rootFolderPath / "root.textFile2", "123");
   fileSystem.CreateTextFile(_rootFolderPath / "subdirectory1/subdirectory1.emptyFile1", "");
   fileSystem.CreateTextFile(_rootFolderPath / "subdirectory1/subdirectory1.textFile1", "abc");
-  fileSystem.CreateFileWithBytes(_rootFolderPath / "subdirectory1/subdirectory1.binaryFile1", bytesContaining0B, sizeof(bytesContaining0B));
+  fileSystem.CreateFileWithBytes(_rootFolderPath / "subdirectory1/subdirectory1.binaryFile1", bytesContaining0B.data(), sizeof(bytesContaining0B));
   fileSystem.CreateDirectories(_rootFolderPath / "subdirectory1/subdirectoryA/subdirectoryB");
   fileSystem.CreateTextFile(_rootFolderPath / "subdirectory2/subdirectory2.emptyFile1", "");
   fileSystem.CreateTextFile(_rootFolderPath / "subdirectory2/subdirectory2.textFile1", "123");
-  fileSystem.CreateFileWithBytes(_rootFolderPath / "subdirectory2/subdirectory2.binaryFile1", bytesContaining0B, sizeof(bytesContaining0B));
+  fileSystem.CreateFileWithBytes(_rootFolderPath / "subdirectory2/subdirectory2.binaryFile1", bytesContaining0B.data(), sizeof(bytesContaining0B));
   fileSystem.CreateDirectories(_rootFolderPath / "subdirectory3");
   fileSystem.CreateDirectories(_rootFolderPath / "subdirectory3/subdirectory4");
 }
@@ -178,8 +178,8 @@ TEST(ReadText_FileExists_FileIsEmpty_ReturnsEmptyString)
 TEST(ReadText_FileExists_FileIsNotEmptyAndContainsTrailingBinaryZeros_ReturnsFileTextMinusTrailingBinaryZeros)
 {
   const fs::path textFilePath = _rootFolderPath / "ReadTextTest.txt";
-  const char fileBytes[] = { 'a', 'b', '\n', 'c', 0, 0 };
-  p_fileSystem.CreateFileWithBytes(textFilePath, fileBytes, sizeof(fileBytes));
+  const array<char, 6> fileBytes { 'a', 'b', '\n', 'c', 0, 0 };
+  p_fileSystem.CreateFileWithBytes(textFilePath, fileBytes.data(), sizeof(fileBytes));
   //
   const string fileText = p_fileSystem.ReadText(textFilePath);
   //
