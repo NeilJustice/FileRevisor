@@ -7,6 +7,6 @@ python -u FileRevisorDevOpsPython/FileRevisorDevOpsPython/BuildAndInstallCPlusPl
    --solution-name=FileRevisor \
    --cmake-build-type=Debug \
    --cmake-definitions="-DIncludeWhatYouUseMode=ON" \
-   --tests-project-name=FileRevisorTests \
+   --tests-project-name=libFileRevisorTests \
    --no-install
 
