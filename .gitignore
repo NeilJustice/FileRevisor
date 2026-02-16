@@ -29,7 +29,7 @@ x64/
 *.lib
 *.log
 *.opendb
-*.sln
+*.slnx
 *.suo
 *.obj
 *.pch
