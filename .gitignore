@@ -40,10 +40,8 @@ x64/
 *.user
 *.vcxproj
 *.vspx
-!FileRevisorDevOpsPython.sln
 
 # IntegrationTests
 DirectoryIteratorIntegrationTests/
 FileSystemIntegrationTests/
 RecursiveFileDeleterIntegrationTests/
-

@@ -1,8 +1,5 @@
-$env:PYTHONPATH="FileRevisorDevOpsPython"
-python.exe -u FileRevisorDevOpsPython\FileRevisorDevOpsPython\BuildAndInstallCPlusPlusProgram.py `
+WindowsCPlusPlusBuilder.exe build-cpp-program `
    --solution-name=FileRevisor `
-   --cmake-build-type=RelWithDebInfo `
-   --tests-project-name=libFileRevisorTests `
-   --cmake-definitions="-DCMAKE_INSTALL_PREFIX=C:\" `
-   --install
+   --configuration=RelWithDebInfo `
+   --install=true
 exit $LastExitCode
