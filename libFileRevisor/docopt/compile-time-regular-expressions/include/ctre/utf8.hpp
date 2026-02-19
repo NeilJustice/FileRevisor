@@ -1,11 +1,17 @@
 #ifndef CTRE__UTF8__HPP
 #define CTRE__UTF8__HPP
 
-#if __cpp_char8_t >= 201811
+#if defined(__cpp_char8_t) && __cpp_char8_t >= 201811
 
 #include "utility.hpp"
+#ifndef CTRE_IN_A_MODULE
 #include <string_view>
 #include <iterator>
+#endif
+
+#if defined(__cpp_char8_t) &&__cpp_lib_char8_t >= 201811L
+#define CTRE_ENABLE_UTF8_RANGE
+#endif
 
 namespace ctre {
 
@@ -18,31 +24,85 @@ struct utf8_iterator {
 	using difference_type = int;
 	
 	struct sentinel {
+		// this is here only because I want to support std::make_reverse_iterator
+		using self_type = sentinel;
+		using value_type = char8_t;
+		using reference = char8_t &;
+		using pointer = const char8_t *;
+		using iterator_category = std::bidirectional_iterator_tag;
+		using difference_type = int;
+		
+		// it's just sentinel it won't be ever called
+		auto operator++() noexcept -> self_type &;
+		auto operator++(int) noexcept -> self_type;
+		auto operator--() noexcept -> self_type &;
+		auto operator--(int) noexcept -> self_type;
+		friend auto operator==(self_type, self_type) noexcept -> bool;
+		auto operator*() noexcept -> reference;
+		
+		friend constexpr auto operator==(self_type, const char8_t * other_ptr) noexcept {
+			return *other_ptr == char8_t{0};
+		}
+#if !defined(__cpp_impl_three_way_comparison) || __cpp_impl_three_way_comparison < 201907L		
+		friend constexpr auto operator!=(self_type, const char8_t * other_ptr) noexcept {
+			return *other_ptr != char8_t{0};
+		}
+		
+		friend constexpr auto operator==(const char8_t * other_ptr, self_type) noexcept {
+			return *other_ptr == char8_t{0};
+		}
 
+		friend constexpr auto operator!=(const char8_t * other_ptr, self_type) noexcept {
+			return *other_ptr != char8_t{0};
+		}
+#endif
 	};
 	
 	const char8_t * ptr{nullptr};
 	const char8_t * end{nullptr};
-	
+#if !defined(__cpp_impl_three_way_comparison) || __cpp_impl_three_way_comparison < 201907L
 	constexpr friend bool operator!=(const utf8_iterator & lhs, sentinel) {
 		return lhs.ptr < lhs.end;
 	}
 	
-	constexpr friend bool operator!=(sentinel, const utf8_iterator & rhs) {
-		return rhs.ptr < rhs.end;
+	constexpr friend bool operator!=(const utf8_iterator & lhs, const char8_t * rhs) {
+		return lhs.ptr != rhs;
 	}
 	
 	constexpr friend bool operator!=(const utf8_iterator & lhs, const utf8_iterator & rhs) {
 		return lhs.ptr != rhs.ptr;
 	}
-	
+#endif	
 	constexpr friend bool operator==(const utf8_iterator & lhs, sentinel) {
 		return lhs.ptr >= lhs.end;
+	}
+	
+	constexpr friend bool operator==(const utf8_iterator & lhs, const char8_t * rhs) {
+		return lhs.ptr == rhs;
+	}
+	
+	constexpr friend bool operator==(const utf8_iterator & lhs, const utf8_iterator & rhs) {
+		return lhs.ptr == rhs.ptr;
+	}
+	
+#if !defined(__cpp_impl_three_way_comparison) || __cpp_impl_three_way_comparison < 201907L
+	constexpr friend bool operator!=(sentinel, const utf8_iterator & rhs) {
+		return rhs.ptr < rhs.end;
+	}
+	
+	constexpr friend bool operator!=(const char8_t * lhs, const utf8_iterator & rhs) {
+		return lhs == rhs.ptr;
 	}
 	
 	constexpr friend bool operator==(sentinel, const utf8_iterator & rhs) {
 		return rhs.ptr >= rhs.end;
 	}
+	
+	constexpr friend bool operator==(const char8_t * lhs, const utf8_iterator & rhs) {
+		return lhs == rhs.ptr;
+	}
+#endif
+	
 	
 	constexpr utf8_iterator & operator=(const char8_t * rhs) {
 		ptr = rhs;
@@ -114,7 +174,7 @@ struct utf8_iterator {
 		
 		// quickpath
 		if (!(*ptr & 0b1000'0000u)) CTRE_LIKELY {
-			return *ptr;
+			return static_cast<char32_t>(*ptr);
 		}
  
 		// calculate length based on first 5 bits
@@ -136,7 +196,7 @@ struct utf8_iterator {
 			return mojibake;
 		}
 
-		const char8_t mask = (0b0011'1111u >> length);
+		const char8_t mask = static_cast<char8_t>(0b0011'1111u >> length);
 		
 		// length = 1 (2 bytes) mask = 0b0001'1111u
 		// length = 2 (3 bytes) mask = 0b0000'1111u
@@ -170,6 +230,7 @@ struct utf8_iterator {
 	}
 };
 
+#ifdef CTRE_ENABLE_UTF8_RANGE
 struct utf8_range {
 	std::u8string_view range;
 	constexpr utf8_range(std::u8string_view r) noexcept: range{r} { }
@@ -181,6 +242,7 @@ struct utf8_range {
 		return utf8_iterator::sentinel{};
 	}
 };
+#endif
 
 }
 

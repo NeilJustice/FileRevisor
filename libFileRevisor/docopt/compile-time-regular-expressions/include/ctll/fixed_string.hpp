@@ -1,10 +1,15 @@
 #ifndef CTLL__FIXED_STRING__GPP
 #define CTLL__FIXED_STRING__GPP
 
+#ifndef CTLL_IN_A_MODULE
 #include <utility>
 #include <cstddef>
 #include <string_view>
+#include <array>
 #include <cstdint>
+#endif
+
+#include "utilities.hpp"
 
 namespace ctll {
 
@@ -36,16 +41,20 @@ constexpr length_value_t length_and_value_of_utf16_code_point(uint16_t first_uni
 	else return {first_unit, 1};
 }
 
-template <size_t N> struct fixed_string {
+struct construct_from_pointer_t { };
+
+constexpr auto construct_from_pointer = construct_from_pointer_t{};
+
+CTLL_EXPORT template <size_t N> struct fixed_string {
 	char32_t content[N] = {};
 	size_t real_size{0};
 	bool correct_flag{true};
-	template <typename T> constexpr fixed_string(const T (&input)[N+1]) noexcept {
+	
+	template <typename T> constexpr fixed_string(construct_from_pointer_t, const T * input) noexcept {
 		if constexpr (std::is_same_v<T, char>) {
 			#ifdef CTRE_STRING_IS_UTF8
 				size_t out{0};
 				for (size_t i{0}; i < N; ++i) {
-					if ((i == (N-1)) && (input[i] == 0)) break;
 					length_value_t info = length_and_value_of_utf8_code_point(input[i]);
 					switch (info.length) {
 						case 6:
@@ -75,15 +84,13 @@ template <size_t N> struct fixed_string {
 			#else
 				for (size_t i{0}; i < N; ++i) {
 					content[i] = static_cast<uint8_t>(input[i]);
-					if ((i == (N-1)) && (input[i] == 0)) break;
 					real_size++;
 				}
 			#endif
-		#if __cpp_char8_t
+#if defined(__cpp_char8_t)
 		} else if constexpr (std::is_same_v<T, char8_t>) {
 			size_t out{0};
 			for (size_t i{0}; i < N; ++i) {
-				if ((i == (N-1)) && (input[i] == 0)) break;
 				length_value_t info = length_and_value_of_utf8_code_point(input[i]);
 				switch (info.length) {
 					case 6:
@@ -110,7 +117,7 @@ template <size_t N> struct fixed_string {
 						return;
 				}
 			}
-		#endif
+#endif
 		} else if constexpr (std::is_same_v<T, char16_t>) {
 			size_t out{0};
 			for (size_t i{0}; i < N; ++i) {
@@ -125,7 +132,6 @@ template <size_t N> struct fixed_string {
 						}
 					}
 				} else {
-					if ((i == (N-1)) && (input[i] == 0)) break;
 					content[out++] = info.value;
 				}
 			}
@@ -133,11 +139,14 @@ template <size_t N> struct fixed_string {
 		} else if constexpr (std::is_same_v<T, wchar_t> || std::is_same_v<T, char32_t>) {
 			for (size_t i{0}; i < N; ++i) {
 				content[i] = static_cast<char32_t>(input[i]);
-				if ((i == (N-1)) && (input[i] == 0)) break;
 				real_size++;
 			}
 		}
 	}
+	
+	template <typename T> constexpr fixed_string(const std::array<T, N> & in) noexcept: fixed_string{construct_from_pointer, in.data()} { }
+	template <typename T> constexpr fixed_string(const T (&input)[N+1]) noexcept: fixed_string{construct_from_pointer, input} { }
+	
 	constexpr fixed_string(const fixed_string & other) noexcept {
 		for (size_t i{0}; i < N; ++i) {
 			content[i] = other.content[i];
@@ -205,6 +214,8 @@ public:
 };
 
 template <typename CharT, size_t N> fixed_string(const CharT (&)[N]) -> fixed_string<N-1>;
+template <typename CharT, size_t N> fixed_string(const std::array<CharT,N> &) -> fixed_string<N>;
+
 template <size_t N> fixed_string(fixed_string<N>) -> fixed_string<N>;
 
 }

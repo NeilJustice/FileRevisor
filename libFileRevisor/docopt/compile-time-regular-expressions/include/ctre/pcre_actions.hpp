@@ -2,11 +2,12 @@
 #define CTRE__PCRE_ACTIONS__HPP
 
 #include "pcre.hpp"
-#include "atoms.hpp"
-#include "atoms_unicode.hpp"
+#include "rotate.hpp"
 #include "id.hpp"
+#ifndef CTRE_IN_A_MODULE
 #include <cstdint>
 #include <limits>
+#endif
 
 namespace ctre {
 	
@@ -14,13 +15,16 @@ template <size_t Counter> struct pcre_parameters {
 	static constexpr size_t current_counter = Counter;
 };
 	
-template <typename Stack = ctll::list<>, typename Parameters = pcre_parameters<0>> struct pcre_context {
+template <typename Stack = ctll::list<>, typename Parameters = pcre_parameters<0>, typename Mode = ctll::list<>> struct pcre_context {
 	using stack_type = Stack;
 	using parameters_type = Parameters;
+	using mode_list = Mode;
 	static constexpr inline auto stack = stack_type();
 	static constexpr inline auto parameters = parameters_type();
+	static constexpr inline auto mode = mode_list();
 	constexpr pcre_context() noexcept { }
 	constexpr pcre_context(Stack, Parameters) noexcept { }
+	constexpr pcre_context(Stack, Parameters, Mode) noexcept { }
 };
 
 template <typename... Content, typename Parameters> pcre_context(ctll::list<Content...>, Parameters) -> pcre_context<ctll::list<Content...>, Parameters>;
@@ -47,6 +51,7 @@ struct pcre_actions {
 #include "actions/repeat.inc.hpp"
 #include "actions/sequence.inc.hpp"
 #include "actions/set.inc.hpp"
+#include "actions/mode.inc.hpp"
 
 };
 

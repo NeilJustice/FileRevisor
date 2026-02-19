@@ -86,6 +86,12 @@ constexpr auto first(ctll::list<Content...> l, ctll::list<sequence<Seq...>, Tail
 	return first(l, ctll::list<Seq..., Tail...>{});
 }
 
+// atomic group
+template <typename... Content, typename... Seq, typename... Tail> 
+constexpr auto first(ctll::list<Content...> l, ctll::list<atomic_group<Seq...>, Tail...>) noexcept {
+	return first(l, ctll::list<possessive_repeat<1, 1, Seq...>, Tail...>{});
+}
+
 // plus
 template <typename... Content, typename... Seq, typename... Tail> 
 constexpr auto first(ctll::list<Content...> l, ctll::list<plus<Seq...>, Tail...>) noexcept {
@@ -161,6 +167,18 @@ constexpr auto first(ctll::list<Content...>, ctll::list<lookahead_positive<Seq..
 	return ctll::list<can_be_anything>{};
 }
 
+// lookbehind_negative TODO fixme
+template <typename... Content, typename... Seq, typename... Tail> 
+constexpr auto first(ctll::list<Content...>, ctll::list<lookbehind_negative<Seq...>, Tail...>) noexcept {
+	return ctll::list<can_be_anything>{};
+}
+
+// lookbehind_positive
+template <typename... Content, typename... Seq, typename... Tail> 
+constexpr auto first(ctll::list<Content...>, ctll::list<lookbehind_positive<Seq...>, Tail...>) noexcept {
+	return ctll::list<can_be_anything>{};
+}
+
 // lookahead_negative TODO fixme
 template <typename... Content, typename... Seq, typename... Tail> 
 constexpr auto first(ctll::list<Content...>, ctll::list<lookahead_negative<Seq...>, Tail...>) noexcept {
@@ -225,13 +243,13 @@ constexpr auto first(ctll::list<Content...> l, ctll::list<select<>, Tail...>) no
 
 
 // unicode property => anything
-template <typename... Content, auto Property, typename... Tail> 
-constexpr auto first(ctll::list<Content...>, ctll::list<ctre::binary_property<Property>, Tail...>) noexcept {
+template <typename... Content, typename PropertyType, PropertyType Property, typename... Tail> 
+constexpr auto first(ctll::list<Content...>, ctll::list<ctre::binary_property<PropertyType, Property>, Tail...>) noexcept {
 	return ctll::list<can_be_anything>{};
 }
 
-template <typename... Content, auto Property, auto Value, typename... Tail> 
-constexpr auto first(ctll::list<Content...>, ctll::list<ctre::property<Property, Value>, Tail...>) noexcept {
+template <typename... Content, typename PropertyType, PropertyType Property, auto Value, typename... Tail> 
+constexpr auto first(ctll::list<Content...>, ctll::list<ctre::property<PropertyType, Property, Value>, Tail...>) noexcept {
 	return ctll::list<can_be_anything>{};
 }
 
@@ -314,7 +332,7 @@ template <auto A, typename CB> constexpr int64_t negative_helper(ctre::character
 	} else {
 		return A;
 	}
-}  
+}	
 
 template <auto A, auto B, typename CB> constexpr int64_t negative_helper(ctre::char_range<A,B>, CB & cb, int64_t start) {
 	if (A != (std::numeric_limits<int64_t>::min)()) {
@@ -327,7 +345,7 @@ template <auto A, auto B, typename CB> constexpr int64_t negative_helper(ctre::c
 	} else {
 		return B;
 	}
-}  
+}	
 
 template <auto Head, auto... Tail, typename CB> constexpr int64_t negative_helper(ctre::enumeration<Head, Tail...>, CB & cb, int64_t start) {
 	int64_t nstart = negative_helper(ctre::character<Head>{}, cb, start);
@@ -342,13 +360,13 @@ template <typename CB> constexpr int64_t negative_helper(ctre::set<>, CB &, int6
 	return start;
 }
 
-template <auto Property, typename CB> 
-constexpr auto negative_helper(ctre::binary_property<Property>, CB &&, int64_t start) {
+template <typename PropertyType, PropertyType Property, typename CB> 
+constexpr auto negative_helper(ctre::binary_property<PropertyType, Property>, CB &&, int64_t start) {
 	return start;
 }
 
-template <auto Property, auto Value, typename CB> 
-constexpr auto negative_helper(ctre::property<Property, Value>, CB &&, int64_t start) {
+template <typename PropertyType, PropertyType Property, auto Value, typename CB> 
+constexpr auto negative_helper(ctre::property<PropertyType, Property, Value>, CB &&, int64_t start) {
 	return start;
 }
 
@@ -399,7 +417,7 @@ template <size_t Capacity> class point_set {
 		auto last = end();
 		auto it = first;
 		auto count = std::distance(first, last);
-                while (count != 0) {
+		while (count != 0) {
 			it = first;
 			auto step = count / 2;
 			std::advance(it, step);
@@ -445,7 +463,7 @@ public:
 		//insert_point(high, low);
 	}
 	constexpr bool check(int64_t low, int64_t high) {
-		for (auto r: *this) {
+		for (const auto & r: *this) {
 			if (r.low <= low && low <= r.high) {
 				return true;
 			} else if (r.low <= high && high <= r.high) {
@@ -468,6 +486,15 @@ public:
 	}
 	constexpr bool check(can_be_anything) {
 		return used > 0;
+	}
+	template <typename PropertyType, PropertyType Property> 
+	constexpr bool check(ctre::binary_property<PropertyType, Property>) {
+		return check(can_be_anything{});
+	}
+
+	template <typename PropertyType, PropertyType Property, auto Value> 
+	constexpr bool check(ctre::property<PropertyType, Property, Value>) {
+		return check(can_be_anything{});
 	}
 	template <typename... Content> constexpr bool check(ctre::negative_set<Content...> nset) {
 		bool collision = false;

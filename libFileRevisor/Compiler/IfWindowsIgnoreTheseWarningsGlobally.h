@@ -29,6 +29,7 @@
 // ctre warnings
 #pragma warning(disable: 4189) // 'must_be_nonreverse_contiguous_iterator': local variable is initialized but not referenced
 #pragma warning(disable: 4464) // relative include path contains '..'
+#pragma warning(disable: 4996) // 'ctre::range<ctll::fixed_string<17>{char32_t92,83,42,60,46,42,63,62,124,91,94,60,62,92,115,93,43,size_t:17,bool:true},>': was declared deprecated
 #pragma warning(disable: 4668) // '__GNUC__' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
 #pragma warning(disable: 4702) // unreachable code
 
