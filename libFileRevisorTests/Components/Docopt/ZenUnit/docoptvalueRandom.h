@@ -1,8 +1,8 @@
 #pragma once
-#include "libFileRevisor/Components/Docopt/docopt.h"
+#include "libFileRevisor/docopt/docopt.h"
 
 namespace ZenUnit
 {
    template<>
-   docopt::Value Random();
+   docopt::value Random();
 }

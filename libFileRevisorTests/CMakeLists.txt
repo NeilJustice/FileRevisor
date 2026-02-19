@@ -6,8 +6,9 @@ if(UNIX)
 endif()
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-include_directories(${CMAKE_SOURCE_DIR})
-include_directories(${ZenUnitAndMetalMockIncludeDirectory})
+include_directories(
+   ${CMAKE_SOURCE_DIR}
+   ${ZenUnitAndMetalMockIncludeDirectory})
 
 folder_source_group(Components)
 folder_source_group_subfolder(Components Asserters)
@@ -84,12 +85,12 @@ if(UNIX)
 elseif(MSVC)
    replace(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/O2" "/Od")
    replace(CMAKE_CXX_FLAGS_RELWITHDEBINFO "/Ob2" "/Ob0")
-   replace(CMAKE_EXE_LINKER_FLAGS_DEBUG "/debug" "/DEBUG:FASTLINK")
+   replace(CMAKE_EXE_LINKER_FLAGS_DEBUG "/debug" "/DEBUG:FULL")
    replace(CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO "/debug" "")
    IfMSVCEnablePrecompiledHeaders()
-   set_target_properties(libFileRevisorTests PROPERTIES UNITY_BUILD ON)
-   set_target_properties(libFileRevisorTests PROPERTIES UNITY_BUILD_BATCH_SIZE 8)
-   append(CMAKE_CXX_FLAGS "/FIpch.h")
+   #set_target_properties(libFileRevisorTests PROPERTIES UNITY_BUILD ON)
+   #set_target_properties(libFileRevisorTests PROPERTIES UNITY_BUILD_BATCH_SIZE 8)
+   #append(CMAKE_CXX_FLAGS "/FIpch.h")
    IfMSVCAddRunTestsPostBuildStep()
 endif()
 

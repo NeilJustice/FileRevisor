@@ -4,7 +4,7 @@ class DocoptParser;
 class FileSystem;
 namespace docopt
 {
-   struct Value;
+   struct value;
 }
 class FileRevisorPreambleMaker;
 template<typename ReturnType, typename ClassType, typename Arg1Type, typename Arg2Type>
@@ -18,7 +18,7 @@ private:
    function<ProgramMode(bool, bool, bool, bool)> _call_DetermineProgramMode;
    // Function Callers
    using NonVoidTwoArgMemberFunctionCallerType = NonVoidTwoArgMemberFunctionCaller<
-      tuple<fs::path, string, string>, FileRevisorArgsParser, const map<string, docopt::Value>&, bool>;
+      tuple<fs::path, string, string>, FileRevisorArgsParser, const map<string, docopt::value>&, bool>;
    unique_ptr<const NonVoidTwoArgMemberFunctionCallerType> _caller_ParseDirAndFromAndToArguments;
    // Constant Components
    unique_ptr<const Console> p_console;
@@ -37,5 +37,5 @@ private:
       bool isReplaceTextInTextFilesMode,
       bool isDeleteDirectoryMode);
    tuple<fs::path, string, string> ParseTargetAndFromAndToArguments(
-      const map<string, docopt::Value>& docoptValues, bool isDeleteDirectoryMode) const;
+      const map<string, docopt::value>& docoptValues, bool isDeleteDirectoryMode) const;
 };

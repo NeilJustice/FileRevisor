@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileRevisor/Components/Docopt/docopt.h"
+#include "libFileRevisor/docopt/docopt.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorArgsParser.h"
 #include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
 #include "libFileRevisorTests/Components/Docopt/MetalMock/DocoptParserMock.h"
@@ -24,7 +24,7 @@ FileSystemMock* p_fileSystemMock = nullptr;
 // Function Pointers
 METALMOCK_NONVOID4_STATIC_OR_FREE(ProgramMode, _call_FileRevisorArgsParser_DetermineProgramMode, bool, bool, bool, bool)
 using NonVoidTwoArgMemberFunctionCallerMockType = NonVoidTwoArgMemberFunctionCallerMock<
-   tuple<fs::path, string, string>, FileRevisorArgsParser, const map<string, docopt::Value>&, bool>;
+   tuple<fs::path, string, string>, FileRevisorArgsParser, const map<string, docopt::value>&, bool>;
 // Function Callers
 NonVoidTwoArgMemberFunctionCallerMockType* _caller_ParseDirAndFromAndToArgumentsMock = nullptr;
 // Constant Components
@@ -47,8 +47,8 @@ STARTUP
 
 TEST(ParseStringArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
 {
-   map<string, docopt::Value> docoptValues;
-   docoptValues[ZenUnit::Random<string>()] = docopt::Value(ZenUnit::Random<string>());
+   map<string, docopt::value> docoptValues;
+   docoptValues[ZenUnit::Random<string>()] = docopt::value(ZenUnit::Random<string>());
    _docoptParserMock->ParseArgsMock.Return(docoptValues);
 
    const bool isRenameFilesMode = ZenUnit::Random<bool>();
@@ -135,8 +135,8 @@ TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsTrue_ParsesDirArgum
 
    const fs::path targetFolderPath = p_fileSystemMock->GetAbsolutePathMock.ReturnRandom();
 
-   map<string, docopt::Value> docoptValues;
-   docoptValues[ZenUnit::Random<string>()] = docopt::Value(ZenUnit::Random<string>());
+   map<string, docopt::value> docoptValues;
+   docoptValues[ZenUnit::Random<string>()] = docopt::value(ZenUnit::Random<string>());
    //
    const tuple<fs::path, string, string> targetFolderPath_fromRegexPattern_toRegexPattern =
       _fileRevisorArgsParser.ParseTargetAndFromAndToArguments(docoptValues, true);
@@ -154,8 +154,8 @@ TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsFalse_FromArgumentI
    const string fromRegexPattern;
    _docoptParserMock->GetRequiredStringMock.Return(fromRegexPattern);
 
-   map<string, docopt::Value> docoptValues;
-   docoptValues[ZenUnit::Random<string>()] = docopt::Value(ZenUnit::Random<string>());
+   map<string, docopt::value> docoptValues;
+   docoptValues[ZenUnit::Random<string>()] = docopt::value(ZenUnit::Random<string>());
    //
    tuple<fs::path, string, string> targetFolderPath_fromRegexPattern_toRegexPattern;
    THROWS_EXCEPTION(targetFolderPath_fromRegexPattern_toRegexPattern =
@@ -176,8 +176,8 @@ TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsFalse_FromArgumentI
    const string toRegexPattern = ZenUnit::Random<string>();
    _docoptParserMock->GetRequiredStringMock.ReturnValues(fromRegexPattern, toRegexPattern);
 
-   map<string, docopt::Value> docoptValues;
-   docoptValues[ZenUnit::Random<string>()] = docopt::Value(ZenUnit::Random<string>());
+   map<string, docopt::value> docoptValues;
+   docoptValues[ZenUnit::Random<string>()] = docopt::value(ZenUnit::Random<string>());
    //
    const tuple<fs::path, string, string> targetFolderPath_fromRegexPattern_toRegexPattern =
       _fileRevisorArgsParser.ParseTargetAndFromAndToArguments(docoptValues, false);

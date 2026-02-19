@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "libFileRevisor/Components/Docopt/docopt.h"
+#include "libFileRevisor/docopt/docopt.h"
 #include "libFileRevisor/Components/Docopt/DocoptParser.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorArgsParser.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorPreambleMaker.h"
@@ -25,7 +25,7 @@ FileRevisorArgsParser::~FileRevisorArgsParser()
 
 FileRevisorArgs FileRevisorArgsParser::ParseStringArgs(const vector<string>& stringArgs) const
 {
-   const map<string, docopt::Value> docoptValues = _docoptParser->ParseArgs(FileRevisorArgs::CommandLineUsage, stringArgs);
+   const map<string, docopt::value> docoptValues = _docoptParser->ParseArgs(FileRevisorArgs::CommandLineUsage, stringArgs);
    const bool isRenameFilesMode = _docoptParser->GetRequiredBool(docoptValues, "rename-files");
    const bool isRenameDirectoriesMode = _docoptParser->GetRequiredBool(docoptValues, "rename-directories");
    const bool isReplaceTextInTextFilesMode = _docoptParser->GetRequiredBool(docoptValues, "replace-text");
@@ -61,7 +61,7 @@ void FileRevisorArgsParser::PrintPreambleLines(const FileRevisorArgs& args) cons
 }
 
 tuple<fs::path, string, string> FileRevisorArgsParser::ParseTargetAndFromAndToArguments(
-   const map<string, docopt::Value>& docoptValues, bool isDeleteDirectoryMode) const
+   const map<string, docopt::value>& docoptValues, bool isDeleteDirectoryMode) const
 {
    string targetFolderPathString;
    string fromRegexPattern;

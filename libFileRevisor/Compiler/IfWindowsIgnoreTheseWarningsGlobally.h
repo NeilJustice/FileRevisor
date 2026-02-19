@@ -19,4 +19,19 @@
 #pragma warning(disable: 5262) // implicit fall-through occurs here
 #pragma warning(disable: 5264) // variable is not used
 #pragma warning(disable: 5267) // definition of implicit copy constructor is deprecated because it has a user-provided destructor
+
+// docopt warnings
+#pragma warning(disable: 4582) // 'docopt::value::Variant::strValue': constructor is not implicitly called
+#pragma warning(disable: 4583) // 'docopt::value::Variant::strValue': destructor is not implicitly called
+#pragma warning(disable: 4868) // compiler may not enforce left-to-right evaluation order in braced initializer list
+#pragma warning(disable: 5245) // '`anonymous-namespace'::trim': unreferenced function with internal linkage has been removed
+
+// ctre warnings
+#pragma warning(disable: 4189) // 'must_be_nonreverse_contiguous_iterator': local variable is initialized but not referenced
+#pragma warning(disable: 4464) // relative include path contains '..'
+#pragma warning(disable: 4668) // '__GNUC__' is not defined as a preprocessor macro, replacing with '0' for '#if/#elif'
+#pragma warning(disable: 4702) // unreachable code
+
+// both docopt and ctre warnings
+#pragma warning(disable: 4365) // 'argument': conversion from 'const std::basic_string_view<char,std::char_traits<char>>::size_type' to 'const std::_String_view_iterator<_Traits>::difference_type', signed/unsigned mismatch
 #endif
