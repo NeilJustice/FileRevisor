@@ -1,7 +1,6 @@
 #include "pch.h"
-#include "libFileRevisor/Compiler/CompilerHints.h"
 
-[[noreturn]] NOINLINE static void ThrowLogicError(
+[[noreturn]] static void ThrowLogicError(
    const char* predicateExpressionText,
    const char* filePath,
    long lineNumber,
