@@ -7,8 +7,7 @@
 //
 
 #pragma once
-//#include "ctre.hpp"
-#include "C:\Code\FileRevisor\libFileRevisor\docopt\compile-time-regular-expressions\include\ctre.hpp"
+#include "docopt\compile-time-regular-expressions\include\ctre.hpp"
 #include <assert.h>
 #include <memory>
 #include <unordered_set>
