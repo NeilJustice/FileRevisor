@@ -5,7 +5,7 @@
 |Build Type|Build Status|
 |----------|------------|
 |Clang 18 and GCC 13 on ubuntu-latest|<a href="https://github.com/NeilJustice/FileRevisor/actions/workflows/linux_build.yml"><img src="https://github.com/NeilJustice/FileRevisor/actions/workflows/linux_build.yml/badge.svg"></a>|
-|VS2022 on windows-latest|<a href="https://github.com/NeilJustice/FileRevisor/actions/workflows/windows_build.yml"><img src="https://github.com/NeilJustice/FileRevisor/actions/workflows/windows_build.yml/badge.svg"></a>|
+|VS2026 on windows-latest|<a href="https://github.com/NeilJustice/FileRevisor/actions/workflows/windows_build.yml"><img src="https://github.com/NeilJustice/FileRevisor/actions/workflows/windows_build.yml/badge.svg"></a>|
 |GCC lcov code coverage|<a href="https://codecov.io/gh/NeilJustice/FileRevisor"><img src="https://codecov.io/gh/NeilJustice/FileRevisor/graph/badge.svg?token=goCObzAYXP"></a>|
 
 FileRevisor is a C++23 command line program for quickly deleting large directories in parallel, renaming files and directories, and replacing text in text files.
@@ -19,8 +19,8 @@ FileRevisor is a C++23 command line program for quickly deleting large directori
 * [Linux FileRevisor parallel directory deletion performance](#linux-filerevisor-parallel-directory-deletion-performance)
 * [Windows FileRevisor parallel folder deletion performance](#windows-filerevisor-parallel-folder-deletion-performance)
 * [Steps to build binary filerevisor from source on Linux with Clang](#steps-to-build-binary-filerevisor-from-source-on-linux-with-clang)
-* [Steps to build executable FileRevisor.exe from source on Windows with Visual Studio 2022](#steps-to-build-executable-filerevisorexe-from-source-on-windows-with-visual-studio-2022)
-* [Thanks to](#thanks-to)
+* [Steps to build executable FileRevisor.exe from source on Windows with Visual Studio 2026](#steps-to-build-executable-filerevisorexe-from-source-on-windows-with-visual-studio-2026)
+* [Acknowledgements](#acknowledgements)
 
 ## FileRevisor command line usage
 
@@ -151,7 +151,7 @@ CXX=clang++ cmake .. -DCMAKE_BUILD_TYPE=Release
 sudo cmake --build . --target install
 ```
 
-## Steps to build executable FileRevisor.exe from source on Windows with Visual Studio 2022
+## Steps to build executable FileRevisor.exe from source on Windows with Visual Studio 2026
 
 ```powershell
 git clone https://github.com/NeilJustice/FileRevisor
@@ -160,7 +160,6 @@ cmake . -G"Visual Studio 18 2026" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
 cmake --build . --config Release --target install
 ```
 
-## Thanks to
+## Acknowledgements
 
 <a href="https://brandmark.io">brandmark.io</a> for FileRevisor's logo
-
