@@ -1,5 +1,14 @@
 #pragma once
 
+namespace Utils
+{
+   class FileNotFoundException : public runtime_error
+   {
+   public:
+      explicit FileNotFoundException(const fs::path& filePath);
+   };
+}
+
 class FileSystemException : public std::exception
 {
 private:

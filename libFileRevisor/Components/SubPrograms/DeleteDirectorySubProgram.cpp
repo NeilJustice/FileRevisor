@@ -29,14 +29,16 @@ int DeleteDirectorySubProgram::Run() const
    const bool targetDirectoryExists = p_fileSystem->FileOrDirectoryExists(p_args.targetFolderPath);
    if (!targetDirectoryExists)
    {
-      const string directoryDoesNotExistMessage = String::ConcatStrings("Directory does not exist: ", p_args.targetFolderPath.string());
+      const string directoryDoesNotExistMessage = Utils::String::ConcatStrings(
+         "Directory does not exist: ", p_args.targetFolderPath.string());
       p_console->ProgramNameThreadIdWriteLine(directoryDoesNotExistMessage);
       return 0;
    }
    const vector<string> topLevelFolderPathsInTargetDirectory = p_fileSystem->GetStringFolderPathsInDirectory(p_args.targetFolderPath, false);
    if (p_args.parallel)
    {
-      const string deletingInParallelMessage = String::ConcatStrings("Deleting in parallel all files in directory: ", p_args.targetFolderPath.string());
+      const string deletingInParallelMessage = Utils::String::ConcatStrings(
+         "Deleting in parallel all files in directory: ", p_args.targetFolderPath.string());
       p_console->ProgramNameThreadIdWriteLine(deletingInParallelMessage);
       _parallelTwoArgMemberFunctionForEacher_DeleteDirectory->ParallelCallConstMemberFunctionWithEachElement(
          topLevelFolderPathsInTargetDirectory,

@@ -72,7 +72,7 @@ TEST2X2(Run_CallsRenameDirectoryOnEachFolderPathInArgsDirPath_PrintsNumberOfDire
    //
    const int exitCode = _renameDirectoriesSubProgram.Run();
    //
-   const string expectedNumberOfDirectoriesMessage = String::ConcatValues(
+   const string expectedNumberOfDirectoriesMessage = Utils::String::ConcatValues(
       expectedNumberOfDirectoriesMessagePrefix, numberOfRenamedDirectories, ' ', directoryOrDirectories);
 
    METALMOCKTHEN(p_fileSystemMock->GetFolderPathsInDirectoryMock.CalledOnceWith(

@@ -38,6 +38,7 @@ using namespace std;
 #include "libFileRevisor/ValueTypes/RenameResult.h"
 // libFileRevisorTests Components
 #include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
+#include "libFileRevisor/docopt/docopt.h"
 // libFileRevisor StaticUtilities
 #include "libFileRevisor/StaticUtilities/ENUM_STRING_ARRAY.h"
 #include "libFileRevisor/StaticUtilities/Map.h"
@@ -51,3 +52,4 @@ using namespace std;
 // libFileRevisorTests ValueTypes
 #include "libFileRevisorTests/ValueTypes/ZenUnit/FileRevisorArgsEqualizerAndRandom.h"
 #include "libFileRevisorTests/ValueTypes/ZenUnit/RenameResultEqualizerAndRandom.h"
+#include "libFileRevisorTests/Components/Docopt/ZenUnit/docoptvalueRandom.h"

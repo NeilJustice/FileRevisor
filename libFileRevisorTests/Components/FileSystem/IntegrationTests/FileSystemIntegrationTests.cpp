@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "libFileRevisor/Components/Exceptions/FileSystemExceptionMaker.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
-#include "libFileRevisor/Exceptions/FileSystemException.h"
+#include "libFileRevisor/Components/FileSystem/FileSystemExceptions.h"
 
 TESTS(FileSystemIntegrationTests)
 AFACT(GetFilePathsInDirectory_RecurseIsFalse_ReturnsTopLevelFilePaths)
@@ -183,7 +183,7 @@ TEST(ReadText_FileExists_FileIsNotEmptyAndContainsTrailingBinaryZeros_ReturnsFil
   //
   const string fileText = p_fileSystem.ReadText(textFilePath);
   //
-  const string expectedFileText = String::ConcatStrings("a", "b", "\n", "c");
+  const string expectedFileText = Utils::String::ConcatStrings("a", "b", "\n", "c");
   ARE_EQUAL(expectedFileText, fileText);
 }
 
@@ -204,7 +204,7 @@ TEST(RemoveFile_FileDoesNotExist_IgnoreFileDeleteErrorIsFalse_ThrowsFileSystemEx
   const string filePathThatDoesNotExist = ZenUnit::Random<string>();
   IS_FALSE(p_fileSystem.FileOrDirectoryExists(filePathThatDoesNotExist));
   //
-  const string expectedExceptionMessage = String::ConcatStrings(
+  const string expectedExceptionMessage = Utils::String::ConcatStrings(
      "FailedToDeleteFile: unlink(\"", filePathThatDoesNotExist, "\") failed with errno 2 (No such file or directory)");
   THROWS_EXCEPTION(p_fileSystem.RemoveFile(filePathThatDoesNotExist.c_str(), false),
      FileSystemException, expectedExceptionMessage);

@@ -41,6 +41,7 @@ using namespace std;
 #include "libFileRevisor/Enums/WindowsColor.h"
 // libFileRevisor Components
 #include "libFileRevisor/Components/Console/Console.h"
+#include "libFileRevisor/docopt/docopt.h"
 // libFileRevisor StaticUtilities
 #include "libFileRevisor/StaticUtilities/ENUM_STRING_ARRAY.h"
 #include "libFileRevisor/StaticUtilities/ReleaseAssert.h"

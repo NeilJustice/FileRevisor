@@ -1,6 +1,14 @@
 #include "pch.h"
+#include "libFileRevisor/Components/FileSystem/FileSystemExceptions.h"
 #include "libFileRevisor/Enums/FileExceptionType.h"
-#include "libFileRevisor/Exceptions/FileSystemException.h"
+
+namespace Utils
+{
+   FileNotFoundException::FileNotFoundException(const fs::path& filePath)
+      : runtime_error(filePath.string())
+   {
+   }
+}
 
 FileSystemException::FileSystemException(FileExceptionType fileExceptionType, string_view exceptionMessage)
    // Constant Fields

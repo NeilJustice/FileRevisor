@@ -46,7 +46,7 @@ TEST(CallOperator_RawFilePointerIsNotNullptr_FClosesFileWhichReturnsNon0_ThrowsR
    _call_fcloseMock.Return(fcloseReturnValue);
    FILE* const rawFilePointer = tmpfile();
    //
-   const string expectedExceptionMessage = String::ConcatValues(
+   const string expectedExceptionMessage = Utils::String::ConcatValues(
       "fclose(rawFilePointer) in FCloseDeleter::operator(FILE* rawFilePointer) failed with return value ", fcloseReturnValue);
    THROWS_EXCEPTION(_fcloseDeleter(rawFilePointer),
       runtime_error, expectedExceptionMessage);

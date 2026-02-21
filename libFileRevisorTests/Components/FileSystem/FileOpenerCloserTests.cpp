@@ -91,7 +91,7 @@ TEST(CloseFile_CallsFCloseOnFilePointerWhichReturnsNon0_ThrowsRuntimeError)
    FILE* const rawFilePointer = tmpfile();
    const fs::path filePath = ZenUnit::Random<fs::path>();
    //
-   const string expectedExceptionMessage = String::ConcatValues("fclose(FILE*) unexpectedly returned ", non0FCloseReturnValue,
+   const string expectedExceptionMessage = Utils::String::ConcatValues("fclose(FILE*) unexpectedly returned ", non0FCloseReturnValue,
       ". filePath=\"", filePath.string(), "\", errno=", errnoWithDescription.first, " (", errnoWithDescription.second, ")");
    THROWS_EXCEPTION(_fileOpenerCloser.CloseFile(rawFilePointer, filePath),
       runtime_error, expectedExceptionMessage);
@@ -116,7 +116,7 @@ TEST(ThrowFileOpenExceptionIfFileOpenFailed_FilePointerIsNullptr_ThrowIfFileNotO
    const fs::path filePath = ZenUnit::Random<fs::path>();
    const bool throwIfFileNotOpenable = true;
    //
-   const string expectedExceptionMessage = String::ConcatValues("fopen() returned nullptr. filePath=\"",
+   const string expectedExceptionMessage = Utils::String::ConcatValues("fopen() returned nullptr. filePath=\"",
       filePath.string(), "\". errno=", errnoWithDescription.first, " (", errnoWithDescription.second, ")");
    THROWS_EXCEPTION(_fileOpenerCloser.ThrowFileOpenExceptionIfFileOpenFailed(nullptr, filePath, throwIfFileNotOpenable),
       runtime_error, expectedExceptionMessage);

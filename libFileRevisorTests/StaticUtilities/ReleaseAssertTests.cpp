@@ -24,8 +24,8 @@ static void FailReleaseAssertFunction()
    catch (const logic_error& ex)
    {
       const char* const exceptionMessage = ex.what();
-      IS_TRUE(String::ContainsSubstring(exceptionMessage, "release_assert(1 == 0) failed in FailReleaseAssertFunction()"));
-      IS_TRUE(String::CaseInsensitiveContainsSubstring(exceptionMessage, "ReleaseAssertTests.cpp(22)"));
+      IS_TRUE(Utils::String::ContainsSubstring(exceptionMessage, "release_assert(1 == 0) failed in FailReleaseAssertFunction()"));
+      IS_TRUE(Utils::String::CaseInsensitiveContainsSubstring(exceptionMessage, "ReleaseAssertTests.cpp(22)"));
    }
 }
 
@@ -48,11 +48,11 @@ TEST(release_assert_IsFalse_FromOperatorParentheses_ThrowsLogicError)
    {
       const char* const exceptionMessage = ex.what();
 #if defined __linux__
-      IS_TRUE(String::ContainsSubstring(exceptionMessage, "release_assert(false) failed in operator()()"));
+      IS_TRUE(Utils::String::ContainsSubstring(exceptionMessage, "release_assert(false) failed in operator()()"));
 #elif _WIN32
-      IS_TRUE(String::ContainsSubstring(exceptionMessage, "release_assert(false) failed in operator ()()"));
+      IS_TRUE(Utils::String::ContainsSubstring(exceptionMessage, "release_assert(false) failed in operator ()()"));
 #endif
-      IS_TRUE(String::CaseInsensitiveContainsSubstring(exceptionMessage, "ReleaseAssertTests.cpp(40)"));
+      IS_TRUE(Utils::String::CaseInsensitiveContainsSubstring(exceptionMessage, "ReleaseAssertTests.cpp(40)"));
    }
 }
 

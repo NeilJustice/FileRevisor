@@ -74,7 +74,8 @@ TEST2X2(Run_CallsRenameFileOnEachFilePathInArgsDirPath_PrintsNumberOfFilesThatWe
    //
    const int exitCode = _renameFilesSubProgram.Run();
    //
-   const string expectedRenamedXNumberOfFilesMessage = String::ConcatValues(expectedRenamedFilesMessagePrefix, numberOfRenamedFiles, ' ', fileOrFiles);
+   const string expectedRenamedXNumberOfFilesMessage = Utils::String::ConcatValues(
+      expectedRenamedFilesMessagePrefix, numberOfRenamedFiles, ' ', fileOrFiles);
 
    METALMOCKTHEN(p_fileSystemMock->GetFilePathsInDirectoryMock.CalledOnceWith(
       p_args.targetFolderPath, p_args.recurse)).Then(
@@ -143,7 +144,8 @@ TEST(RenameFileIfFileNameMatchesFromPattern_ReplacedFileNameDoesNotEqualSourceFi
    //
    const string originalFileName = filePath.filename().string();
    const fs::path expectedRenamedFilePath = filePath.parent_path() / regexReplacedFileName;
-   const string expectedFileRenamedMessage = String::ConcatStrings("DryRun: Would rename file ", filePath.string(), " to ", regexReplacedFileName);
+   const string expectedFileRenamedMessage = Utils::String::ConcatStrings(
+      "DryRun: Would rename file ", filePath.string(), " to ", regexReplacedFileName);
 
    METALMOCKTHEN(_textReplacerMock->ReplaceTextMock.CalledOnceWith(
       originalFileName, p_args.fromRegexPattern, p_args.toRegexPattern)).Then(
@@ -169,7 +171,8 @@ TEST(RenameFileIfFileNameMatchesFromPattern_ReplacedFileNameDoesNotEqualSourceFi
    const RenameResult fileRenameResult = _renameFilesSubProgram.RenameFileIfFileNameMatchesFromPattern(filePath);
    //
    const string originalFileName = filePath.filename().string();
-   const string expectedRenamedFileMessage = String::ConcatStrings("Renamed file ", filePath.string(), " to ", regexReplacedFileName);
+   const string expectedRenamedFileMessage = Utils::String::ConcatStrings(
+      "Renamed file ", filePath.string(), " to ", regexReplacedFileName);
    const RenameResult expectedRenameResult(true, filePath, renamedFilePath);
    METALMOCKTHEN(_textReplacerMock->ReplaceTextMock.CalledOnceWith(
       originalFileName, p_args.fromRegexPattern, p_args.toRegexPattern)).Then(

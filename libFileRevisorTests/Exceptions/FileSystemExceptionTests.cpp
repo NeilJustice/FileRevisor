@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "libFileRevisor/Enums/FileExceptionType.h"
-#include "libFileRevisor/Exceptions/FileSystemException.h"
+#include "libFileRevisor/Components/FileSystem/FileSystemExceptions.h"
 
 TESTS(FileExceptionTests)
 AFACT(TwoArgConstructor_MakesWhatReturnExpectedExceptionMessage)

@@ -25,7 +25,7 @@ TEST1X1(NewSubProgram_ProgramModeIsInvalid_ThrowsInvalidArgument,
    ProgramMode::Unset,
    ProgramMode::MaxValue)
 {
-   const string expectedExceptionmessage = String::ConcatValues(
+   const string expectedExceptionmessage = Utils::String::ConcatValues(
       "FileRevisorSubProgramFactory::NewSubProgram called with invalid ProgramMode: ", static_cast<int>(invalidProgramMode));
    THROWS_EXCEPTION(shared_ptr<FileRevisorSubProgram> fileRevisorSubProgram = _fileRevisorSubProgramFactory.NewSubProgram(invalidProgramMode),
       invalid_argument, expectedExceptionmessage);

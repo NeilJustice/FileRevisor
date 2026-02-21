@@ -84,7 +84,7 @@ TEST(ParseStringArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
    METALMOCK(_docoptParserMock->GetRequiredBoolMock.CalledNTimes(4));
    METALMOCK(_docoptParserMock->GetOptionalBoolMock.CalledNTimes(6));
 
-   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledOnceWith(FileRevisorArgs::CommandLineUsage, stringArgs)).Then(
+   METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledOnceWith(FileRevisorArgs::CommandLineUsage, stringArgs, true)).Then(
    METALMOCKTHEN(_docoptParserMock->GetRequiredBoolMock.CalledWith(docoptValues, "rename-files"))).Then(
    METALMOCKTHEN(_docoptParserMock->GetRequiredBoolMock.CalledWith(docoptValues, "rename-directories"))).Then(
    METALMOCKTHEN(_docoptParserMock->GetRequiredBoolMock.CalledWith(docoptValues, "replace-text"))).Then(

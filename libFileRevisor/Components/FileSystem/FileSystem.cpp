@@ -4,6 +4,7 @@
 #include "libFileRevisor/Components/FileSystem/FCloseDeleter.h"
 #include "libFileRevisor/Components/FileSystem/FileOpenerCloser.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
+#include "libFileRevisor/Components/FileSystem/FileSystemExceptions.h"
 #include "libFileRevisor/Components/FileSystem/RecursiveFileDeleter.h"
 #include "libFileRevisor/Components/FunctionCallers/Member/NonVoidOneArgMemberFunctionCaller.h"
 #include "libFileRevisor/Components/FunctionCallers/Member/NonVoidTwoArgMemberFunctionCaller.h"
@@ -11,7 +12,6 @@
 #include "libFileRevisor/Components/FunctionCallers/Member/VoidTwoArgMemberFunctionCaller.h"
 #include "libFileRevisor/Components/Iteration/ForEach/FourArgMemberFunctionForEacher.h"
 #include "libFileRevisor/Components/Strings/ConstCharPointerGetter.h"
-#include "libFileRevisor/Exceptions/FileSystemException.h"
 
 FileSystem::FileSystem()
    // Function Pointers
@@ -182,7 +182,7 @@ fs::path FileSystem::RenameFile(const fs::path& filePath, string_view newFileNam
    const bool filePathExists = _caller_FileSystem_Exists->CallConstMemberFunction(this, &FileSystem::FileOrDirectoryExists, filePath);
    if (!filePathExists)
    {
-      const string exceptionMessage = String::ConcatStrings(
+      const string exceptionMessage = Utils::String::ConcatStrings(
          "FileSystem::RenameFile(const fs::path& filePath, string_view newFileName) error: filePath does not exist: ", filePath.string());
       throw runtime_error(exceptionMessage);
    }
@@ -191,7 +191,7 @@ fs::path FileSystem::RenameFile(const fs::path& filePath, string_view newFileNam
    const bool destinationFilePathExists = _caller_FileSystem_Exists->CallConstMemberFunction(this, &FileSystem::FileOrDirectoryExists, renamedFilePath);
    if (destinationFilePathExists)
    {
-      const string exceptionMessage = String::ConcatStrings(
+      const string exceptionMessage = Utils::String::ConcatStrings(
          "FileSystem::RenameFile(const fs::path& filePath, string_view newFileName) error: renamedFilePath already exists: ", renamedFilePath.string());
       throw runtime_error(exceptionMessage);
    }
@@ -202,7 +202,7 @@ fs::path FileSystem::RenameFile(const fs::path& filePath, string_view newFileNam
    const int renameReturnValue = _call_std_rename(filePathStringCCP, renamedFilePathStringCCP);
    if (renameReturnValue != 0)
    {
-      const string exceptionMessage = String::ConcatValues(
+      const string exceptionMessage = Utils::String::ConcatValues(
          "FileSystem::RenameFile(const fs::path& filePath, string_view newFileName) error: std::rename(\"",
          filePathString, "\", \"", renamedFilePathString, "\") returned a non-0 value: ", renameReturnValue);
       throw runtime_error(exceptionMessage);

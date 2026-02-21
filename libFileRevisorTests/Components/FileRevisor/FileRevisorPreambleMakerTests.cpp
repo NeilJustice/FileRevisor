@@ -34,11 +34,11 @@ TEST3X3(PrintPreambleLines_PrintsPreambleLines,
    _fileRevisorPreambleMaker.PrintPreambleLines(args);
    //
    METALMOCK(p_fileSystemMock->CurrentFolderPathMock.CalledOnce());
-   const string expectedRunningLine = String::ConcatStrings("Running: ", args.commandLine);
+   const string expectedRunningLine = Utils::String::ConcatStrings("Running: ", args.commandLine);
    const string expectedProgramModeString = ENUM_AS_STRING(ProgramMode, args.programMode);
-   const string expectedProgramModeLine = String::ConcatValues("ProgramMode: ", expectedProgramModeString, expectedActionSuffix);
-   const string expectedWorkingDirectoryLine = String::ConcatStrings("WorkingDirectory: ", currentFolderPath.string());
-   const string expectedTargetDirectoryLine = String::ConcatStrings(" TargetDirectory: ", args.targetFolderPath.string());
+   const string expectedProgramModeLine = Utils::String::ConcatValues("ProgramMode: ", expectedProgramModeString, expectedActionSuffix);
+   const string expectedWorkingDirectoryLine = Utils::String::ConcatStrings("WorkingDirectory: ", currentFolderPath.string());
+   const string expectedTargetDirectoryLine = Utils::String::ConcatStrings(" TargetDirectory: ", args.targetFolderPath.string());
    METALMOCK(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledNTimes(4));
    METALMOCKTHEN(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledWith(expectedRunningLine)).Then(
    METALMOCKTHEN(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledWith(expectedProgramModeLine))).Then(

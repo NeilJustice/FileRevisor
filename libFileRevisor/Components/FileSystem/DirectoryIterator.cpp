@@ -93,7 +93,7 @@ bool DirectoryIterator::IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(const fs::path
    const shared_ptr<FILE> fileOpenInBinaryReadMode = _fileOpenerCloser->OpenReadModeBinaryFile(filePath, false);
    if (fileOpenInBinaryReadMode == nullptr)
    {
-      const string unableToOpenFileMessage = String::ConcatStrings("Note: Unable to open file ", filePath.string());
+      const string unableToOpenFileMessage = Utils::String::ConcatStrings("Note: Unable to open file ", filePath.string());
       _console->ProgramNameThreadIdWriteLineColor(unableToOpenFileMessage, Color::Yellow);
       return true;
    }
@@ -154,7 +154,7 @@ bool DirectoryIterator::PathContainsAnySubstringCaseInsensitive(const fs::path& 
    const string fileOrFolderPathAsString = fileOrFolderPath.string();
    const bool doIgnoreFileOrFolderPath = std::any_of(pathSubstrings.cbegin(), pathSubstrings.cend(), [&](const string& ignoredSubstring)
    {
-      if (String::CaseInsensitiveContainsSubstring(fileOrFolderPathAsString, ignoredSubstring))
+      if (Utils::String::CaseInsensitiveContainsSubstring(fileOrFolderPathAsString, ignoredSubstring))
       {
          return true;
       }

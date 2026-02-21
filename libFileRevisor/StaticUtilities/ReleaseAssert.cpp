@@ -6,7 +6,7 @@
    long lineNumber,
    const char* functionName)
 {
-   const string exceptioMessage = String::ConcatValues(
+   const string exceptioMessage = Utils::String::ConcatValues(
       "release_assert(", predicateExpressionText, ") failed in ", functionName, "()\n", filePath, "(", lineNumber, ")");
    throw logic_error(exceptioMessage);
 }

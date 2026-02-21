@@ -71,7 +71,7 @@ TEST(MakeFileSystemExceptionForFailedToOpenFileWithFOpen_ReturnsExpectedFileSyst
       _fileSystemExceptionMaker.MakeFileSystemExceptionForFailedToOpenFileWithFOpen(_filePath, _fileOpenMode.c_str());
    //
    METALMOCK(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce());
-   const string expectedExceptionMessage = String::ConcatValues("fopen() returned nullptr for filePath=\"",
+   const string expectedExceptionMessage = Utils::String::ConcatValues("fopen() returned nullptr for filePath=\"",
       _filePath.string(), "\" and fileOpenMode=\"", _fileOpenMode, "\". errno=",
       errnoWithDescription.first, " (", errnoWithDescription.second, ")");
    const FileSystemException expectedFileSystemException(
@@ -85,7 +85,7 @@ TEST(MakeFileSystemExceptionForFailedToOpenFileWithFStream_ReturnsExpectedFileSy
    //
    const FileSystemException fileSystemException = _fileSystemExceptionMaker.MakeFileSystemExceptionForFailedToOpenFileWithFStream(filePath);
    //
-   const string expectedExceptionMessage = String::ConcatStrings("Failed to open file: \"", filePath.string(), "\"");
+   const string expectedExceptionMessage = Utils::String::ConcatStrings("Failed to open file: \"", filePath.string(), "\"");
    const FileSystemException expectedFileSystemException(
       FileExceptionType::FailedToOpenFile, expectedExceptionMessage);
    ARE_EQUAL(expectedFileSystemException.what(), fileSystemException.what());
@@ -97,7 +97,7 @@ TEST(MakeFileSystemExceptionForFailedToCloseFile_ReturnsExpectedFileSystemExcept
    //
    const FileSystemException fileSystemException = _fileSystemExceptionMaker.MakeFileSystemExceptionForFailedToCloseFile(filePath);
    //
-   const string expectedExceptionMessage = String::ConcatStrings("Failed to close file: \"", filePath.string(), "\"");
+   const string expectedExceptionMessage = Utils::String::ConcatStrings("Failed to close file: \"", filePath.string(), "\"");
    const FileSystemException expectedFileSystemException(FileExceptionType::FailedToCloseFile, expectedExceptionMessage);
    ARE_EQUAL(expectedFileSystemException.what(), fileSystemException.what());
 }
@@ -113,7 +113,7 @@ TEST(MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory_ReturnsExpectedF
       _fileSystemExceptionMaker.MakeFileSystemExceptionForRemoveAllFailedToDeleteDirectory(fileOrFolderPath, errorCodeValue);
    //
    METALMOCK(_errorCodeTranslatorMock->GetSystemErrorDescriptionMock.CalledOnceWith(errorCodeValue));
-   const string exceptionMessage = String::ConcatValues(
+   const string exceptionMessage = Utils::String::ConcatValues(
       "fs::remove_all(\"", fileOrFolderPath.string(), "\", errorCode) failed with error code ", errorCodeValue, " (", systemErrorDescription, ")");
    const FileSystemException expectedFileSystemException(
       FileExceptionType::FailedToDeleteDirectory, exceptionMessage);
@@ -131,7 +131,7 @@ TEST(MakeFileSystemExceptionForFailedToRenameDirectory_ReturnsExpectedFileSystem
    //
    const int renameErrorCodeValue = renameErrorCode.value();
    const string renameErrorCodeMessage = renameErrorCode.message();
-   const string exceptionMessage = String::ConcatValues(
+   const string exceptionMessage = Utils::String::ConcatValues(
       "Failed to rename directory ", directoryPath.string(), " to ", renamedFolderPath.string(),
       ". renameErrorCode=", renameErrorCodeValue,
       ", renameErrorCodeMessage=\"", renameErrorCodeMessage, "\"");
@@ -149,7 +149,7 @@ TEST(MakeFileSystemExceptionForFailedToDeleteFile_ReturnsExpectedFileSystemExcep
    const FileSystemException fileSystemException = _fileSystemExceptionMaker.MakeFileSystemExceptionForFailedToDeleteFile(filePath);
    //
    METALMOCK(_errorCodeTranslatorMock->GetErrnoWithDescriptionMock.CalledOnce());
-   const string expectedExceptionMessage = String::ConcatValues(
+   const string expectedExceptionMessage = Utils::String::ConcatValues(
       "unlink(\"", filePath, "\") failed with errno ", errnoWithDescription.first, " (", errnoWithDescription.second, ")");
    const FileSystemException expectedFileSystemException(
       FileExceptionType::FailedToDeleteFile, expectedExceptionMessage);
@@ -164,7 +164,7 @@ TEST(MakeFileSystemExceptionForFindFirstFileExHavingReturnedInvalidHandleValue_R
    const FileSystemException fileSystemException =
       _fileSystemExceptionMaker.MakeFileSystemExceptionForFindFirstFileExHavingReturnedInvalidHandleValue(directoryPathSearchPatternChars);
    //
-   const string exceptionMessage = String::ConcatStrings(
+   const string exceptionMessage = Utils::String::ConcatStrings(
       "FindFirstFileEx(\"", directoryPathSearchPatternChars, "\") returned INVALID_HANDLE_VALUE. Administrator rights are likely required in order to query this folder.");
    const FileSystemException expectedFileSystemException(
       FileExceptionType::WindowsFindFirstFileExReturnedInvalidHandleValue, exceptionMessage);
@@ -181,7 +181,7 @@ TEST(MakeFileSystemExceptionForFailedToSetFileAttribute_ReturnsExpectedFileSyste
    const FileSystemException fileSystemException = _fileSystemExceptionMaker.MakeFileSystemExceptionForFailedToSetFileAttribute(filePath, fileAttributes);
    //
    METALMOCK(_errorCodeTranslatorMock->GetWindowsLastErrorWithDescriptionMock.CalledOnce());
-   const string expectedExceptionMessage = String::ConcatValues(
+   const string expectedExceptionMessage = Utils::String::ConcatValues(
       "SetFileAttributes(\"", filePath, "\", ", fileAttributes, ") failed. GetLastError()=",
       windowsLastErrorWithDescription.first, " (", windowsLastErrorWithDescription.second, ")");
    const FileSystemException expectedFileSystemException(

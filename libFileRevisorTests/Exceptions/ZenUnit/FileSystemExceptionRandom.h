@@ -1,5 +1,5 @@
 #pragma once
-#include "libFileRevisor/Exceptions/FileSystemException.h"
+#include "libFileRevisor/Components/FileSystem/FileSystemExceptions.h"
 
 FileSystemException TestableRandomFileSystemException(const ZenUnit::RandomGenerator* randomGenerator);
 

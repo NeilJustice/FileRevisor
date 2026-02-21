@@ -97,7 +97,7 @@ TEST(ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDen
    //
    _recursiveFileDeleter.ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueAndErrnoIsPermissionDenied(filePath, args);
    //
-   const string expectedSkippingFileMessage = String::ConcatStrings(
+   const string expectedSkippingFileMessage = Utils::String::ConcatStrings(
       "Skipped file: \"", filePath, "\" because of error 13 (permission denied) when attempting to delete it");
    METALMOCK(_fileSystemExceptionMakerMock->GetErrnoValueMock.CalledOnce());
    METALMOCK(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(expectedSkippingFileMessage));
@@ -217,7 +217,7 @@ TEST(PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException_U
    //
    _recursiveFileDeleter_SelfMocked.PrintDeletedFileMessageIfDeleteSucceededOtherwiseThrowFileSystemException(filePath, unlinkReturnValue, args);
    //
-   const string expectedDeletedFilePathMessage = String::ConcatValues("Deleted ", filePath);
+   const string expectedDeletedFilePathMessage = Utils::String::ConcatValues("Deleted ", filePath);
    METALMOCK(_recursiveFileDeleter_SelfMocked.p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(expectedDeletedFilePathMessage));
 }
 

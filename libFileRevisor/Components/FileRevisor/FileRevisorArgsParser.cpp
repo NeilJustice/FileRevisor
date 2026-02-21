@@ -25,7 +25,7 @@ FileRevisorArgsParser::~FileRevisorArgsParser()
 
 FileRevisorArgs FileRevisorArgsParser::ParseStringArgs(const vector<string>& stringArgs) const
 {
-   const map<string, docopt::value> docoptValues = _docoptParser->ParseArgs(FileRevisorArgs::CommandLineUsage, stringArgs);
+   const map<string, docopt::value> docoptValues = _docoptParser->ParseArgs(FileRevisorArgs::CommandLineUsage, stringArgs, true);
    const bool isRenameFilesMode = _docoptParser->GetRequiredBool(docoptValues, "rename-files");
    const bool isRenameDirectoriesMode = _docoptParser->GetRequiredBool(docoptValues, "rename-directories");
    const bool isReplaceTextInTextFilesMode = _docoptParser->GetRequiredBool(docoptValues, "replace-text");

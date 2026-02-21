@@ -14,7 +14,7 @@ void FCloseDeleter::operator()(FILE* rawFilePointer) const
       const int fcloseReturnValue = _call_fclose(rawFilePointer);
       if (fcloseReturnValue != 0)
       {
-         const string exceptionMessage = String::ConcatValues(
+         const string exceptionMessage = Utils::String::ConcatValues(
             "fclose(rawFilePointer) in FCloseDeleter::operator(FILE* rawFilePointer) failed with return value ", fcloseReturnValue);
          throw runtime_error(exceptionMessage);
       }

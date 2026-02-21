@@ -9,14 +9,18 @@ if(UNIX)
          -Wno-alloca \
          -Wno-c++98-compat \
          -Wno-c++98-compat-pedantic \
+         -Wno-class-varargs \
          -Wno-covered-switch-default \
+         -Wno-ctad-maybe-unsupported \
          -Wno-deprecated-copy-with-dtor \
+         -Wno-deprecated-declarations \
          -Wno-disabled-macro-expansion \
          -Wno-exit-time-destructors \
          -Wno-extra-semi-stmt \
          -Wno-global-constructors \
          -Wno-gnu-zero-variadic-macro-arguments \
          -Wno-header-hygiene \
+         -Wno-missing-noreturn \
          -Wno-missing-variable-declarations \
          -Wno-padded \
          -Wno-reserved-identifier \
@@ -30,7 +34,9 @@ if(UNIX)
          append(CMAKE_CXX_FLAGS "-Wno-nrvo")
       endif ()
    elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
-      set(CMAKE_CXX_FLAGS "-std=c++2b -Wall -Wextra -pedantic -Werror")
+      set(CMAKE_CXX_FLAGS "-std=c++2b \
+         -Wall -Wextra -pedantic -Werror \
+         -Wno-deprecated-declarations")
    endif()
    if(FastLinuxDebugBuildMode)
       replace(CMAKE_CXX_FLAGS_DEBUG "-g" "")

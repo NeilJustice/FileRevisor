@@ -34,11 +34,13 @@ int RenameDirectoriesSubProgram::Run() const
    string numberOfDirectoriesMessage;
    if (p_args.dryrun)
    {
-      numberOfDirectoriesMessage = String::ConcatValues("Result: Would rename ", numberOfRenamedDirectories, ' ', directoryOrDirectories);
+      numberOfDirectoriesMessage = Utils::String::ConcatValues(
+         "Result: Would rename ", numberOfRenamedDirectories, ' ', directoryOrDirectories);
    }
    else
    {
-      numberOfDirectoriesMessage = String::ConcatValues("Result: Renamed ", numberOfRenamedDirectories, ' ', directoryOrDirectories);
+      numberOfDirectoriesMessage = Utils::String::ConcatValues(
+         "Result: Renamed ", numberOfRenamedDirectories, ' ', directoryOrDirectories);
    }
    p_console->ProgramNameThreadIdWriteLine(numberOfDirectoriesMessage);
    return 0;
@@ -58,12 +60,14 @@ RenameResult RenameDirectoriesSubProgram::RenameDirectory(const fs::path& direct
    {
       const fs::path parentFolderPath = directoryPath.parent_path();
       const fs::path renamedFolderPath = parentFolderPath / regexReplacedDirectoryName;
-      const string wouldRenameMessage = String::ConcatStrings("DryRun: Would rename directory ", directoryPath.string(), " to ", regexReplacedDirectoryName);
+      const string wouldRenameMessage = Utils::String::ConcatStrings(
+         "DryRun: Would rename directory ", directoryPath.string(), " to ", regexReplacedDirectoryName);
       p_console->ProgramNameThreadIdWriteLine(wouldRenameMessage);
       return RenameResult(true, directoryPath, renamedFolderPath);
    }
    const fs::path renamedFolderPath = p_fileSystem->RenameDirectory(directoryPath, regexReplacedDirectoryName);
-   const string renamedDirectoryMessage = String::ConcatStrings("Renamed directory ", directoryPath.string(), " to ", regexReplacedDirectoryName);
+   const string renamedDirectoryMessage = Utils::String::ConcatStrings(
+      "Renamed directory ", directoryPath.string(), " to ", regexReplacedDirectoryName);
    p_console->ProgramNameThreadIdWriteLine(renamedDirectoryMessage);
    return RenameResult(true, directoryPath, renamedFolderPath);
 }
@@ -72,7 +76,7 @@ void RenameDirectoriesSubProgram::PrintDidNotMatchDirectoryMessageIfVerboseMode(
 {
    if (verbose)
    {
-      const string didNotMatchDirectoryMessage = String::ConcatStrings("Verbose: Did not match ", directoryPath.string());
+      const string didNotMatchDirectoryMessage = Utils::String::ConcatStrings("Verbose: Did not match ", directoryPath.string());
       p_console->ProgramNameThreadIdWriteLine(didNotMatchDirectoryMessage);
    }
 }

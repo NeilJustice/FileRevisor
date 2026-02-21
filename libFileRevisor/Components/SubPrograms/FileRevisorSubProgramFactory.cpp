@@ -15,7 +15,7 @@ shared_ptr<FileRevisorSubProgram> FileRevisorSubProgramFactory::NewSubProgram(Pr
    case ProgramMode::DeleteDirectory: return make_shared<DeleteDirectorySubProgram>();
    default:
    {
-      const string exceptionmessage = String::ConcatValues(
+      const string exceptionmessage = Utils::String::ConcatValues(
          "FileRevisorSubProgramFactory::NewSubProgram called with invalid ProgramMode: ", static_cast<int>(programMode));
       throw invalid_argument(exceptionmessage);
    }

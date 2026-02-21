@@ -1,10 +1,33 @@
 #include "pch.h"
-#include "docopt/docopt.h"
 #include "libFileRevisor/Components/Docopt/DocoptParser.h"
+#include "libFileRevisor/Components/FileSystem/FileSystemPather.h"
 #include "libFileRevisor/StaticUtilities/Map.h"
 
+DocoptParser::DocoptParser()
+   // Function Pointers
+   : _call_StaticGetRequiredSizeT(StaticGetRequiredSizeT)
+   , _call_StaticGetRequiredString(StaticGetRequiredString)
+   // Constant Components
+   , _fileSystemPather(make_unique<Utils::FileSystemPather>())
+{
+}
+
+DocoptParser::~DocoptParser()
+{
+}
+
+bool DocoptParser::DocoptArgsAreForProgramMode(
+   const map<string, docopt::value>& docoptArgs, const string& programModeString) const
+{
+   const docopt::value docoptValue = Map::At(docoptArgs, programModeString);
+   bool docoptArgsAreForProgramMode = docoptValue.asBool();
+   return docoptArgsAreForProgramMode;
+}
+
 map<string, docopt::value> DocoptParser::ParseArgs(
-   const string& usage, const vector<string>& argv) const
+   const string& usage,
+   const vector<string>& argv,
+   bool doExitIfInvalid) const
 {
    if (argv.empty())
    {
@@ -16,7 +39,8 @@ map<string, docopt::value> DocoptParser::ParseArgs(
       argvWithoutFirstArgument,
       true,
       "",
-      false);
+      false,
+      doExitIfInvalid);
    return argPairs;
 }
 
@@ -32,12 +56,15 @@ bool DocoptParser::GetRequiredBool(
    const map<string, docopt::value>& docoptArgs, const string& argName) const
 {
    const docopt::value docoptValue = Map::At(docoptArgs, argName);
-   const bool boolValue = docoptValue.asBool();
+   bool boolValue = docoptValue.asBool();
    return boolValue;
 }
 
 string DocoptParser::GetProgramModeSpecificRequiredString(
-   const map<string, docopt::value>& docoptArgs, unsigned modeValue, unsigned fieldIsRequiredIfModeEqualsThisValue, const string& argName) const
+   const map<string, docopt::value>& docoptArgs,
+   unsigned modeValue,
+   unsigned fieldIsRequiredIfModeEqualsThisValue,
+   const string& argName) const
 {
    if (modeValue == fieldIsRequiredIfModeEqualsThisValue)
    {
@@ -54,7 +81,7 @@ bool DocoptParser::GetOptionalBool(
    docopt::value docoptValue;
    if (Map::TryGetValue(docoptArgs, argName, docoptValue))
    {
-      const bool boolValue = docoptValue.asBool();
+      bool boolValue = docoptValue.asBool();
       return boolValue;
    }
    return false;
@@ -73,7 +100,9 @@ string DocoptParser::GetOptionalString(
 }
 
 string DocoptParser::GetOptionalStringWithDefaultValue(
-   const map<string, docopt::value>& docoptArgs, string_view argName, string_view defaultValue) const
+   const map<string, docopt::value>& docoptArgs,
+   string_view argName,
+   string_view defaultValue) const
 {
    docopt::value docoptValue;
    if (Map::TryGetValue(docoptArgs, string(argName), docoptValue))
@@ -85,4 +114,52 @@ string DocoptParser::GetOptionalStringWithDefaultValue(
       }
    }
    return string(defaultValue);
+}
+
+size_t DocoptParser::GetRequiredSizeT(
+   const map<string, docopt::value>& docoptArgs, const string& argName) const
+{
+   size_t sizeTValue = _call_StaticGetRequiredSizeT(docoptArgs, argName);
+   return sizeTValue;
+}
+
+fs::path DocoptParser::GetRequiredFilePathWhichMustExist(
+   const map<string, docopt::value>& docoptArgs, const string& argName) const
+{
+   const string potentiallyRelativeFilePathStringArgument = _call_StaticGetRequiredString(docoptArgs, argName);
+   fs::path potentiallyRelativeFilePathArgument(potentiallyRelativeFilePathStringArgument);
+   fs::path absoluteFilePathArgument = _fileSystemPather->GetAbsoluteFileOrFolderPath(potentiallyRelativeFilePathArgument);
+   _fileSystemPather->ThrowIfFileDoesNotExist(absoluteFilePathArgument);
+   return absoluteFilePathArgument;
+}
+
+fs::path DocoptParser::GetRequiredFolderPathWhichNeedNotExist(
+   const map<string, docopt::value>& docoptArgs, const string& argName) const
+{
+   const string potentiallyRelativeFolderPathStringArgument = _call_StaticGetRequiredString(docoptArgs, argName);
+   fs::path potentiallyRelativeFolderPathArgument(potentiallyRelativeFolderPathStringArgument);
+   fs::path absoluteFolderPathArgument = _fileSystemPather->GetAbsoluteFileOrFolderPath(potentiallyRelativeFolderPathArgument);
+   return absoluteFolderPathArgument;
+}
+
+// Private Functions
+
+size_t DocoptParser::StaticGetRequiredSizeT(
+   const map<string, docopt::value>& docoptArgs, const string& argName)
+{
+   const docopt::value& docoptValue = Map::At(docoptArgs, argName);
+   size_t sizeTValue = docoptValue.asSizeT();
+   return sizeTValue;
+}
+
+string DocoptParser::StaticGetRequiredString(const map<string, docopt::value>& docoptArgs, const string& argName)
+{
+   const docopt::value& docoptValue = Map::At(docoptArgs, argName);
+   if (docoptValue.isString())
+   {
+      const string& stringArgumentValue = docoptValue.asString();
+      return stringArgumentValue;
+   }
+   const string exceptionMessage = Utils::String::ConcatValues("String key not found in map: [", argName, "]");
+   throw invalid_argument(exceptionMessage);
 }

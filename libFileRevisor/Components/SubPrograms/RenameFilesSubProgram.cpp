@@ -32,11 +32,11 @@ int RenameFilesSubProgram::Run() const
    const string fileOrFiles = p_pluralizer->PotentiallyPluralizeWord(numberOfRenamedFiles, "file", "files");
    if (p_args.dryrun)
    {
-      renamedFilesMessage = String::ConcatValues("Result: Would rename ", numberOfRenamedFiles, ' ', fileOrFiles);
+      renamedFilesMessage = Utils::String::ConcatValues("Result: Would rename ", numberOfRenamedFiles, ' ', fileOrFiles);
    }
    else
    {
-      renamedFilesMessage = String::ConcatValues("Result: Renamed ", numberOfRenamedFiles, ' ', fileOrFiles);
+      renamedFilesMessage = Utils::String::ConcatValues("Result: Renamed ", numberOfRenamedFiles, ' ', fileOrFiles);
    }
    p_console->ProgramNameThreadIdWriteLine(renamedFilesMessage);
    return 0;
@@ -59,14 +59,15 @@ RenameResult RenameFilesSubProgram::RenameFileIfFileNameMatchesFromPattern(const
    }
    if (p_args.dryrun)
    {
-      const string wouldRenameMessage = String::ConcatStrings("DryRun: Would rename file ", filePath.string(), " to ", regexReplacedFileName);
+      const string wouldRenameMessage = Utils::String::ConcatStrings(
+         "DryRun: Would rename file ", filePath.string(), " to ", regexReplacedFileName);
       p_console->ProgramNameThreadIdWriteLine(wouldRenameMessage);
       const fs::path sourceFolderPath = filePath.parent_path();
       const fs::path renamedFilePath = sourceFolderPath / regexReplacedFileName;
       return RenameResult(true, filePath, renamedFilePath);
    }
    const fs::path renamedFilePath = p_fileSystem->RenameFile(filePath, regexReplacedFileName);
-   const string renamedFileMessage = String::ConcatStrings("Renamed file ", filePath.string(), " to ", regexReplacedFileName);
+   const string renamedFileMessage = Utils::String::ConcatStrings("Renamed file ", filePath.string(), " to ", regexReplacedFileName);
    p_console->ProgramNameThreadIdWriteLine(renamedFileMessage);
    return RenameResult(true, filePath, renamedFilePath);
 }

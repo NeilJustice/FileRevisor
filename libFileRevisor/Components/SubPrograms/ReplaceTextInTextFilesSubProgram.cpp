@@ -53,12 +53,14 @@ int ReplaceTextInTextFilesSubProgram::Run() const
    const string fileOrFiles = p_pluralizer->PotentiallyPluralizeWord(numberOfFilesThatWereOrWouldBeModified, "file", "files");
    if (p_args.dryrun)
    {
-      const string message = String::ConcatValues("DryRun: Would replace text in ", numberOfFilesThatWereOrWouldBeModified, " ", fileOrFiles);
+      const string message = Utils::String::ConcatValues(
+         "DryRun: Would replace text in ", numberOfFilesThatWereOrWouldBeModified, " ", fileOrFiles);
       p_console->ProgramNameThreadIdWriteLine(message);
    }
    else
    {
-      const string message = String::ConcatValues("Result: Replaced text in ", numberOfFilesThatWereOrWouldBeModified, " ", fileOrFiles);
+      const string message = Utils::String::ConcatValues(
+         "Result: Replaced text in ", numberOfFilesThatWereOrWouldBeModified, " ", fileOrFiles);
       p_console->ProgramNameThreadIdWriteLine(message);
    }
    return 0;

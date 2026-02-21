@@ -26,6 +26,7 @@ string Stopwatch::StopAndGetElapsedSeconds()
       0ULL; // 333 -> 0.333
    const string leadingMillisecondZeros(numberOfLeadingMillisecondZeros, '0');
    const long long elapsedSeconds = elapsedMilliseconds / 1000;
-   string elapsedSecondsWithMillisecondResolution = String::ConcatValues(elapsedSeconds, '.', leadingMillisecondZeros, elapsedMillisecondsMod1000);
+   string elapsedSecondsWithMillisecondResolution = Utils::String::ConcatValues(
+      elapsedSeconds, '.', leadingMillisecondZeros, elapsedMillisecondsMod1000);
    return elapsedSecondsWithMillisecondResolution;
 }
