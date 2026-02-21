@@ -156,7 +156,7 @@ sudo cmake --build . --target install
 ```powershell
 git clone https://github.com/NeilJustice/FileRevisor
 cd FileRevisor
-cmake . -G"Visual Studio 17 2022" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
+cmake . -G"Visual Studio 18 2026" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
 cmake --build . --config Release --target install
 ```
 
