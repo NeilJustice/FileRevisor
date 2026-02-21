@@ -18,11 +18,7 @@ void ReleaseAssert(
    long lineNumber,
    const char* functionName)
 {
-#if defined __linux__
-   if (UNLIKELY(!predicateExpressionResult))
-#elif _WIN32
-   if (!predicateExpressionResult)
-#endif
+   [[unlikely]] if (!predicateExpressionResult)
    {
       ThrowLogicError(predicateExpressionText, filePath, lineNumber, functionName);
    }
