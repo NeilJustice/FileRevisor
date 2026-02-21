@@ -58,7 +58,7 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* dire
             const char* const filePath = filePathOrSubdirectoryPathChars.data();
             if (args.dryrun)
             {
-               const string wouldDeleteFileMessage = String::ConcatStrings("DryRun: Would delete file ", filePath);
+               const string wouldDeleteFileMessage = Utils::String::ConcatStrings("DryRun: Would delete file ", filePath);
                p_console->ProgramNameThreadIdWriteLine(wouldDeleteFileMessage);
             }
             else
