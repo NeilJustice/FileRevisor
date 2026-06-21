@@ -1,3 +1,2 @@
 ignore:
-  - libFileRevisor/docopt/**/*
-  - libFileRevisor/docopt/docopt_value.h
+  - libFileRevisor/docopt
