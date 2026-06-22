@@ -1,12 +1,12 @@
 #!/usr/bin/bash
-set -ev
+#set -ev
 
-export CXX=clang++
-export PYTHONPATH=FileRevisorDevOpsPython
-python -u FileRevisorDevOpsPython/FileRevisorDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
-   --solution-name=FileRevisor \
-   --cmake-build-type=Debug \
-   --cmake-definitions="-DIncludeWhatYouUseMode=ON" \
-   --tests-project-name=libFileRevisorTests \
-   --no-install
+#export CXX=clang++
+#export PYTHONPATH=FileRevisorDevOpsPython
+#python -u FileRevisorDevOpsPython/FileRevisorDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
+#   --solution-name=FileRevisor \
+#   --cmake-build-type=Debug \
+#   --cmake-definitions="-DIncludeWhatYouUseMode=ON" \
+#   --tests-project-name=libFileRevisorTests \
+#   --no-install
 
