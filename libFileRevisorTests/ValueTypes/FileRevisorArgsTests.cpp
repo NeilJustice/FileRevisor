@@ -8,13 +8,37 @@ EVIDENCE
 
 TEST(CommandLineUsage_IsExpectedString)
 {
-   ARE_EQUAL(R"(FileRevisor v1.1.0 - Quickly delete directories, rename files or directories, or replace text in files.
+   ARE_EQUAL(R"(FileRevisor v1.1.0
+Deletes directories, renames files or directories, or replaces text in files.
 
 Usage:
-   filerevisor delete-directory --target=<TargetFolderPath> [--parallel] [--skip-files-in-use] [--dryrun] [--quiet]
-   filerevisor rename-files --target=<TargetFolderPath> --from=<FileNameRegex> --to=<FileNameRegex> [--recurse] [--dryrun] [--verbose]
-   filerevisor rename-directories --target=<TargetFolderPath> --from=<DirectoryNameRegex> --to=<DirectoryNameRegex> [--recurse] [--dryrun] [--verbose]
-   filerevisor replace-text --target=<TargetFolderPath> --from=<FileTextRegexPattern> --to=<ReplacementFileTextRegexPattern> [--recurse] [--dryrun] [--verbose]
+   filerevisor delete-directory
+      --target=<TargetFolderPath>
+      [--parallel]
+      [--skip-files-in-use]
+      [--dryrun]
+      [--quiet]
+   filerevisor rename-files
+      --target=<TargetFolderPath>
+      --from=<FileNameRegex>
+      --to=<FileNameRegex>
+      [--recurse]
+      [--dryrun]
+      [--verbose]
+   filerevisor rename-directories
+      --target=<TargetFolderPath>
+      --from=<DirectoryNameRegex>
+      --to=<DirectoryNameRegex>
+      [--recurse]
+      [--dryrun]
+      [--verbose]
+   filerevisor replace-text
+      --target=<TargetFolderPath>
+      --from=<LiteralFileText>
+      --to=<ReplacementLiteralFileText>
+      [--recurse]
+      [--dryrun]
+      [--verbose]
 )", FileRevisorArgs::CommandLineUsage);
 }
 
