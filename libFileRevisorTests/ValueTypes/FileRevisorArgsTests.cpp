@@ -34,8 +34,8 @@ Usage:
       [--verbose]
    filerevisor replace-text
       --target=<TargetDirectory>
-      --from=<Substring>
-      --to=<ReplacementSubstring>
+      --from=<TextSubstring>
+      --to=<ReplacementTextSubstring>
       [--recurse]
       [--dryrun]
       [--verbose]
