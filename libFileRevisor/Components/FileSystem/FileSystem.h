@@ -76,10 +76,17 @@ public:
 
    // Deletes
    virtual void DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(
-      const fs::path& directoryPath, bool skipFilesInUse, bool dryRun, bool quietMode) const;
+      const fs::path& directoryPath,
+      bool skipFilesInUse,
+      bool dryRun,
+      bool quietMode) const;
    virtual void RecursivelyDeleteAllFilesInDirectory(const string& directoryPath, const FileRevisorArgs& args) const;
    virtual void RemoveFile(const char* filePath, bool ignoreFileDeleteError) const;
-   virtual void DeleteFileOrDirectory(const fs::path& fileOrFolderPath, bool ignoreFileDeleteError, bool dryRun, bool quietMode) const;
+   virtual void DeleteFileOrDirectory(
+      const fs::path& fileOrFolderPath,
+      bool ignoreFileDeleteError,
+      bool dryRun,
+      bool quietMode) const;
 
    // Open File
    virtual shared_ptr<FILE> OpenFile(const fs::path& filePath, const char* fileOpenMode) const;
@@ -101,7 +108,10 @@ public:
    // Writes
    virtual void CreateDirectories(const fs::path& directoryPath) const;
    virtual void CreateTextFile(const fs::path& filePath, string_view fileText) const;
-   virtual void CreateFileWithBytes(const fs::path& filePath, const char* bytes, size_t bytesLength) const;
+   virtual void CreateFileWithBytes(
+      const fs::path& filePath,
+      const char* bytes,
+      size_t bytesLength) const;
    virtual fs::path RenameFile(const fs::path& filePath, string_view newFileName) const;
    virtual fs::path RenameDirectory(const fs::path& directoryPath, string_view newDirectoryName) const;
 private:

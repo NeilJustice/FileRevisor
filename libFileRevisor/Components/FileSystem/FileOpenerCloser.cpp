@@ -46,7 +46,10 @@ void FileOpenerCloser::CloseFile(FILE* rawFilePointer, const fs::path& filePath)
 
 #if defined __linux__
 
-shared_ptr<FILE> FileOpenerCloser::OpenFileOnLinux(const fs::path& filePath, const char* fileOpenMode, bool throwIfFileNotOpenable) const
+shared_ptr<FILE> FileOpenerCloser::OpenFileOnLinux(
+   const fs::path& filePath,
+   const char* fileOpenMode,
+   bool throwIfFileNotOpenable) const
 {
    FILE* const rawFilePointer = _call_fopen(filePath.c_str(), fileOpenMode);
    ThrowFileOpenExceptionIfFileOpenFailed(rawFilePointer, filePath, throwIfFileNotOpenable);
@@ -56,7 +59,10 @@ shared_ptr<FILE> FileOpenerCloser::OpenFileOnLinux(const fs::path& filePath, con
 
 #elif _WIN32
 
-shared_ptr<FILE> FileOpenerCloser::OpenFileOnWindows(const fs::path& filePath, const wchar_t* fileOpenMode, bool throwIfFileNotOpenable) const
+shared_ptr<FILE> FileOpenerCloser::OpenFileOnWindows(
+   const fs::path& filePath,
+   const wchar_t* fileOpenMode,
+   bool throwIfFileNotOpenable) const
 {
    FILE* const rawFilePointer = _call_wfsopen(filePath.c_str(), fileOpenMode, _SH_DENYWR);
    ThrowFileOpenExceptionIfFileOpenFailed(rawFilePointer, filePath, throwIfFileNotOpenable);
@@ -66,7 +72,10 @@ shared_ptr<FILE> FileOpenerCloser::OpenFileOnWindows(const fs::path& filePath, c
 
 #endif
 
-void FileOpenerCloser::ThrowFileOpenExceptionIfFileOpenFailed(const FILE* rawFilePointer, const fs::path& filePath, bool throwIfFileNotOpenable) const
+void FileOpenerCloser::ThrowFileOpenExceptionIfFileOpenFailed(
+   const FILE* rawFilePointer,
+   const fs::path& filePath,
+   bool throwIfFileNotOpenable) const
 {
    if (rawFilePointer == nullptr)
    {

@@ -20,6 +20,7 @@ private:
 public:
    DirectoryIterator() noexcept;
    virtual ~DirectoryIterator();
+
    virtual vector<fs::path> GetNonEmptyNonIgnoredTextFilePaths();
    virtual fs::path NextNonIgnoredFolderPath();
    virtual fs::path NextNonIgnoredFilePath();
@@ -27,7 +28,10 @@ public:
    virtual void SetFileAndFolderPathIgnoreSubstrings(const vector<string>& fileAndFolderPathIgnoreSubstrings);
 private:
    virtual bool IsFileEmptyOrBinaryOrNotAnsiOrNotOpenable(const fs::path& filePath) const;
+
    template<typename DirectoryIteratorType>
    fs::path NextNonIgnoredPath(DirectoryIteratorType& iter, fs::file_type requiredFileType);
-   static bool PathContainsAnySubstringCaseInsensitive(const fs::path& fileOrFolderPath, const vector<string>& pathSubstrings);
+
+   static bool PathContainsAnySubstringCaseInsensitive(
+      const fs::path& fileOrFolderPath, const vector<string>& pathSubstrings);
 };

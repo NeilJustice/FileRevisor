@@ -21,9 +21,18 @@ public:
    virtual void CloseFile(FILE* rawFilePointer, const fs::path& filePath) const;
 private:
 #if defined __linux__
-   shared_ptr<FILE> OpenFileOnLinux(const fs::path& filePath, const char* fileOpenMode, bool throwIfFileNotOpenable) const;
+   shared_ptr<FILE> OpenFileOnLinux(
+      const fs::path& filePath,
+      const char* fileOpenMode,
+      bool throwIfFileNotOpenable) const;
 #elif _WIN32
-   shared_ptr<FILE> OpenFileOnWindows(const fs::path& filePath, const wchar_t* fileOpenMode, bool throwIfFileNotOpenable) const;
+   shared_ptr<FILE> OpenFileOnWindows(
+      const fs::path& filePath,
+      const wchar_t* fileOpenMode,
+      bool throwIfFileNotOpenable) const;
 #endif
-   void ThrowFileOpenExceptionIfFileOpenFailed(const FILE* rawFilePointer, const fs::path& filePath, bool throwIfFileNotOpenable) const;
+   void ThrowFileOpenExceptionIfFileOpenFailed(
+      const FILE* rawFilePointer,
+      const fs::path& filePath,
+      bool throwIfFileNotOpenable) const;
 };

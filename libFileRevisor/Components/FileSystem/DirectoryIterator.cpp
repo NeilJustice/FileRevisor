@@ -135,7 +135,8 @@ fs::path DirectoryIterator::NextNonIgnoredPath(DirectoryIteratorType& iter, fs::
       if (nextDirectoryEntryStatusType == requiredFileType)
       {
          fs::path nextPathWithMatchingFileType = nextDirectoryEntry.path();
-         const bool pathIsIgnored = PathContainsAnySubstringCaseInsensitive(nextPathWithMatchingFileType, _fileAndFolderPathIgnoreSubstrings);
+         const bool pathIsIgnored = PathContainsAnySubstringCaseInsensitive(
+            nextPathWithMatchingFileType, _fileAndFolderPathIgnoreSubstrings);
          if (pathIsIgnored)
          {
             continue;
@@ -145,7 +146,8 @@ fs::path DirectoryIterator::NextNonIgnoredPath(DirectoryIteratorType& iter, fs::
    }
 }
 
-bool DirectoryIterator::PathContainsAnySubstringCaseInsensitive(const fs::path& fileOrFolderPath, const vector<string>& pathSubstrings)
+bool DirectoryIterator::PathContainsAnySubstringCaseInsensitive(
+   const fs::path& fileOrFolderPath, const vector<string>& pathSubstrings)
 {
    if (pathSubstrings.empty())
    {

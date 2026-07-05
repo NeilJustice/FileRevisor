@@ -5,7 +5,7 @@ namespace Utils
 {
    bool String::ContainsSubstring(string_view stringView, string_view substring)
    {
-      const bool strContainsSubstring = ::strstr(stringView.data(), substring.data()) != nullptr;
+      bool strContainsSubstring = ::strstr(stringView.data(), substring.data()) != nullptr;
       return strContainsSubstring;
    }
 
@@ -13,7 +13,7 @@ namespace Utils
    {
       const string lowercaseStr = String::ToAllLowercase(stringView);
       const string lowercaseSubstring = String::ToAllLowercase(substring);
-      const bool strContainsSubstring = ContainsSubstring(lowercaseStr, lowercaseSubstring);
+      bool strContainsSubstring = ContainsSubstring(lowercaseStr, lowercaseSubstring);
       return strContainsSubstring;
    }
 

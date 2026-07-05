@@ -143,7 +143,8 @@ string FileSystem::ReadText(const fs::path& textFilePath) const
    ifstream textFileStream(textFilePath.c_str(), ios_base::binary);
    if (!textFileStream.is_open())
    {
-      const FileSystemException fileSystemException = _fileSystemExceptionMaker->MakeFileSystemExceptionForFailedToOpenFileWithFStream(textFilePath);
+      const FileSystemException fileSystemException =
+         _fileSystemExceptionMaker->MakeFileSystemExceptionForFailedToOpenFileWithFStream(textFilePath);
       throw fileSystemException;
    }
    const size_t fileSize = GetFileSize(textFileStream);
@@ -165,7 +166,10 @@ void FileSystem::CreateTextFile(const fs::path& filePath, string_view fileText) 
    CreateFileWithBytes(filePath, fileText.data(), fileText.size());
 }
 
-void FileSystem::CreateFileWithBytes(const fs::path& filePath, const char* bytes, size_t bytesLength) const
+void FileSystem::CreateFileWithBytes(
+   const fs::path& filePath,
+   const char* bytes,
+   size_t bytesLength) const
 {
    const fs::path parentFolderPath = filePath.parent_path();
    fs::create_directories(parentFolderPath);
@@ -233,20 +237,34 @@ fs::path FileSystem::RenameDirectory(const fs::path& directoryPath, string_view 
 // Deletes
 
 void FileSystem::DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(
-   const fs::path& directoryPath, bool skipFilesInUse, bool dryRun, bool quietMode) const
+   const fs::path& directoryPath,
+   bool skipFilesInUse,
+   bool dryRun,
+   bool quietMode) const
 {
    _caller_DeleteFileOrDirectory->CallConstMemberFunction(
-      this, &FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows, directoryPath, dryRun);
+      this, &FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows,
+      directoryPath, dryRun);
 
    const vector<fs::path> topLevelFolderPaths = _caller_GetFileOrFolderPathsInDirectory->CallConstMemberFunction(
       this, &FileSystem::GetFolderPathsInDirectory, directoryPath, false);
+
    const vector<fs::path> topLevelFilePaths = _caller_GetFileOrFolderPathsInDirectory->CallConstMemberFunction(
       this, &FileSystem::GetFilePathsInDirectory, directoryPath, false);
 
    _foreacher_DeleteFileOrDirectory->CallConstMemberFunctionWithEachElement(
-      topLevelFolderPaths, this, &FileSystem::DeleteFileOrDirectory, skipFilesInUse, dryRun, quietMode);
+      topLevelFolderPaths,
+      this, &FileSystem::DeleteFileOrDirectory,
+      skipFilesInUse,
+      dryRun,
+      quietMode);
+
    _foreacher_DeleteFileOrDirectory->CallConstMemberFunctionWithEachElement(
-      topLevelFilePaths, this, &FileSystem::DeleteFileOrDirectory, skipFilesInUse, dryRun, quietMode);
+      topLevelFilePaths,
+      this, &FileSystem::DeleteFileOrDirectory,
+      skipFilesInUse,
+      dryRun,
+      quietMode);
 }
 
 void FileSystem::RemoveFile(const char* filePath, bool ignoreFileDeleteError) const
@@ -260,13 +278,18 @@ void FileSystem::RemoveFile(const char* filePath, bool ignoreFileDeleteError) co
    {
       if (!ignoreFileDeleteError)
       {
-         const FileSystemException fileSystemException = _fileSystemExceptionMaker->MakeFileSystemExceptionForFailedToDeleteFile(filePath);
+         const FileSystemException fileSystemException =
+            _fileSystemExceptionMaker->MakeFileSystemExceptionForFailedToDeleteFile(filePath);
          throw fileSystemException;
       }
    }
 }
 
-void FileSystem::DeleteFileOrDirectory(const fs::path& fileOrFolderPath, bool ignoreFileDeleteError, bool dryRun, bool quietMode) const
+void FileSystem::DeleteFileOrDirectory(
+   const fs::path& fileOrFolderPath,
+   bool ignoreFileDeleteError,
+   bool dryRun,
+   bool quietMode) const
 {
    if (dryRun)
    {
