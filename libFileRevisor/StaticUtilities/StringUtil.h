@@ -35,7 +35,6 @@ namespace Utils
 
       static bool ContainsSubstring(string_view stringView, string_view substring);
       static bool CaseInsensitiveContainsSubstring(string_view stringView, string_view substring);
-      static string ReplaceText(string_view stringView, string_view matchingRegex, string_view replacingRegex);
 
       template<typename T, typename... Ts>
       static void RecursivelyConcatenate(const ostringstream* outStringStream, const T& value, const Ts&... values)

@@ -6,7 +6,6 @@ AFACT(ConcatStrings_ReturnsStringsConcatenatedIntoAString)
 AFACT(ConcatValues_ReturnsValuesConcatenatedIntoAString)
 FACTS(ContainsSubstring_ReturnsTrueIfStringContainsSubstring)
 FACTS(CaseInsensitiveContainsSubstring_ReturnsTrueIfStringCaseInsensitiveContainsSubstring)
-FACTS(ReplaceText_ReturnsReplacedString)
 EVIDENCE
 
 struct UserType
@@ -80,18 +79,6 @@ TEST3X3(CaseInsensitiveContainsSubstring_ReturnsTrueIfStringCaseInsensitiveConta
    true, "a\r\n_bc_", "bc")
 {
    ARE_EQUAL(expectedReturnValue, Utils::String::CaseInsensitiveContainsSubstring(str, substring));
-}
-
-TEST4X4(ReplaceText_ReturnsReplacedString,
-   string_view str, string_view pattern, string_view replacement, string_view expectedReturnValue,
-   "", "", "", "",
-   "a", "b", "c", "a",
-   "a", "a", "b", "b",
-   "A", "a", "b", "A",
-   "123 -> 456", "\\d\\d\\d -> ", "|", "|456")
-{
-   const string replacedString = Utils::String::ReplaceText(str, pattern, replacement);
-   ARE_EQUAL(expectedReturnValue, replacedString);
 }
 
 RUN_TESTS(StringUtilTests)

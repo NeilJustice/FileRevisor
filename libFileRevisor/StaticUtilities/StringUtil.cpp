@@ -17,16 +17,6 @@ namespace Utils
       return strContainsSubstring;
    }
 
-   string String::ReplaceText(string_view stringView, string_view matchingRegex, string_view replacingRegex)
-   {
-      const string stringViewString(stringView);
-      const string matchingRegexString(matchingRegex);
-      const regex matchingRegexObject(matchingRegexString);
-      const string replacingRegexString(replacingRegex);
-      string regexReplacedString = regex_replace(stringViewString, matchingRegexObject, replacingRegexString);
-      return regexReplacedString;
-   }
-
    string String::ToAllLowercase(string_view str)
    {
       string lowercaseString;
