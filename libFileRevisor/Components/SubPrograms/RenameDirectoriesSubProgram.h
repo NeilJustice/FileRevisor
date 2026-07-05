@@ -14,11 +14,12 @@ class RenameDirectoriesSubProgram : public FileRevisorSubProgram
    friend class RenameDirectoriesSubProgramTests;
 private:
    // Function Pointers
-   using _call_PrintDidNotMatchDirectoryMessageIfVerboseModeType = VoidTwoArgMemberFunctionCaller<RenameDirectoriesSubProgram, bool, const fs::path&>;
+   using _call_PrintDidNotMatchDirectoryMessageIfVerboseModeType = VoidTwoArgMemberFunctionCaller<
+      RenameDirectoriesSubProgram, bool, const fs::path&>;
    unique_ptr<const _call_PrintDidNotMatchDirectoryMessageIfVerboseModeType> _call_PrintDidNotMatchDirectoryMessageIfVerboseMode;
    // Function Callers
-   using _directoryPathsTransformer_RenameDirectoryType =
-      OneArgMemberFunctionTransformer<RenameDirectoriesSubProgram, fs::path, RenameResult>;
+   using _directoryPathsTransformer_RenameDirectoryType = OneArgMemberFunctionTransformer<
+      RenameDirectoriesSubProgram, fs::path, RenameResult>;
    unique_ptr<const _directoryPathsTransformer_RenameDirectoryType> _directoryPathsTransformer_RenameDirectory;
    // Constant Components
    unique_ptr<const PredicateCounter<RenameResult>> _predicateCounter;

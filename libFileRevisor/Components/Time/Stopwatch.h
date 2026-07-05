@@ -11,6 +11,7 @@ private:
 public:
    Stopwatch();
    virtual ~Stopwatch() = default;
+
    virtual void Start();
    virtual std::string StopAndGetElapsedSeconds();
 };

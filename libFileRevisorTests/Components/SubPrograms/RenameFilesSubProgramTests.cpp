@@ -19,18 +19,18 @@ AFACT(PrintDidNotMatchFileMessageIfVerboseMode_VerboseIsTrue_WritesDidNotMatchFi
 EVIDENCE
 
 RenameFilesSubProgram _renameFilesSubProgram;
-// Function Callers
-using _caller_PrintDidNotMatchFileMessageIfVerboseModeMockType =
-   VoidTwoArgMemberFunctionCallerMock<RenameFilesSubProgram, bool, const fs::path&>;
-_caller_PrintDidNotMatchFileMessageIfVerboseModeMockType* _caller_PrintDidNotMatchFileMessageIfVerboseModeMock = nullptr;
-
-using _transformer_RenameFileIfFileNameMatchesFromPatternMockType =
-   OneArgMemberFunctionTransformerMock<RenameFilesSubProgram, fs::path, RenameResult>;
-_transformer_RenameFileIfFileNameMatchesFromPatternMockType* _transformer_RenameFileIfFileNameMatchesFromPatternMock = nullptr;
 // Base Class Constant Components
 ConsoleMock* p_consoleMock = nullptr;
 FileSystemMock* p_fileSystemMock = nullptr;
 PluralizerMock* p_pluralizerMock = nullptr;
+// Function Callers
+using _caller_PrintDidNotMatchFileMessageIfVerboseModeMockType = VoidTwoArgMemberFunctionCallerMock<
+   RenameFilesSubProgram, bool, const fs::path&>;
+_caller_PrintDidNotMatchFileMessageIfVerboseModeMockType* _caller_PrintDidNotMatchFileMessageIfVerboseModeMock = nullptr;
+
+using _transformer_RenameFileIfFileNameMatchesFromPatternMockType = OneArgMemberFunctionTransformerMock<
+   RenameFilesSubProgram, fs::path, RenameResult>;
+_transformer_RenameFileIfFileNameMatchesFromPatternMockType* _transformer_RenameFileIfFileNameMatchesFromPatternMock = nullptr;
 // Constant Components
 PredicateCounterMock<RenameResult>* _predicateCounterMock = nullptr;
 TextReplacerMock* _textReplacerMock = nullptr;
@@ -39,13 +39,13 @@ FileRevisorArgs p_args;
 
 STARTUP
 {
-   // Function Callers
-   _renameFilesSubProgram._caller_PrintDidNotMatchFileMessageIfVerboseMode.reset(_caller_PrintDidNotMatchFileMessageIfVerboseModeMock = new _caller_PrintDidNotMatchFileMessageIfVerboseModeMockType);
-   _renameFilesSubProgram._transformer_RenameFileIfFileNameMatchesFromPattern.reset(_transformer_RenameFileIfFileNameMatchesFromPatternMock = new _transformer_RenameFileIfFileNameMatchesFromPatternMockType);
    // Base Class Constant Components
    _renameFilesSubProgram.p_console.reset(p_consoleMock = new ConsoleMock);
    _renameFilesSubProgram.p_fileSystem.reset(p_fileSystemMock = new FileSystemMock);
    _renameFilesSubProgram.p_pluralizer.reset(p_pluralizerMock = new PluralizerMock);
+   // Function Callers
+   _renameFilesSubProgram._caller_PrintDidNotMatchFileMessageIfVerboseMode.reset(_caller_PrintDidNotMatchFileMessageIfVerboseModeMock = new _caller_PrintDidNotMatchFileMessageIfVerboseModeMockType);
+   _renameFilesSubProgram._transformer_RenameFileIfFileNameMatchesFromPattern.reset(_transformer_RenameFileIfFileNameMatchesFromPatternMock = new _transformer_RenameFileIfFileNameMatchesFromPatternMockType);
    // Constant Components
    _renameFilesSubProgram._predicateCounter.reset(_predicateCounterMock = new PredicateCounterMock<RenameResult>);
    _renameFilesSubProgram._textReplacer.reset(_textReplacerMock = new TextReplacerMock);
@@ -135,19 +135,19 @@ TEST(RenameFileIfFileNameMatchesFromPattern_ReplacedFileNameEqualsSourceFileName
 
 TEST(RenameFileIfFileNameMatchesFromPattern_ReplacedFileNameDoesNotEqualSourceFileName_DryRunIsTrue_PrintsWouldRenameMessage_ReturnsTrueRenameResult)
 {
-   const string regexReplacedFileName = _textReplacerMock->ReplaceTextMock.ReturnRandom();
+   const string possiblyReplacedFileName = _textReplacerMock->ReplaceTextMock.ReturnRandom();
 
    p_consoleMock->WriteProgramNameThreadIdLineMock.Expect();
 
-   const fs::path filePath = ZenUnit::RandomNotEqualTo<string>(regexReplacedFileName);
+   const fs::path filePath = ZenUnit::RandomNotEqualTo<string>(possiblyReplacedFileName);
    _renameFilesSubProgram.p_args.dryrun = true;
    //
    const RenameResult fileRenameResult = _renameFilesSubProgram.RenameFileIfFileNameMatchesFromPattern(filePath);
    //
    const string originalFileName = filePath.filename().string();
-   const fs::path expectedRenamedFilePath = filePath.parent_path() / regexReplacedFileName;
+   const fs::path expectedRenamedFilePath = filePath.parent_path() / possiblyReplacedFileName;
    const string expectedFileRenamedMessage = Utils::String::ConcatStrings(
-      "DryRun: Would rename file ", filePath.string(), " to ", regexReplacedFileName);
+      "DryRun: Would rename file ", filePath.string(), " to ", possiblyReplacedFileName);
 
    METALMOCKTHEN(_textReplacerMock->ReplaceTextMock.CalledOnceWith(
       originalFileName,
@@ -163,26 +163,26 @@ TEST(RenameFileIfFileNameMatchesFromPattern_ReplacedFileNameDoesNotEqualSourceFi
 
 TEST(RenameFileIfFileNameMatchesFromPattern_ReplacedFileNameDoesNotEqualSourceFileName_DryRunIsFalse_RenamesTheFile_ReturnsTrueRenameResult)
 {
-   const string regexReplacedFileName = _textReplacerMock->ReplaceTextMock.ReturnRandom();
+   const string possiblyReplacedFileName = _textReplacerMock->ReplaceTextMock.ReturnRandom();
 
    const fs::path renamedFilePath = p_fileSystemMock->RenameFileMock.ReturnRandom();
 
    p_consoleMock->WriteProgramNameThreadIdLineMock.Expect();
 
-   const fs::path filePath = ZenUnit::RandomNotEqualTo<string>(regexReplacedFileName);
+   const fs::path filePath = ZenUnit::RandomNotEqualTo<string>(possiblyReplacedFileName);
    _renameFilesSubProgram.p_args.dryrun = false;
    //
    const RenameResult fileRenameResult = _renameFilesSubProgram.RenameFileIfFileNameMatchesFromPattern(filePath);
    //
    const string originalFileName = filePath.filename().string();
    const string expectedRenamedFileMessage = Utils::String::ConcatStrings(
-      "Renamed file ", filePath.string(), " to ", regexReplacedFileName);
+      "Renamed file ", filePath.string(), " to ", possiblyReplacedFileName);
    const RenameResult expectedRenameResult(true, filePath, renamedFilePath);
    METALMOCKTHEN(_textReplacerMock->ReplaceTextMock.CalledOnceWith(
       originalFileName, p_args.fromFileOrDirectoryName, p_args.toFileOrDirectoryName)).Then(
 
    METALMOCKTHEN(p_fileSystemMock->RenameFileMock.CalledOnceWith(
-      filePath, regexReplacedFileName))).Then(
+      filePath, possiblyReplacedFileName))).Then(
 
    METALMOCKTHEN(p_consoleMock->WriteProgramNameThreadIdLineMock.CalledOnceWith(
       expectedRenamedFileMessage)));

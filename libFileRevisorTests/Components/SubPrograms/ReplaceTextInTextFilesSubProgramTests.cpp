@@ -18,6 +18,10 @@ AFACT(PrintReadingFileMessageIfVerboseIsTrue_VerboseIsTrue_PrintsReadingFileMess
 EVIDENCE
 
 ReplaceTextInTextFilesSubProgram _replaceTextInTextFilesSubProgram;
+// Base Class Constant Components
+ConsoleMock* p_consoleMock = nullptr;
+FileSystemMock* p_fileSystemMock = nullptr;
+PluralizerMock* p_pluralizerMock = nullptr;
 // Function Pointers
 using _call_PrintReadingFileMessageIfVerboseModeMockType = VoidTwoArgMemberFunctionCallerMock<ReplaceTextInTextFilesSubProgram, bool, const fs::path&>;
 _call_PrintReadingFileMessageIfVerboseModeMockType* _call_PrintReadingFileMessageIfVerboseModeMock = nullptr;
@@ -25,10 +29,6 @@ _call_PrintReadingFileMessageIfVerboseModeMockType* _call_PrintReadingFileMessag
 using _memberFunctionAccumulator_ReplaceTextInTextFileMockType = OneArgMemberFunctionAccumulatorMock<
    ReplaceTextInTextFilesSubProgram, size_t, fs::path>;
 _memberFunctionAccumulator_ReplaceTextInTextFileMockType* _memberFunctionAccumulator_ReplaceTextInTextFileMock = nullptr;
-// Base Class Constant Components
-ConsoleMock* p_consoleMock = nullptr;
-FileSystemMock* p_fileSystemMock = nullptr;
-PluralizerMock* p_pluralizerMock = nullptr;
 // Constant Components
 TextReplacerMock* _textReplacerMock = nullptr;
 // Mutable Components
@@ -38,14 +38,14 @@ FileRevisorArgs p_args;
 
 STARTUP
 {
-   // Function Pointers
-   _replaceTextInTextFilesSubProgram._call_PrintReadingFileMessageIfVerboseMode.reset(_call_PrintReadingFileMessageIfVerboseModeMock = new _call_PrintReadingFileMessageIfVerboseModeMockType);
-   // Function Callers
-   _replaceTextInTextFilesSubProgram._memberFunctionAccumulator_ReplaceTextInTextFile.reset(_memberFunctionAccumulator_ReplaceTextInTextFileMock = new _memberFunctionAccumulator_ReplaceTextInTextFileMockType);
    // Base Class Constant Components
    _replaceTextInTextFilesSubProgram.p_console.reset(p_consoleMock = new ConsoleMock);
    _replaceTextInTextFilesSubProgram.p_fileSystem.reset(p_fileSystemMock = new FileSystemMock);
    _replaceTextInTextFilesSubProgram.p_pluralizer.reset(p_pluralizerMock = new PluralizerMock);
+   // Function Pointers
+   _replaceTextInTextFilesSubProgram._call_PrintReadingFileMessageIfVerboseMode.reset(_call_PrintReadingFileMessageIfVerboseModeMock = new _call_PrintReadingFileMessageIfVerboseModeMockType);
+   // Function Callers
+   _replaceTextInTextFilesSubProgram._memberFunctionAccumulator_ReplaceTextInTextFile.reset(_memberFunctionAccumulator_ReplaceTextInTextFileMock = new _memberFunctionAccumulator_ReplaceTextInTextFileMockType);
    // Constant Components
    _replaceTextInTextFilesSubProgram._textReplacer.reset(_textReplacerMock = new TextReplacerMock);
    // Mutable Components

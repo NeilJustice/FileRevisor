@@ -11,7 +11,7 @@ using namespace std;
 
 // rename-files --target=C:\FileRevisorTesting --from=123 --to=abc --recurse --verbose
 
-// rename-directories --target=C:\FileRevisorTesting --from=dir1 --to=new_dir_name --verbose
+// rename-directories --target=C:\FileRevisorTesting --from=\w\w\w --to=new_dir_name --verbose
 
 // replace-text --target=C:\FileRevisorTesting --from=abc --to=123
 // replace-text --target=C:\FileRevisorTesting --from=abc --to=123 --verbose

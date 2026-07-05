@@ -54,11 +54,11 @@ bool RenameFilesSubProgram::DidRenameFileIsTrue(const RenameResult& fileRenameRe
 RenameResult RenameFilesSubProgram::RenameFileIfFileNameMatchesFromPattern(const fs::path& filePath) const
 {
    const string fileName = filePath.filename().string();
-   const string regexReplacedFileName = _textReplacer->ReplaceText(
+   const string possiblyReplacedFileName = _textReplacer->ReplaceText(
       fileName,
       p_args.fromFileOrDirectoryName,
       p_args.toFileOrDirectoryName);
-   if (regexReplacedFileName == fileName)
+   if (possiblyReplacedFileName == fileName)
    {
       _caller_PrintDidNotMatchFileMessageIfVerboseMode->CallConstMemberFunction(
          this, &RenameFilesSubProgram::PrintDidNotMatchFileMessageIfVerboseMode,
@@ -68,14 +68,14 @@ RenameResult RenameFilesSubProgram::RenameFileIfFileNameMatchesFromPattern(const
    if (p_args.dryrun)
    {
       const string wouldRenameMessage = Utils::String::ConcatStrings(
-         "DryRun: Would rename file ", filePath.string(), " to ", regexReplacedFileName);
+         "DryRun: Would rename file ", filePath.string(), " to ", possiblyReplacedFileName);
       p_console->WriteProgramNameThreadIdLine(wouldRenameMessage);
       const fs::path sourceFolderPath = filePath.parent_path();
-      const fs::path renamedFilePath = sourceFolderPath / regexReplacedFileName;
+      const fs::path renamedFilePath = sourceFolderPath / possiblyReplacedFileName;
       return RenameResult(true, filePath, renamedFilePath);
    }
-   const fs::path renamedFilePath = p_fileSystem->RenameFile(filePath, regexReplacedFileName);
-   const string renamedFileMessage = Utils::String::ConcatStrings("Renamed file ", filePath.string(), " to ", regexReplacedFileName);
+   const fs::path renamedFilePath = p_fileSystem->RenameFile(filePath, possiblyReplacedFileName);
+   const string renamedFileMessage = Utils::String::ConcatStrings("Renamed file ", filePath.string(), " to ", possiblyReplacedFileName);
    p_console->WriteProgramNameThreadIdLine(renamedFileMessage);
    return RenameResult(true, filePath, renamedFilePath);
 }
