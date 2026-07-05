@@ -26,7 +26,7 @@ RecursiveFileDeleter::~RecursiveFileDeleter()
 void RecursiveFileDeleter::PrintDeletedFileMessage(const char* filePath) const
 {
    const string deletedFileMessage = Utils::String::ConcatStrings("Deleted ", filePath);
-   p_console->ProgramNameThreadIdWriteLine(deletedFileMessage);
+   p_console->WriteProgramNameThreadIdLine(deletedFileMessage);
 }
 
 #if defined __linux__
@@ -59,7 +59,7 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* dire
             if (args.dryrun)
             {
                const string wouldDeleteFileMessage = Utils::String::ConcatStrings("DryRun: Would delete file ", filePath);
-               p_console->ProgramNameThreadIdWriteLine(wouldDeleteFileMessage);
+               p_console->WriteProgramNameThreadIdLine(wouldDeleteFileMessage);
             }
             else
             {
@@ -115,7 +115,7 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* dire
             if (args.dryrun)
             {
                const string wouldDeleteFileMessage = Utils::String::ConcatStrings("DryRun: Would delete file ", filePath);
-               p_console->ProgramNameThreadIdWriteLine(wouldDeleteFileMessage);
+               p_console->WriteProgramNameThreadIdLine(wouldDeleteFileMessage);
             }
             else
             {
@@ -156,7 +156,7 @@ void RecursiveFileDeleter::ThrowFileSystemExceptionExceptIfSkipFilesInUseIsTrueA
       {
          const string skippingFileMessage = Utils::String::ConcatStrings(
             "Skipped file: \"", filePath, "\" because of error 13 (permission denied) when attempting to delete it");
-         p_console->ProgramNameThreadIdWriteLine(skippingFileMessage);
+         p_console->WriteProgramNameThreadIdLine(skippingFileMessage);
          return;
       }
    }

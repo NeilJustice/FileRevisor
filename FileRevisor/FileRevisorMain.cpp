@@ -9,7 +9,7 @@ using namespace std;
 // ==============================
 // delete-directory --target=C:\FileRevisorTesting\directory1 --parallel
 
-// rename-files --target=C:\FileRevisorTesting --from=file --to=abc --recurse --verbose
+// rename-files --target=C:\FileRevisorTesting --from=123 --to=abc --recurse --verbose
 
 // rename-directories --target=C:\FileRevisorTesting --from=dir1 --to=new_dir_name --verbose
 

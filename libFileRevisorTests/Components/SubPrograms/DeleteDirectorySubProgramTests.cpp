@@ -1,6 +1,4 @@
 #include "pch.h"
-#include "libFileRevisor/Components/Iteration/ForEach/OneArgMemberFunctionForEacher.h"
-#include "libFileRevisor/Components/Iteration/ForEach/ParallelOneArgMemberFunctionForEacher.h"
 #include "libFileRevisor/Components/SubPrograms/DeleteDirectorySubProgram.h"
 #include "libFileRevisorTests/Components/Console/MetalMock/ConsoleMock.h"
 #include "libFileRevisorTests/Components/FileSystem/MetalMock/FileSystemMock.h"
@@ -8,7 +6,6 @@
 #include "libFileRevisorTests/Components/FunctionCallers/TryCatchCallers/MetalMock/VoidOneArgTryCatchCallerMock.h"
 #include "libFileRevisorTests/Components/Iteration/ForEach/MetalMock/OneArgMemberFunctionForEacherMock.h"
 #include "libFileRevisorTests/Components/Iteration/ForEach/MetalMock/ParallelOneArgMemberFunctionForEacherMock.h"
-#include "libFileRevisorTests/Components/Iteration/ForEach/MetalMock/TwoArgMemberFunctionForEacherMock.h"
 #include "libFileRevisorTests/Components/Strings/MetalMock/PluralizerMock.h"
 
 TESTS(DeleteDirectorySubProgramTests)
@@ -61,13 +58,13 @@ STARTUP
 TEST(Run_TargetDirectoryDoesNotExist_WritesDirectoryDoesNotExistInformationalMessage_Returns0)
 {
    p_fileSystemMock->FileOrDirectoryExistsMock.Return(false);
-   p_consoleMock->ProgramNameThreadIdWriteLineMock.Expect();
+   p_consoleMock->WriteProgramNameThreadIdLineMock.Expect();
    //
    const int exitCode = _deleteDirectorySubProgram.Run();
    //
    const string expectedDirectoryDoesNotExistMessage = "Directory does not exist: " + p_args.targetFolderPath.string();
    METALMOCKTHEN(p_fileSystemMock->FileOrDirectoryExistsMock.CalledOnceWith(p_args.targetFolderPath)).Then(
-   METALMOCKTHEN(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(expectedDirectoryDoesNotExistMessage)));
+   METALMOCKTHEN(p_consoleMock->WriteProgramNameThreadIdLineMock.CalledOnceWith(expectedDirectoryDoesNotExistMessage)));
    IS_ZERO(exitCode);
 }
 
@@ -117,7 +114,7 @@ TEST(Run_TargetDirectoryExists_ParallelIsTrue_WritesDeletingInParallelMessage_Re
 
    _caller_DeleteTargetDirectoryIfNotCurrentDirectoryMock->CallConstMemberFunctionMock.Expect();
 
-   p_consoleMock->ProgramNameThreadIdWriteLineMock.Expect();
+   p_consoleMock->WriteProgramNameThreadIdLineMock.Expect();
 
    _deleteDirectorySubProgram.p_args.parallel = true;
    //
@@ -128,7 +125,7 @@ TEST(Run_TargetDirectoryExists_ParallelIsTrue_WritesDeletingInParallelMessage_Re
 
    METALMOCKTHEN(p_fileSystemMock->GetStringFolderPathsInDirectoryMock.CalledOnceWith(p_args.targetFolderPath, false))).Then(
 
-   METALMOCKTHEN(p_consoleMock->ProgramNameThreadIdWriteLineMock.CalledOnceWith(expectedDeletingInParallelMessage))).Then(
+   METALMOCKTHEN(p_consoleMock->WriteProgramNameThreadIdLineMock.CalledOnceWith(expectedDeletingInParallelMessage))).Then(
 
    METALMOCKTHEN(_parallelTwoArgMemberFunctionForEacher_DeleteDirectoryMock->ParallelCallConstMemberFunctionWithEachElementMock.CalledOnceWith(
       topLevelFolderPathsInDirectory,
@@ -198,13 +195,13 @@ TEST(TryCatchCallDeleteDirectory_TryCatchCallsDeleteDirectoryWithParallelExcepti
 
 TEST(ParallelExceptionHandler_WritesExceptionMessageWithThreadIdAndRedText)
 {
-   p_consoleMock->ProgramNameThreadIdWriteLineColorMock.Expect();
+   p_consoleMock->WriteProgramNameThreadIdLineColorMock.Expect();
    const string exceptionClassNameAndMessage = ZenUnit::Random<string>();
    //
    _deleteDirectorySubProgram.ParallelExceptionHandler(exceptionClassNameAndMessage);
    //
    const string expectedErrorMessage = "Error: " + string(exceptionClassNameAndMessage);
-   METALMOCK(p_consoleMock->ProgramNameThreadIdWriteLineColorMock.CalledOnceWith(expectedErrorMessage, Color::Red));
+   METALMOCK(p_consoleMock->WriteProgramNameThreadIdLineColorMock.CalledOnceWith(expectedErrorMessage, Color::Red));
 }
 
 RUN_TESTS(DeleteDirectorySubProgramTests)

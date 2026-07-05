@@ -25,8 +25,8 @@ void FileRevisorPreambleMaker::PrintPreambleLines(const FileRevisorArgs& args) c
    const string workingDirectoryLine = Utils::String::ConcatStrings("WorkingDirectory: ", currentFolderPath.string());
    const string targetDirectoryLine = Utils::String::ConcatStrings(" TargetDirectory: ", args.targetFolderPath.string());
 
-   p_console->ProgramNameThreadIdWriteLine(runningLine);
-   p_console->ProgramNameThreadIdWriteLine(programModeLine);
-   p_console->ProgramNameThreadIdWriteLine(workingDirectoryLine);
-   p_console->ProgramNameThreadIdWriteLine(targetDirectoryLine);
+   p_console->WriteProgramNameThreadIdLine(runningLine);
+   p_console->WriteProgramNameThreadIdLine(programModeLine);
+   p_console->WriteProgramNameThreadIdLine(workingDirectoryLine);
+   p_console->WriteProgramNameThreadIdLine(targetDirectoryLine);
 }

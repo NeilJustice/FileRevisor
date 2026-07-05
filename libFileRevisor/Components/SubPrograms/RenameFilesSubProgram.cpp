@@ -25,9 +25,13 @@ int RenameFilesSubProgram::Run() const
 {
    const vector<fs::path> filePathsInAndPossiblyBelowDirectory =
       p_fileSystem->GetFilePathsInDirectory(p_args.targetFolderPath, p_args.recurse);
+
    const vector<RenameResult> fileRenameResults = _transformer_RenameFileIfFileNameMatchesFromPattern->Transform(
-      filePathsInAndPossiblyBelowDirectory, this, &RenameFilesSubProgram::RenameFileIfFileNameMatchesFromPattern);
+      filePathsInAndPossiblyBelowDirectory,
+      this, &RenameFilesSubProgram::RenameFileIfFileNameMatchesFromPattern);
+
    const size_t numberOfRenamedFiles = _predicateCounter->CountWhere(fileRenameResults, DidRenameFileIsTrue);
+
    string renamedFilesMessage;
    const string fileOrFiles = p_pluralizer->PotentiallyPluralizeWord(numberOfRenamedFiles, "file", "files");
    if (p_args.dryrun)
@@ -38,7 +42,7 @@ int RenameFilesSubProgram::Run() const
    {
       renamedFilesMessage = Utils::String::ConcatValues("Result: Renamed ", numberOfRenamedFiles, ' ', fileOrFiles);
    }
-   p_console->ProgramNameThreadIdWriteLine(renamedFilesMessage);
+   p_console->WriteProgramNameThreadIdLine(renamedFilesMessage);
    return 0;
 }
 
@@ -50,25 +54,29 @@ bool RenameFilesSubProgram::DidRenameFileIsTrue(const RenameResult& fileRenameRe
 RenameResult RenameFilesSubProgram::RenameFileIfFileNameMatchesFromPattern(const fs::path& filePath) const
 {
    const string fileName = filePath.filename().string();
-   const string regexReplacedFileName = _textReplacer->ReplaceText(fileName, p_args.fromRegexPattern, p_args.toRegexPattern);
+   const string regexReplacedFileName = _textReplacer->ReplaceText(
+      fileName,
+      p_args.fromFileOrDirectoryName,
+      p_args.toFileOrDirectoryName);
    if (regexReplacedFileName == fileName)
    {
       _caller_PrintDidNotMatchFileMessageIfVerboseMode->CallConstMemberFunction(
-         this, &RenameFilesSubProgram::PrintDidNotMatchFileMessageIfVerboseMode, p_args.verbose, filePath);
+         this, &RenameFilesSubProgram::PrintDidNotMatchFileMessageIfVerboseMode,
+         p_args.verbose, filePath);
       return RenameResult(false, filePath, filePath);
    }
    if (p_args.dryrun)
    {
       const string wouldRenameMessage = Utils::String::ConcatStrings(
          "DryRun: Would rename file ", filePath.string(), " to ", regexReplacedFileName);
-      p_console->ProgramNameThreadIdWriteLine(wouldRenameMessage);
+      p_console->WriteProgramNameThreadIdLine(wouldRenameMessage);
       const fs::path sourceFolderPath = filePath.parent_path();
       const fs::path renamedFilePath = sourceFolderPath / regexReplacedFileName;
       return RenameResult(true, filePath, renamedFilePath);
    }
    const fs::path renamedFilePath = p_fileSystem->RenameFile(filePath, regexReplacedFileName);
    const string renamedFileMessage = Utils::String::ConcatStrings("Renamed file ", filePath.string(), " to ", regexReplacedFileName);
-   p_console->ProgramNameThreadIdWriteLine(renamedFileMessage);
+   p_console->WriteProgramNameThreadIdLine(renamedFileMessage);
    return RenameResult(true, filePath, renamedFilePath);
 }
 
@@ -77,6 +85,6 @@ void RenameFilesSubProgram::PrintDidNotMatchFileMessageIfVerboseMode(bool verbos
    if (verbose)
    {
       const string didNotMatchFileMessage = "Verbose: Did not match " + filePath.string();
-      p_console->ProgramNameThreadIdWriteLine(didNotMatchFileMessage);
+      p_console->WriteProgramNameThreadIdLine(didNotMatchFileMessage);
    }
 }

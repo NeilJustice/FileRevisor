@@ -1,12 +1,12 @@
 #pragma once
-class Console;
-class DocoptParser;
-class FileSystem;
 namespace docopt
 {
    struct value;
 }
+class Console;
+class DocoptParser;
 class FileRevisorPreambleMaker;
+class FileSystem;
 template<typename ReturnType, typename ClassType, typename Arg1Type, typename Arg2Type>
 class NonVoidTwoArgMemberFunctionCaller;
 
@@ -21,10 +21,10 @@ private:
       tuple<fs::path, string, string>, FileRevisorArgsParser, const map<string, docopt::value>&, bool>;
    unique_ptr<const NonVoidTwoArgMemberFunctionCallerType> _caller_ParseDirAndFromAndToArguments;
    // Constant Components
-   unique_ptr<const Console> p_console;
-   unique_ptr<const FileSystem> p_fileSystem;
+   unique_ptr<const Console> _console;
    unique_ptr<const DocoptParser> _docoptParser;
    unique_ptr<const FileRevisorPreambleMaker> _fileRevisorPreambleMaker;
+   unique_ptr<const FileSystem> _fileSystem;
 public:
    FileRevisorArgsParser();
    virtual ~FileRevisorArgsParser();

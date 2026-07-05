@@ -8,8 +8,8 @@ namespace ZenUnit
    {
       FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, commandLine);
       FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, programMode);
-      FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, fromRegexPattern);
-      FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, toRegexPattern);
+      FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, fromFileOrDirectoryName);
+      FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, toFileOrDirectoryName);
       FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, targetFolderPath);
       FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, recurse);
       FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, parallel);
@@ -24,8 +24,8 @@ namespace ZenUnit
       FileRevisorArgs randomFileRevisorArgs;
       randomFileRevisorArgs.commandLine = randomGenerator->String();
       randomFileRevisorArgs.programMode = static_cast<ProgramMode>(randomGenerator->Enum(static_cast<int>(ProgramMode::MaxValue)));
-      randomFileRevisorArgs.fromRegexPattern = randomGenerator->String();
-      randomFileRevisorArgs.toRegexPattern = randomGenerator->String();
+      randomFileRevisorArgs.fromFileOrDirectoryName = randomGenerator->String();
+      randomFileRevisorArgs.toFileOrDirectoryName = randomGenerator->String();
       randomFileRevisorArgs.targetFolderPath = randomGenerator->FilesystemPath();
       randomFileRevisorArgs.recurse = randomGenerator->Bool();
       randomFileRevisorArgs.parallel = randomGenerator->Bool();

@@ -55,13 +55,13 @@ int ReplaceTextInTextFilesSubProgram::Run() const
    {
       const string message = Utils::String::ConcatValues(
          "DryRun: Would replace text in ", numberOfFilesThatWereOrWouldBeModified, " ", fileOrFiles);
-      p_console->ProgramNameThreadIdWriteLine(message);
+      p_console->WriteProgramNameThreadIdLine(message);
    }
    else
    {
       const string message = Utils::String::ConcatValues(
          "Result: Replaced text in ", numberOfFilesThatWereOrWouldBeModified, " ", fileOrFiles);
-      p_console->ProgramNameThreadIdWriteLine(message);
+      p_console->WriteProgramNameThreadIdLine(message);
    }
    return 0;
 }
@@ -69,20 +69,26 @@ int ReplaceTextInTextFilesSubProgram::Run() const
 size_t ReplaceTextInTextFilesSubProgram::ReplaceTextInTextFile(const fs::path& textFilePath) const
 {
    _call_PrintReadingFileMessageIfVerboseMode->CallConstMemberFunction(
-      this, &ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue, p_args.verbose, textFilePath);
+      this, &ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue,
+      p_args.verbose, textFilePath);
+
    const string textFileText = p_fileSystem->ReadText(textFilePath);
-   const string replacedTextFileText = _textReplacer->ReplaceText(textFileText, p_args.fromRegexPattern, p_args.toRegexPattern);
+
+   const string replacedTextFileText = _textReplacer->ReplaceText(
+      textFileText,
+      p_args.fromFileOrDirectoryName,
+      p_args.toFileOrDirectoryName);
    if (replacedTextFileText != textFileText)
    {
       if (p_args.dryrun)
       {
          const string wouldReplaceTextInFileMessage = "DryRun: Would replace text in file " + textFilePath.string();
-         p_console->ProgramNameThreadIdWriteLine(wouldReplaceTextInFileMessage);
+         p_console->WriteProgramNameThreadIdLine(wouldReplaceTextInFileMessage);
          return 1;
       }
       p_fileSystem->CreateTextFile(textFilePath, replacedTextFileText);
       const string replacedTextInFileMessage = "Replaced text in file " + textFilePath.string();
-      p_console->ProgramNameThreadIdWriteLine(replacedTextInFileMessage);
+      p_console->WriteProgramNameThreadIdLine(replacedTextInFileMessage);
       return 1;
    }
    return 0;
@@ -93,6 +99,6 @@ void ReplaceTextInTextFilesSubProgram::PrintReadingFileMessageIfVerboseIsTrue(bo
    if (verbose)
    {
       const string readingFileMessage = "Verbose: Reading file " + textFilePath.string();
-      p_console->ProgramNameThreadIdWriteLine(readingFileMessage);
+      p_console->WriteProgramNameThreadIdLine(readingFileMessage);
    }
 }

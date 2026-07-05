@@ -12,8 +12,8 @@ TEST(ZenUnitEqualizer_ThrowsIfAnyFieldsNotEqual)
    ZENUNIT_EQUALIZER_TEST_SETUP(FileRevisorArgs);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, commandLine, ZenUnit::Random<string>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, programMode, ProgramMode::ReplaceTextInTextFiles);
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, fromRegexPattern, ZenUnit::Random<string>());
-   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, toRegexPattern, ZenUnit::Random<string>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, fromFileOrDirectoryName, ZenUnit::Random<string>());
+   ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, toFileOrDirectoryName, ZenUnit::Random<string>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, targetFolderPath, ZenUnit::Random<fs::path>());
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, recurse, true);
    ZENUNIT_EQUALIZER_THROWS_WHEN_FIELD_NOT_EQUAL(FileRevisorArgs, parallel, true);
@@ -28,10 +28,14 @@ TEST(TestableRandomFileRevisorArgs_ReturnsFileRevisorArgsWithAllRandomFields)
    ZenUnit::RandomGeneratorMock randomGeneratorMock;
 
    const string commandLine = ZenUnit::Random<string>();
-   const string fromRegexPattern = ZenUnit::Random<string>();
-   const string toRegexPattern = ZenUnit::Random<string>();
+   const string fromFileOrDirectoryName = ZenUnit::Random<string>();
+   const string toFileOrDirectoryName = ZenUnit::Random<string>();
    const string justFilesSubstrings = ZenUnit::Random<string>();
-   randomGeneratorMock.StringMock.ReturnValues(commandLine, fromRegexPattern, toRegexPattern, justFilesSubstrings);
+   randomGeneratorMock.StringMock.ReturnValues(
+      commandLine,
+      fromFileOrDirectoryName,
+      toFileOrDirectoryName,
+      justFilesSubstrings);
 
    const int programModeInt = randomGeneratorMock.EnumMock.ReturnRandom();
    const ProgramMode programMode = static_cast<ProgramMode>(programModeInt);
@@ -55,8 +59,8 @@ TEST(TestableRandomFileRevisorArgs_ReturnsFileRevisorArgsWithAllRandomFields)
    FileRevisorArgs expectedRandomFileRevisorArgs;
    expectedRandomFileRevisorArgs.commandLine = commandLine;
    expectedRandomFileRevisorArgs.programMode = programMode;
-   expectedRandomFileRevisorArgs.fromRegexPattern = fromRegexPattern;
-   expectedRandomFileRevisorArgs.toRegexPattern = toRegexPattern;
+   expectedRandomFileRevisorArgs.fromFileOrDirectoryName = fromFileOrDirectoryName;
+   expectedRandomFileRevisorArgs.toFileOrDirectoryName = toFileOrDirectoryName;
    expectedRandomFileRevisorArgs.targetFolderPath = targetDirectory;
    expectedRandomFileRevisorArgs.recurse = recurse;
    expectedRandomFileRevisorArgs.parallel = parallel;

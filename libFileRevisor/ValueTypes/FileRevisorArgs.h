@@ -7,8 +7,8 @@ struct FileRevisorArgs
    string commandLine;
    ProgramMode programMode = ProgramMode::Unset;
    fs::path targetFolderPath;
-   string fromRegexPattern;
-   string toRegexPattern;
+   string fromFileOrDirectoryName;
+   string toFileOrDirectoryName;
    bool recurse = false;
    bool parallel = false;
    bool skipFilesInUse = false;

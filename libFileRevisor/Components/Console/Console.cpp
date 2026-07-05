@@ -18,14 +18,14 @@ void Console::WriteLine(string_view message) const
    cout << message << '\n';
 }
 
-void Console::ProgramNameThreadIdWriteLine(string_view message) const
+void Console::WriteProgramNameThreadIdLine(string_view message) const
 {
    const string threadIdMessage = MakeThreadIdMessage(message);
    scoped_lock<mutex> coutLock(_coutMutex);
    cout << threadIdMessage;
 }
 
-void Console::ProgramNameThreadIdWriteLineColor(string_view message, Color color) const
+void Console::WriteProgramNameThreadIdLineColor(string_view message, Color color) const
 {
    const string threadIdMessage = MakeThreadIdMessage(message);
    scoped_lock<mutex> coutLock(_coutMutex);

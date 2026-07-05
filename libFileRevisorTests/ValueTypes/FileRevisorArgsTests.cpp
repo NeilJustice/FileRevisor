@@ -49,8 +49,8 @@ TEST(DefaultConstructor_SetsFieldsToDefaultValues)
    expectedDefaultFileRevisorArgs.commandLine = "";
    expectedDefaultFileRevisorArgs.programMode = ProgramMode::Unset;
    expectedDefaultFileRevisorArgs.targetFolderPath = fs::path();
-   expectedDefaultFileRevisorArgs.fromRegexPattern = "";
-   expectedDefaultFileRevisorArgs.toRegexPattern = "";
+   expectedDefaultFileRevisorArgs.fromFileOrDirectoryName = "";
+   expectedDefaultFileRevisorArgs.toFileOrDirectoryName = "";
    expectedDefaultFileRevisorArgs.recurse = false;
    expectedDefaultFileRevisorArgs.parallel = false;
    expectedDefaultFileRevisorArgs.skipFilesInUse = false;

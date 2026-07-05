@@ -271,7 +271,7 @@ void FileSystem::DeleteFileOrDirectory(const fs::path& fileOrFolderPath, bool ig
    if (dryRun)
    {
       const string wouldDeleteMessage = "DryRun: Would delete " + fileOrFolderPath.string();
-      _console->ProgramNameThreadIdWriteLine(wouldDeleteMessage);
+      _console->WriteProgramNameThreadIdLine(wouldDeleteMessage);
    }
    else
    {
@@ -281,7 +281,7 @@ void FileSystem::DeleteFileOrDirectory(const fs::path& fileOrFolderPath, bool ig
          if (!quietMode)
          {
             const string deletedMessage = "Deleted " + fileOrFolderPath.string();
-            _console->ProgramNameThreadIdWriteLine(deletedMessage);
+            _console->WriteProgramNameThreadIdLine(deletedMessage);
          }
       }
       catch (const exception& ex)
@@ -290,7 +290,7 @@ void FileSystem::DeleteFileOrDirectory(const fs::path& fileOrFolderPath, bool ig
          {
             const string exceptionClassNameAndMessage = Type::GetExceptionClassNameAndMessage(&ex);
             const string message = "Ignoring exception because --skip-files-in-use: " + exceptionClassNameAndMessage;
-            _console->ProgramNameThreadIdWriteLineColor(message, Color::Yellow);
+            _console->WriteProgramNameThreadIdLineColor(message, Color::Yellow);
          }
          else
          {

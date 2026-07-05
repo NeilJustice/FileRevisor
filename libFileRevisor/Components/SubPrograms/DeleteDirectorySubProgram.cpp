@@ -31,7 +31,7 @@ int DeleteDirectorySubProgram::Run() const
    {
       const string directoryDoesNotExistMessage = Utils::String::ConcatStrings(
          "Directory does not exist: ", p_args.targetFolderPath.string());
-      p_console->ProgramNameThreadIdWriteLine(directoryDoesNotExistMessage);
+      p_console->WriteProgramNameThreadIdLine(directoryDoesNotExistMessage);
       return 0;
    }
    const vector<string> topLevelFolderPathsInTargetDirectory = p_fileSystem->GetStringFolderPathsInDirectory(p_args.targetFolderPath, false);
@@ -39,7 +39,7 @@ int DeleteDirectorySubProgram::Run() const
    {
       const string deletingInParallelMessage = Utils::String::ConcatStrings(
          "Deleting in parallel all files in directory: ", p_args.targetFolderPath.string());
-      p_console->ProgramNameThreadIdWriteLine(deletingInParallelMessage);
+      p_console->WriteProgramNameThreadIdLine(deletingInParallelMessage);
       _parallelTwoArgMemberFunctionForEacher_DeleteDirectory->ParallelCallConstMemberFunctionWithEachElement(
          topLevelFolderPathsInTargetDirectory,
          this, &DeleteDirectorySubProgram::TryCatchCallDeleteDirectory);
@@ -86,5 +86,5 @@ void DeleteDirectorySubProgram::TryCatchCallDeleteDirectory(const string& direct
 void DeleteDirectorySubProgram::ParallelExceptionHandler(string_view exceptionClassNameAndMessage) const
 {
    const string errorMessage = "Error: " + string(exceptionClassNameAndMessage);
-   p_console->ProgramNameThreadIdWriteLineColor(errorMessage, Color::Red);
+   p_console->WriteProgramNameThreadIdLineColor(errorMessage, Color::Red);
 }
