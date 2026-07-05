@@ -61,4 +61,3 @@ function(IfUNIXEnablePrecompiledHeaderAndPossiblyUnityBuildIfNotIncludeWhatYouUs
       endif()
    endif()
 endfunction()
-

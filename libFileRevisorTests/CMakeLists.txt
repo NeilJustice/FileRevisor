@@ -11,17 +11,23 @@ include_directories(
    ${ZenUnitAndMetalMockIncludeDirectory})
 
 folder_source_group(Components)
+
 folder_source_group_subfolder(Components Asserters)
 folder_source_group_subsubfolder(Components Asserters MetalMock)
+
 folder_source_group_subfolder(Components Console)
 folder_source_group_subsubfolder(Components Console MetalMock)
+
 folder_source_group_subfolder(Components DataStructures)
 folder_source_group_subsubfolder(Components DataStructures MetalMock)
+
 folder_source_group_subfolder(Components Docopt)
 folder_source_group_subsubfolder(Components Docopt MetalMock)
 folder_source_group_subsubfolder(Components Docopt ZenUnit)
+
 folder_source_group_subfolder(Components FileRevisor)
 folder_source_group_subsubfolder(Components FileRevisor MetalMock)
+
 folder_source_group_subfolder(Components FunctionCallers)
 folder_source_group_subsubfolder(Components FunctionCallers Member)
 folder_source_group_subsubsubfolder(Components FunctionCallers Member MetalMock)
@@ -29,18 +35,24 @@ folder_source_group_subsubfolder(Components FunctionCallers NonMember)
 folder_source_group_subsubsubfolder(Components FunctionCallers NonMember MetalMock)
 folder_source_group_subsubfolder(Components FunctionCallers TryCatchCallers)
 folder_source_group_subsubsubfolder(Components FunctionCallers TryCatchCallers MetalMock)
+
 folder_source_group_subfolder(Components SubPrograms)
 folder_source_group_subsubfolder(Components SubPrograms MetalMock)
+
 folder_source_group_subfolder(Components ErrorHandling)
 folder_source_group_subsubfolder(Components ErrorHandling MetalMock)
+
 folder_source_group_subfolder(Components Exceptions)
 folder_source_group_subsubfolder(Components Exceptions MetalMock)
+
 folder_source_group_subfolder(Components Extension)
 folder_source_group_subsubfolder(Components Extension MetalMock)
+
 folder_source_group_subfolder(Components FileSystem)
 folder_source_group_subsubfolder(Components FileSystem IntegrationTests)
 folder_source_group_subsubfolder(Components FileSystem MetalMock)
 folder_source_group_subsubfolder(Components FileSystem ZenUnit)
+
 folder_source_group_subfolder(Components Iteration)
 folder_source_group_subsubfolder(Components Iteration Counter)
 folder_source_group_subsubsubfolder(Components Iteration Counter MetalMock)
@@ -50,17 +62,23 @@ folder_source_group_subsubfolder(Components Iteration Math)
 folder_source_group_subsubsubfolder(Components Iteration Math MetalMock)
 folder_source_group_subsubfolder(Components Iteration Transform)
 folder_source_group_subsubsubfolder(Components Iteration Transform MetalMock)
+
 folder_source_group_subfolder(Components Process)
 folder_source_group_subsubfolder(Components Process ZenUnit)
 folder_source_group_subsubfolder(Components Process Windows)
 folder_source_group_subsubsubfolder(Components Process Windows MetalMock)
+
 folder_source_group_subfolder(Components Random)
+
 folder_source_group_subfolder(Components Strings)
 folder_source_group_subsubfolder(Components Strings MetalMock)
+
 folder_source_group_subfolder(Components Threading)
+
 folder_source_group_subfolder(Components Time)
 folder_source_group_subsubfolder(Components Time MetalMock)
 folder_source_group_subsubfolder(Components Time ZenUnit)
+
 folder_source_group_subfolder(Components Windows)
 folder_source_group(Constants)
 folder_source_group(Enums)
@@ -93,4 +111,3 @@ elseif(MSVC)
    append(CMAKE_CXX_FLAGS "/FIpch.h")
    IfMSVCAddRunTestsPostBuildStep()
 endif()
-
