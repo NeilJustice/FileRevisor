@@ -13,29 +13,29 @@ Deletes directories, renames files or directories, or replaces text in files.
 
 Usage:
    filerevisor delete-directory
-      --target=<TargetFolderPath>
+      --target=<TargetDirectory>
       [--parallel]
       [--skip-files-in-use]
       [--dryrun]
       [--quiet]
    filerevisor rename-files
-      --target=<TargetFolderPath>
-      --from=<FileNameRegex>
-      --to=<FileNameRegex>
+      --target=<TargetDirectory>
+      --from=<FileNameSubstring>
+      --to=<FileNameSubstring>
       [--recurse]
       [--dryrun]
       [--verbose]
    filerevisor rename-directories
-      --target=<TargetFolderPath>
-      --from=<DirectoryNameRegex>
-      --to=<DirectoryNameRegex>
+      --target=<TargetDirectory>
+      --from=<DirectoryNameSubstring>
+      --to=<DirectoryNameSubstring>
       [--recurse]
       [--dryrun]
       [--verbose]
    filerevisor replace-text
-      --target=<TargetFolderPath>
-      --from=<LiteralFileText>
-      --to=<ReplacementLiteralFileText>
+      --target=<TargetDirectory>
+      --from=<Substring>
+      --to=<ReplacementSubstring>
       [--recurse]
       [--dryrun]
       [--verbose]
