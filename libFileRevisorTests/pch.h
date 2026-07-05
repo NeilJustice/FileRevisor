@@ -1,15 +1,6 @@
 #pragma once
 #include "libFileRevisor/Compiler/IfWindowsIgnoreTheseWarningsGlobally.h"
-#if defined _WIN32
-#pragma warning(push)
-#pragma warning(disable: 4365) // signed/unsigned mismatch
-#endif
-#include <execution>
-#if defined _WIN32
-#pragma warning(pop)
-#endif
 #include <filesystem>
-#include <regex>
 #if defined __linux__
    #include <cstddef>
    #include <ios>
@@ -29,6 +20,7 @@ using namespace std;
 
 // libFileRevisor Constants
 #include "libFileRevisor/Constants/ErrnoValue.h"
+// libFileRevisor Enums
 #include "libFileRevisor/Enums/Color.h"
 #include "libFileRevisor/Enums/FileExceptionType.h"
 #include "libFileRevisor/Enums/ProgramMode.h"
@@ -45,7 +37,6 @@ using namespace std;
 #include "libFileRevisor/StaticUtilities/ReleaseAssert.h"
 #include "libFileRevisor/StaticUtilities/StringUtil.h"
 #include "libFileRevisor/StaticUtilities/Type.h"
-#include "libFileRevisor/StaticUtilities/Vector.h"
 
 // libFileRevisorTests Exceptions
 #include "libFileRevisorTests/Exceptions/ZenUnit/FileSystemExceptionRandom.h"

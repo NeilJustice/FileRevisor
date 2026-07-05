@@ -1,4 +1,5 @@
 #include "pch.h"
+#include <fstream>
 #include "libFileRevisor/Components/Exceptions/FileSystemExceptionMaker.h"
 #include "libFileRevisor/Components/FileSystem/DirectoryIterator.h"
 #include "libFileRevisor/Components/FileSystem/FCloseDeleter.h"

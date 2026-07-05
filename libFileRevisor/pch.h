@@ -1,13 +1,11 @@
 #pragma once
 #include "libFileRevisor/Compiler/IfWindowsIgnoreTheseWarningsGlobally.h"
 #include <array>
-#include <execution>
 #include <filesystem>
-#include <fstream>
 #include <functional>
 #include <iostream>
-#include <map>
 #include <regex>
+#include <unordered_map>
 #if defined __linux__
    #include <cstddef>
    #include <dirent.h>
@@ -35,6 +33,7 @@ using namespace std;
 
 // libFileRevisor Constants
 #include "libFileRevisor/Constants/ErrnoValue.h"
+// libFileRevisor Enums
 #include "libFileRevisor/Enums/Color.h"
 #include "libFileRevisor/Enums/FileExceptionType.h"
 #include "libFileRevisor/Enums/ProgramMode.h"
