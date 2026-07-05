@@ -25,7 +25,7 @@ ReplaceTextInTextFilesSubProgram::~ReplaceTextInTextFilesSubProgram()
 
 int ReplaceTextInTextFilesSubProgram::Run() const
 {
-   _directoryIterator->SetDirectoryIterator(p_args.targetFolderPath, p_args.recurse);
+   _directoryIterator->SetDirectoryIterator(p_args.targetDirectoryPath, p_args.recurse);
    static const vector<string> fileAndFolderPathIgnoreSubstrings =
    {
       ".git/",

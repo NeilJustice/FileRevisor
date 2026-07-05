@@ -17,6 +17,9 @@ AFACT(ExceptionHandler_PrintsExceptionClassNameAndWhat_Returns1)
 EVIDENCE
 
 FileRevisorProgram _fileRevisorProgram;
+// Function Callers
+using _nonVoidOneArgTryCatchCallerMockType = NonVoidOneArgTryCatchCallerMock<int, FileRevisorProgram, const vector<string>&>;
+_nonVoidOneArgTryCatchCallerMockType* _nonVoidOneArgTryCatchCallerMock = nullptr;
 // Function Pointers
 METALMOCK_NONVOID2_STATIC_OR_FREE(vector<string>, _call_Vector_FromArgcArgv, int, char**)
 METALMOCK_NONVOID1_STATIC_OR_FREE(string, _call_Type_GetExceptionClassNameAndMessage, const exception*)
@@ -24,13 +27,13 @@ METALMOCK_NONVOID1_STATIC_OR_FREE(string, _call_Type_GetExceptionClassNameAndMes
 FileRevisorArgsParserMock* _argsParserMock = nullptr;
 ConsoleMock* _consoleMock = nullptr;
 FileRevisorSubProgramFactoryMock* _fileRevisorSubProgramFactoryMock = nullptr;
-using _nonVoidOneArgTryCatchCallerMockType = NonVoidOneArgTryCatchCallerMock<int, FileRevisorProgram, const vector<string>&>;
-_nonVoidOneArgTryCatchCallerMockType* _nonVoidOneArgTryCatchCallerMock = nullptr;
 // Mutable Components
 StopwatchMock* _stopwatchMock = nullptr;
 
 STARTUP
 {
+   // Function Callers
+   _fileRevisorProgram._nonVoidOneArgTryCatchCaller.reset(_nonVoidOneArgTryCatchCallerMock = new _nonVoidOneArgTryCatchCallerMockType);
    // Function Pointers
    _fileRevisorProgram._call_Vector_FromArgcArgv = BIND_2ARG_METALMOCK_OBJECT(_call_Vector_FromArgcArgvMock);
    _fileRevisorProgram._call_Type_GetExceptionClassNameAndMessage = BIND_1ARG_METALMOCK_OBJECT(_call_Type_GetExceptionClassNameAndMessageMock);
@@ -38,7 +41,6 @@ STARTUP
    _fileRevisorProgram._console.reset(_consoleMock = new ConsoleMock);
    _fileRevisorProgram._argsParser.reset(_argsParserMock = new FileRevisorArgsParserMock);
    _fileRevisorProgram._fileRevisorSubProgramFactory.reset(_fileRevisorSubProgramFactoryMock = new FileRevisorSubProgramFactoryMock);
-   _fileRevisorProgram._nonVoidOneArgTryCatchCaller.reset(_nonVoidOneArgTryCatchCallerMock = new _nonVoidOneArgTryCatchCallerMockType);
    // Mutable Components
    _fileRevisorProgram._stopwatch.reset(_stopwatchMock = new StopwatchMock);
 }

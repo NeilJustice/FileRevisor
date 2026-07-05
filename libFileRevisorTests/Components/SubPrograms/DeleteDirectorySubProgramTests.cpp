@@ -14,8 +14,8 @@ AFACT(Run_TargetDirectoryExists_ParallelIsFalse_WritesDeletingSequentiallyMessag
 AFACT(Run_TargetDirectoryExists_ParallelIsTrue_WritesDeletingInParallelMessage_RecursivelyDeletesAllTopLevelDirectoriesInTargetDirectoryInParallelThenDeletesTargetDirectory_Returns0)
 // Private Functions
 AFACT(DeleteDirectory_CallsRecursivelyDeleteAllFilesInDirectoryOnFolderPath)
-AFACT(DeleteTargetDirectoryIfNotCurrentDirectory_CurrentFolderPathIsTargetFolderPath_DoesNothing)
-AFACT(DeleteTargetDirectoryIfNotCurrentDirectory_CurrentFolderPathIsNotTargetFolderPath_DeletesTargetDirectory)
+AFACT(DeleteTargetDirectoryIfNotCurrentDirectory_CurrentDirectoryPathIsTargetFolderPath_DoesNothing)
+AFACT(DeleteTargetDirectoryIfNotCurrentDirectory_CurrentDirectoryPathIsNotTargetFolderPath_DeletesTargetDirectory)
 AFACT(TryCatchCallDeleteDirectory_TryCatchCallsDeleteDirectoryWithParallelExceptionHandler)
 AFACT(ParallelExceptionHandler_WritesExceptionMessageWithThreadIdAndRedText)
 EVIDENCE
@@ -62,8 +62,8 @@ TEST(Run_TargetDirectoryDoesNotExist_WritesDirectoryDoesNotExistInformationalMes
    //
    const int exitCode = _deleteDirectorySubProgram.Run();
    //
-   const string expectedDirectoryDoesNotExistMessage = "Directory does not exist: " + p_args.targetFolderPath.string();
-   METALMOCKTHEN(p_fileSystemMock->FileOrDirectoryExistsMock.CalledOnceWith(p_args.targetFolderPath)).Then(
+   const string expectedDirectoryDoesNotExistMessage = "Directory does not exist: " + p_args.targetDirectoryPath.string();
+   METALMOCKTHEN(p_fileSystemMock->FileOrDirectoryExistsMock.CalledOnceWith(p_args.targetDirectoryPath)).Then(
    METALMOCKTHEN(p_consoleMock->WriteProgramNameThreadIdLineMock.CalledOnceWith(expectedDirectoryDoesNotExistMessage)));
    IS_ZERO(exitCode);
 }
@@ -84,15 +84,15 @@ TEST(Run_TargetDirectoryExists_ParallelIsFalse_WritesDeletingSequentiallyMessage
    //
    const int exitCode = _deleteDirectorySubProgram.Run();
    //
-   METALMOCKTHEN(p_fileSystemMock->FileOrDirectoryExistsMock.CalledOnceWith(p_args.targetFolderPath)).Then(
+   METALMOCKTHEN(p_fileSystemMock->FileOrDirectoryExistsMock.CalledOnceWith(p_args.targetDirectoryPath)).Then(
 
-   METALMOCKTHEN(p_fileSystemMock->GetStringFolderPathsInDirectoryMock.CalledOnceWith(p_args.targetFolderPath, false))).Then(
+   METALMOCKTHEN(p_fileSystemMock->GetStringFolderPathsInDirectoryMock.CalledOnceWith(p_args.targetDirectoryPath, false))).Then(
 
    METALMOCKTHEN(_oneExtraArgMemberForEacher_DeleteDirectoryMock->CallConstMemberFunctionWithEachElementMock.CalledOnceWith(
       topLevelFolderPathsInDirectory, &_deleteDirectorySubProgram, &DeleteDirectorySubProgram::DeleteDirectory))).Then(
 
    METALMOCKTHEN(p_fileSystemMock->DeleteTopLevelFilesAndEmptyDirectoriesInDirectoryMock.CalledOnceWith(
-      p_args.targetFolderPath,
+      p_args.targetDirectoryPath,
       p_args.skipFilesInUse,
       p_args.dryrun,
       p_args.quiet))).Then(
@@ -120,10 +120,10 @@ TEST(Run_TargetDirectoryExists_ParallelIsTrue_WritesDeletingInParallelMessage_Re
    //
    const int exitCode = _deleteDirectorySubProgram.Run();
    //
-   const string expectedDeletingInParallelMessage = "Deleting in parallel all files in directory: " + p_args.targetFolderPath.string();
-   METALMOCKTHEN(p_fileSystemMock->FileOrDirectoryExistsMock.CalledOnceWith(p_args.targetFolderPath)).Then(
+   const string expectedDeletingInParallelMessage = "Deleting in parallel all files in directory: " + p_args.targetDirectoryPath.string();
+   METALMOCKTHEN(p_fileSystemMock->FileOrDirectoryExistsMock.CalledOnceWith(p_args.targetDirectoryPath)).Then(
 
-   METALMOCKTHEN(p_fileSystemMock->GetStringFolderPathsInDirectoryMock.CalledOnceWith(p_args.targetFolderPath, false))).Then(
+   METALMOCKTHEN(p_fileSystemMock->GetStringFolderPathsInDirectoryMock.CalledOnceWith(p_args.targetDirectoryPath, false))).Then(
 
    METALMOCKTHEN(p_consoleMock->WriteProgramNameThreadIdLineMock.CalledOnceWith(expectedDeletingInParallelMessage))).Then(
 
@@ -132,7 +132,7 @@ TEST(Run_TargetDirectoryExists_ParallelIsTrue_WritesDeletingInParallelMessage_Re
       &_deleteDirectorySubProgram, &DeleteDirectorySubProgram::TryCatchCallDeleteDirectory))).Then(
 
    METALMOCKTHEN(p_fileSystemMock->DeleteTopLevelFilesAndEmptyDirectoriesInDirectoryMock.CalledOnceWith(
-      p_args.targetFolderPath,
+      p_args.targetDirectoryPath,
       p_args.skipFilesInUse,
       p_args.dryrun,
       p_args.quiet))).Then(
@@ -155,26 +155,26 @@ TEST(DeleteDirectory_CallsRecursivelyDeleteAllFilesInDirectoryOnFolderPath)
    METALMOCK(p_fileSystemMock->RecursivelyDeleteAllFilesInDirectoryMock.CalledOnceWith(directoryPath, p_args));
 }
 
-TEST(DeleteTargetDirectoryIfNotCurrentDirectory_CurrentFolderPathIsTargetFolderPath_DoesNothing)
+TEST(DeleteTargetDirectoryIfNotCurrentDirectory_CurrentDirectoryPathIsTargetFolderPath_DoesNothing)
 {
-   p_fileSystemMock->CurrentFolderPathMock.Return(p_args.targetFolderPath);
+   p_fileSystemMock->CurrentDirectoryPathMock.Return(p_args.targetDirectoryPath);
    //
    _deleteDirectorySubProgram.DeleteTargetDirectoryIfNotCurrentDirectory();
    //
-   METALMOCK(p_fileSystemMock->CurrentFolderPathMock.CalledOnce());
+   METALMOCK(p_fileSystemMock->CurrentDirectoryPathMock.CalledOnce());
 }
 
-TEST(DeleteTargetDirectoryIfNotCurrentDirectory_CurrentFolderPathIsNotTargetFolderPath_DeletesTargetDirectory)
+TEST(DeleteTargetDirectoryIfNotCurrentDirectory_CurrentDirectoryPathIsNotTargetFolderPath_DeletesTargetDirectory)
 {
-   const fs::path currentFolderPath = ZenUnit::RandomNotEqualTo<fs::path>(p_args.targetFolderPath);
-   p_fileSystemMock->CurrentFolderPathMock.Return(currentFolderPath);
+   const fs::path currentDirectoryPath = ZenUnit::RandomNotEqualTo<fs::path>(p_args.targetDirectoryPath);
+   p_fileSystemMock->CurrentDirectoryPathMock.Return(currentDirectoryPath);
    p_fileSystemMock->DeleteFileOrDirectoryMock.Expect();
    //
    _deleteDirectorySubProgram.DeleteTargetDirectoryIfNotCurrentDirectory();
    //
-   METALMOCK(p_fileSystemMock->CurrentFolderPathMock.CalledOnce());
+   METALMOCK(p_fileSystemMock->CurrentDirectoryPathMock.CalledOnce());
    METALMOCK(p_fileSystemMock->DeleteFileOrDirectoryMock.CalledOnceWith(
-      p_args.targetFolderPath,
+      p_args.targetDirectoryPath,
       p_args.skipFilesInUse,
       p_args.dryrun,
       p_args.quiet));

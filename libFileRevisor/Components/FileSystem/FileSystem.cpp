@@ -70,15 +70,15 @@ fs::path FileSystem::GetAbsolutePath(const fs::path& fileOrFolderPath) const
 #endif
 }
 
-fs::path FileSystem::CurrentFolderPath() const
+fs::path FileSystem::CurrentDirectoryPath() const
 {
-   fs::path currentFolderPath = _call_fs_current_path();
-   return currentFolderPath;
+   fs::path currentDirectoryPath = _call_fs_current_path();
+   return currentDirectoryPath;
 }
 
 bool FileSystem::FileOrDirectoryExists(const fs::path& fileOrFolderPath) const
 {
-   const bool fileOrFolderPathExists = _call_fs_exists(fileOrFolderPath);
+   bool fileOrFolderPathExists = _call_fs_exists(fileOrFolderPath);
    return fileOrFolderPathExists;
 }
 
@@ -185,7 +185,7 @@ void FileSystem::CreateFileWithBytes(
 fs::path FileSystem::RenameFile(const fs::path& filePath, string_view newFileName) const
 {
    const bool filePathExists = _caller_FileSystem_Exists->CallConstMemberFunction(this, &FileSystem::FileOrDirectoryExists, filePath);
-   if (!filePathExists)
+   [[unlikely]] if (!filePathExists)
    {
       const string exceptionMessage = Utils::String::ConcatStrings(
          "FileSystem::RenameFile(const fs::path& filePath, string_view newFileName) error: filePath does not exist: ", filePath.string());
@@ -194,7 +194,7 @@ fs::path FileSystem::RenameFile(const fs::path& filePath, string_view newFileNam
    const fs::path sourceFolderPath = filePath.parent_path();
    fs::path renamedFilePath = sourceFolderPath / newFileName;
    const bool destinationFilePathExists = _caller_FileSystem_Exists->CallConstMemberFunction(this, &FileSystem::FileOrDirectoryExists, renamedFilePath);
-   if (destinationFilePathExists)
+   [[unlikely]] if (destinationFilePathExists)
    {
       const string exceptionMessage = Utils::String::ConcatStrings(
          "FileSystem::RenameFile(const fs::path& filePath, string_view newFileName) error: renamedFilePath already exists: ", renamedFilePath.string());
@@ -204,8 +204,8 @@ fs::path FileSystem::RenameFile(const fs::path& filePath, string_view newFileNam
    const char* const filePathStringCCP = _constCharPointerGetter->GetStringConstCharPointer(filePathString);
    const string renamedFilePathString = renamedFilePath.string();
    const char* const renamedFilePathStringCCP = _constCharPointerGetter->GetStringConstCharPointer(renamedFilePathString);
-   const int renameReturnValue = _call_std_rename(filePathStringCCP, renamedFilePathStringCCP);
-   if (renameReturnValue != 0)
+   int renameReturnValue = _call_std_rename(filePathStringCCP, renamedFilePathStringCCP);
+   [[unlikely]] if (renameReturnValue != 0)
    {
       const string exceptionMessage = Utils::String::ConcatValues(
          "FileSystem::RenameFile(const fs::path& filePath, string_view newFileName) error: std::rename(\"",
@@ -237,20 +237,20 @@ fs::path FileSystem::RenameDirectory(const fs::path& directoryPath, string_view 
 // Deletes
 
 void FileSystem::DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(
-   const fs::path& directoryPath,
+   const fs::path& targetDirectoryPath,
    bool skipFilesInUse,
    bool dryRun,
    bool quietMode) const
 {
    _caller_DeleteFileOrDirectory->CallConstMemberFunction(
       this, &FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows,
-      directoryPath, dryRun);
+      targetDirectoryPath, dryRun);
 
    const vector<fs::path> topLevelFolderPaths = _caller_GetFileOrFolderPathsInDirectory->CallConstMemberFunction(
-      this, &FileSystem::GetFolderPathsInDirectory, directoryPath, false);
+      this, &FileSystem::GetFolderPathsInDirectory, targetDirectoryPath, false);
 
    const vector<fs::path> topLevelFilePaths = _caller_GetFileOrFolderPathsInDirectory->CallConstMemberFunction(
-      this, &FileSystem::GetFilePathsInDirectory, directoryPath, false);
+      this, &FileSystem::GetFilePathsInDirectory, targetDirectoryPath, false);
 
    _foreacher_DeleteFileOrDirectory->CallConstMemberFunctionWithEachElement(
       topLevelFolderPaths,
@@ -276,7 +276,7 @@ void FileSystem::RemoveFile(const char* filePath, bool ignoreFileDeleteError) co
 #endif
    if (unlinkReturnValue != 0)
    {
-      if (!ignoreFileDeleteError)
+      [[unlikely]] if (!ignoreFileDeleteError)
       {
          const FileSystemException fileSystemException =
             _fileSystemExceptionMaker->MakeFileSystemExceptionForFailedToDeleteFile(filePath);
@@ -300,7 +300,8 @@ void FileSystem::DeleteFileOrDirectory(
    {
       try
       {
-         _caller_DoDeleteFileOrDirectory->CallConstMemberFunction(this, &FileSystem::DoDeleteFileOrDirectory, fileOrFolderPath);
+         _caller_DoDeleteFileOrDirectory->CallConstMemberFunction(
+            this, &FileSystem::DoDeleteFileOrDirectory, fileOrFolderPath);
          if (!quietMode)
          {
             const string deletedMessage = "Deleted " + fileOrFolderPath.string();
@@ -331,10 +332,10 @@ void FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows(
 #ifdef _WIN32
    if (!dryRun)
    {
-      const vector<fs::path> topLevelFilePathsInDirectory = GetFilePathsInDirectory(directoryPath, false);
-      for (const fs::path& filePath : topLevelFilePathsInDirectory)
+      const vector<fs::path> topLevelFilePaths = GetFilePathsInDirectory(directoryPath, false);
+      for (const fs::path& topLevelFilePath : topLevelFilePaths)
       {
-         _recursiveFileDeleter->RemoveReadonlyFlagFromFileSystemFilePath(filePath);
+         _recursiveFileDeleter->RemoveReadonlyFlagFromFileSystemFilePath(topLevelFilePath);
       }
    }
 #endif
@@ -345,7 +346,7 @@ void FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows(
 shared_ptr<FILE> FileSystem::OpenFile(const fs::path& filePath, const char* fileOpenMode) const
 {
    FILE* const rawFilePointer = _call_fopen(filePath.string().c_str(), fileOpenMode);
-   if (rawFilePointer == nullptr)
+   [[unlikely]] if (rawFilePointer == nullptr)
    {
       const FileSystemException fileSystemException =
          _fileSystemExceptionMaker->MakeFileSystemExceptionForFailedToOpenFileWithFOpen(filePath, fileOpenMode);
@@ -375,7 +376,7 @@ size_t FileSystem::GetFileSize(ifstream& fileStream) const
    fileStream.seekg(0, ios::end);
    const streampos fileSizeAsStreamPos = fileStream.tellg();
    fileStream.seekg(0, ios::beg);
-   const size_t fileSizeAsSizeT = static_cast<size_t>(fileSizeAsStreamPos);
+   size_t fileSizeAsSizeT = static_cast<size_t>(fileSizeAsStreamPos);
    return fileSizeAsSizeT;
 }
 

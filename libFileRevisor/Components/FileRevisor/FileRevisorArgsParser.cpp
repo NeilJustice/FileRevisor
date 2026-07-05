@@ -1,10 +1,10 @@
 #include "pch.h"
-#include "libFileRevisor/docopt/docopt.h"
 #include "libFileRevisor/Components/Docopt/DocoptParser.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorArgsParser.h"
 #include "libFileRevisor/Components/FileRevisor/FileRevisorPreambleMaker.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
 #include "libFileRevisor/Components/FunctionCallers/Member/NonVoidTwoArgMemberFunctionCaller.h"
+#include "libFileRevisor/docopt/docopt.h"
 
 FileRevisorArgsParser::FileRevisorArgsParser()
    // Function Pointers
@@ -42,10 +42,11 @@ FileRevisorArgs FileRevisorArgsParser::ParseStringArgs(const vector<string>& str
       _caller_ParseDirAndFromAndToArguments->CallConstMemberFunction(
          this, &FileRevisorArgsParser::ParseTargetAndFromAndToArguments,
          docoptValues, isDeleteDirectoryMode);
-   args.targetFolderPath = get<0>(targetDirectory_fromFileOrDirectoryName_toFileOrDirectoryName);
+   args.targetDirectoryPath = get<0>(targetDirectory_fromFileOrDirectoryName_toFileOrDirectoryName);
    args.fromFileOrDirectoryName = get<1>(targetDirectory_fromFileOrDirectoryName_toFileOrDirectoryName);
    args.toFileOrDirectoryName = get<2>(targetDirectory_fromFileOrDirectoryName_toFileOrDirectoryName);
 
+   args.contentsOnly = _docoptParser->GetOptionalBool(docoptValues, "--contents-only");
    args.recurse = _docoptParser->GetOptionalBool(docoptValues, "--recurse");
    args.parallel = _docoptParser->GetOptionalBool(docoptValues, "--parallel");
    args.skipFilesInUse = _docoptParser->GetOptionalBool(docoptValues, "--skip-files-in-use");
@@ -63,16 +64,16 @@ void FileRevisorArgsParser::PrintPreambleLines(const FileRevisorArgs& args) cons
 tuple<fs::path, string, string> FileRevisorArgsParser::ParseTargetAndFromAndToArguments(
    const map<string, docopt::value>& docoptValues, bool isDeleteDirectoryMode) const
 {
-   string targetFolderPathString;
+   string targetDirectoryPathString;
    string fromFileOrDirectoryName;
    string toFileOrDirectoryName;
    if (isDeleteDirectoryMode)
    {
-      targetFolderPathString = _docoptParser->GetRequiredString(docoptValues, "--target");
+      targetDirectoryPathString = _docoptParser->GetRequiredString(docoptValues, "--target");
    }
    else
    {
-      targetFolderPathString = _docoptParser->GetOptionalStringWithDefaultValue(docoptValues, "--target", ".");
+      targetDirectoryPathString = _docoptParser->GetOptionalStringWithDefaultValue(docoptValues, "--target", ".");
       fromFileOrDirectoryName = _docoptParser->GetRequiredString(docoptValues, "--from");
       if (fromFileOrDirectoryName.empty())
       {
@@ -80,10 +81,10 @@ tuple<fs::path, string, string> FileRevisorArgsParser::ParseTargetAndFromAndToAr
       }
       toFileOrDirectoryName = _docoptParser->GetRequiredString(docoptValues, "--to");
    }
-   fs::path targetFolderPath = _fileSystem->GetAbsolutePath(targetFolderPathString);
-   tuple<fs::path, string, string> targetFolderPath_fromFileOrDirectoryName_toFileOrDirectoryName(
-      targetFolderPath, fromFileOrDirectoryName, toFileOrDirectoryName);
-   return targetFolderPath_fromFileOrDirectoryName_toFileOrDirectoryName;
+   fs::path targetDirectoryPath = _fileSystem->GetAbsolutePath(targetDirectoryPathString);
+   tuple<fs::path, string, string> targetDirectoryPath_fromFileOrDirectoryName_toFileOrDirectoryName(
+      targetDirectoryPath, fromFileOrDirectoryName, toFileOrDirectoryName);
+   return targetDirectoryPath_fromFileOrDirectoryName_toFileOrDirectoryName;
 }
 
 ProgramMode FileRevisorArgsParser::DetermineProgramMode(

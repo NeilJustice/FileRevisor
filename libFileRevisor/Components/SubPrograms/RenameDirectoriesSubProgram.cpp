@@ -24,7 +24,7 @@ RenameDirectoriesSubProgram::~RenameDirectoriesSubProgram()
 int RenameDirectoriesSubProgram::Run() const
 {
    const vector<fs::path> directoryPathsInDirectory =
-      p_fileSystem->GetFolderPathsInDirectory(p_args.targetFolderPath, p_args.recurse);
+      p_fileSystem->GetFolderPathsInDirectory(p_args.targetDirectoryPath, p_args.recurse);
 
    const vector<RenameResult> directoryRenameResults = _directoryPathsTransformer_RenameDirectory->Transform(
       directoryPathsInDirectory,

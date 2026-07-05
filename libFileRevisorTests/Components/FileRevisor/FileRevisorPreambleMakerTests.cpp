@@ -25,7 +25,7 @@ TEST3X3(PrintPreambleLines_PrintsPreambleLines,
    false, true, " Verbose",
    true, true, " DryRun Verbose")
 {
-   const fs::path currentFolderPath = p_fileSystemMock->CurrentFolderPathMock.ReturnRandom();
+   const fs::path currentDirectoryPath = p_fileSystemMock->CurrentDirectoryPathMock.ReturnRandom();
    p_consoleMock->WriteProgramNameThreadIdLineMock.Expect();
    FileRevisorArgs args = ZenUnit::Random<FileRevisorArgs>();
    args.verbose = verbose;
@@ -33,12 +33,12 @@ TEST3X3(PrintPreambleLines_PrintsPreambleLines,
    //
    _fileRevisorPreambleMaker.PrintPreambleLines(args);
    //
-   METALMOCK(p_fileSystemMock->CurrentFolderPathMock.CalledOnce());
+   METALMOCK(p_fileSystemMock->CurrentDirectoryPathMock.CalledOnce());
    const string expectedRunningLine = Utils::String::ConcatStrings("Running: ", args.commandLine);
    const string expectedProgramModeString = ENUM_AS_STRING(ProgramMode, args.programMode);
    const string expectedProgramModeLine = Utils::String::ConcatValues("ProgramMode: ", expectedProgramModeString, expectedActionSuffix);
-   const string expectedWorkingDirectoryLine = Utils::String::ConcatStrings("WorkingDirectory: ", currentFolderPath.string());
-   const string expectedTargetDirectoryLine = Utils::String::ConcatStrings(" TargetDirectory: ", args.targetFolderPath.string());
+   const string expectedWorkingDirectoryLine = Utils::String::ConcatStrings("WorkingDirectory: ", currentDirectoryPath.string());
+   const string expectedTargetDirectoryLine = Utils::String::ConcatStrings(" TargetDirectory: ", args.targetDirectoryPath.string());
    METALMOCK(p_consoleMock->WriteProgramNameThreadIdLineMock.CalledNTimes(4));
    METALMOCKTHEN(p_consoleMock->WriteProgramNameThreadIdLineMock.CalledWith(expectedRunningLine)).Then(
    METALMOCKTHEN(p_consoleMock->WriteProgramNameThreadIdLineMock.CalledWith(expectedProgramModeLine))).Then(

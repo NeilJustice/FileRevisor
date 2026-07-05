@@ -96,7 +96,7 @@ TEST2X2(Run_ReadsTextFilesInWorkingDirectory_CallsReplaceTextInTextFileOnEachTex
    };
    const string expectedMessage = expectedMessagePrefix + to_string(numberOfFilesThatWereOrWouldBeModified) + " " + fileOrFiles;
 
-   METALMOCKTHEN(_directoryIteratorMock->SetDirectoryIteratorMock.CalledOnceWith(p_args.targetFolderPath, p_args.recurse)).Then(
+   METALMOCKTHEN(_directoryIteratorMock->SetDirectoryIteratorMock.CalledOnceWith(p_args.targetDirectoryPath, p_args.recurse)).Then(
 
    METALMOCKTHEN(_directoryIteratorMock->SetFileAndFolderPathIgnoreSubstringsMock.CalledOnceWith(
       expectedFileAndFolderPathIgnoreSubstrings))).Then(

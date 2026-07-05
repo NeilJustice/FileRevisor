@@ -76,7 +76,7 @@ TEST2X2(Run_CallsRenameDirectoryOnEachFolderPathInArgsDirPath_PrintsNumberOfDire
       expectedNumberOfDirectoriesMessagePrefix, numberOfRenamedDirectories, ' ', directoryOrDirectories);
 
    METALMOCKTHEN(p_fileSystemMock->GetFolderPathsInDirectoryMock.CalledOnceWith(
-      p_args.targetFolderPath, p_args.recurse)).Then(
+      p_args.targetDirectoryPath, p_args.recurse)).Then(
 
    METALMOCKTHEN(_directoryPathsTransformer_RenameDirectoryMock->TransformMock.CalledOnceWith(
       directoryPathsInDirectory,

@@ -14,6 +14,7 @@ Deletes directories, renames files or directories, or replaces text in files.
 Usage:
    filerevisor delete-directory
       --target=<TargetDirectory>
+      [--contents-only]
       [--parallel]
       [--skip-files-in-use]
       [--dryrun]
@@ -48,9 +49,10 @@ TEST(DefaultConstructor_SetsFieldsToDefaultValues)
    FileRevisorArgs expectedDefaultFileRevisorArgs;
    expectedDefaultFileRevisorArgs.commandLine = "";
    expectedDefaultFileRevisorArgs.programMode = ProgramMode::Unset;
-   expectedDefaultFileRevisorArgs.targetFolderPath = fs::path();
+   expectedDefaultFileRevisorArgs.targetDirectoryPath = fs::path();
    expectedDefaultFileRevisorArgs.fromFileOrDirectoryName = "";
    expectedDefaultFileRevisorArgs.toFileOrDirectoryName = "";
+   expectedDefaultFileRevisorArgs.contentsOnly = false;
    expectedDefaultFileRevisorArgs.recurse = false;
    expectedDefaultFileRevisorArgs.parallel = false;
    expectedDefaultFileRevisorArgs.skipFilesInUse = false;

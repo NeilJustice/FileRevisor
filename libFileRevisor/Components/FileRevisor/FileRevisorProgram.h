@@ -13,12 +13,13 @@ private:
    // Function Pointers
    function<string(const exception*)> _call_Type_GetExceptionClassNameAndMessage;
    function<vector<string>(int, char**)> _call_Vector_FromArgcArgv;
+   // Function Callers
+   using _nonVoidOneArgTryCatchCallerType = NonVoidOneArgTryCatchCaller<int, FileRevisorProgram, const vector<string>&>;
+   unique_ptr<const _nonVoidOneArgTryCatchCallerType> _nonVoidOneArgTryCatchCaller;
    // Constant Components
    unique_ptr<const FileRevisorArgsParser> _argsParser;
    unique_ptr<const Console> _console;
    unique_ptr<const FileRevisorSubProgramFactory> _fileRevisorSubProgramFactory;
-   using _nonVoidOneArgTryCatchCallerType = NonVoidOneArgTryCatchCaller<int, FileRevisorProgram, const vector<string>&>;
-   unique_ptr<const _nonVoidOneArgTryCatchCallerType> _nonVoidOneArgTryCatchCaller;
    // Mutable Components
    unique_ptr<Stopwatch> _stopwatch;
 public:

@@ -60,6 +60,7 @@ TEST(ParseStringArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
       isReplaceTextInTextFilesMode,
       isDeleteDirectoryMode);
 
+   const bool contentsOnly = ZenUnit::Random<bool>();
    const bool recurse = ZenUnit::Random<bool>();
    const bool parallel = ZenUnit::Random<bool>();
    const bool skipFilesInUse = ZenUnit::Random<bool>();
@@ -67,21 +68,28 @@ TEST(ParseStringArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
    const bool quiet = ZenUnit::Random<bool>();
    const bool verbose = ZenUnit::Random<bool>();
    _docoptParserMock->GetOptionalBoolMock.ReturnValues(
-      recurse, parallel, skipFilesInUse, dryrun, quiet, verbose);
+      contentsOnly,
+      recurse,
+      parallel,
+      skipFilesInUse,
+      dryrun,
+      quiet,
+      verbose);
 
    const ProgramMode programMode = ZenUnit::RandomEnum<ProgramMode>();
    _call_FileRevisorArgsParser_DetermineProgramModeMock.Return(programMode);
 
    const tuple<fs::path, string, string> targetDirectory_fromFileOrDirectoryName_toFileOrDirectoryName(
       ZenUnit::Random<string>(), ZenUnit::Random<string>(), ZenUnit::Random<string>());
-   _caller_ParseDirAndFromAndToArgumentsMock->CallConstMemberFunctionMock.Return(targetDirectory_fromFileOrDirectoryName_toFileOrDirectoryName);
+   _caller_ParseDirAndFromAndToArgumentsMock->CallConstMemberFunctionMock.Return(
+      targetDirectory_fromFileOrDirectoryName_toFileOrDirectoryName);
 
    const vector<string> stringArgs = ZenUnit::RandomVector<string>();
    //
    const FileRevisorArgs args = _fileRevisorArgsParser.ParseStringArgs(stringArgs);
    //
    METALMOCK(_docoptParserMock->GetRequiredBoolMock.CalledNTimes(4));
-   METALMOCK(_docoptParserMock->GetOptionalBoolMock.CalledNTimes(6));
+   METALMOCK(_docoptParserMock->GetOptionalBoolMock.CalledNTimes(7));
 
    METALMOCKTHEN(_docoptParserMock->ParseArgsMock.CalledOnceWith(FileRevisorArgs::CommandLineUsage, stringArgs, true)).Then(
    METALMOCKTHEN(_docoptParserMock->GetRequiredBoolMock.CalledWith(docoptValues, "rename-files"))).Then(
@@ -96,6 +104,7 @@ TEST(ParseStringArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
       &_fileRevisorArgsParser, &FileRevisorArgsParser::ParseTargetAndFromAndToArguments,
       docoptValues, isDeleteDirectoryMode))).Then(
 
+   METALMOCKTHEN(_docoptParserMock->GetOptionalBoolMock.CalledWith(docoptValues, "--contents-only"))).Then(
    METALMOCKTHEN(_docoptParserMock->GetOptionalBoolMock.CalledWith(docoptValues, "--recurse"))).Then(
    METALMOCKTHEN(_docoptParserMock->GetOptionalBoolMock.CalledWith(docoptValues, "--parallel"))).Then(
    METALMOCKTHEN(_docoptParserMock->GetOptionalBoolMock.CalledWith(docoptValues, "--skip-files-in-use"))).Then(
@@ -106,9 +115,10 @@ TEST(ParseStringArgs_ParsesEachArgument_ReturnsFileRevisorArgs)
    FileRevisorArgs expectedArgs;
    expectedArgs.commandLine = Vector::Join(stringArgs, ' ');
    expectedArgs.programMode = programMode;
-   expectedArgs.targetFolderPath = get<0>(targetDirectory_fromFileOrDirectoryName_toFileOrDirectoryName);
+   expectedArgs.targetDirectoryPath = get<0>(targetDirectory_fromFileOrDirectoryName_toFileOrDirectoryName);
    expectedArgs.fromFileOrDirectoryName = get<1>(targetDirectory_fromFileOrDirectoryName_toFileOrDirectoryName);
    expectedArgs.toFileOrDirectoryName = get<2>(targetDirectory_fromFileOrDirectoryName_toFileOrDirectoryName);
+   expectedArgs.contentsOnly = contentsOnly;
    expectedArgs.recurse = recurse;
    expectedArgs.parallel = parallel;
    expectedArgs.skipFilesInUse = skipFilesInUse;
@@ -130,32 +140,32 @@ TEST(PrintPreambleLines_WritesPreambleLinesToConsole)
 
 TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsTrue_ParsesDirArgumentAsRequired_ReturnsDirAndFromAndToArgumentValues)
 {
-   const string targetFolderPathString = _docoptParserMock->GetRequiredStringMock.ReturnRandom();
+   const string targetDirectoryPathString = _docoptParserMock->GetRequiredStringMock.ReturnRandom();
 
-   const fs::path targetFolderPath = _fileSystemMock->GetAbsolutePathMock.ReturnRandom();
+   const fs::path targetDirectoryPath = _fileSystemMock->GetAbsolutePathMock.ReturnRandom();
 
    map<string, docopt::value> docoptValues;
    docoptValues[ZenUnit::Random<string>()] = docopt::value(ZenUnit::Random<string>());
    //
-   const tuple<fs::path, string, string> targetFolderPath_fromFileOrDirectoryName_toFileOrDirectoryName =
+   const tuple<fs::path, string, string> targetDirectoryPath_fromFileOrDirectoryName_toFileOrDirectoryName =
       _fileRevisorArgsParser.ParseTargetAndFromAndToArguments(docoptValues, true);
    //
    METALMOCKTHEN(_docoptParserMock->GetRequiredStringMock.CalledOnceWith(
       docoptValues, "--target")).Then(
 
    METALMOCKTHEN(_fileSystemMock->GetAbsolutePathMock.CalledOnceWith(
-      targetFolderPathString)));
+      targetDirectoryPathString)));
 
-   const tuple<fs::path, string, string> expected_targetFolderPath_fromFileOrDirectoryName_toFileOrDirectoryName(
-      targetFolderPath, "", "");
+   const tuple<fs::path, string, string> expected_targetDirectoryPath_fromFileOrDirectoryName_toFileOrDirectoryName(
+      targetDirectoryPath, "", "");
    ARE_EQUAL(
-      expected_targetFolderPath_fromFileOrDirectoryName_toFileOrDirectoryName,
-      targetFolderPath_fromFileOrDirectoryName_toFileOrDirectoryName);
+      expected_targetDirectoryPath_fromFileOrDirectoryName_toFileOrDirectoryName,
+      targetDirectoryPath_fromFileOrDirectoryName_toFileOrDirectoryName);
 }
 
 TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsFalse_FromArgumentIsEmpty_ThrowsInvalidArgumentException)
 {
-   const string targetFolderPathString = _docoptParserMock->GetOptionalStringWithDefaultValueMock.ReturnRandom();
+   const string targetDirectoryPathString = _docoptParserMock->GetOptionalStringWithDefaultValueMock.ReturnRandom();
 
    const string fromFileOrDirectoryName;
    _docoptParserMock->GetRequiredStringMock.Return(fromFileOrDirectoryName);
@@ -163,8 +173,8 @@ TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsFalse_FromArgumentI
    map<string, docopt::value> docoptValues;
    docoptValues[ZenUnit::Random<string>()] = docopt::value(ZenUnit::Random<string>());
    //
-   tuple<fs::path, string, string> targetFolderPath_fromFileOrDirectoryName_toFileOrDirectoryName;
-   THROWS_EXCEPTION(targetFolderPath_fromFileOrDirectoryName_toFileOrDirectoryName =
+   tuple<fs::path, string, string> targetDirectoryPath_fromFileOrDirectoryName_toFileOrDirectoryName;
+   THROWS_EXCEPTION(targetDirectoryPath_fromFileOrDirectoryName_toFileOrDirectoryName =
       _fileRevisorArgsParser.ParseTargetAndFromAndToArguments(docoptValues, false),
       invalid_argument, "--from value cannot be empty");
    //
@@ -177,9 +187,9 @@ TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsFalse_FromArgumentI
 
 TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsFalse_FromArgumentIsNotEmpty_ParsesDirArgumentAsOptional_ReturnsDirAndFromAndToArgumentValues)
 {
-   const string targetFolderPathString = _docoptParserMock->GetOptionalStringWithDefaultValueMock.ReturnRandom();
+   const string targetDirectoryPathString = _docoptParserMock->GetOptionalStringWithDefaultValueMock.ReturnRandom();
 
-   const fs::path targetFolderPath = _fileSystemMock->GetAbsolutePathMock.ReturnRandom();
+   const fs::path targetDirectoryPath = _fileSystemMock->GetAbsolutePathMock.ReturnRandom();
 
    const string fromFileOrDirectoryName = ZenUnit::Random<string>();
    const string toFileOrDirectoryName = ZenUnit::Random<string>();
@@ -188,7 +198,7 @@ TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsFalse_FromArgumentI
    map<string, docopt::value> docoptValues;
    docoptValues[ZenUnit::Random<string>()] = docopt::value(ZenUnit::Random<string>());
    //
-   const tuple<fs::path, string, string> targetFolderPath_fromFileOrDirectoryName_toFileOrDirectoryName =
+   const tuple<fs::path, string, string> targetDirectoryPath_fromFileOrDirectoryName_toFileOrDirectoryName =
       _fileRevisorArgsParser.ParseTargetAndFromAndToArguments(docoptValues, false);
    //
    METALMOCK(_docoptParserMock->GetRequiredStringMock.CalledNTimes(2));
@@ -203,13 +213,13 @@ TEST(ParseTargetAndFromAndToArguments_IsDeleteDirectoryModeIsFalse_FromArgumentI
       docoptValues, "--to"))).Then(
 
    METALMOCKTHEN(_fileSystemMock->GetAbsolutePathMock.CalledOnceWith(
-      targetFolderPathString)));
+      targetDirectoryPathString)));
 
-   const tuple<fs::path, string, string> expected_targetFolderPath_fromFileOrDirectoryName_toFileOrDirectoryName(
-      targetFolderPath, fromFileOrDirectoryName, toFileOrDirectoryName);
+   const tuple<fs::path, string, string> expected_targetDirectoryPath_fromFileOrDirectoryName_toFileOrDirectoryName(
+      targetDirectoryPath, fromFileOrDirectoryName, toFileOrDirectoryName);
    ARE_EQUAL(
-      expected_targetFolderPath_fromFileOrDirectoryName_toFileOrDirectoryName,
-      targetFolderPath_fromFileOrDirectoryName_toFileOrDirectoryName);
+      expected_targetDirectoryPath_fromFileOrDirectoryName_toFileOrDirectoryName,
+      targetDirectoryPath_fromFileOrDirectoryName_toFileOrDirectoryName);
 }
 
 TEST5X5(DetermineProgramMode_OneOfTheFourProgramModeBoolsTrue_ReturnsExpectedProgramMode,

@@ -6,9 +6,10 @@ struct FileRevisorArgs
    static const string CommandLineUsage;
    string commandLine;
    ProgramMode programMode = ProgramMode::Unset;
-   fs::path targetFolderPath;
+   fs::path targetDirectoryPath;
    string fromFileOrDirectoryName;
    string toFileOrDirectoryName;
+   bool contentsOnly = false;
    bool recurse = false;
    bool parallel = false;
    bool skipFilesInUse = false;

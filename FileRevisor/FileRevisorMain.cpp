@@ -7,7 +7,8 @@ using namespace std;
 
 // Testing command line arguments
 // ==============================
-// delete-directory --target=C:\FileRevisorTesting\directory1 --parallel
+// delete-directory --target=C:\FileRevisorTesting\directory1 --contents-only
+// delete-directory --target=C:\FileRevisorTesting\directory1 --contents-only --parallel
 
 // rename-files --target=C:\FileRevisorTesting --from=123 --to=abc --recurse --verbose
 

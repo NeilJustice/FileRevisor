@@ -8,6 +8,7 @@ Deletes directories, renames files or directories, or replaces text in files.
 Usage:
    filerevisor delete-directory
       --target=<TargetDirectory>
+      [--contents-only]
       [--parallel]
       [--skip-files-in-use]
       [--dryrun]

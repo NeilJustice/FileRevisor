@@ -1,12 +1,9 @@
 #include "pch.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
-#include "libFileRevisor/Components/FunctionCallers/Member/VoidOneArgMemberFunctionCaller.h"
 #include "libFileRevisor/Components/FunctionCallers/Member/VoidZeroArgMemberFunctionCaller.h"
 #include "libFileRevisor/Components/FunctionCallers/TryCatchCallers/VoidOneArgTryCatchCaller.h"
-#include "libFileRevisor/Components/FunctionCallers/TryCatchCallers/VoidTwoArgTryCatchCaller.h"
 #include "libFileRevisor/Components/Iteration/ForEach/OneArgMemberFunctionForEacher.h"
 #include "libFileRevisor/Components/Iteration/ForEach/ParallelOneArgMemberFunctionForEacher.h"
-#include "libFileRevisor/Components/Iteration/ForEach/TwoArgMemberFunctionForEacher.h"
 #include "libFileRevisor/Components/SubPrograms/DeleteDirectorySubProgram.h"
 
 DeleteDirectorySubProgram::DeleteDirectorySubProgram()
@@ -26,32 +23,33 @@ DeleteDirectorySubProgram::~DeleteDirectorySubProgram()
 
 int DeleteDirectorySubProgram::Run() const
 {
-   const bool targetDirectoryExists = p_fileSystem->FileOrDirectoryExists(p_args.targetFolderPath);
+   const bool targetDirectoryExists = p_fileSystem->FileOrDirectoryExists(p_args.targetDirectoryPath);
    if (!targetDirectoryExists)
    {
       const string directoryDoesNotExistMessage = Utils::String::ConcatStrings(
-         "Directory does not exist: ", p_args.targetFolderPath.string());
+         "Directory does not exist: ", p_args.targetDirectoryPath.string());
       p_console->WriteProgramNameThreadIdLine(directoryDoesNotExistMessage);
       return 0;
    }
-   const vector<string> topLevelFolderPathsInTargetDirectory = p_fileSystem->GetStringFolderPathsInDirectory(p_args.targetFolderPath, false);
+   const vector<string> topLevelDirectoryPathsInTargetDirectory =
+      p_fileSystem->GetStringFolderPathsInDirectory(p_args.targetDirectoryPath, false);
    if (p_args.parallel)
    {
       const string deletingInParallelMessage = Utils::String::ConcatStrings(
-         "Deleting in parallel all files in directory: ", p_args.targetFolderPath.string());
+         "Deleting in parallel all files in directory: ", p_args.targetDirectoryPath.string());
       p_console->WriteProgramNameThreadIdLine(deletingInParallelMessage);
       _parallelTwoArgMemberFunctionForEacher_DeleteDirectory->ParallelCallConstMemberFunctionWithEachElement(
-         topLevelFolderPathsInTargetDirectory,
+         topLevelDirectoryPathsInTargetDirectory,
          this, &DeleteDirectorySubProgram::TryCatchCallDeleteDirectory);
    }
    else
    {
       _oneExtraArgMemberForEacher_DeleteDirectory->CallConstMemberFunctionWithEachElement(
-         topLevelFolderPathsInTargetDirectory,
+         topLevelDirectoryPathsInTargetDirectory,
          this, &DeleteDirectorySubProgram::DeleteDirectory);
    }
    p_fileSystem->DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(
-      p_args.targetFolderPath,
+      p_args.targetDirectoryPath,
       p_args.skipFilesInUse,
       p_args.dryrun,
       p_args.quiet);
@@ -69,10 +67,14 @@ void DeleteDirectorySubProgram::DeleteDirectory(const string& directoryPath) con
 
 void DeleteDirectorySubProgram::DeleteTargetDirectoryIfNotCurrentDirectory() const
 {
-   const fs::path currentFolderPath = p_fileSystem->CurrentFolderPath();
-   if (currentFolderPath != p_args.targetFolderPath)
+   const fs::path currentDirectoryPath = p_fileSystem->CurrentDirectoryPath();
+   if (currentDirectoryPath != p_args.targetDirectoryPath)
    {
-      p_fileSystem->DeleteFileOrDirectory(p_args.targetFolderPath, p_args.skipFilesInUse, p_args.dryrun, p_args.quiet);
+      p_fileSystem->DeleteFileOrDirectory(
+         p_args.targetDirectoryPath,
+         p_args.skipFilesInUse,
+         p_args.dryrun,
+         p_args.quiet);
    }
 }
 

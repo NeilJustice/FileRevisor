@@ -36,7 +36,7 @@ AFACT(Linux__GetAbsolutePath_ReturnsNonEmptyPath)
 #elif _WIN32
 AFACT(Windows__GetAbsolutePath_ReturnsResultOfCallingStdFilesystemAbsolute)
 #endif
-AFACT(CurrentFolderPath_ReturnsResultOfCallingFilesystemCurrentPath)
+AFACT(CurrentDirectoryPath_ReturnsResultOfCallingFilesystemCurrentPath)
 AFACT(FileOrDirectoryExists_ReturnsResultOfCallingStdFilesystemExists)
 // Writes
 AFACT(RenameFile_FilePathDoesNotExist_ThrowsRuntimeError)
@@ -155,29 +155,43 @@ TEST(DeleteTopLevelFilesAndEmptyDirectoriesInDirectory_IfWindowsRemovesReadOnlyF
 
    _foreacher_DeleteFileOrDirectoryMock->CallConstMemberFunctionWithEachElementMock.Expect();
 
-   const fs::path directoryPath = ZenUnit::Random<fs::path>();
+   const fs::path targetDirectoryPath = ZenUnit::Random<fs::path>();
    const bool skipFilesInUse = ZenUnit::Random<bool>();
    const bool dryRun = ZenUnit::Random<bool>();
    const bool quietMode = ZenUnit::Random<bool>();
    //
-   p_fileSystem.DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(directoryPath, skipFilesInUse, dryRun, quietMode);
+   p_fileSystem.DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(
+      targetDirectoryPath,
+      skipFilesInUse,
+      dryRun,
+      quietMode);
    //
    METALMOCK(_caller_GetFileOrFolderPathsInDirectoryMock->CallConstMemberFunctionMock.CalledNTimes(2));
    METALMOCK(_foreacher_DeleteFileOrDirectoryMock->CallConstMemberFunctionWithEachElementMock.CalledNTimes(2));
 
-   METALMOCKTHEN(_caller_DeleteFileOrDirectoryMock->CallConstMemberFunctionMock.CalledOnceWith(&p_fileSystem, &FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows, directoryPath, dryRun)).Then(
+   METALMOCKTHEN(_caller_DeleteFileOrDirectoryMock->CallConstMemberFunctionMock.CalledOnceWith(
+      &p_fileSystem, &FileSystem::RemoveReadonlyFlagsFromTopLevelFilesInDirectoryIfWindows,
+      targetDirectoryPath, dryRun)).Then(
 
    METALMOCKTHEN(_caller_GetFileOrFolderPathsInDirectoryMock->CallConstMemberFunctionMock.CalledWith(
-      &p_fileSystem, &FileSystem::GetFolderPathsInDirectory, directoryPath, false))).Then(
+      &p_fileSystem, &FileSystem::GetFolderPathsInDirectory,
+      targetDirectoryPath, false))).Then(
 
    METALMOCKTHEN(_caller_GetFileOrFolderPathsInDirectoryMock->CallConstMemberFunctionMock.CalledWith(
-      &p_fileSystem, &FileSystem::GetFilePathsInDirectory, directoryPath, false))).Then(
+      &p_fileSystem, &FileSystem::GetFilePathsInDirectory,
+      targetDirectoryPath, false))).Then(
 
    METALMOCKTHEN(_foreacher_DeleteFileOrDirectoryMock->CallConstMemberFunctionWithEachElementMock.CalledWith(
-      topLevelFolderPaths, &p_fileSystem, &FileSystem::DeleteFileOrDirectory, skipFilesInUse, dryRun, quietMode))).Then(
+      topLevelFolderPaths, &p_fileSystem, &FileSystem::DeleteFileOrDirectory,
+      skipFilesInUse,
+      dryRun,
+      quietMode))).Then(
 
    METALMOCKTHEN(_foreacher_DeleteFileOrDirectoryMock->CallConstMemberFunctionWithEachElementMock.CalledWith(
-      topLevelFilePaths, &p_fileSystem, &FileSystem::DeleteFileOrDirectory, skipFilesInUse, dryRun, quietMode)));
+      topLevelFilePaths, &p_fileSystem, &FileSystem::DeleteFileOrDirectory,
+      skipFilesInUse,
+      dryRun,
+      quietMode)));
 }
 
 TEST(RecursivelyDeleteAllFilesInDirectory_CallsFileDeleterRecursivelyDeleteAllFilesInDirectory)
@@ -382,14 +396,14 @@ TEST(Windows__GetAbsolutePath_ReturnsResultOfCallingStdFilesystemAbsolute)
 }
 #endif
 
-TEST(CurrentFolderPath_ReturnsResultOfCallingFilesystemCurrentPath)
+TEST(CurrentDirectoryPath_ReturnsResultOfCallingFilesystemCurrentPath)
 {
    const fs::path currentPathReturnValue = _call_fs_current_pathMock.ReturnRandom();
    //
-   const fs::path currentFolderPath = p_fileSystem.CurrentFolderPath();
+   const fs::path currentDirectoryPath = p_fileSystem.CurrentDirectoryPath();
    //
    METALMOCK(_call_fs_current_pathMock.CalledOnce());
-   ARE_EQUAL(currentPathReturnValue, currentFolderPath);
+   ARE_EQUAL(currentPathReturnValue, currentDirectoryPath);
 }
 
 TEST(FileOrDirectoryExists_ReturnsResultOfCallingStdFilesystemExists)

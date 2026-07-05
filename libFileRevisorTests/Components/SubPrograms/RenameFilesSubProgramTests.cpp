@@ -78,7 +78,7 @@ TEST2X2(Run_CallsRenameFileOnEachFilePathInArgsDirPath_PrintsNumberOfFilesThatWe
       expectedRenamedFilesMessagePrefix, numberOfRenamedFiles, ' ', fileOrFiles);
 
    METALMOCKTHEN(p_fileSystemMock->GetFilePathsInDirectoryMock.CalledOnceWith(
-      p_args.targetFolderPath, p_args.recurse)).Then(
+      p_args.targetDirectoryPath, p_args.recurse)).Then(
 
    METALMOCKTHEN(_transformer_RenameFileIfFileNameMatchesFromPatternMock->TransformMock.CalledOnceWith(
       filePathsInAndPossiblyBelowDirectory,

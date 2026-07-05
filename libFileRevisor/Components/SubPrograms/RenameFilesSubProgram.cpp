@@ -24,7 +24,7 @@ RenameFilesSubProgram::~RenameFilesSubProgram()
 int RenameFilesSubProgram::Run() const
 {
    const vector<fs::path> filePathsInAndPossiblyBelowDirectory =
-      p_fileSystem->GetFilePathsInDirectory(p_args.targetFolderPath, p_args.recurse);
+      p_fileSystem->GetFilePathsInDirectory(p_args.targetDirectoryPath, p_args.recurse);
 
    const vector<RenameResult> fileRenameResults = _transformer_RenameFileIfFileNameMatchesFromPattern->Transform(
       filePathsInAndPossiblyBelowDirectory,

@@ -15,15 +15,15 @@ FileRevisorPreambleMaker::~FileRevisorPreambleMaker()
 
 void FileRevisorPreambleMaker::PrintPreambleLines(const FileRevisorArgs& args) const
 {
-   const fs::path currentFolderPath = p_fileSystem->CurrentFolderPath();
+   const fs::path currentDirectoryPath = p_fileSystem->CurrentDirectoryPath();
    const string programModeString = ENUM_AS_STRING(ProgramMode, args.programMode);
    const string dryRunOrEmptyString = args.dryrun ? " DryRun" : "";
    const string verboseOrEmptyString = args.verbose ? " Verbose" : "";
 
    const string runningLine = Utils::String::ConcatStrings("Running: ", args.commandLine);
    const string programModeLine = Utils::String::ConcatValues("ProgramMode: ", programModeString, dryRunOrEmptyString, verboseOrEmptyString);
-   const string workingDirectoryLine = Utils::String::ConcatStrings("WorkingDirectory: ", currentFolderPath.string());
-   const string targetDirectoryLine = Utils::String::ConcatStrings(" TargetDirectory: ", args.targetFolderPath.string());
+   const string workingDirectoryLine = Utils::String::ConcatStrings("WorkingDirectory: ", currentDirectoryPath.string());
+   const string targetDirectoryLine = Utils::String::ConcatStrings(" TargetDirectory: ", args.targetDirectoryPath.string());
 
    p_console->WriteProgramNameThreadIdLine(runningLine);
    p_console->WriteProgramNameThreadIdLine(programModeLine);

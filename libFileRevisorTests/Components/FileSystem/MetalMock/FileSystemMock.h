@@ -15,7 +15,7 @@ public:
 
    // Queries
    METALMOCK_NONVOID1_CONST(fs::path, GetAbsolutePath, const fs::path&)
-   METALMOCK_NONVOID0_CONST(fs::path, CurrentFolderPath)
+   METALMOCK_NONVOID0_CONST(fs::path, CurrentDirectoryPath)
    METALMOCK_NONVOID2_CONST(vector<fs::path>, GetFilePathsInDirectory, const fs::path&, bool)
    METALMOCK_NONVOID2_CONST(vector<fs::path>, GetFolderPathsInDirectory, const fs::path&, bool)
    METALMOCK_NONVOID2_CONST(vector<string>, GetStringFolderPathsInDirectory, const fs::path&, bool)

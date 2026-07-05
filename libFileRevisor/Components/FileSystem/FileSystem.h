@@ -76,7 +76,7 @@ public:
 
    // Deletes
    virtual void DeleteTopLevelFilesAndEmptyDirectoriesInDirectory(
-      const fs::path& directoryPath,
+      const fs::path& targetDirectoryPath,
       bool skipFilesInUse,
       bool dryRun,
       bool quietMode) const;
@@ -93,7 +93,7 @@ public:
 
    // Queries
    virtual fs::path GetAbsolutePath(const fs::path& fileOrFolderPath) const;
-   virtual fs::path CurrentFolderPath() const;
+   virtual fs::path CurrentDirectoryPath() const;
    virtual bool FileOrDirectoryExists(const fs::path& fileOrFolderPath) const;
    virtual vector<fs::path> GetFolderPathsInDirectory(const fs::path& directoryPath, bool recurse) const;
    virtual vector<fs::path> GetFilePathsInDirectory(const fs::path& directoryPath, bool recurse) const;

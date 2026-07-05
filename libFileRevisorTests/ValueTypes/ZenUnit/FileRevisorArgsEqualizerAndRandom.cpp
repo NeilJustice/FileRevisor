@@ -4,19 +4,20 @@
 namespace ZenUnit
 {
    void Equalizer<FileRevisorArgs>::AssertEqual(
-      const FileRevisorArgs& expectedFileRevisorArgs, const FileRevisorArgs& actualFileRevisorArgs)
+      const FileRevisorArgs& expectedArgs, const FileRevisorArgs& actualArgs)
    {
-      FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, commandLine);
-      FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, programMode);
-      FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, fromFileOrDirectoryName);
-      FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, toFileOrDirectoryName);
-      FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, targetFolderPath);
-      FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, recurse);
-      FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, parallel);
-      FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, skipFilesInUse);
-      FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, dryrun);
-      FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, quiet);
-      FIELDS_ARE_EQUAL(expectedFileRevisorArgs, actualFileRevisorArgs, verbose);
+      FIELDS_ARE_EQUAL(expectedArgs, actualArgs, commandLine);
+      FIELDS_ARE_EQUAL(expectedArgs, actualArgs, programMode);
+      FIELDS_ARE_EQUAL(expectedArgs, actualArgs, fromFileOrDirectoryName);
+      FIELDS_ARE_EQUAL(expectedArgs, actualArgs, toFileOrDirectoryName);
+      FIELDS_ARE_EQUAL(expectedArgs, actualArgs, targetDirectoryPath);
+      FIELDS_ARE_EQUAL(expectedArgs, actualArgs, contentsOnly);
+      FIELDS_ARE_EQUAL(expectedArgs, actualArgs, recurse);
+      FIELDS_ARE_EQUAL(expectedArgs, actualArgs, parallel);
+      FIELDS_ARE_EQUAL(expectedArgs, actualArgs, skipFilesInUse);
+      FIELDS_ARE_EQUAL(expectedArgs, actualArgs, dryrun);
+      FIELDS_ARE_EQUAL(expectedArgs, actualArgs, quiet);
+      FIELDS_ARE_EQUAL(expectedArgs, actualArgs, verbose);
    }
 
    FileRevisorArgs TestableRandomFileRevisorArgs(const ZenUnit::RandomGenerator* randomGenerator)
@@ -26,7 +27,8 @@ namespace ZenUnit
       randomFileRevisorArgs.programMode = static_cast<ProgramMode>(randomGenerator->Enum(static_cast<int>(ProgramMode::MaxValue)));
       randomFileRevisorArgs.fromFileOrDirectoryName = randomGenerator->String();
       randomFileRevisorArgs.toFileOrDirectoryName = randomGenerator->String();
-      randomFileRevisorArgs.targetFolderPath = randomGenerator->FilesystemPath();
+      randomFileRevisorArgs.targetDirectoryPath = randomGenerator->FilesystemPath();
+      randomFileRevisorArgs.contentsOnly = randomGenerator->Bool();
       randomFileRevisorArgs.recurse = randomGenerator->Bool();
       randomFileRevisorArgs.parallel = randomGenerator->Bool();
       randomFileRevisorArgs.skipFilesInUse = randomGenerator->Bool();
@@ -39,8 +41,6 @@ namespace ZenUnit
    template<>
    FileRevisorArgs Random()
    {
-      ZenUnit::RandomGenerator randomGenerator;
-      FileRevisorArgs randomFileRevisorArgs = TestableRandomFileRevisorArgs(&randomGenerator);
-      return randomFileRevisorArgs;
+      return TestableRandomFileRevisorArgs(ZenUnit::RandomGenerator::Instance());
    }
 }
