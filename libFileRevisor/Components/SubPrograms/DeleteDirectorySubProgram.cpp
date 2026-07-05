@@ -1,6 +1,6 @@
 #include "pch.h"
+#include "libFileRevisor/Components/FileSystem/DirectoryDeleter.h"
 #include "libFileRevisor/Components/FileSystem/FileSystem.h"
-#include "libFileRevisor/Components/FunctionCallers/Member/VoidZeroArgMemberFunctionCaller.h"
 #include "libFileRevisor/Components/FunctionCallers/TryCatchCallers/VoidOneArgTryCatchCaller.h"
 #include "libFileRevisor/Components/Iteration/ForEach/OneArgMemberFunctionForEacher.h"
 #include "libFileRevisor/Components/Iteration/ForEach/ParallelOneArgMemberFunctionForEacher.h"
@@ -8,10 +8,11 @@
 
 DeleteDirectorySubProgram::DeleteDirectorySubProgram()
    // Function Callers
-   : _caller_DeleteTargetDirectoryIfNotCurrentDirectory(make_unique<_caller_DeleteTargetDirectoryIfNotCurrentDirectoryType>())
-   , _oneExtraArgMemberForEacher_DeleteDirectory(make_unique<_oneExtraArgMemberForEacher_DeleteDirectoryType>())
+   : _oneExtraArgMemberForEacher_DeleteDirectory(make_unique<_oneExtraArgMemberForEacher_DeleteDirectoryType>())
    , _parallelTwoArgMemberFunctionForEacher_DeleteDirectory(make_unique<_parallelTwoArgMemberFunctionForEacher_DeleteDirectoryType>())
    , _tryCatchCaller_DeleteDirectory(make_unique<_tryCatchCaller_DeleteDirectoryType>())
+   // Constant Components
+   , _directoryDeleter(make_unique<DirectoryDeleter>())
 {
 }
 
@@ -53,8 +54,7 @@ int DeleteDirectorySubProgram::Run() const
       p_args.skipFilesInUse,
       p_args.dryrun,
       p_args.quiet);
-   _caller_DeleteTargetDirectoryIfNotCurrentDirectory->CallConstMemberFunction(
-      this, &DeleteDirectorySubProgram::DeleteTargetDirectoryIfNotCurrentDirectory);
+   _directoryDeleter->DeleteTargetDirectoryIfNotContentsOnlyAndNotCurrentDirectory(p_args);
    return 0;
 }
 
@@ -63,19 +63,6 @@ int DeleteDirectorySubProgram::Run() const
 void DeleteDirectorySubProgram::DeleteDirectory(const string& directoryPath) const
 {
    p_fileSystem->RecursivelyDeleteAllFilesInDirectory(directoryPath, p_args);
-}
-
-void DeleteDirectorySubProgram::DeleteTargetDirectoryIfNotCurrentDirectory() const
-{
-   const fs::path currentDirectoryPath = p_fileSystem->CurrentDirectoryPath();
-   if (currentDirectoryPath != p_args.targetDirectoryPath)
-   {
-      p_fileSystem->DeleteFileOrDirectory(
-         p_args.targetDirectoryPath,
-         p_args.skipFilesInUse,
-         p_args.dryrun,
-         p_args.quiet);
-   }
 }
 
 void DeleteDirectorySubProgram::TryCatchCallDeleteDirectory(const string& directoryPath) const
