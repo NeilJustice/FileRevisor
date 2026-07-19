@@ -101,6 +101,17 @@ void RecursiveFileDeleter::RecursivelyDeleteAllFilesInDirectory(const char* dire
          filePathOrSubdirectoryPathChars[directoryPathLength] = '\\';
 
          const size_t fileNameOrSubdirectoryNameLength = strlen(win32FindData.cFileName);
+
+         const size_t fullFileNameOrSubdirectoryNameLength = directoryPathLength + 1 + fileNameOrSubdirectoryNameLength;
+         [[unlikely]] if (fullFileNameOrSubdirectoryNameLength > MAX_PATH)
+         {
+            const string exceptionMessage = Utils::String::ConcatValues(
+               "File or folder name ", win32FindData.cFileName, " has an absolute path length[", fullFileNameOrSubdirectoryNameLength,
+               "] that is greater than Windows MAX_PATH[", MAX_PATH, "]\n",
+               "Folder to delete manually in Windows Explorer: ", directoryPath);
+            throw invalid_argument(exceptionMessage);
+         }
+
          memcpy(filePathOrSubdirectoryPathChars + directoryPathLength + 1, win32FindData.cFileName, fileNameOrSubdirectoryNameLength);
          filePathOrSubdirectoryPathChars[directoryPathLength + 1 + fileNameOrSubdirectoryNameLength] = 0;
 
