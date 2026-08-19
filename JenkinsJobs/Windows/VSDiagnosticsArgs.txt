@@ -1,0 +1,3 @@
+delete-directory
+--target=X:\PerformanceTestingInputFiles\FileRevisor\VSDiagnostics
+--quiet

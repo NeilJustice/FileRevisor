@@ -5,8 +5,8 @@
 using namespace std;
 #include "libFileRevisor/Components/FileRevisor/FileRevisorProgram.h"
 
-// Testing command line arguments
-// ==============================
+// Testing Args
+// ============
 // delete-directory --target=C:\FileRevisorTesting\directory1 --contents-only
 // delete-directory --target=C:\FileRevisorTesting\directory1 --contents-only --parallel
 
@@ -17,6 +17,18 @@ using namespace std;
 // replace-text --target=C:\FileRevisorTesting --from=abc --to=123
 // replace-text --target=C:\FileRevisorTesting --from=abc --to=123 --verbose
 // replace-text --target=C:\FileRevisorTesting --from=abc --to=123 --recurse --verbose
+
+// Performance Test Args
+// =====================
+// delete-directory --target=X:\PerformanceTestingInputFiles\FileRevisor\PerformanceTest --parallel --quiet
+
+// VTune Hotspots Args
+// ===================
+// delete-directory --target=X:\PerformanceTestingInputFiles\FileRevisor\VTuneHotspots --quiet
+
+// VSDiagnostics Args
+// ==================
+// delete-directory --target=X:\PerformanceTestingInputFiles\FileRevisor\VSDiagnostics --quiet
 
 int main(int argc, char* argv[])
 {
