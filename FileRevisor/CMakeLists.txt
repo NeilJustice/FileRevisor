@@ -27,4 +27,5 @@ elseif(MSVC)
    replace(CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO "/debug" "/DEBUG:FULL")
 endif()
 
+set_target_properties(FileRevisor PROPERTIES OUTPUT_NAME_RELWITHDEBINFO "FileRevisorRelease")
 install(TARGETS FileRevisor DESTINATION "bin")
