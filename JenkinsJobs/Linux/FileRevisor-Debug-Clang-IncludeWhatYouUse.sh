@@ -2,7 +2,7 @@
 set -ev
 
 export CXX=clang++
-LinuxCPlusPlusBuilder build-cpp-program \
+LinuxCPlusPlusBuilder build-cpp-solution \
    --solution-name=FileRevisor \
    --configuration=Debug \
    --cmake-definitions="-DIncludeWhatYouUseMode=ON" \
