@@ -5,6 +5,7 @@ $args = "delete-directory " +
 
 AcceliTune.exe build-then-measure-program-run-time `
    --working-dir="." `
+   --solution="FileRevisor" `
    --program="FileRevisor" `
    --configuration="RelWithDebInfo" `
    --args="$args" `
