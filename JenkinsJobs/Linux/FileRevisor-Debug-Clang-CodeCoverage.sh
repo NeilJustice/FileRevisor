@@ -2,12 +2,12 @@
 set -ev
 
 export CXX=clang++
-export PYTHONPATH=FileRevisorDevOpsPython
-python -u FileRevisorDevOpsPython/FileRevisorDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
+LinuxCPlusPlusBuilder build-cpp-solution \
    --solution-name=FileRevisor \
-   --cmake-build-type=Debug \
-   --tests-project-name=libFileRevisorTests \
-   --cmake-definitions="-DClangCodeCoverageMode=ON" \
-   --no-install
+   --configuration=Debug \
+   --cmake-definitions="-DFastLinuxDebugBuildMode=ON" \
+   --install=false
 
-LinuxCodeCoverageRunner measure-cplusplus-code-coverage --solution=FileRevisor --tests-project=libFileRevisorTests
+LinuxCodeCoverageRunner measure-cplusplus-code-coverage \
+   --solution=FileRevisor \
+   --tests-project=libFileRevisorTests

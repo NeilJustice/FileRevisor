@@ -2,10 +2,8 @@
 set -ev
 
 export CXX=clang++
-export PYTHONPATH=FileRevisorDevOpsPython
-python -u FileRevisorDevOpsPython/FileRevisorDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
+LinuxCPlusPlusBuilder build-cpp-solution \
    --solution-name=FileRevisor \
-   --cmake-build-type=Debug \
-   --tests-project-name=libFileRevisorTests \
+   --configuration=Debug \
    --cmake-definitions="-DFastLinuxDebugBuildMode=ON" \
-   --no-install
+   --install=false

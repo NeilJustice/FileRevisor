@@ -1,12 +1,10 @@
 #!/bin/bash
 set -ev
 
-export CXX=clang++
-export PYTHONPATH=FileRevisorDevOpsPython
 export UBSAN_OPTIONS="silence_unsigned_overflow=1"
-python -u FileRevisorDevOpsPython/FileRevisorDevOpsPython/BuildAndInstallCPlusPlusProgram.py \
+export CXX=clang++
+LinuxCPlusPlusBuilder build-cpp-solution \
    --solution-name=FileRevisor \
-   --cmake-build-type=Debug \
-   --tests-project-name=libFileRevisorTests \
+   --configuration=Debug \
    --cmake-definitions="-DClangUndefinedBehaviorSanitizerMode=ON" \
-   --no-install
+   --install=false
