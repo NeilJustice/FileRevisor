@@ -4,6 +4,7 @@ $args = "delete-directory " +
 
 AcceliTune.exe build-then-collect-hotspots `
    --working-dir="." `
+   --solution="FileRevisor" `
    --program="FileRevisor" `
    --configuration=RelWithDebInfo `
    --args="$args" `
