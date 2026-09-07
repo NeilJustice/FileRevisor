@@ -8,7 +8,7 @@
 |VS2026 on windows-2025-vs2026|<a href="https://github.com/NeilJustice/FileRevisor/actions/workflows/windows_build.yml"><img src="https://github.com/NeilJustice/FileRevisor/actions/workflows/windows_build.yml/badge.svg"></a>|
 |GCC lcov code coverage|<a href="https://codecov.io/gh/NeilJustice/FileRevisor"><img src="https://codecov.io/gh/NeilJustice/FileRevisor/graph/badge.svg?token=goCObzAYXP"></a>|
 
-FileRevisor is a C++23 command line program for quickly deleting large directories in parallel, renaming files and directories, and replacing text in text files.
+FileRevisor is a C++ command line program for quickly deleting large directories in parallel, bulk renaming files and directories, and bulk replacing text in files.
 
 * [FileRevisor command line usage](#filerevisor-command-line-usage)
 * [FileRevisor program modes](#filerevisor-program-modes)
