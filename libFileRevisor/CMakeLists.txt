@@ -44,7 +44,7 @@ source_group("" FILES ${Sources})
 
 add_library(libFileRevisor ${Sources})
 if(UNIX)
-   IfUNIXEnablePrecompiledHeaderAndPossiblyUnityBuildIfNotIncludeWhatYouUseOrClangTidyMode(libFileRevisor 8)
+   IfUNIXEnablePrecompiledHeaderAndPossiblyUnityBuildIfNotClangTidyMode(libFileRevisor 8)
    if(LCovCodeCoverageMode)
      target_link_libraries(libFileRevisor CodeCovLibraryInterface)
    endif()
