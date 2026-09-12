@@ -1,6 +1,7 @@
 AcceliTune.exe build-then-collect-vsdiagnostics `
    --working-dir="."  `
-   --program="FileRevisor" `
+   --solution=FileRevisor `
+   --program=FileRevisor `
    --configuration=RelWithDebInfo `
    --args-file="JenkinsJobs\Windows\VSDiagnosticsArgs.txt" `
    --session-id=60 `
