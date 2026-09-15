@@ -5,7 +5,7 @@ export CXX=clang++
 LinuxCPlusPlusBuilder build-cpp-solution \
    --solution-name=FileRevisor \
    --configuration=Debug \
-   --cmake-definitions="-DFastLinuxDebugBuildMode=ON" \
+   --cmake-definitions="-DClangCodeCoverageMode=ON" \
    --install=false
 
 LinuxCodeCoverageRunner measure-cplusplus-code-coverage \
