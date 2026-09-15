@@ -6,4 +6,4 @@ LinuxCPlusPlusBuilder build-cpp-solution \
    --solution-name=FileRevisor \
    --configuration=RelWithDebInfo \
    --cmake-definitions="-DFastLinuxReleaseBuildMode=ON" \
-   --install=false
+   --install=true
