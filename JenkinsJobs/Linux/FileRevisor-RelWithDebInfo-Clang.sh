@@ -3,7 +3,7 @@ set -ev
 
 export CXX=clang++
 LinuxCPlusPlusBuilder build-cpp-solution \
-   --solution-name=FileRevisor \
+   --solution=FileRevisor \
    --configuration=RelWithDebInfo \
    --cmake-definitions="-DFastLinuxReleaseBuildMode=ON" \
    --install=true

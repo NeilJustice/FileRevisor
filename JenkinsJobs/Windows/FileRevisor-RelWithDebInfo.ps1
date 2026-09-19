@@ -1,5 +1,5 @@
 WindowsCPlusPlusBuilder.exe build-cpp-solution `
-   --solution-name=FileRevisor `
+   --solution=FileRevisor `
    --configuration=RelWithDebInfo `
    --cmake-definitions="" `
    --install=true
