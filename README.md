@@ -18,8 +18,8 @@ FileRevisor is a C++ command line program for quickly deleting large directories
   * [replace-text](#replace-text)
 * [Linux FileRevisor parallel directory deletion performance](#linux-filerevisor-parallel-directory-deletion-performance)
 * [Windows FileRevisor parallel folder deletion performance](#windows-filerevisor-parallel-folder-deletion-performance)
-* [Steps to build binary filerevisor from source on Linux with Clang](#steps-to-build-binary-filerevisor-from-source-on-linux-with-clang)
-* [Steps to build executable FileRevisor.exe from source on Windows with Visual Studio 2026](#steps-to-build-executable-filerevisorexe-from-source-on-windows-with-visual-studio-2026)
+* [Steps to build binary filerevisor on Linux with Clang](#steps-to-build-binary-filerevisor-on-linux-with-clang)
+* [Steps to build FileRevisor.exe on Windows with Visual Studio 2026](#steps-to-build-filerevisorexe-on-windows-with-visual-studio-2026)
 * [Acknowledgements](#acknowledgements)
 
 ## FileRevisor command line usage
@@ -144,7 +144,7 @@ As you can see from the above two graphs, Linux file deletions are quite a bit f
 
 The OS, CPU, and storage hardware which generated the above performance numbers is Fedora 33 / Windows 10, 32-core 64-thread AMD Threadripper 2990WX, and a 512 GB Samsung 970 PRO NVMe drive.
 
-## Steps to build binary filerevisor from source on Linux with Clang
+## Steps to build binary filerevisor on Linux with Clang
 
 ```bash
 git clone https://github.com/NeilJustice/FileRevisor
@@ -153,7 +153,7 @@ CXX=clang++ cmake .. -DCMAKE_BUILD_TYPE=Release
 sudo cmake --build . --target install
 ```
 
-## Steps to build executable FileRevisor.exe from source on Windows with Visual Studio 2026
+## Steps to build FileRevisor.exe on Windows with Visual Studio 2026
 
 ```powershell
 git clone https://github.com/NeilJustice/FileRevisor
@@ -163,5 +163,9 @@ cmake --build . --config Release --target install
 ```
 
 ## Acknowledgements
+
+<a href="https://github.com/docopt/docopt.cpp">docopt.cpp</a>
+
+<a href="https://github.com/hanickadot/compile-time-regular-expressions">compile-time-regular-expressions</a>
 
 <a href="https://brandmark.io">brandmark.io</a> for FileRevisor's logo
