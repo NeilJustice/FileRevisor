@@ -20,7 +20,7 @@ FileRevisor is a C++ command line program for quickly deleting large directories
 * [Windows FileRevisor parallel folder deletion performance](#windows-filerevisor-parallel-folder-deletion-performance)
 * [Steps to build binary filerevisor on Linux with Clang](#steps-to-build-binary-filerevisor-on-linux-with-clang)
 * [Steps to build FileRevisor.exe on Windows with Visual Studio 2026](#steps-to-build-filerevisorexe-on-windows-with-visual-studio-2026)
-* [Acknowledgements](#acknowledgements)
+* [Thanks to](#thanks-to)
 
 ## FileRevisor command line usage
 
@@ -162,7 +162,7 @@ cmake . -G"Visual Studio 18 2026" -A x64 -DCMAKE_INSTALL_PREFIX=C:\bin
 cmake --build . --config Release --target install
 ```
 
-## Acknowledgements
+## Thanks to
 
 <a href="https://github.com/docopt/docopt.cpp">docopt.cpp</a>
 
